@@ -21,7 +21,7 @@
       "name": "vente",
       "enabled": true,
       "category": "vente",
-      "keywords": "vendeur, vendeuse, conseiller de vente, prêt-à-porter, boutique",
+      "keywords": "vendeur en boutique, vendeur en magasin, conseiller de vente, vendeur multimédia, vendeur téléphonie, vendeur prêt-à-porter, vendeur mode",
       "location": "Île-de-France",
       "radius": "80"
     }
@@ -46,7 +46,7 @@
         "name": "vente",
         "enabled": true,
         "category": "vente",
-        "keywords": "vendeur, conseiller de vente, prêt-à-porter"
+        "keywords": "vendeur en boutique, conseiller de vente en magasin, vendeur multimédia, vendeur téléphonie, vendeur prêt-à-porter"
       }
     ]
   },
@@ -72,7 +72,7 @@
         "name": "vente",
         "enabled": true,
         "category": "vente",
-        "keywords": "vendeur vendeuse conseiller vente boutique prêt-à-porter"
+        "keywords": "vendeur vendeuse conseiller vente boutique magasin multimédia téléphonie mode prêt-à-porter"
       }
     ]
   },
