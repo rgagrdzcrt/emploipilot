@@ -49,5 +49,67 @@
         "keywords": "vendeur, conseiller de vente, prêt-à-porter"
       }
     ]
+  },
+  "adzuna": {
+    "enabled": true,
+    "country": "fr",
+    "location": "Île-de-France",
+    "resultsPerPage": 50,
+    "queries": [
+      {
+        "name": "stock-logistique",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "magasinier stockiste gestionnaire stock logistique préparateur commandes approvisionnement"
+      },
+      {
+        "name": "rayon",
+        "enabled": true,
+        "category": "rayon",
+        "keywords": "employé rayon mise rayon libre service réassort"
+      },
+      {
+        "name": "vente",
+        "enabled": true,
+        "category": "vente",
+        "keywords": "vendeur vendeuse conseiller vente boutique prêt-à-porter"
+      }
+    ]
+  },
+  "greenhouse": {
+    "enabled": true,
+    "boards": []
+  },
+  "lever": {
+    "enabled": true,
+    "sites": []
+  },
+  "smartRecruiters": {
+    "enabled": true,
+    "country": "FR",
+    "region": "Île-de-France",
+    "resultsPerQuery": 50,
+    "maxDetailsPerCompany": 30,
+    "companies": [
+      {
+        "name": "Groupement Mousquetaires (Intermarché, Netto, Bricorama)",
+        "identifier": "GroupementMousquetaires",
+        "enabled": true
+      },
+      {
+        "name": "Groupement Mousquetaires (activités centrales et logistiques)",
+        "identifier": "GroupementMousquetaires3",
+        "enabled": true
+      },
+      {
+        "name": "Courir",
+        "identifier": "courir",
+        "enabled": true
+      }
+    ]
+  },
+  "ashby": {
+    "enabled": true,
+    "boards": []
   }
 }

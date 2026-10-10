@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from urllib.request import Request, urlopen
-from urllib.parse import urlparse, urlencode
+from urllib.parse import urlparse, urlencode, quote
 from urllib.error import HTTPError, URLError
 import xml.etree.ElementTree as ET
 
@@ -97,6 +97,32 @@ DEFAULT_FT_QUERIES = [
     },
 ]
 FT_CONTRACTS = {"CDI": "CDI", "CDD": "CDD", "MIS": "Intérim"}
+
+# Adzuna fournit une recherche nationale généraliste. Les identifiants ne sont
+# lus que dans les secrets de GitHub Actions (jamais dans sources.json).
+DEFAULT_ADZUNA_QUERIES = [
+    {
+        "name": "stock-logistique",
+        "category": "stock",
+        "keywords": "magasinier stockiste gestionnaire stock logistique préparateur commandes approvisionnement",
+    },
+    {
+        "name": "rayon",
+        "category": "rayon",
+        "keywords": "employé rayon mise rayon libre service réassort",
+    },
+    {
+        "name": "vente",
+        "category": "vente",
+        "keywords": "vendeur vendeuse conseiller vente boutique prêt-à-porter",
+    },
+]
+
+DEFAULT_SMARTRECRUITERS_QUERIES = [
+    {"name": "stock-logistique", "category": "stock", "keywords": "magasinier logistique stock"},
+    {"name": "rayon", "category": "rayon", "keywords": "employé rayon libre-service"},
+    {"name": "vente", "category": "vente", "keywords": "vendeur vente boutique"},
+]
 
 # Villes connues pour déduire le département depuis un libellé de lieu libre.
 # Sert aussi au front via le champ "dept" stocké sur chaque offre.
@@ -446,6 +472,329 @@ def fetch_francetravail(ft_cfg):
     return offers
 
 
+def api_json(url, label, timeout=30):
+    """GET JSON sans jamais afficher l'URL (elle peut contenir une clé)."""
+    req = Request(
+        url,
+        headers={"User-Agent": UA, "Accept": "application/json"},
+    )
+    try:
+        return http_json(req, timeout=timeout)
+    except HTTPError as exc:
+        print(f"{label} : erreur HTTP {exc.code}.")
+        raise
+    except (URLError, TimeoutError, ValueError) as exc:
+        print(f"{label} : erreur de connexion ou réponse invalide ({type(exc).__name__}).")
+        raise
+
+
+def fetch_adzuna(cfg):
+    """Recherche généraliste Adzuna France (app_id/app_key dans les secrets)."""
+    if not cfg.get("enabled", True):
+        return []
+    app_id = os.environ.get("ADZUNA_APP_ID", "").strip()
+    app_key = os.environ.get("ADZUNA_APP_KEY", "").strip()
+    if not app_id or not app_key:
+        print("Adzuna ignoré : secrets ADZUNA_APP_ID / ADZUNA_APP_KEY absents.")
+        return []
+
+    queries = cfg.get("queries") or DEFAULT_ADZUNA_QUERIES
+    country = quote(str(cfg.get("country") or "fr").strip().lower(), safe="")
+    location = cfg.get("location") or "Île-de-France"
+    per_page = min(max(int(cfg.get("resultsPerPage", 50)), 1), 50)
+    offers = []
+
+    for query in queries:
+        if not query.get("enabled", True) or not query.get("keywords"):
+            continue
+        params = urlencode(
+            {
+                "app_id": app_id,
+                "app_key": app_key,
+                "results_per_page": per_page,
+                "what": query["keywords"],
+                "where": query.get("location") or location,
+                "sort_by": "date",
+                "content-type": "application/json",
+            }
+        )
+        url = f"https://api.adzuna.com/v1/api/jobs/{country}/search/1?{params}"
+        try:
+            data = api_json(url, f"Adzuna [{query.get('name', '?')}]")
+        except Exception:
+            continue
+
+        count = 0
+        for job in data.get("results", []):
+            location_data = job.get("location") or {}
+            location_text = location_data.get("display_name") or ", ".join(
+                location_data.get("area") or []
+            )
+            url = (job.get("redirect_url") or "").strip()
+            offer = make_offer(
+                title=job.get("title") or "",
+                company=(job.get("company") or {}).get("display_name") or "",
+                location=location_text,
+                text=job.get("description") or "",
+                url=url,
+                date=job.get("created") or "",
+                source="Adzuna",
+                category=query.get("category"),
+            )
+            if not offer:
+                continue
+            offer["id"] = f"adz_{job.get('id') or stable_id(url)}"
+            extra = []
+            if job.get("contract_type"):
+                extra.append("Contrat indiqué : " + str(job["contract_type"]))
+            if job.get("contract_time"):
+                extra.append("Temps indiqué : " + str(job["contract_time"]))
+            if job.get("salary_min") or job.get("salary_max"):
+                minimum = job.get("salary_min")
+                maximum = job.get("salary_max")
+                if minimum and maximum:
+                    salary = f"{minimum}–{maximum}"
+                else:
+                    salary = str(minimum or maximum)
+                extra.append("Salaire affiché par l’annonce : " + salary)
+            if extra:
+                offer["notes"] = (offer["notes"] + "\n" + " | ".join(extra)).strip()
+            offers.append(offer)
+            count += 1
+        print(f"Adzuna [{query.get('name', '?')}] : {count} offres pertinentes.")
+        time.sleep(1)
+    return offers
+
+
+def fetch_greenhouse(cfg):
+    """Récupère les offres publiques des tableaux d'employeurs configurés."""
+    if not cfg.get("enabled", True):
+        return []
+    boards = [b for b in cfg.get("boards", []) if b.get("enabled", True) and b.get("token")]
+    if not boards:
+        print("Greenhouse ignoré : aucun tableau d’employeur configuré.")
+        return []
+    offers = []
+    for board in boards:
+        token = quote(str(board["token"]).strip(), safe="")
+        name = board.get("name") or board["token"]
+        try:
+            data = api_json(
+                f"https://boards-api.greenhouse.io/v1/boards/{token}/jobs?content=true",
+                f"Greenhouse [{name}]",
+            )
+        except Exception:
+            continue
+        count = 0
+        for job in data.get("jobs", []):
+            location = (job.get("location") or {}).get("name") or ""
+            if not location and job.get("offices"):
+                location = (job["offices"][0].get("location")
+                            or job["offices"][0].get("name") or "")
+            url = (job.get("absolute_url") or "").strip()
+            offer = make_offer(
+                title=job.get("title") or "",
+                company=name,
+                location=location,
+                text=job.get("content") or "",
+                url=url,
+                date=job.get("first_published") or job.get("updated_at") or "",
+                source="Greenhouse",
+            )
+            if offer:
+                offer["id"] = f"gh_{token}_{job.get('id') or stable_id(url)}"
+                offers.append(offer)
+                count += 1
+        print(f"Greenhouse [{name}] : {count} offres pertinentes.")
+        time.sleep(0.5)
+    return offers
+
+
+def fetch_lever(cfg):
+    """Récupère les offres publiées sur les sites Lever configurés."""
+    if not cfg.get("enabled", True):
+        return []
+    sites = [s for s in cfg.get("sites", []) if s.get("enabled", True) and s.get("slug")]
+    if not sites:
+        print("Lever ignoré : aucun site d’employeur configuré.")
+        return []
+    offers = []
+    for site in sites:
+        slug = quote(str(site["slug"]).strip(), safe="")
+        name = site.get("name") or site["slug"]
+        host = "api.eu.lever.co" if str(site.get("region", "global")).lower() == "eu" else "api.lever.co"
+        try:
+            data = api_json(
+                f"https://{host}/v0/postings/{slug}?mode=json&limit=100",
+                f"Lever [{name}]",
+            )
+        except Exception:
+            continue
+        count = 0
+        for job in data if isinstance(data, list) else []:
+            categories = job.get("categories") or {}
+            locations = categories.get("allLocations") or []
+            if isinstance(locations, str):
+                locations = [locations]
+            location = categories.get("location") or ", ".join(locations)
+            url = (job.get("hostedUrl") or job.get("applyUrl") or "").strip()
+            description = job.get("descriptionPlain") or strip_html(job.get("description") or "")
+            offer = make_offer(
+                title=job.get("text") or "",
+                company=name,
+                location=location,
+                text=description,
+                url=url,
+                date=job.get("createdAt") or "",
+                source="Lever",
+            )
+            if offer:
+                offer["id"] = f"lever_{slug}_{job.get('id') or stable_id(url)}"
+                if categories.get("commitment"):
+                    offer["notes"] += "\nType indiqué : " + str(categories["commitment"])
+                offers.append(offer)
+                count += 1
+        print(f"Lever [{name}] : {count} offres pertinentes.")
+        time.sleep(0.5)
+    return offers
+
+
+def fetch_smartrecruiters(cfg):
+    """Recherche les offres publiques SmartRecruiters, puis charge leurs détails."""
+    if not cfg.get("enabled", True):
+        return []
+    companies = [c for c in cfg.get("companies", [])
+                 if c.get("enabled", True) and c.get("identifier")]
+    if not companies:
+        print("SmartRecruiters ignoré : aucune entreprise configurée.")
+        return []
+    queries = cfg.get("queries") or DEFAULT_SMARTRECRUITERS_QUERIES
+    limit = min(max(int(cfg.get("resultsPerQuery", 50)), 1), 100)
+    max_details = min(max(int(cfg.get("maxDetailsPerCompany", 30)), 1), 100)
+    offers = []
+    for company_cfg in companies:
+        identifier = quote(str(company_cfg["identifier"]).strip(), safe="")
+        company_name = company_cfg.get("name") or company_cfg["identifier"]
+        candidates = {}
+        for query in queries:
+            if not query.get("enabled", True) or not query.get("keywords"):
+                continue
+            params = urlencode({
+                "q": query["keywords"],
+                "limit": limit,
+                "offset": 0,
+                "country": cfg.get("country", "FR"),
+                **({"region": cfg["region"]} if cfg.get("region") else {}),
+            })
+            try:
+                data = api_json(
+                    f"https://api.smartrecruiters.com/v1/companies/{identifier}/postings?{params}",
+                    f"SmartRecruiters [{company_name}/{query.get('name', '?')}]",
+                )
+            except Exception:
+                continue
+            for posting in data.get("content", []):
+                posting_id = str(posting.get("id") or posting.get("uuid") or "")
+                if posting_id:
+                    candidates.setdefault(posting_id, (posting, query.get("category")))
+
+        count = 0
+        for posting_id, (posting, category) in list(candidates.items())[:max_details]:
+            try:
+                detail = api_json(
+                    f"https://api.smartrecruiters.com/v1/companies/{identifier}/postings/{quote(posting_id, safe='')}",
+                    f"SmartRecruiters [{company_name}/détail]",
+                )
+            except Exception:
+                continue
+            sections = ((detail.get("jobAd") or {}).get("sections") or {})
+            description = " ".join(
+                section.get("text", "")
+                for section in sections.values()
+                if isinstance(section, dict)
+            )
+            location_data = detail.get("location") or posting.get("location") or {}
+            location = ", ".join(
+                str(location_data.get(key, ""))
+                for key in ("city", "region", "country")
+                if location_data.get(key)
+            )
+            url = (detail.get("applyUrl") or "").strip()
+            offer = make_offer(
+                title=detail.get("name") or posting.get("name") or "",
+                company=(detail.get("company") or {}).get("name") or company_name,
+                location=location,
+                text=description,
+                url=url,
+                date=detail.get("releasedDate") or posting.get("releasedDate") or "",
+                source="SmartRecruiters",
+                category=category,
+            )
+            if offer:
+                offer["id"] = f"sr_{identifier}_{posting_id}"
+                employment = (detail.get("typeOfEmployment") or {}).get("label")
+                if employment:
+                    offer["notes"] += "\nType indiqué : " + str(employment)
+                offers.append(offer)
+                count += 1
+            time.sleep(0.25)
+        print(f"SmartRecruiters [{company_name}] : {count} offres pertinentes.")
+        time.sleep(0.5)
+    return offers
+
+
+def fetch_ashby(cfg):
+    """Récupère les offres listées sur les job boards Ashby configurés."""
+    if not cfg.get("enabled", True):
+        return []
+    boards = [b for b in cfg.get("boards", [])
+              if b.get("enabled", True) and b.get("name")]
+    if not boards:
+        print("Ashby ignoré : aucun tableau d’employeur configuré.")
+        return []
+    offers = []
+    for board in boards:
+        board_name = quote(str(board["name"]).strip(), safe="")
+        company_name = board.get("company") or board["name"]
+        try:
+            data = api_json(
+                f"https://api.ashbyhq.com/posting-api/job-board/{board_name}",
+                f"Ashby [{company_name}]",
+            )
+        except Exception:
+            continue
+        count = 0
+        for job in data.get("jobs", []):
+            if job.get("isListed") is False:
+                continue
+            address = ((job.get("address") or {}).get("postalAddress") or {})
+            location = job.get("location") or ", ".join(
+                str(address.get(key, ""))
+                for key in ("addressLocality", "addressRegion", "addressCountry")
+                if address.get(key)
+            )
+            description = job.get("descriptionPlain") or strip_html(job.get("descriptionHtml") or "")
+            url = (job.get("jobUrl") or job.get("applyUrl") or "").strip()
+            offer = make_offer(
+                title=job.get("title") or "",
+                company=company_name,
+                location=location,
+                text=description,
+                url=url,
+                date=job.get("publishedAt") or "",
+                source="Ashby",
+            )
+            if offer:
+                offer["id"] = f"ashby_{board_name}_{stable_id(url)}"
+                if job.get("employmentType"):
+                    offer["notes"] += "\nType indiqué : " + str(job["employmentType"])
+                offers.append(offer)
+                count += 1
+        print(f"Ashby [{company_name}] : {count} offres pertinentes.")
+        time.sleep(0.5)
+    return offers
+
+
 def child_text(node, names):
     for element in node.iter():
         tag = element.tag.rsplit("}", 1)[-1].lower()
@@ -518,6 +867,13 @@ def load_previous():
 
 def should_keep(offer, today):
     """Purge : publication trop ancienne ET plus revue depuis MAX_UNSEEN_DAYS."""
+    # Ne jamais supprimer l'historique de candidature ni les modifications utilisateur.
+    status = str(offer.get("status") or "").strip().casefold()
+    if offer.get("appliedDate") or offer.get("notesEdited"):
+        return True
+    if status and status != "à examiner":
+        return True
+
     pub = parse_date(offer.get("date"))
     seen = parse_date(offer.get("lastSeen") or offer.get("collectedAt"))
     if pub is not None and (today - pub.date()).days > MAX_AGE_DAYS:
@@ -574,6 +930,25 @@ def main():
         except Exception as exc:
             errors.append({"source": "France Travail", "error": type(exc).__name__})
 
+    # API généraliste Adzuna ; nécessite deux secrets GitHub facultatifs.
+    try:
+        fresh.extend(fetch_adzuna(config.get("adzuna") or {}))
+    except Exception as exc:
+        errors.append({"source": "Adzuna", "error": type(exc).__name__})
+
+    # Les quatre API ATS ci-dessous sont publiques en lecture, mais chaque
+    # employeur doit avoir un identifiant de tableau configuré dans sources.json.
+    for config_key, source_name, fetcher in (
+        ("greenhouse", "Greenhouse", fetch_greenhouse),
+        ("lever", "Lever", fetch_lever),
+        ("smartRecruiters", "SmartRecruiters", fetch_smartrecruiters),
+        ("ashby", "Ashby", fetch_ashby),
+    ):
+        try:
+            fresh.extend(fetcher(config.get(config_key) or {}))
+        except Exception as exc:
+            errors.append({"source": source_name, "error": type(exc).__name__})
+
     # Flux RSS/Atom explicitement configurés et autorisés.
     feeds = config.get("feeds") or []
     for feed in feeds:
@@ -595,17 +970,31 @@ def main():
         item["collectedAt"] = now
         item["lastSeen"] = today.isoformat()
         keys = offer_keys(item)
-        match = next((index[key] for key in keys if key in index), None)
+        match = index.get(url_key(item.get("url")))
+        if match is None:
+            match = index.get(content_key(item.get("title"), item.get("company"), item.get("location")))
         if match is not None:
             updated_count += 1
             match["lastSeen"] = today.isoformat()
+            linked_sources = match.get("sources")
+            if not isinstance(linked_sources, list):
+                linked_sources = [match["source"]] if match.get("source") else []
+            incoming_source = item.get("source")
+            if incoming_source and incoming_source not in linked_sources:
+                linked_sources.append(incoming_source)
+            if linked_sources:
+                match["sources"] = linked_sources
             for field in ("title", "company", "location", "dept", "contract",
                           "category", "date", "notes", "url"):
+                if field == "notes" and match.get("notesEdited"):
+                    continue
                 if item.get(field):
                     match[field] = item[field]
         else:
             new_count += 1
             item.setdefault("created", today.isoformat())
+            if item.get("source"):
+                item.setdefault("sources", [item["source"]])
             merged.append(item)
             for key in keys:
                 index.setdefault(key, item)

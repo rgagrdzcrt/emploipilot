@@ -1,59 +1,75 @@
-# EmploiPilot — recherche d'emploi (logistique, rayon, vente)
+# ZCRT — recherche d’emploi
 
-Outil personnel : site statique (GitHub Pages), collecte planifiée toutes les 6 heures (GitHub Actions), offres stockées dans `offres.json` (versionné) pour mémoriser les annonces, éviter les doublons et conserver le suivi des candidatures. Les candidatures restent **100 % manuelles** — rien n'est jamais envoyé automatiquement.
+Site statique hébergé sur GitHub Pages, avec collecte planifiée toutes les 6 heures et offres stockées dans `offres.json`. Les candidatures restent **100 % manuelles** : aucun connecteur n’envoie de candidature.
 
-## Architecture
+## Fichiers principaux
 
 | Fichier | Rôle |
 |---|---|
-| `index.html` | Site complet (dashboard, filtres, suivi des candidatures, export). |
-| `collect.py` | Collecteur : Jooble, API France Travail, flux RSS/Atom autorisés. |
-| `sources.json` | Configuration des sources (requêtes Jooble, France Travail, flux RSS). |
-| `.github/workflows/collect.yml` | Cron toutes les 6 h + lancement manuel (**Run workflow**). |
-| `offres.json` | Base d'offres versionnée, écrite par le collecteur. |
+| `index.html` | Site, filtres et suivi des candidatures. |
+| `collect.py` | Collecte, filtrage, fusion, déduplication et purge des offres. |
+| `sources.json` | Requêtes et identifiants des sources publiques. |
+| `.github/workflows/collect.yml` | Collecte automatique et lancement manuel. |
+| `offres.json` | Offres collectées et historique conservés par le collecteur. |
 
-## Sources d'offres
+## Sources intégrées
 
-### Jooble (déjà actif)
-Clé API dans le secret GitHub `JOOBLE_API_KEY`. Depuis `sources.json`, la collecte est découpée en **une requête par métier** (stock-logistique, rayon, vente) pour une meilleure couverture ; tu peux ajuster mots-clés, zone, rayon ou désactiver une requête avec `"enabled": false`.
+### Jooble
 
-### API France Travail (nouveau, à activer)
-Source officielle et gratuite : https://francetravail.io — crée une application avec le produit **« Offres d'emploi v2 »**, puis enregistre deux secrets dans **Settings → Secrets and variables → Actions** :
+Recherche généraliste configurée par métier dans `sources.json`. La clé reste dans le secret GitHub `JOOBLE_API_KEY`.
 
-- `FT_CLIENT_ID`
-- `FT_CLIENT_SECRET`
+### France Travail
 
-Tant que ces secrets sont absents, le collecteur ignore simplement cette source (message dans les logs). Les départements interrogés sont configurables dans `sources.json` (`franceTravail.departements`, par défaut 75 et 93).
+Connecteur officiel déjà présent. Il utilise les secrets `FT_CLIENT_ID` et `FT_CLIENT_SECRET`; les départements et métiers interrogés sont réglables dans `sources.json`. L’absence des secrets désactive cette source sans interrompre les autres.
 
-### Flux RSS/Atom autorisés
-Ajoute-les dans `sources.json` → `feeds`. N'ajoute que des flux dont tu as le droit d'usage ; jamais de clé API dans ce fichier.
+### Adzuna
+
+Recherche généraliste en France pour la logistique, la mise en rayon et la vente. Elle nécessite les secrets GitHub `ADZUNA_APP_ID` et `ADZUNA_APP_KEY`. Ne les inscris jamais dans les fichiers du dépôt ni dans une conversation. Chaque offre affichée porte le crédit Adzuna demandé par ses conditions d’utilisation.
+
+### Greenhouse, Lever, SmartRecruiters et Ashby
+
+Ces API publiques donnent accès aux annonces publiées par **un employeur à la fois**. Elles ne font pas de recherche globale multi-entreprises. SmartRecruiters est déjà configuré pour les deux tableaux publics du Groupement Mousquetaires et pour Courir, avec une recherche limitée à la région Île-de-France. Les annonces passent ensuite par les filtres de métier et de contrat du collecteur. Pour les autres plateformes, aucun employeur n'est activé tant qu'un tableau public pertinent n'a pas été vérifié et ajouté à `sources.json` :
+
+- Greenhouse : `greenhouse.boards`, avec le nom de l’employeur et son identifiant de tableau.
+- Lever : `lever.sites`, avec le nom de l’employeur, son identifiant de site et, si nécessaire, la région `eu`.
+- SmartRecruiters : `smartRecruiters.companies`, avec le nom et l’identifiant de carrière.
+- Ashby : `ashby.boards`, avec le nom du tableau d’emploi et le nom d’affichage de l’entreprise.
+
+L’identifiant est la partie qui suit le domaine de la page carrière : par exemple `entreprise` dans `jobs.lever.co/entreprise`, ou `entreprise` dans `jobs.ashbyhq.com/entreprise`. Pour Greenhouse, c’est le nom après `boards.greenhouse.io/`; pour SmartRecruiters, celui après `careers.smartrecruiters.com/`.
+
+Les identifiants d’employeurs sont publics et ne sont pas des clés API. Les recherches d’entreprise sont limitées à la France et à l’Île-de-France lorsqu’elles le permettent. Les offres passent par les mêmes filtres de métier, de contrat et d’exclusion des stages que les autres.
+
+### Flux RSS/Atom
+
+Des flux autorisés peuvent être ajoutés à `feeds`. Le collecteur ne visite pas les pages de sites d’emploi et ne récupère pas d’annonces par scraping.
 
 ## Ce que fait le collecteur
 
-- **Dates normalisées** en ISO ; le site trie par date de publication et affiche « il y a X jours ».
-- **Filtre de fraîcheur** côté site : 24 h / 7 jours / 30 jours.
-- **Déduplication robuste** : clé URL (sans fragment ni `/` final) **puis** clé de contenu (poste + entreprise + lieu normalisés) — les doublons inter-sources et les URLs de tracking Jooble sont rattrapés.
-- **Département détecté** (`dept`) depuis le lieu ; le site filtre par département (75, 93, 92, 94, grande couronne…).
-- **Purge automatique** : une offre est retirée si sa publication date de plus de 45 jours **et** si elle n'a plus été revue par une source depuis 30 jours. Les statuts et dates de candidature sont toujours conservés d'une exécution à l'autre.
-- **Stages/alternances exclus** ; contrats classés CDI / CDD / Intérim / « À vérifier » (à contrôler dans l'annonce).
+- Il normalise les dates et repère le département en Île-de-France quand le lieu le permet.
+- Il déduplique par URL et par contenu (poste, entreprise et lieu).
+- Lors d’une fusion, il conserve le statut et les dates de candidature déjà enregistrés.
+- Il retire une annonce publiée depuis plus de 45 jours seulement si elle n’a pas été revue depuis plus de 30 jours. Une annonce sans date connue est retirée uniquement si elle n’a pas été revue depuis plus de 30 jours.
+- Il exclut les stages et l’alternance, et garde les contrats indéterminés avec le statut « À vérifier ».
 
-## Suivi des candidatures
+Le site garde également les notes, statuts et dates de candidature dans le navigateur. Pense à exporter une sauvegarde régulièrement.
 
-Les statuts, notes et dates de candidature sont enregistrés dans ton navigateur (`localStorage`) et fusionnés avec les offres collectées à chaque visite. **Exporte une sauvegarde JSON régulièrement** (onglet *Export & alertes*) ; le site te le rappelle tous les 30 jours. Si tu modifies les notes d'une offre collectée, ta version est conservée.
+## Lancer la collecte
 
-## Tester le collecteur en local
+Dans GitHub, ouvre **Actions → Collecte des offres → Run workflow**. Le workflow tourne aussi automatiquement toutes les 6 heures. Sans secrets, les connecteurs qui en ont besoin sont ignorés et les connecteurs d’entreprise sans identifiant ne font aucun appel.
 
-Avec Python 3.11+ :
+## Limites
 
-```bash
-python collect.py
-```
+- Adzuna demande des identifiants et impose un crédit visible pour chaque annonce affichée.
+- Greenhouse, Lever et Ashby restent inactifs faute d'employeurs pertinents configurés. SmartRecruiters est actif pour les tableaux Groupement Mousquetaires et Courir.
+- La Bonne Alternance est une API réelle, mais elle ne fournit que des offres en alternance. Elle n’est pas ajoutée au collecteur puisque ce site exclut actuellement l’alternance.
+- Les pages GitHub Actions planifiées peuvent être retardées; un workflow inactif peut nécessiter un lancement manuel.
 
-Sans secrets, Jooble et France Travail sont ignorés ; le fichier `offres.json` est simplement consolidé (fusion + purge).
+## Documentation officielle
 
-## Limites connues
-
-- GitHub peut retarder les déclenchements planifiés ; les workflows inactifs 60 jours peuvent être désactivés (relance-les via **Run workflow**).
-- Les flux RSS ne fournissent que les champs publiés par leur éditeur (date ou lieu parfois absents).
-- GitHub Pages est statique : aucun serveur, aucune base de données. Suffisant pour un usage personnel.
-- Vérifie toujours le lien, le contrat et la date d'une annonce avant de postuler.
+- [Adzuna — recherche](https://developer.adzuna.com/docs/search) et [conditions d’utilisation](https://developer.adzuna.com/docs/terms_of_service)
+- [Greenhouse — Job Board API](https://docs.greenhouse.io/job-board.html)
+- [Lever — Postings API](https://github.com/lever/postings-api)
+- [SmartRecruiters — API publique des annonces](https://developers.smartrecruiters.com/docs/endpoints)
+- [Ashby — Job Postings API](https://developers.ashbyhq.com/docs/public-job-posting-api)
+- [France Travail — portail développeurs](https://francetravail.io)
+- [La Bonne Alternance — API](https://api.apprentissage.beta.gouv.fr/fr/explorer)
