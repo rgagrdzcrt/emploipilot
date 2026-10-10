@@ -46,7 +46,7 @@ function isStoreDistributionOffer(o){
  const storeContext=/(boutique|magasin|pointdevente|pretaporter|mode|textile|multimedia|hightech|informatique|telephonie|electronique|electromenager|sport|chaussure|optique|bijouterie|parfumerie|cosmetique|ameublement|decoration|grandmagasin)/.test(title);
  const sellerRole=/vendeur|vendeuse/.test(title);
  const retailRole=directRetailRole||sellerRole;
- return retailRole&&(retailEmployer||storeContext);
+ return directRetailRole||(sellerRole&&(retailEmployer||storeContext));
 }
 
 function categoryOf(o){
