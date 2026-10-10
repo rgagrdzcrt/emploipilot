@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Collecter les flux autorisés
-        run: python scripts/collect.py
+        run: python collect.py
       - name: Enregistrer les changements
         run: |
           git config user.name "github-actions[bot]"
