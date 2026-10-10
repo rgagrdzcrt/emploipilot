@@ -18,10 +18,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-       
+
       - name: Collecter les flux autorisés
         env:
           JOOBLE_API_KEY: ${{ secrets.JOOBLE_API_KEY }}
+          FT_CLIENT_ID: ${{ secrets.FT_CLIENT_ID }}
+          FT_CLIENT_SECRET: ${{ secrets.FT_CLIENT_SECRET }}
         run: python collect.py
 
       - name: Enregistrer les changements
@@ -34,4 +36,3 @@ jobs:
             git push
           else
             echo "Aucun changement à enregistrer."
-          fi
