@@ -1,81 +1,59 @@
-# EmploiPilot — kit de démarrage gratuit
+# EmploiPilot — recherche d'emploi (logistique, rayon, vente)
 
-Ce kit prépare une architecture gratuite au maximum : site statique (GitHub Pages), collecte planifiée (GitHub Actions) et fichier JSON versionné pour mémoriser les annonces et éviter les doublons.
+Outil personnel : site statique (GitHub Pages), collecte planifiée toutes les 6 heures (GitHub Actions), offres stockées dans `offres.json` (versionné) pour mémoriser les annonces, éviter les doublons et conserver le suivi des candidatures. Les candidatures restent **100 % manuelles** — rien n'est jamais envoyé automatiquement.
 
-## Important : ce qui fonctionne / ce qui ne fonctionne pas encore
+## Architecture
 
-- `index.html` est le prototype EmploiPilot. En ligne, il peut importer `data/offres.json`.
-- Le collecteur sait lire les flux RSS/Atom que vous êtes autorisé à utiliser, dédupliquer les URL et classer les offres.
-- Le workflow peut tourner toutes les six heures et publier le JSON mis à jour.
-- **Aucune source n'est préconnectée dans ce kit.** Le fichier `sources.json` est volontairement vide. Il faut ajouter des flux/API autorisés.
-- Indeed, HelloWork, JobiJoba et FashionJobs ne proposent pas nécessairement un accès candidat universel à leurs données. N'utilisez que les API/flux auxquels vous avez accès et respectez leurs conditions. Le connecteur de recherche Indeed disponible dans ChatGPT n'est pas une clé API pour ce site.
-- Sans accès officiel à un flux ou une API, le collecteur ne peut pas aspirer automatiquement les pages protégées. Le kit ne contourne pas les protections anti-robot.
-- Le suivi de candidature du prototype est conservé dans le navigateur (`localStorage`), pas dans le JSON distant. Exportez régulièrement une sauvegarde depuis EmploiPilot.
+| Fichier | Rôle |
+|---|---|
+| `index.html` | Site complet (dashboard, filtres, suivi des candidatures, export). |
+| `collect.py` | Collecteur : Jooble, API France Travail, flux RSS/Atom autorisés. |
+| `sources.json` | Configuration des sources (requêtes Jooble, France Travail, flux RSS). |
+| `.github/workflows/collect.yml` | Cron toutes les 6 h + lancement manuel (**Run workflow**). |
+| `offres.json` | Base d'offres versionnée, écrite par le collecteur. |
 
-## Étapes à effectuer
+## Sources d'offres
 
-### 1. Créer un compte GitHub
+### Jooble (déjà actif)
+Clé API dans le secret GitHub `JOOBLE_API_KEY`. Depuis `sources.json`, la collecte est découpée en **une requête par métier** (stock-logistique, rayon, vente) pour une meilleure couverture ; tu peux ajuster mots-clés, zone, rayon ou désactiver une requête avec `"enabled": false`.
 
-1. Allez sur https://github.com/ et créez un compte gratuit si nécessaire.
-2. Créez un nouveau dépôt nommé `emploipilot`. Pour une mise en route simple, choisissez **Public** (le code et les offres collectées seront publics). Si vous ne souhaitez pas rendre ces données publiques, choisissez Private, mais vérifiez les quotas GitHub Pages et Actions de votre compte avant de compter sur une utilisation gratuite.
-3. Décompressez ce kit sur votre ordinateur, puis importez tous les fichiers dans le dépôt. Vous pouvez utiliser l'interface GitHub « Add file » ou GitHub Desktop.
+### API France Travail (nouveau, à activer)
+Source officielle et gratuite : https://francetravail.io — crée une application avec le produit **« Offres d'emploi v2 »**, puis enregistre deux secrets dans **Settings → Secrets and variables → Actions** :
 
-### 2. Activer le site
+- `FT_CLIENT_ID`
+- `FT_CLIENT_SECRET`
 
-Dans le dépôt GitHub : **Settings → Pages → Build and deployment → Deploy from a branch**, choisissez `main` et `/ (root)`, puis Save. Attendez que GitHub affiche l'URL du site. La page est consultable en ligne à cette URL.
+Tant que ces secrets sont absents, le collecteur ignore simplement cette source (message dans les logs). Les départements interrogés sont configurables dans `sources.json` (`franceTravail.departements`, par défaut 75 et 93).
 
-### 3. Configurer les sources autorisées
+### Flux RSS/Atom autorisés
+Ajoute-les dans `sources.json` → `feeds`. N'ajoute que des flux dont tu as le droit d'usage ; jamais de clé API dans ce fichier.
 
-Éditez `sources.json`. Pour chaque source, ajoutez un flux RSS/Atom public ou une API dont vous avez obtenu l'autorisation. Exemple de structure :
+## Ce que fait le collecteur
 
-```json
-{
-  "feeds": [
-    {
-      "name": "Flux partenaire autorisé",
-      "url": "https://EXEMPLE-AUTORISE/flux.xml",
-      "enabled": true
-    }
-  ]
-}
-```
+- **Dates normalisées** en ISO ; le site trie par date de publication et affiche « il y a X jours ».
+- **Filtre de fraîcheur** côté site : 24 h / 7 jours / 30 jours.
+- **Déduplication robuste** : clé URL (sans fragment ni `/` final) **puis** clé de contenu (poste + entreprise + lieu normalisés) — les doublons inter-sources et les URLs de tracking Jooble sont rattrapés.
+- **Département détecté** (`dept`) depuis le lieu ; le site filtre par département (75, 93, 92, 94, grande couronne…).
+- **Purge automatique** : une offre est retirée si sa publication date de plus de 45 jours **et** si elle n'a plus été revue par une source depuis 30 jours. Les statuts et dates de candidature sont toujours conservés d'une exécution à l'autre.
+- **Stages/alternances exclus** ; contrats classés CDI / CDD / Intérim / « À vérifier » (à contrôler dans l'annonce).
 
-Remplacez impérativement l'URL d'exemple par une URL réelle autorisée. Ne mettez jamais de clé API dans ce fichier. Si une API exige un secret, il faut ajouter un connecteur spécifique au script et enregistrer la clé dans **Settings → Secrets and variables → Actions**. Ne partagez pas vos mots de passe de sites d'emploi.
+## Suivi des candidatures
 
-Pour JobiJoba, demandez l'accès via son programme officiel d'intégration/affiliation : https://www.jobijoba.com/fr/affiliation-offres-emploi . Pour les autres sites, vérifiez directement s'ils vous accordent un flux ou un accès API. N'activez pas de collecte robotisée d'un site qui l'interdit.
+Les statuts, notes et dates de candidature sont enregistrés dans ton navigateur (`localStorage`) et fusionnés avec les offres collectées à chaque visite. **Exporte une sauvegarde JSON régulièrement** (onglet *Export & alertes*) ; le site te le rappelle tous les 30 jours. Si tu modifies les notes d'une offre collectée, ta version est conservée.
 
-### 4. Tester manuellement le collecteur
+## Tester le collecteur en local
 
-Sur votre ordinateur, avec Python 3.11 ou plus récent :
+Avec Python 3.11+ :
 
 ```bash
-python scripts/collect.py
+python collect.py
 ```
 
-Le script écrit `data/offres.json`. Avec `sources.json` vide, le résultat sera simplement une liste vide.
+Sans secrets, Jooble et France Travail sont ignorés ; le fichier `offres.json` est simplement consolidé (fusion + purge).
 
-### 5. Activer la veille toutes les six heures
+## Limites connues
 
-Dans GitHub, ouvrez **Actions** et activez les workflows si demandé. Le workflow `Collecte des offres` s'exécute à 00 h, 06 h, 12 h et 18 h UTC, et peut être lancé manuellement avec **Run workflow**. Les horaires peuvent être décalés par rapport à l'heure française en été/hiver ; GitHub peut aussi retarder les déclenchements planifiés.
-
-### 6. Vérifier les résultats
-
-Après une exécution réussie, ouvrez `data/offres.json` dans le dépôt. Les annonces importées depuis ce fichier apparaîtront sur le site hébergé. Vérifiez toujours le lien et les critères de contrat avant de postuler.
-
-## Catégories et critères
-
-- `stock` : stock, logistique, magasinier, préparation de commandes, approvisionnement.
-- `rayon` : mise en rayon, employé libre-service, réassort, grande distribution.
-- `vente` : vente en boutique, prêt-à-porter, conseiller de vente.
-- `interim` : missions d'intérim, conservées dans une catégorie séparée.
-
-Le collecteur écarte les stages et l'alternance. Il ne garde que les contrats qu'il peut identifier de façon raisonnable comme CDI, CDD ou intérim ; les offres au contrat indéterminé sont mises de côté pour éviter de présenter un type de contrat inventé. Les classifications automatiques restent imparfaites : vérifiez l'annonce d'origine.
-
-## Limites gratuites
-
-- GitHub Actions offre un quota gratuit mensuel selon le type de dépôt et le compte ; les quotas peuvent changer. Les dépôts publics bénéficient généralement d'un usage gratuit des exécuteurs standards, sous réserve des politiques GitHub.
-- GitHub Pages héberge un site statique ; il ne fournit pas un serveur Python permanent.
-- Ce kit stocke les résultats dans Git, sans base de données distincte. C'est suffisant pour un prototype personnel de petite taille, mais moins adapté à plusieurs utilisateurs ou à des données sensibles.
-- Les flux RSS ne donnent que les champs fournis par leur éditeur. Ils peuvent manquer la date, la localisation ou le type de contrat.
-- Les liens peuvent expirer et les sites peuvent modifier leurs flux/API.
-- La fréquence « toutes les six heures » est une demande de planification, pas une garantie d'exécution à la minute près.
+- GitHub peut retarder les déclenchements planifiés ; les workflows inactifs 60 jours peuvent être désactivés (relance-les via **Run workflow**).
+- Les flux RSS ne fournissent que les champs publiés par leur éditeur (date ou lieu parfois absents).
+- GitHub Pages est statique : aucun serveur, aucune base de données. Suffisant pour un usage personnel.
+- Vérifie toujours le lien, le contrat et la date d'une annonce avant de postuler.

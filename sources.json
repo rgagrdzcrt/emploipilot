@@ -1,3 +1,53 @@
 {
-  "feeds": []
+  "feeds": [],
+  "joobleQueries": [
+    {
+      "name": "stock-logistique",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "magasinier, stockiste, gestionnaire de stock, logistique, préparateur de commandes, approvisionnement",
+      "location": "Île-de-France",
+      "radius": "80"
+    },
+    {
+      "name": "rayon",
+      "enabled": true,
+      "category": "rayon",
+      "keywords": "mise en rayon, employé libre-service, rayoniste, employé de rayon, réassort",
+      "location": "Île-de-France",
+      "radius": "80"
+    },
+    {
+      "name": "vente",
+      "enabled": true,
+      "category": "vente",
+      "keywords": "vendeur, vendeuse, conseiller de vente, prêt-à-porter, boutique",
+      "location": "Île-de-France",
+      "radius": "80"
+    }
+  ],
+  "franceTravail": {
+    "enabled": true,
+    "departements": ["75", "93"],
+    "queries": [
+      {
+        "name": "stock-logistique",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "magasinier, gestionnaire de stock, logistique, préparateur de commandes"
+      },
+      {
+        "name": "rayon",
+        "enabled": true,
+        "category": "rayon",
+        "keywords": "mise en rayon, employé libre-service, rayoniste"
+      },
+      {
+        "name": "vente",
+        "enabled": true,
+        "category": "vente",
+        "keywords": "vendeur, conseiller de vente, prêt-à-porter"
+      }
+    ]
+  }
 }
