@@ -53,7 +53,8 @@
   "adzuna": {
     "enabled": true,
     "country": "fr",
-    "location": "Île-de-France",
+    "location": "Paris",
+    "distance": 80,
     "resultsPerPage": 50,
     "queries": [
       {
@@ -103,7 +104,7 @@
     ]
   },
   "workopia": {
-    "enabled": true,
+    "enabled": false,
     "queries": [
       {
         "name": "stock-logistique",
