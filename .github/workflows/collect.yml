@@ -18,8 +18,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+       
       - name: Collecter les flux autorisés
+        env:
+          JOOBLE_API_KEY: ${{ secrets.JOOBLE_API_KEY }}
         run: python collect.py
+
       - name: Enregistrer les changements
         run: |
           git config user.name "github-actions[bot]"
