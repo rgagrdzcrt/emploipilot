@@ -488,6 +488,387 @@ def api_json(url, label, timeout=30):
         raise
 
 
+MCP_PROTOCOL_VERSION = "2025-03-26"
+JOBLET_MCP_URL = "https://joblet-grok.joveo.com/mcp"
+WORKOPIA_MCP_URL = "https://workopia.io/api/mcp-jobs"
+WORKOPIA_TOKEN_URL = "https://workopia.io/api/oauth/token"
+
+
+def _mcp_post(endpoint, payload, token="", session_id="", protocol_version=""):
+    """Envoie un message JSON-RPC MCP et accepte les réponses JSON ou SSE."""
+    headers = {
+        "User-Agent": UA,
+        "Content-Type": "application/json",
+        "Accept": "application/json, text/event-stream",
+    }
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    if session_id:
+        headers["Mcp-Session-Id"] = session_id
+    if protocol_version:
+        headers["MCP-Protocol-Version"] = protocol_version
+
+    request = Request(
+        endpoint,
+        data=json.dumps(payload).encode("utf-8"),
+        headers=headers,
+        method="POST",
+    )
+    try:
+        with urlopen(request, timeout=40) as response:
+            raw = response.read().decode("utf-8", errors="replace")
+            response_session = response.headers.get("Mcp-Session-Id", session_id)
+            content_type = response.headers.get("Content-Type", "")
+    except HTTPError as exc:
+        # Ne jamais imprimer le corps d'erreur : il pourrait contenir des
+        # détails d'authentification ou des données de compte.
+        raise RuntimeError(f"réponse HTTP {exc.code}") from None
+    except (URLError, TimeoutError) as exc:
+        raise RuntimeError(f"connexion impossible ({type(exc).__name__})") from None
+
+    if not raw.strip():
+        return {}, response_session
+
+    if "text/event-stream" in content_type.lower():
+        messages = []
+        for line in raw.splitlines():
+            if not line.startswith("data:"):
+                continue
+            value = line[5:].strip()
+            if not value or value == "[DONE]":
+                continue
+            try:
+                messages.append(json.loads(value))
+            except json.JSONDecodeError:
+                continue
+        if not messages:
+            raise RuntimeError("réponse MCP SSE illisible")
+        # Les notifications peuvent accompagner la réponse; prendre le
+        # dernier message JSON-RPC qui porte un identifiant.
+        parsed = next(
+            (message for message in reversed(messages) if "id" in message),
+            messages[-1],
+        )
+    else:
+        try:
+            parsed = json.loads(raw)
+        except json.JSONDecodeError as exc:
+            raise RuntimeError("réponse MCP JSON illisible") from exc
+
+    if not isinstance(parsed, dict):
+        raise RuntimeError("réponse MCP inattendue")
+    return parsed, response_session
+
+
+def mcp_tool_call(endpoint, tool_name, arguments, token=""):
+    """Initialise une session MCP puis appelle un outil en lecture seule."""
+    initialize = {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+            "protocolVersion": MCP_PROTOCOL_VERSION,
+            "capabilities": {},
+            "clientInfo": {"name": "zcrt-job-collector", "version": "1.0.0"},
+        },
+    }
+    response, session_id = _mcp_post(endpoint, initialize, token=token)
+    if response.get("error"):
+        raise RuntimeError("initialisation MCP refusée")
+    negotiated = (response.get("result") or {}).get(
+        "protocolVersion", MCP_PROTOCOL_VERSION
+    )
+
+    initialized = {"jsonrpc": "2.0", "method": "notifications/initialized"}
+    _, session_id = _mcp_post(
+        endpoint,
+        initialized,
+        token=token,
+        session_id=session_id,
+        protocol_version=negotiated,
+    )
+
+    call = {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "tools/call",
+        "params": {"name": tool_name, "arguments": arguments},
+    }
+    response, _ = _mcp_post(
+        endpoint,
+        call,
+        token=token,
+        session_id=session_id,
+        protocol_version=negotiated,
+    )
+    if response.get("error"):
+        raise RuntimeError("appel de l'outil MCP refusé")
+    result = response.get("result") or {}
+    if result.get("isError"):
+        raise RuntimeError("l'outil MCP a signalé une erreur")
+    return result
+
+
+def _mcp_job_rows(result):
+    """Extrait les annonces des formes MCP structurées ou textuelles usuelles."""
+    candidates = [result]
+    structured = result.get("structuredContent")
+    if isinstance(structured, dict):
+        candidates.insert(0, structured)
+
+    def rows_from(value, depth=0):
+        if depth > 4:
+            return []
+        if isinstance(value, list):
+            if value and all(
+                isinstance(item, dict)
+                and any(key in item for key in ("title", "job_title", "jobTitle", "card", "job", "offer"))
+                for item in value
+            ):
+                return value
+            for item in value:
+                found = rows_from(item, depth + 1)
+                if found:
+                    return found
+            return []
+        if not isinstance(value, dict):
+            return []
+        for key in ("jobs", "items", "job_cards", "results", "offers", "data"):
+            nested = value.get(key)
+            found = rows_from(nested, depth + 1)
+            if found:
+                return found
+        for key, nested in value.items():
+            if key == "content":
+                continue
+            if isinstance(nested, (dict, list)):
+                found = rows_from(nested, depth + 1)
+                if found:
+                    return found
+        return []
+
+    for candidate in candidates:
+        rows = rows_from(candidate)
+        if rows:
+            return rows
+
+    for block in result.get("content", []):
+        if not isinstance(block, dict) or block.get("type") != "text":
+            continue
+        try:
+            decoded = json.loads(block.get("text", ""))
+        except (json.JSONDecodeError, TypeError):
+            continue
+        rows = rows_from(decoded)
+        if rows:
+            return rows
+    return []
+
+
+def _unwrap_job_row(row):
+    """Déplie les cartes d'annonce renvoyées par certains serveurs MCP."""
+    if not isinstance(row, dict):
+        return {}
+    for key in ("card", "job", "offer"):
+        if isinstance(row.get(key), dict):
+            return row[key]
+    return row
+
+
+def _is_france_idf_location(location):
+    """Refuse les homonymes étrangers, notamment les nombreux « Paris » US."""
+    raw = str(location or "").strip()
+    normalized = norm_text(raw)
+    if not raw:
+        return False
+    if any(marker in normalized for marker in (
+        "unitedstates", "usa", "virginia", "tennessee", "mississippi",
+        "kentucky", "maine", "ohio", "michigan", "california", "texas",
+        "florida", "newyork", "canada", "india", "australia", "unitedkingdom",
+    )):
+        return False
+    if "france" in normalized or "iledefrance" in normalized or "idf" in normalized:
+        return True
+    if re.search(r"\bFR\s*$", raw, re.I):
+        return True
+    if re.search(r"\b(?:75|77|78|91|92|93|94|95)\d{3}\b", raw):
+        return True
+    # Un nom de ville seul ne suffit pas : le serveur doit préciser un indice
+    # français pour éviter de publier une annonce d'un homonyme étranger.
+    return False
+
+
+def _row_value(row, *keys):
+    for key in keys:
+        value = row.get(key)
+        if value is not None and str(value).strip():
+            return value
+    return ""
+
+
+def _fetch_mcp_search(endpoint, tool_name, arguments, source, category, token=""):
+    """Mappe une réponse MCP de recherche vers le format commun du site."""
+    result = mcp_tool_call(endpoint, tool_name, arguments, token=token)
+    offers = []
+    for raw_row in _mcp_job_rows(result):
+        row = _unwrap_job_row(raw_row)
+        title = _row_value(row, "title", "job_title", "jobTitle", "position")
+        company = _row_value(row, "company", "company_name", "companyName", "employer")
+        location = _row_value(row, "location", "city", "location_name", "locationName")
+        text = _row_value(row, "summary", "description", "snippet", "job_description")
+        url = _row_value(
+            row, "apply_url", "applyUrl", "apply_link", "applyLink",
+            "url", "jobletUrl", "job_url", "jobUrl",
+        )
+        if not _is_france_idf_location(location):
+            continue
+        # Les recherches d'emploi peuvent renvoyer des catégories voisines.
+        # On ne garde que les annonces dont le titre/texte confirme le métier.
+        if classify_category(f"{title} {text}") != category:
+            continue
+        offer = make_offer(
+            title=str(title),
+            company=str(company),
+            location=str(location),
+            text=str(text),
+            url=str(url).strip(),
+            date=_row_value(row, "posted_date", "postedDate", "date", "posted_at", "postedAt"),
+            source=source,
+            category=category,
+        )
+        if not offer:
+            continue
+        # Ne republie pas les descriptions longues du fournisseur : le site ne
+        # garde que les champs utiles et renvoie vers l'annonce d'origine.
+        offer["notes"] = "Ouvre le lien de candidature pour vérifier les détails."
+        remote_id = _row_value(row, "id", "job_id", "jobId")
+        if remote_id:
+            safe_id = re.sub(r"[^a-zA-Z0-9_-]", "", str(remote_id))[:80]
+            if safe_id:
+                offer["id"] = f"{source.lower()}_{safe_id}"
+        employment_type = _row_value(row, "employment_type", "employmentType", "type")
+        salary = _row_value(row, "salary")
+        extras = []
+        if employment_type:
+            extras.append("Type indiqué : " + str(employment_type))
+        if salary:
+            extras.append("Salaire indiqué : " + str(salary))
+        if extras:
+            offer["notes"] = (offer["notes"] + "\n" + " | ".join(extras)).strip()
+        offers.append(offer)
+    return offers
+
+
+def fetch_joblet(cfg):
+    """Recherche Joblet via son connecteur MCP public, sans clé ni scraping."""
+    if not cfg.get("enabled", True):
+        return []
+    queries = cfg.get("queries") or []
+    offers = []
+    for query in queries:
+        if not query.get("enabled", True) or not query.get("keywords"):
+            continue
+        category = query.get("category")
+        if category not in CATEGORIES:
+            continue
+        arguments = {
+            "query": str(query["keywords"]),
+            "location": str(query.get("location") or "Île-de-France, France"),
+        }
+        try:
+            found = _fetch_mcp_search(
+                JOBLET_MCP_URL,
+                "search_jobs",
+                arguments,
+                "Joblet",
+                category,
+            )
+            offers.extend(found)
+            print(f"Joblet [{query.get('name', '?')}] : {len(found)} offres France/IDF pertinentes.")
+        except Exception as exc:
+            print(f"Joblet [{query.get('name', '?')}] : source ignorée ({type(exc).__name__}).")
+        time.sleep(1)
+    return offers
+
+
+def workopia_access_token():
+    """Échange un refresh token OAuth stocké dans les secrets GitHub."""
+    client_id = os.environ.get("WORKOPIA_CLIENT_ID", "").strip()
+    refresh_token = os.environ.get("WORKOPIA_REFRESH_TOKEN", "").strip()
+    if not client_id or not refresh_token:
+        print("Workopia ignoré : secrets OAuth WORKOPIA_CLIENT_ID / WORKOPIA_REFRESH_TOKEN absents.")
+        return ""
+    body = urlencode({
+        "grant_type": "refresh_token",
+        "client_id": client_id,
+        "refresh_token": refresh_token,
+    }).encode("utf-8")
+    request = Request(
+        WORKOPIA_TOKEN_URL,
+        data=body,
+        headers={
+            "User-Agent": UA,
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        token_data = http_json(request, timeout=30)
+    except HTTPError as exc:
+        print(f"Workopia : renouvellement OAuth refusé (HTTP {exc.code}).")
+        return ""
+    except (URLError, TimeoutError, ValueError) as exc:
+        print(f"Workopia : renouvellement impossible ({type(exc).__name__}).")
+        return ""
+    access_token = str(token_data.get("access_token") or "").strip()
+    new_refresh_token = str(token_data.get("refresh_token") or "").strip()
+    if new_refresh_token and new_refresh_token != refresh_token:
+        print("Workopia a renouvelé le jeton durable ; actualisez le secret GitHub WORKOPIA_REFRESH_TOKEN après cette collecte.")
+    if not access_token:
+        print("Workopia : réponse OAuth sans jeton d'accès.")
+    return access_token
+
+
+def fetch_workopia(cfg):
+    """Recherche Workopia via MCP, avec OAuth conservé uniquement en mémoire."""
+    if not cfg.get("enabled", True):
+        return []
+    token = workopia_access_token()
+    if not token:
+        return []
+    queries = cfg.get("queries") or []
+    offers = []
+    for query in queries:
+        if not query.get("enabled", True) or not query.get("keywords"):
+            continue
+        category = query.get("category")
+        if category not in CATEGORIES:
+            continue
+        arguments = {
+            "action": "search",
+            "search_jobs": {
+                "job_title": str(query["keywords"]),
+                "city": str(query.get("city") or "Paris, France"),
+            },
+        }
+        try:
+            found = _fetch_mcp_search(
+                WORKOPIA_MCP_URL,
+                "job_tool",
+                arguments,
+                "Workopia",
+                category,
+                token=token,
+            )
+            offers.extend(found)
+            print(f"Workopia [{query.get('name', '?')}] : {len(found)} offres France/IDF pertinentes.")
+        except Exception as exc:
+            print(f"Workopia [{query.get('name', '?')}] : source ignorée ({type(exc).__name__}).")
+        time.sleep(1)
+    return offers
+
+
 def fetch_adzuna(cfg):
     """Recherche généraliste Adzuna France (app_id/app_key dans les secrets)."""
     if not cfg.get("enabled", True):
@@ -935,6 +1316,18 @@ def main():
         fresh.extend(fetch_adzuna(config.get("adzuna") or {}))
     except Exception as exc:
         errors.append({"source": "Adzuna", "error": type(exc).__name__})
+
+    # Joblet est un connecteur MCP public en lecture seule, sans clé API.
+    try:
+        fresh.extend(fetch_joblet(config.get("joblet") or {}))
+    except Exception as exc:
+        errors.append({"source": "Joblet", "error": type(exc).__name__})
+
+    # Workopia est un connecteur MCP OAuth ; ses jetons restent dans les secrets.
+    try:
+        fresh.extend(fetch_workopia(config.get("workopia") or {}))
+    except Exception as exc:
+        errors.append({"source": "Workopia", "error": type(exc).__name__})
 
     # Les quatre API ATS ci-dessous sont publiques en lecture, mais chaque
     # employeur doit avoir un identifiant de tableau configuré dans sources.json.

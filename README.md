@@ -26,6 +26,14 @@ Connecteur officiel déjà présent. Il utilise les secrets `FT_CLIENT_ID` et `F
 
 Recherche généraliste en France pour la logistique, la mise en rayon et la vente. Elle nécessite les secrets GitHub `ADZUNA_APP_ID` et `ADZUNA_APP_KEY`. Ne les inscris jamais dans les fichiers du dépôt ni dans une conversation. Chaque offre affichée porte le crédit Adzuna demandé par ses conditions d’utilisation.
 
+### Joblet
+
+Connecteur MCP officiel en lecture seule, appelé par le collecteur toutes les 6 heures. Il ne demande ni compte ni clé API. Les recherches couvrent le stock et les rayons en Île-de-France, ainsi que la vente à Paris. Le collecteur ne conserve que les annonces dont le métier correspond à la requête et dont le lieu indique clairement la France ou l’Île-de-France ; cela écarte les homonymes étrangers comme Paris, en Virginie. Seuls les champs utiles sont enregistrés (pas la description complète), avec un lien vers l’annonce d’origine.
+
+### Workopia
+
+Connecteur MCP officiel, avec recherche en France et liens vers les annonces. Workopia exige une autorisation OAuth : ce n’est pas une clé API et la connexion du plugin ChatGPT ne peut pas être réutilisée dans GitHub Actions. Pour l’activer dans le collecteur, il faut configurer les secrets GitHub `WORKOPIA_CLIENT_ID` et `WORKOPIA_REFRESH_TOKEN`. Si ces secrets sont absents ou expirés, le collecteur ignore Workopia sans interrompre les autres sources. Les jetons ne sont jamais écrits dans `offres.json` ni affichés dans les journaux ; si Workopia fait tourner le jeton de renouvellement, le secret GitHub devra être actualisé. Seuls les champs utiles de l’annonce sont conservés, avec son lien d’origine.
+
 ### Greenhouse, Lever, SmartRecruiters et Ashby
 
 Ces API publiques donnent accès aux annonces publiées par **un employeur à la fois**. Elles ne font pas de recherche globale multi-entreprises. SmartRecruiters est déjà configuré pour les deux tableaux publics du Groupement Mousquetaires et pour Courir, avec une recherche limitée à la région Île-de-France. Les annonces passent ensuite par les filtres de métier et de contrat du collecteur. Pour les autres plateformes, aucun employeur n'est activé tant qu'un tableau public pertinent n'a pas été vérifié et ajouté à `sources.json` :
@@ -60,6 +68,8 @@ Dans GitHub, ouvre **Actions → Collecte des offres → Run workflow**. Le work
 ## Limites
 
 - Adzuna demande des identifiants et impose un crédit visible pour chaque annonce affichée.
+- Joblet est une recherche publique sans clé ; ses résultats ont un filtrage strict de la catégorie et du lieu avant ajout.
+- Workopia demande un renouvellement OAuth durable. Il est ignoré tant que les deux secrets dédiés ne sont pas configurés.
 - Greenhouse, Lever et Ashby restent inactifs faute d'employeurs pertinents configurés. SmartRecruiters est actif pour les tableaux Groupement Mousquetaires et Courir.
 - La Bonne Alternance est une API réelle, mais elle ne fournit que des offres en alternance. Elle n’est pas ajoutée au collecteur puisque ce site exclut actuellement l’alternance.
 - Les pages GitHub Actions planifiées peuvent être retardées; un workflow inactif peut nécessiter un lancement manuel.
@@ -72,4 +82,6 @@ Dans GitHub, ouvre **Actions → Collecte des offres → Run workflow**. Le work
 - [SmartRecruiters — API publique des annonces](https://developers.smartrecruiters.com/docs/endpoints)
 - [Ashby — Job Postings API](https://developers.ashbyhq.com/docs/public-job-posting-api)
 - [France Travail — portail développeurs](https://francetravail.io)
+- [Joblet — connecteur MCP officiel](https://joblet.ai/grok-connector)
+- [Workopia — serveur MCP officiel et OAuth](https://github.com/workopia/workopia-mcp)
 - [La Bonne Alternance — API](https://api.apprentissage.beta.gouv.fr/fr/explorer)

@@ -76,6 +76,58 @@
       }
     ]
   },
+  "joblet": {
+    "enabled": true,
+    "queries": [
+      {
+        "name": "stock-logistique",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "magasinier gestionnaire de stock",
+        "location": "Île-de-France, France"
+      },
+      {
+        "name": "rayon",
+        "enabled": true,
+        "category": "rayon",
+        "keywords": "mise en rayon employé libre-service",
+        "location": "Île-de-France, France"
+      },
+      {
+        "name": "vente",
+        "enabled": true,
+        "category": "vente",
+        "keywords": "vendeur en boutique conseiller de vente",
+        "location": "Paris, France"
+      }
+    ]
+  },
+  "workopia": {
+    "enabled": true,
+    "queries": [
+      {
+        "name": "stock-logistique",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "magasinier gestionnaire de stock",
+        "city": "Paris"
+      },
+      {
+        "name": "rayon",
+        "enabled": true,
+        "category": "rayon",
+        "keywords": "mise en rayon employé libre-service",
+        "city": "Paris"
+      },
+      {
+        "name": "vente",
+        "enabled": true,
+        "category": "vente",
+        "keywords": "vendeur en boutique conseiller de vente",
+        "city": "Paris"
+      }
+    ]
+  },
   "greenhouse": {
     "enabled": true,
     "boards": []
