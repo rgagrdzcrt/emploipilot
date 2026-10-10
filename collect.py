@@ -881,7 +881,10 @@ def fetch_adzuna(cfg):
 
     queries = cfg.get("queries") or DEFAULT_ADZUNA_QUERIES
     country = quote(str(cfg.get("country") or "fr").strip().lower(), safe="")
-    location = cfg.get("location") or "Île-de-France"
+    location = cfg.get("location") or "Paris"
+    # Adzuna limite par défaut la recherche à 5 km ; le rayon configurable
+    # couvre ici l'Île-de-France autour de Paris.
+    distance = max(1, int(cfg.get("distance", 80)))
     per_page = min(max(int(cfg.get("resultsPerPage", 50)), 1), 50)
     offers = []
 
@@ -893,8 +896,11 @@ def fetch_adzuna(cfg):
                 "app_id": app_id,
                 "app_key": app_key,
                 "results_per_page": per_page,
-                "what": query["keywords"],
+                # Les termes d'une même requête sont des métiers synonymes :
+                # what_or évite de demander qu'ils apparaissent tous ensemble.
+                "what_or": query["keywords"],
                 "where": query.get("location") or location,
+                "distance": max(1, int(query.get("distance", distance))),
                 "sort_by": "date",
                 "content-type": "application/json",
             }
@@ -902,11 +908,14 @@ def fetch_adzuna(cfg):
         url = f"https://api.adzuna.com/v1/api/jobs/{country}/search/1?{params}"
         try:
             data = api_json(url, f"Adzuna [{query.get('name', '?')}]")
-        except Exception:
+        except Exception as exc:
+            print(f"Adzuna [{query.get('name', '?')}] : requête ignorée ({type(exc).__name__}).")
             continue
 
+        results = data.get("results") or []
+        api_count = data.get("count", len(results))
         count = 0
-        for job in data.get("results", []):
+        for job in results:
             location_data = job.get("location") or {}
             location_text = location_data.get("display_name") or ", ".join(
                 location_data.get("area") or []
@@ -942,7 +951,10 @@ def fetch_adzuna(cfg):
                 offer["notes"] = (offer["notes"] + "\n" + " | ".join(extra)).strip()
             offers.append(offer)
             count += 1
-        print(f"Adzuna [{query.get('name', '?')}] : {count} offres pertinentes.")
+        print(
+            f"Adzuna [{query.get('name', '?')}] : {api_count} résultats dans l’API, "
+            f"{len(results)} reçus, {count} offres retenues après filtrage."
+        )
         time.sleep(1)
     return offers
 
