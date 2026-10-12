@@ -425,42 +425,59 @@ def http_json(request, timeout=35):
         return json.loads(response.read().decode("utf-8"))
 
 
-def fetch_jooble(api_key, query):
-    endpoint = f"https://fr.jooble.org/api/{api_key}"
+# Volume par source et par recherche (annoncé par l'API, reçu, retenu),
+# écrit dans stats.json pour mesurer ce que la collecte récupère réellement.
+SOURCE_STATS = []
+
+
+def record_stats(source, query_name, announced, received, kept, pages):
+    SOURCE_STATS.append({
+        "source": source, "recherche": query_name, "annoncees": announced,
+        "recues": received, "retenues": kept, "pages": pages,
+    })
+
+
+def _jooble_page(api_key, query, page, per_page):
     payload = {
         "keywords": query.get("keywords", ""),
         "location": query.get("location", "Île-de-France"),
         "radius": str(query.get("radius", "80")),
-        "page": "1",
-        "ResultOnPage": "50",
+        "page": str(page),
+        "ResultOnPage": str(per_page),
         "companysearch": False,
     }
     req = Request(
-        endpoint,
+        f"https://fr.jooble.org/api/{api_key}",
         data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
-        headers={
-            "User-Agent": UA,
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        },
+        headers={"User-Agent": UA, "Content-Type": "application/json", "Accept": "application/json"},
         method="POST",
     )
+    return http_json(req)
 
-    try:
-        data = http_json(req)
-    except HTTPError as exc:
-        # Ne jamais afficher l'URL complète : elle contient la clé API.
-        print(f"Jooble [{query.get('name')}] : erreur HTTP {exc.code}.")
-        raise
-    except (URLError, TimeoutError, ValueError) as exc:
-        print(
-            f"Jooble [{query.get('name')}] : erreur de connexion ou réponse invalide "
-            f"({type(exc).__name__})."
-        )
-        raise
+
+def fetch_jooble(api_key, query, max_pages=1, per_page=50):
+    """Lit jusqu'à `max_pages` pages de résultats (50 offres chacune)."""
+    jobs, total, pages = [], 0, 0
+    for page in range(1, max_pages + 1):
+        try:
+            data = _jooble_page(api_key, query, page, per_page)
+        except (HTTPError, URLError, TimeoutError, ValueError) as exc:
+            # Ne jamais afficher l'URL complète : elle contient la clé API.
+            code = getattr(exc, "code", type(exc).__name__)
+            print(f"Jooble [{query.get('name')}] page {page} : erreur {code}.")
+            if page == 1:
+                raise
+            break  # quota ou incident : on garde les pages déjà lues
+        page_jobs = data.get("jobs", [])
+        total = int(data.get("totalCount") or total or 0)
+        jobs.extend(page_jobs)
+        pages = page
+        if len(page_jobs) < per_page or len(jobs) >= total:
+            break
+        time.sleep(1.5)
 
     offers = []
-    for job in data.get("jobs", []):
+    for job in jobs:
         url = (job.get("link") or "").strip()
         text = job.get("snippet") or ""
         title = job.get("title") or ""
@@ -490,7 +507,9 @@ def fetch_jooble(api_key, query):
                 offer["notes"] = (offer["notes"] + "\n" + " | ".join(extra)).strip()
             offers.append(offer)
 
-    print(f"Jooble [{query.get('name')}] : {len(offers)} offres pertinentes après filtrage.")
+    print(f"Jooble [{query.get('name')}] : {total} annoncées, {len(jobs)} reçues ({pages} page(s)), "
+          f"{len(offers)} retenues après filtrage.")
+    record_stats("Jooble", query.get("name", "?"), total, len(jobs), len(offers), pages)
     return offers
 
 
@@ -1001,34 +1020,53 @@ def fetch_adzuna(cfg):
     # couvre ici l'Île-de-France autour de Paris.
     distance = max(1, int(cfg.get("distance", 80)))
     per_page = min(max(int(cfg.get("resultsPerPage", 50)), 1), 50)
+    max_pages = max(1, int(cfg.get("maxPages", 1)))
+    # Quota gratuit Adzuna : 25 requêtes/min, 250/jour, 1 000/semaine, 2 500/mois.
+    # 4 collectes par jour → au plus ~20 requêtes par collecte.
+    budget = max(1, int(cfg.get("maxRequestsPerRun", 18)))
+    used = 0
     offers = []
 
     for query in queries:
         if not query.get("enabled", True) or not query.get("keywords"):
             continue
-        params = urlencode(
-            {
-                "app_id": app_id,
-                "app_key": app_key,
-                "results_per_page": per_page,
-                # Les termes d'une même requête sont des métiers synonymes :
-                # what_or évite de demander qu'ils apparaissent tous ensemble.
-                "what_or": query["keywords"],
-                "where": query.get("location") or location,
-                "distance": max(1, int(query.get("distance", distance))),
-                "sort_by": "date",
-                "content-type": "application/json",
-            }
-        )
-        url = f"https://api.adzuna.com/v1/api/jobs/{country}/search/1?{params}"
-        try:
-            data = api_json(url, f"Adzuna [{query.get('name', '?')}]")
-        except Exception as exc:
-            print(f"Adzuna [{query.get('name', '?')}] : requête ignorée ({type(exc).__name__}).")
-            continue
+        if used >= budget:
+            print(f"Adzuna : quota de la collecte atteint ({budget} requêtes), recherches suivantes reportées.")
+            break
+        results, api_count, pages = [], 0, 0
+        for page in range(1, max_pages + 1):
+            if used >= budget:
+                break
+            params = urlencode(
+                {
+                    "app_id": app_id,
+                    "app_key": app_key,
+                    "results_per_page": per_page,
+                    # "phrase" : expression exacte (« employé libre service ») ;
+                    # sinon métiers synonymes, dont un seul doit apparaître.
+                    **({"what_phrase": query["keywords"]} if query.get("phrase")
+                       else {"what_or": query["keywords"]}),
+                    "where": query.get("location") or location,
+                    "distance": max(1, int(query.get("distance", distance))),
+                    "sort_by": "date",
+                    "content-type": "application/json",
+                }
+            )
+            url = f"https://api.adzuna.com/v1/api/jobs/{country}/search/{page}?{params}"
+            used += 1
+            try:
+                data = api_json(url, f"Adzuna [{query.get('name', '?')}] page {page}")
+            except Exception as exc:
+                print(f"Adzuna [{query.get('name', '?')}] page {page} : requête ignorée ({type(exc).__name__}).")
+                break
+            page_results = data.get("results") or []
+            api_count = int(data.get("count") or api_count or 0)
+            results.extend(page_results)
+            pages = page
+            time.sleep(2.6)  # < 25 requêtes par minute
+            if len(page_results) < per_page or len(results) >= api_count:
+                break
 
-        results = data.get("results") or []
-        api_count = data.get("count", len(results))
         count = 0
         for job in results:
             location_data = job.get("location") or {}
@@ -1049,6 +1087,9 @@ def fetch_adzuna(cfg):
             if not offer:
                 continue
             offer["id"] = f"adz_{job.get('id') or stable_id(url)}"
+            # Contrat structuré fourni par Adzuna quand le texte ne le dit pas.
+            if offer["contract"] == "À vérifier":
+                offer["contract"] = {"permanent": "CDI", "contract": "CDD"}.get(job.get("contract_type"), "À vérifier")
             extra = []
             if job.get("contract_type"):
                 extra.append("Contrat indiqué : " + str(job["contract_type"]))
@@ -1068,9 +1109,9 @@ def fetch_adzuna(cfg):
             count += 1
         print(
             f"Adzuna [{query.get('name', '?')}] : {api_count} résultats dans l’API, "
-            f"{len(results)} reçus, {count} offres retenues après filtrage."
+            f"{len(results)} reçus ({pages} page(s)), {count} offres retenues après filtrage."
         )
-        time.sleep(1)
+        record_stats("Adzuna", query.get("name", "?"), api_count, len(results), count, pages)
     return offers
 
 
@@ -1254,7 +1295,9 @@ def fetch_smartrecruiters(cfg):
                 offers.append(offer)
                 count += 1
             time.sleep(0.25)
-        print(f"SmartRecruiters [{company_name}] : {count} offres pertinentes.")
+        print(f"SmartRecruiters [{company_name}] : {offset} offres en IDF, {len(candidates)} du bon métier, "
+              f"{count} retenues.")
+        record_stats("SmartRecruiters", company_name, offset, len(candidates), count, 0)
         time.sleep(0.5)
     return offers
 
@@ -1569,11 +1612,12 @@ def main():
     if not api_key:
         print("Jooble ignoré : secret JOOBLE_API_KEY absent.")
     else:
+        jooble_pages = max(1, int(config.get("joobleMaxPages", 1)))
         for query in config.get("joobleQueries") or DEFAULT_JOOBLE_QUERIES:
             if not query.get("enabled", True) or not query.get("keywords"):
                 continue
             try:
-                fresh.extend(fetch_jooble(api_key, query))
+                fresh.extend(fetch_jooble(api_key, query, max_pages=jooble_pages))
                 time.sleep(2)
             except Exception as exc:
                 errors.append(
@@ -1709,6 +1753,7 @@ def main():
 
     write_offers(offers)
     save_pending_alert([item for item in new_items if item in offers])
+    write_stats(offers, new_count, removed_by_rule, now)
 
     print(f"Offres conservées : {len(offers)} (nouvelles : {new_count}, mises à jour : {updated_count})")
     print(f"Offres purgées (obsolètes) : {removed}")
@@ -1721,6 +1766,24 @@ def main():
     if not fresh:
         # Échec visible dans GitHub Actions (et notification par e-mail).
         raise SystemExit("ERREUR : aucune source n'a renvoyé d'offre lors de cette collecte.")
+
+
+STATS_FILE = ROOT / "stats.json"
+
+
+def write_stats(offers, new_count, removed_by_rule, now):
+    """Bilan de la collecte : volume par recherche et offres finales par source."""
+    by_source = {}
+    for offer in offers:
+        by_source[offer.get("source") or "?"] = by_source.get(offer.get("source") or "?", 0) + 1
+    STATS_FILE.write_text(json.dumps({
+        "collecte": now,
+        "offres_finales": len(offers),
+        "nouvelles": new_count,
+        "offres_finales_par_source": dict(sorted(by_source.items(), key=lambda kv: -kv[1])),
+        "retirees": removed_by_rule,
+        "recherches": SOURCE_STATS,
+    }, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
 PLACES_FILE = ROOT / "lieux.json"  # cache des positions et trajets, commité avec les offres
