@@ -20,13 +20,13 @@ const DEFAULT_TEMPLATES = {
 
 Madame, Monsieur,
 
-Votre offre de {poste} chez {entreprise} a retenu toute mon attention. Le travail en entrepôt ou en réserve correspond à ce que je recherche : des missions concrètes, un rythme soutenu et des résultats visibles chaque jour.
+Votre offre de {poste} chez {entreprise} a retenu toute mon attention. Avec près de 4 ans d'expérience en stock et en logistique, je souhaite mettre ma rigueur et mon savoir-faire au service de votre équipe.
 
-Réception et contrôle des marchandises, préparation des commandes, rangement et suivi des stocks : j'aborde ces tâches avec rigueur, dans le respect des procédures, des consignes de sécurité et des délais. La fiabilité et la ponctualité font partie de mes points forts, et je m'adapte rapidement à de nouveaux outils comme à une nouvelle équipe.
+Magasinier chez Darty à Paris, je réceptionnais et contrôlais chaque jour une livraison importante et j'organisais une très grande réserve, pour que chaque produit soit retrouvé rapidement. Responsable logistique au Carré Médical, j'ai ensuite piloté les stocks et les commandes fournisseurs de matériel médical et encadré une équipe de six livreurs. Plus récemment, j'ai assuré le suivi des stocks et l'expédition des commandes d'un catalogue en ligne de plus de 400 références. J'utilise au quotidien G.O.L.D, un WMS et Excel.
 
 {accroche}
 
-Je suis disponible {disponibilite} et reste à votre disposition pour un entretien.
+Disponible {disponibilite}, je serais heureux de vous rencontrer pour vous présenter ma motivation.
 
 Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
 
@@ -36,13 +36,15 @@ Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distin
 
 Madame, Monsieur,
 
-Votre offre de {poste} chez {entreprise} a retenu toute mon attention. Travailler en magasin, au contact des produits et de la clientèle, correspond à ce que je recherche.
+Votre offre de {poste} chez {entreprise} a retenu toute mon attention. Avec plus de 3 ans d'expérience en grande distribution, je connais les exigences d'un rayon bien tenu : réassort, fraîcheur, présentation et service au client.
 
-Mise en rayon, réassort, rotation des produits, contrôle des dates et des prix, rayon propre et bien présenté : j'aborde ces missions avec rigueur et efficacité, y compris aux heures de forte affluence. Je prends aussi le temps de renseigner les clients avec amabilité. La ponctualité, l'esprit d'équipe et la polyvalence font partie de mes points forts.
+J'ai commencé comme employé de rayon Fruits & Légumes chez Monoprix, avant d'en devenir chef de rayon : approvisionnements, suivi des stocks et des ventes, travail avec l'équipe au quotidien. Chez E.Leclerc, comme référent du rayon épicerie, j'ai suivi les stocks et les commandes, coordonné l'équipe pour assurer le réassort et la propreté des rayons, et mis en place les PLV et les événements commerciaux.
+
+Ponctuel, polyvalent et à l'aise en équipe, je m'adapte rapidement à l'organisation d'un nouveau magasin.
 
 {accroche}
 
-Je suis disponible {disponibilite} et reste à votre disposition pour un entretien.
+Disponible {disponibilite}, je serais heureux de vous rencontrer pour vous présenter ma motivation.
 
 Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
 
@@ -52,13 +54,15 @@ Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distin
 
 Madame, Monsieur,
 
-Votre offre de {poste} chez {entreprise} a retenu toute mon attention. La vente en magasin correspond à ce que je recherche : un métier de contact, où l'écoute et la qualité du service font la différence.
+Votre offre de {poste} chez {entreprise} a retenu toute mon attention. Diplômé d'un BTS Commerce international, j'ai plus de 3 ans d'expérience en vente, dans le multimédia comme dans la mode.
 
-Accueillir chaque client, comprendre son besoin, le conseiller et conclure la vente, tout en participant à la mise en valeur du magasin, à l'encaissement et au réassort : ce sont des missions qui me motivent. J'ai le sens du contact, le souci d'une bonne présentation et le goût du travail en équipe pour atteindre les objectifs.
+Chez Darty à Paris 19e, j'ai été conseiller de vente puis référent du pôle multimédia : découverte des besoins des clients, conseil sur les produits techniques, vente de services associés et suivi des objectifs de l'équipe. Plus récemment, chez COS à Paris 11e, j'ai accueilli et conseillé une clientèle française et internationale, mis en valeur les collections et assuré l'encaissement et la tenue de la boutique. Mon anglais bilingue est un vrai atout face à une clientèle étrangère.
+
+À l'écoute, souriant et motivé par les objectifs, j'aime le contact client et le travail en équipe.
 
 {accroche}
 
-Je suis disponible {disponibilite} et reste à votre disposition pour un entretien.
+Disponible {disponibilite}, je serais heureux de vous rencontrer pour vous présenter ma motivation.
 
 Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
 
@@ -106,9 +110,16 @@ function cityOf(o) {
 
 function fillTemplate(o) {
   const company = (!o.company || /à vérifier/i.test(o.company)) ? 'votre entreprise' : o.company;
-  const vars = { ...infosOf(), poste: cleanTitle(o.title), entreprise: company, ville: cityOf(o) };
+  let poste = cleanTitle(o.title);
+  // Minuscule en milieu de phrase, sauf sigle (« CDI », « ELS »…).
+  if (poste && !/^[A-ZÀ-Ý]{2}/.test(poste)) poste = poste.charAt(0).toLowerCase() + poste.slice(1);
+  const empty = Object.fromEntries(INFO_FIELDS.map(([k]) => [k, '']));
+  const vars = { ...empty, ...infosOf(), poste, entreprise: company, ville: cityOf(o) };
   return templatesOf()[jobCategory(o)]
+    // « poste de employé » → « poste d'employé »
+    .replace(/\bde \{poste\}/g, /^[aeiouyhàâéèêëîïôûü]/i.test(poste) ? "d'{poste}" : 'de {poste}')
     .replace(/\{(\w+)\}/g, (m, k) => (k in vars ? (vars[k] || '') : m))
+    .replace(/^[ \t]*—[ \t]*|[ \t]*—[ \t]*$/gm, '') // « tél — e-mail » avec une info vide
     .replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
@@ -185,6 +196,15 @@ function updatePilotBar() {
 
 function openPilot(mode) {
   pilot = { mode, ids: pilotList(mode).map(o => o.id), i: 0, undo: [] };
+  document.getElementById('pilot').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  drawPilot();
+}
+
+/** « Préparer » sur une offre : même fenêtre que la file, pour cette offre seule. */
+function openPilotFor(id) {
+  if (!offers.some(o => o.id === id)) return;
+  pilot = { mode: 'queue', ids: [id], i: 0, undo: [] };
   document.getElementById('pilot').classList.add('open');
   document.body.style.overflow = 'hidden';
   drawPilot();
