@@ -378,6 +378,13 @@
   "lat": 49.00776,
   "lon": 1.89578
  },
+ "herblay-sur-seine||95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Herblay-sur-Seine",
+  "lat": 49.00406,
+  "lon": 2.15245
+ },
  "houdan||78": {
   "km": 66.1,
   "label": "Houdan",
@@ -460,6 +467,13 @@
   "lon": 2.26106
  },
  "les clayes-sous-bois||78": {
+  "km": 37.9,
+  "label": "Les Clayes-sous-Bois",
+  "lat": 48.81651,
+  "lon": 1.98385
+ },
+ "les clayes-sous-bois||IDF": {
+  "dept": "78",
   "km": 37.9,
   "label": "Les Clayes-sous-Bois",
   "lat": 48.81651,
@@ -632,6 +646,13 @@
   "label": "Montgeron",
   "lat": 48.70482,
   "lon": 2.4554
+ },
+ "montmagny||IDF": {
+  "dept": "95",
+  "km": 12.4,
+  "label": "Montmagny",
+  "lat": 48.96767,
+  "lon": 2.34704
  },
  "montreuil||93": {
   "km": 5.2,
