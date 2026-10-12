@@ -32,13 +32,41 @@ MAX_AGE_DAYS = 45
 MAX_UNSEEN_DAYS = 30
 
 STAGE_RE = re.compile(
-    r"\b(stage|stagiaire|alternance|alternant|apprentissage|apprenti)\b", re.I
+    r"\b(stage|stagiaire|alternance|alternant|apprentissage|apprentie?)\b", re.I
+)
+# Dans la description, seules des formules explicites excluent l'offre : un CDI
+# peut très bien évoquer le « sens de l'apprentissage » ou un « stage d'intégration ».
+STAGE_TEXT_RE = re.compile(
+    r"contrat d['’]apprentissage|contrat de professionnalisation|contrat en alternance"
+    r"|en alternance|offre de stage|convention de stage|stage conventionn",
+    re.I,
 )
 INTERIM_RE = re.compile(r"\b(int[eé]rim|int[eé]rimaire|mission temporaire)\b", re.I)
 CDI_RE = re.compile(r"\b(CDI|contrat [àa] dur[eé]e ind[eé]termin[eé]e)\b", re.I)
 CDD_RE = re.compile(r"\b(CDD|contrat [àa] dur[eé]e d[eé]termin[eé]e)\b", re.I)
 
-CATEGORIES = {"stock", "rayon", "vente"}
+# Ordre important : un « magasinier vendeur » relève d'abord du stock.
+CATEGORY_RE = {
+    "stock": re.compile(
+        r"stock|logisti|magasinier|pr[eé]parat(?:eur|rice|ion) de commandes|approvision|cariste"
+        r"|r[eé]ceptionnaire",
+        re.I,
+    ),
+    "rayon": re.compile(
+        r"mise en rayon|employ[eé].{0,12}rayon|employ[eé]e? commercia|rayonn?iste|libre.?service"
+        r"|r[eé]assort|r[eé]serviste|grande distribution",
+        re.I,
+    ),
+    "vente": re.compile(
+        r"vendeu(?:r|se)|vente|boutique|pr[eê]t[- ]?[àa][- ]?porter|conseill(?:er|[eè]re) de vente",
+        re.I,
+    ),
+}
+CATEGORIES = set(CATEGORY_RE)
+
+PLACEHOLDER_COMPANY = "Entreprise à vérifier"
+PLACEHOLDER_LOCATION = "Lieu à vérifier dans l’annonce"
+GENDER_RE = re.compile(r"\(?\b[hfx]\s*/\s*[hfx](?:\s*/\s*[hfx])?\b\)?", re.I)
 
 # Requêtes Jooble par défaut : une par métier visé pour améliorer la couverture
 # (personnalisables via "joobleQueries" dans sources.json).
@@ -124,38 +152,70 @@ DEFAULT_SMARTRECRUITERS_QUERIES = [
     {"name": "vente", "category": "vente", "keywords": "vendeur vente boutique"},
 ]
 
-# Villes connues pour déduire le département depuis un libellé de lieu libre.
+# Lieux connus pour déduire le département depuis un libellé libre. Un lieu
+# n'est reconnu que s'il forme des mots entiers du libellé, et le lieu le plus
+# long l'emporte : « Clichy-sous-Bois » (93) n'est donc plus pris pour
+# « Clichy » (92), ni « Cormeilles-en-Parisis » (95) pour « Paris ».
 # Sert aussi au front via le champ "dept" stocké sur chaque offre.
 DEPT_CITIES = {
     "75": ["paris"],
-    "77": ["meaux", "melun", "torcy", "chelles", "chessy", "bussy", "marne-la-vallée",
-           "lagny", "coulommiers", "provins", "fontainebleau", "dammarie"],
-    "78": ["versailles", "saint-quentin-en-yvelines", "mantes", "poissy", "sartrouville",
-           "plasir", "rambouillet", "trappes", "guyancourt", "chatou", "houilles",
-           "conflans", "achères", "andresy", "le chesnay"],
-    "91": ["evry", "massy", "palaiseau", "longjumeau", "draveil", "ris-orangis",
+    "77": ["seine-et-marne", "meaux", "melun", "torcy", "chelles", "chessy", "bussy",
+           "marne-la-vallée", "lagny", "coulommiers", "provins", "fontainebleau",
+           "dammarie", "serris", "bailly-romainvilliers", "claye-souilly", "vaux-le-pénil",
+           "montereau-fault-yonne", "villeparisis", "roissy-en-brie", "moissy-cramayel",
+           "lieusaint", "pontault-combault", "savigny-le-temple", "la genevraye",
+           "chalmaison", "mitry-mory", "le mée-sur-seine", "nemours", "la grande-paroisse"],
+    "78": ["yvelines", "versailles", "saint-quentin-en-yvelines", "mantes", "poissy",
+           "sartrouville", "plaisir", "rambouillet", "trappes", "guyancourt", "chatou",
+           "houilles", "conflans", "achères", "andresy", "le chesnay", "le pecq",
+           "saint-germain-en-laye", "vélizy-villacoublay", "magny-les-hameaux", "maurepas",
+           "montigny-le-bretonneux", "saint-arnoult-en-yvelines", "élancourt",
+           "les mureaux", "coignières", "buc"],
+    "91": ["essonne", "evry", "massy", "palaiseau", "longjumeau", "draveil", "ris-orangis",
            "savigny-sur-orge", "athis-mons", "juvisy", "bretigny",
-           "sainte-genevieve-des-bois", "gif-sur-yvette", "orsay", "bondoufle"],
-    "92": ["nanterre", "courbevoie", "boulogne-billancourt", "puteaux", "asnières",
-           "colombes", "levallois", "neuilly-sur-seine", "clichy", "montrouge",
+           "sainte-genevieve-des-bois", "gif-sur-yvette", "orsay", "bondoufle", "lisses",
+           "etampes", "saint-chéron", "les ulis", "limours", "corbeil-essonnes",
+           "courcouronnes", "wissous", "morangis", "grigny", "viry-châtillon", "vauhallan"],
+    "92": ["hauts-de-seine", "nanterre", "courbevoie", "boulogne-billancourt", "puteaux",
+           "asnières", "colombes", "levallois", "neuilly-sur-seine", "clichy", "montrouge",
            "antony", "gennevilliers", "issy-les-moulineaux", "clamart", "suresnes",
-           "rueil", "bagneux", "malakoff", "chatenay-malabry", "villeneuve-la-garenne"],
-    "93": ["bondy", "saint-denis", "montreuil", "pantin", "aubervilliers", "bobigny",
-           "noisy-le-sec", "romainville", "rosny-sous-bois", "aulnay", "drancy",
-           "bagnolet", "pierrefitte", "saint-ouen", "l'île-saint-denis",
-           "fontenay-sous-bois", "villemomble", "gagny", "blanc-mesnil", "livry-gargan",
-           "neuilly-sur-marne", "neuilly-plaisance", "clichy-sous-bois", "coubron",
-           "vaujours", "sevran", "le pré-saint-gervais", "noisy-le-grand",
-           "montfermeil", "stains", "pierrefitte-sur-seine"],
-    "94": ["créteil", "vincennes", "ivry", "vitry", "villejuif", "joinville",
-           "nogent-sur-marne", "le perreux", "champigny", "maisons-alfort",
-           "saint-maur", "le kremlin-bicêtre", "fontenay-sous-bois", "bonneuil",
-           "limeil", "saint-mandé", "chennevières", "villeneuve-le-roi",
-           "villeneuve-saint-georges", "choisy-le-roi", "thiais", "chevilly"],
-    "95": ["argenteuil", "cergy", "pontoise", "sarcelles", "garges", "enghien",
-           "montmorency", "eaubonne", "franconville", "ermont", "goussainville",
-           "villiers-le-bel", "montigny-lès-cormeilles", "herblay", "taverny"],
+           "rueil", "bagneux", "malakoff", "chatenay-malabry", "villeneuve-la-garenne",
+           "la défense", "meudon", "sèvres", "saint-cloud", "châtillon", "vanves",
+           "bois-colombes", "la garenne-colombes", "le plessis-robinson", "sceaux",
+           "fontenay-aux-roses", "garches", "vaucresson", "chaville"],
+    "93": ["seine-saint-denis", "bondy", "saint-denis", "montreuil", "pantin",
+           "aubervilliers", "bobigny", "noisy-le-sec", "romainville", "rosny-sous-bois",
+           "aulnay", "drancy", "bagnolet", "pierrefitte", "saint-ouen", "l'île-saint-denis",
+           "villemomble", "gagny", "blanc-mesnil", "livry-gargan", "neuilly-sur-marne",
+           "neuilly-plaisance", "clichy-sous-bois", "coubron", "vaujours", "sevran",
+           "le pré-saint-gervais", "noisy-le-grand", "montfermeil", "stains",
+           "pierrefitte-sur-seine", "les lilas", "épinay-sur-seine", "villepinte",
+           "tremblay-en-france", "la courneuve", "le bourget", "villetaneuse"],
+    "94": ["val-de-marne", "créteil", "vincennes", "ivry", "vitry", "villejuif",
+           "joinville", "nogent-sur-marne", "le perreux", "champigny", "maisons-alfort",
+           "saint-maur", "le kremlin-bicêtre", "fontenay-sous-bois", "bonneuil", "limeil",
+           "saint-mandé", "chennevières", "villeneuve-le-roi", "villeneuve-saint-georges",
+           "choisy-le-roi", "thiais", "chevilly", "rungis", "orly", "charenton",
+           "cachan", "arcueil", "gentilly", "l'haÿ-les-roses", "fresnes", "alfortville",
+           "sucy-en-brie", "boissy-saint-léger"],
+    "95": ["val-d'oise", "argenteuil", "cergy", "pontoise", "sarcelles", "garges",
+           "enghien", "montmorency", "eaubonne", "franconville", "ermont", "goussainville",
+           "villiers-le-bel", "montigny-lès-cormeilles", "herblay", "taverny",
+           "cormeilles-en-parisis", "saint-ouen-l'aumône", "roissy-en-france",
+           "gonesse", "bezons", "sannois", "saint-gratien", "osny", "louvres",
+           "saint-brice-sous-forêt", "deuil-la-barre", "domont", "villaines-sous-bois"],
 }
+# Lieux hors Île-de-France fréquents dans les résultats (rayon de 80 km) :
+# les offres qui y sont situées sont écartées.
+OUTSIDE_IDF_PLACES = [
+    "oise", "hauts-de-france", "eure-et-loir", "eure", "loiret", "yonne", "aisne",
+    "somme", "normandie", "centre-val-de-loire", "bourgogne", "grand est",
+    "beauvais", "compiègne", "creil", "senlis", "chantilly", "chartres", "dreux",
+    "evreux", "orléans", "montargis", "auxerre", "reims", "soissons",
+    "château-thierry", "rouen", "amiens", "lyon", "marseille", "lille", "lens",
+    "bordeaux", "toulouse", "nantes", "nice", "strasbourg", "montpellier", "rennes",
+]
+IDF_DEPTS = set(DEPT_CITIES)
 
 
 def strip_html(value):
@@ -212,9 +272,19 @@ def url_key(url):
     return key.rstrip("/")
 
 
+def place_key(location):
+    """Ville seule : « Montereau, Seine-et-Marne » = « Montereau (77) » = « Montereau 77130 »."""
+    first = re.split(r"[,(]", location or "", maxsplit=1)[0]
+    return norm_text(re.sub(r"\b\d{5}\b", " ", first))
+
+
 def content_key(title, company, location):
-    """Clé de déduplication sur le contenu : poste + entreprise + lieu normalisés."""
-    return "|".join((norm_text(title), norm_text(company), norm_text(location)))
+    """Clé de déduplication sur le contenu : poste (sans H/F) + entreprise + ville.
+    Sans entreprise réelle, aucune clé : deux offres anonymes ne sont pas fusionnées."""
+    if not norm_text(company) or company == PLACEHOLDER_COMPANY:
+        return ""
+    title = norm_text(GENDER_RE.sub(" ", title or ""))
+    return "|".join((title, norm_text(company), place_key(location)))
 
 
 def offer_keys(offer):
@@ -223,53 +293,87 @@ def offer_keys(offer):
     return {k for k in keys if k}
 
 
-def detect_dept(text):
-    """Déduit un département d'Île-de-France depuis un libellé libre."""
+def slug(value):
+    value = unicodedata.normalize("NFD", (value or "").lower())
+    value = "".join(c for c in value if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", "-", value).strip("-")
+
+
+PLACE_PATTERNS = sorted(
+    [(slug(place), dept) for dept, places in DEPT_CITIES.items() for place in places]
+    + [(slug(place), "HORS") for place in OUTSIDE_IDF_PLACES],
+    key=lambda item: len(item[0]),
+    reverse=True,
+)
+
+
+def detect_dept(text, postal=True):
+    """Déduit le département d'Île-de-France d'un libellé libre.
+
+    Renvoie un code (« 75 »…), « IDF » si seule la région est connue, « HORS »
+    si le lieu est clairement hors Île-de-France, ou « » si on ne sait pas.
+    `postal=False` ignore les nombres à 5 chiffres (un titre peut citer un salaire).
+    """
     raw = (text or "").strip()
     if not raw:
         return ""
-    m = re.search(r"\b(7[5-8]|9[1-5])\b", raw)
+    t = slug(raw)
+    place_dept = next(
+        (dept for place, dept in PLACE_PATTERNS  # du plus long au plus court
+         if re.search(rf"(?<![a-z0-9]){re.escape(place)}(?![a-z0-9])", t)),
+        "",
+    )
+    # Une ville d'Île-de-France connue prime : certaines sources accolent un
+    # code postal erroné (« Vauhallan, 89160 »).
+    if place_dept in IDF_DEPTS:
+        return place_dept
+    if postal:
+        m = re.search(r"(?<!\d)(\d{2})\d{3}(?!\d)", raw)
+        if m:
+            return m.group(1) if m.group(1) in IDF_DEPTS else "HORS"
+    m = re.search(r"\((\d{2}|2[AB])\)", raw) or re.search(r"\b(75|77|78|9[1-5])\b", raw)
     if m:
-        return m.group(1)
-    t = norm_text(raw)
-    for dept, cities in DEPT_CITIES.items():
-        if any(norm_text(city) in t for city in cities):
-            return dept
-    if "iledefrance" in t or t == "idf" or "idf" in t:
+        return m.group(1) if m.group(1) in IDF_DEPTS else "HORS"
+    if place_dept:
+        return place_dept
+    if re.search(r"(?<![a-z0-9])(ile-de-france|idf)(?![a-z0-9])", t):
         return "IDF"
     return ""
 
 
-def classify_contract(text):
-    if STAGE_RE.search(text):
+def classify_contract(title, text=""):
+    """None pour un stage/une alternance, sinon le type de contrat reconnu."""
+    if STAGE_RE.search(title or "") or STAGE_TEXT_RE.search(text or ""):
         return None
-    if INTERIM_RE.search(text):
+    full = f"{title} {text}"
+    if INTERIM_RE.search(full):
         return "Intérim"
-    if CDI_RE.search(text):
+    if CDI_RE.search(full):
         return "CDI"
-    if CDD_RE.search(text):
+    if CDD_RE.search(full):
         return "CDD"
     return "À vérifier"
 
 
-def classify_category(text):
-    t = text.lower()
-    if re.search(
-        r"vendeur|vendeuse|vente|boutique|pr[eê]t[- ]?[àa][- ]?porter|conseiller de vente",
-        t,
-    ):
-        return "vente"
-    if re.search(
-        r"mise en rayon|employ[eé].{0,12}rayon|libre.?service|r[eé]assort|grande distribution",
-        t,
-    ):
-        return "rayon"
-    if re.search(
-        r"stock|logistique|magasinier|pr[eé]parateur de commandes|approvision|stockiste",
-        t,
-    ):
-        return "stock"
+def classify_category(title):
+    """Catégorie déduite du seul titre : les descriptions citent trop souvent
+    « vente » ou « stock » pour des métiers sans rapport (cuisinier, data analyst…).
+    La catégorie de la requête n'est donc qu'indicative : sans mot-clé métier
+    dans le titre, l'offre est écartée."""
+    title = title or ""
+    for name, pattern in CATEGORY_RE.items():  # stock, puis rayon, puis vente
+        if pattern.search(title):
+            return name
     return None
+
+
+def is_tracked(offer):
+    """Offre suivie par l'utilisateur : elle n'est jamais retirée automatiquement."""
+    status = str(offer.get("status") or "").strip().casefold()
+    return bool(
+        offer.get("appliedDate") or offer.get("notesEdited")
+        or (status and status != "à examiner")
+    )
 
 
 def stable_id(url):
@@ -280,28 +384,30 @@ def make_offer(title, company, location, text, url, date, source, category=None)
     if not title or not url or urlparse(url).scheme not in {"http", "https"}:
         return None
 
-    full_text = f"{title} {text}"
-    contract = classify_contract(full_text)
-    category = category if category in CATEGORIES else classify_category(full_text)
+    title_text = strip_html(title)
+    body_text = strip_html(text)
+    contract = classify_contract(title_text, body_text)
+    category = classify_category(title_text)  # la catégorie de la requête est indicative
+    dept = detect_dept(location) or detect_dept(title_text, postal=False)
 
-    # On exclut les stages/alternances et les offres hors catégories recherchées.
-    if contract is None or category is None:
+    # On exclut les stages/alternances, les métiers non recherchés et les lieux
+    # hors Île-de-France.
+    if contract is None or category is None or dept == "HORS":
         return None
 
     parsed_date = parse_date(date)
-    dept = detect_dept(location) or detect_dept(title)
 
     return {
         "id": f"{source.lower().replace(' ', '-')}_{stable_id(url)}",
-        "title": strip_html(title),
-        "company": strip_html(company) or "Entreprise à vérifier",
-        "location": strip_html(location) or "Lieu à vérifier dans l’annonce",
+        "title": title_text,
+        "company": strip_html(company) or PLACEHOLDER_COMPANY,
+        "location": strip_html(location) or PLACEHOLDER_LOCATION,
         "dept": dept,
         "contract": contract,
         "category": category,
         "date": parsed_date.isoformat() if parsed_date else "",
         "url": url,
-        "notes": strip_html(text)[:1200]
+        "notes": body_text[:1200]
         or "Ouvre l’annonce pour vérifier les détails.",
         "status": "À examiner",
         "source": source,
@@ -360,11 +466,16 @@ def fetch_jooble(api_key, query):
             location=job.get("location") or "",
             text=text,
             url=url,
-            date=job.get("updated") or "",
+            # Jooble ne fournit que la date de mise à jour de l'annonce, pas sa
+            # date de publication : elle est rangée à part dans "updated".
+            date="",
             source="Jooble",
             category=query.get("category"),
         )
         if offer:
+            updated = parse_date(job.get("updated") or "")
+            if updated:
+                offer["updated"] = updated.isoformat()
             # Le type et la rémunération sont utiles pour examiner l'annonce.
             extra = []
             if job.get("type"):
@@ -724,7 +835,7 @@ def _fetch_mcp_search(endpoint, tool_name, arguments, source, category, token=""
             continue
         # Les recherches d'emploi peuvent renvoyer des catégories voisines.
         # On ne garde que les annonces dont le titre/texte confirme le métier.
-        if classify_category(f"{title} {text}") != category:
+        if classify_category(str(title)) != category:
             continue
         offer = make_offer(
             title=str(title),
@@ -1248,23 +1359,157 @@ def fetch_feed(feed):
 
 
 def load_previous():
+    """Charge l'historique. S'il est illisible, on s'arrête plutôt que de
+    l'écraser avec les seules offres du jour."""
     if not OUT.exists():
         return []
     try:
         previous = json.loads(OUT.read_text(encoding="utf-8"))
-        return previous if isinstance(previous, list) else []
-    except (json.JSONDecodeError, OSError):
-        print("Attention : ancien offres.json illisible ; sauvegarde à vérifier.")
-        return []
+    except (json.JSONDecodeError, OSError, UnicodeDecodeError) as exc:
+        raise SystemExit(
+            f"ERREUR : {OUT.name} est illisible ({type(exc).__name__}). "
+            "Collecte arrêtée sans rien écrire : restaure le fichier depuis l'historique Git."
+        )
+    if not isinstance(previous, list):
+        raise SystemExit(
+            f"ERREUR : {OUT.name} ne contient pas une liste d'offres. "
+            "Collecte arrêtée sans rien écrire."
+        )
+    return [item for item in previous if isinstance(item, dict)]
+
+
+def write_offers(offers):
+    """Écriture atomique : un arrêt brutal ne laisse jamais un fichier tronqué."""
+    tmp = OUT.with_name(OUT.name + ".tmp")
+    tmp.write_text(json.dumps(offers, ensure_ascii=False, indent=2), encoding="utf-8")
+    os.replace(tmp, OUT)
+
+
+def refresh_offer(offer):
+    """Réapplique les règles actuelles à une offre déjà enregistrée.
+
+    Renvoie la raison du retrait (texte) si l'offre sort du périmètre, sinon "".
+    Les offres suivies par l'utilisateur ne sont jamais retirées.
+    """
+    title = offer.get("title") or ""
+    notes = offer.get("notes") or ""
+    tracked = is_tracked(offer)
+
+    # Ancien format Jooble : la date de mise à jour était stockée comme date
+    # de publication.
+    if offer.get("source") == "Jooble" and "updated" not in offer:
+        offer["updated"] = offer.get("date") or ""
+        offer["date"] = ""
+
+    contract = classify_contract(title, notes)
+    if contract is None and not tracked:
+        return "stage / alternance"
+    if contract and offer.get("contract") in (None, "", "À vérifier"):
+        offer["contract"] = contract
+
+    dept = detect_dept(offer.get("location")) or detect_dept(title, postal=False)
+    if offer.get("source") == "France Travail" and offer.get("dept") in IDF_DEPTS and dept in ("", "IDF"):
+        dept = offer["dept"]  # département de la requête France Travail
+    if dept == "HORS":
+        if not tracked:
+            return "hors Île-de-France"
+        dept = ""
+    offer["dept"] = dept
+
+    category = classify_category(title)
+    if category is None:
+        if not tracked:
+            return "métier non recherché"
+    else:
+        offer["category"] = category
+    return ""
+
+
+IDENTITY_FIELDS = ("title", "company", "location", "url")
+
+
+def merge_into(match, item):
+    """Complète une offre existante avec une version revue d'une autre source.
+
+    - titre, entreprise, lieu et URL ne sont remplis que s'ils manquent (sinon
+      les clés de déduplication changeraient d'une collecte à l'autre) ;
+    - la date de publication d'origine est conservée ;
+    - un contrat connu n'est jamais remplacé par « À vérifier » ;
+    - les notes modifiées par l'utilisateur ne sont jamais écrasées.
+    """
+    linked = match.get("sources")
+    if not isinstance(linked, list):
+        linked = [match["source"]] if match.get("source") else []
+    for source in [item.get("source")] + list(item.get("sources") or []):
+        if source and source not in linked:
+            linked.append(source)
+    if linked:
+        match["sources"] = linked
+
+    seen = max(str(match.get("lastSeen") or ""), str(item.get("lastSeen") or ""))
+    if seen:
+        match["lastSeen"] = seen
+
+    for field in IDENTITY_FIELDS:
+        current = match.get(field)
+        if item.get(field) and (not current or current in (PLACEHOLDER_COMPANY, PLACEHOLDER_LOCATION)):
+            match[field] = item[field]
+    for field in ("date", "updated", "created"):
+        if item.get(field) and not match.get(field):
+            match[field] = item[field]
+    if field_newer(item.get("updated"), match.get("updated")):
+        match["updated"] = item["updated"]
+    if item.get("contract") and item["contract"] != "À vérifier":
+        match["contract"] = item["contract"]
+    elif not match.get("contract"):
+        match["contract"] = item.get("contract") or "À vérifier"
+    for field in ("dept", "category"):
+        if item.get(field) and not match.get(field):
+            match[field] = item[field]
+    if item.get("notes") and not match.get("notesEdited"):
+        match["notes"] = item["notes"]
+    # Le suivi utilisateur d'un doublon n'est jamais perdu.
+    if is_tracked(item) and not is_tracked(match):
+        match["status"] = item.get("status")
+    for field in ("appliedDate", "notesEdited"):
+        if item.get(field) and not match.get(field):
+            match[field] = item[field]
+
+
+def field_newer(candidate, current):
+    a, b = parse_date(candidate), parse_date(current)
+    if a is None or b is None:
+        return False
+    if a.tzinfo is None:
+        a = a.replace(tzinfo=timezone.utc)
+    if b.tzinfo is None:
+        b = b.replace(tzinfo=timezone.utc)
+    return a > b
+
+
+def dedupe(offers):
+    """Fusionne les doublons (URL ou poste + entreprise + ville). La première
+    offre rencontrée est conservée et absorbe les informations des suivantes."""
+    result, index = [], {}
+    merged_count = 0
+    for offer in offers:
+        keys = offer_keys(offer)
+        match = next((index[k] for k in keys if k in index), None)
+        if match is None:
+            result.append(offer)
+            match = offer
+        else:
+            merge_into(match, offer)
+            merged_count += 1
+        for key in keys | offer_keys(match):
+            index.setdefault(key, match)
+    return result, merged_count
 
 
 def should_keep(offer, today):
     """Purge : publication trop ancienne ET plus revue depuis MAX_UNSEEN_DAYS."""
     # Ne jamais supprimer l'historique de candidature ni les modifications utilisateur.
-    status = str(offer.get("status") or "").strip().casefold()
-    if offer.get("appliedDate") or offer.get("notesEdited"):
-        return True
-    if status and status != "à examiner":
+    if is_tracked(offer):
         return True
 
     pub = parse_date(offer.get("date"))
@@ -1282,12 +1527,20 @@ def main():
     today = datetime.now(timezone.utc).date()
     now = datetime.now(timezone.utc).isoformat()
 
+    # Les offres déjà enregistrées sont revues avec les règles actuelles
+    # (département, métier, stage, date Jooble), puis dédoublonnées.
+    removed_by_rule = {}
     merged = []
-    index = {}
     for item in previous:
-        if not isinstance(item, dict):
-            continue
-        merged.append(item)
+        reason = refresh_offer(item)
+        if reason:
+            removed_by_rule[reason] = removed_by_rule.get(reason, 0) + 1
+        else:
+            merged.append(item)
+    merged, merged_previous = dedupe(merged)
+
+    index = {}
+    for item in merged:
         for key in offer_keys(item):
             index.setdefault(key, item)
 
@@ -1375,40 +1628,33 @@ def main():
         item["collectedAt"] = now
         item["lastSeen"] = today.isoformat()
         keys = offer_keys(item)
-        match = index.get(url_key(item.get("url")))
-        if match is None:
-            match = index.get(content_key(item.get("title"), item.get("company"), item.get("location")))
+        match = next((index[k] for k in keys if k in index), None)
         if match is not None:
             updated_count += 1
-            match["lastSeen"] = today.isoformat()
-            linked_sources = match.get("sources")
-            if not isinstance(linked_sources, list):
-                linked_sources = [match["source"]] if match.get("source") else []
-            incoming_source = item.get("source")
-            if incoming_source and incoming_source not in linked_sources:
-                linked_sources.append(incoming_source)
-            if linked_sources:
-                match["sources"] = linked_sources
-            for field in ("title", "company", "location", "dept", "contract",
-                          "category", "date", "notes", "url"):
-                if field == "notes" and match.get("notesEdited"):
-                    continue
-                if item.get(field):
-                    match[field] = item[field]
+            merge_into(match, item)
+            match["collectedAt"] = now
         else:
             new_count += 1
             item.setdefault("created", today.isoformat())
             if item.get("source"):
                 item.setdefault("sources", [item["source"]])
             merged.append(item)
-            for key in keys:
-                index.setdefault(key, item)
+            match = item
+        # Index recalculé : les variantes déjà vues pointent vers la même offre.
+        for key in keys | offer_keys(match):
+            index.setdefault(key, match)
 
     kept = [item for item in merged if should_keep(item, today)]
     removed = len(merged) - len(kept)
 
+    if previous and not kept:
+        raise SystemExit(
+            "ERREUR : le résultat serait vide alors que l'historique contenait "
+            f"{len(previous)} offres. Collecte arrêtée sans rien écrire."
+        )
+
     def sort_key(offer):
-        parsed = parse_date(offer.get("date"))
+        parsed = parse_date(offer.get("date") or offer.get("updated"))
         if parsed is not None:
             if parsed.tzinfo is None:
                 parsed = parsed.replace(tzinfo=timezone.utc)
@@ -1418,16 +1664,19 @@ def main():
         return (pub_ts, offer.get("collectedAt", ""))
 
     offers = sorted(kept, key=sort_key, reverse=True)
-    OUT.write_text(
-        json.dumps(offers, ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
+    write_offers(offers)
 
     print(f"Offres conservées : {len(offers)} (nouvelles : {new_count}, mises à jour : {updated_count})")
     print(f"Offres purgées (obsolètes) : {removed}")
+    for reason, count in sorted(removed_by_rule.items()):
+        print(f"Offres retirées ({reason}) : {count}")
+    print(f"Doublons fusionnés dans l'historique : {merged_previous}")
     print(f"Flux RSS activés : {sum(bool(f.get('enabled')) for f in feeds)}")
     if errors:
         print("Sources en erreur : " + json.dumps(errors, ensure_ascii=False))
+    if not fresh:
+        # Échec visible dans GitHub Actions (et notification par e-mail).
+        raise SystemExit("ERREUR : aucune source n'a renvoyé d'offre lors de cette collecte.")
 
 
 if __name__ == "__main__":

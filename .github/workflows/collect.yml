@@ -11,6 +11,7 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Récupérer le dépôt
         uses: actions/checkout@v4
@@ -37,6 +38,8 @@ jobs:
           git add offres.json
           if ! git diff --cached --quiet; then
             git commit -m "Mise à jour des offres collectées"
+            # Un commit a pu être poussé pendant la collecte : on s'aligne avant d'envoyer.
+            git pull --rebase
             git push
           else
             echo "Aucun changement à enregistrer."
