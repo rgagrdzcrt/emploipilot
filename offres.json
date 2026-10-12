@@ -1,5 +1,120 @@
 [
   {
+    "id": "adz_5924112202",
+    "title": "Vendeur.se",
+    "company": "Promod - magasin",
+    "location": "14ème Arrondissement, Paris",
+    "dept": "75",
+    "contract": "CDD",
+    "category": "vente",
+    "date": "2026-10-12T13:06:53+00:00",
+    "url": "https://www.adzuna.fr/details/5924112202?utm_medium=api&utm_source=9d94d17b",
+    "notes": "Chez Promod, chaque collaboration naît d’une rencontre authentique : celle d’un·e candidat·e et d’une entreprise partageant leur passion pour la mode, les relations humaines et leur envie de faire bouger les lignes dans un secteur en pleine évolution. Si vous vous reconnaissez alors votre prochaine aventure professionnelle pourrait démarrer en CDD 20h00 (du lundi au jeudi). Vous évoluerez aux côtés d'un·e Responsable de Magasin , d'un·e Responsable Adjoint·e et de Conseiller·e·s de mode passion…\nContrat indiqué : contract | Temps indiqué : part_time",
+    "status": "À examiner",
+    "source": "Adzuna",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-12",
+    "sources": [
+      "Adzuna"
+    ],
+    "km": 11.3,
+    "trajetMin": 50
+  },
+  {
+    "id": "adz_5924112267",
+    "title": "Vendeur.se",
+    "company": "Promod - magasin",
+    "location": "Saint-Germain-en-Laye-Sud, Saint-Germain-en-Laye",
+    "dept": "78",
+    "contract": "CDI",
+    "category": "vente",
+    "date": "2026-10-12T13:06:53+00:00",
+    "url": "https://www.adzuna.fr/details/5924112267?utm_medium=api&utm_source=9d94d17b",
+    "notes": "Chez Promod, chaque collaboration naît d’une rencontre authentique : celle d’un·e candidat·e et d’une entreprise partageant leur passion pour la mode, les relations humaines et leur envie de faire bouger les lignes dans un secteur en pleine évolution. Si vous vous reconnaissez alors votre prochaine aventure professionnelle pourrait démarrer en CDI - 15h00. Vous évoluerez aux côtés d'un·e Responsable de Magasin , d'un·e Responsable Adjoint·e et de Conseiller·e·s de mode passionné·e·s. Vos missio…\nContrat indiqué : permanent | Temps indiqué : part_time",
+    "status": "À examiner",
+    "source": "Adzuna",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-12",
+    "sources": [
+      "Adzuna"
+    ],
+    "km": 27.4,
+    "trajetMin": 108
+  },
+  {
+    "id": "adz_5924112263",
+    "title": "Vendeur Automobile Véhicules Neufs - COMO - SMART (H/F)",
+    "company": "Como",
+    "location": "Rueil-Malmaison, Nanterre",
+    "dept": "92",
+    "contract": "À vérifier",
+    "category": "vente",
+    "date": "2026-10-12T13:06:53+00:00",
+    "url": "https://www.adzuna.fr/details/5924112263?utm_medium=api&utm_source=9d94d17b",
+    "notes": "Le groupe COMO est distributeur et réparateur agréé des marques Mercedes-Benz, Smart, Lexus et Geely sur Paris et en Ile de France. Nous assurons une qualité de service maximale pour toutes les opérations de Ventes, d’Après-Ventes et de Pièces de rechange. La Passion, le Respect, l’Intégrité et la Satisfaction du client sont des valeurs qui animent au quotidien notre groupe. Nous recherchons pour notre site basé à Rueil-Malmaison, un Vendeur Automobile Véhicules Neufs SMART (H/F). Description d…\nContrat indiqué : permanent | Temps indiqué : full_time",
+    "status": "À examiner",
+    "source": "Adzuna",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-12",
+    "sources": [
+      "Adzuna"
+    ],
+    "km": 22.5,
+    "trajetMin": 85
+  },
+  {
+    "id": "adz_5924110444",
+    "title": "Coordinateur(Trice) Industrialisation – Prêt-À-Porter Homme - H/F",
+    "company": "LTd",
+    "location": "Paris, Ile-de-France",
+    "dept": "75",
+    "contract": "À vérifier",
+    "category": "vente",
+    "date": "2026-10-12T13:06:20+00:00",
+    "url": "https://www.adzuna.fr/details/5924110444?utm_medium=api&utm_source=9d94d17b",
+    "notes": "Rattaché(e) à la Direction Technique, vous assurez la transition entre les intentions créatives et les contraintes de production, en garantissant la conformité des modèles, la qualité des placements et l'optimisation des consommations matières. Missions principales Industrialisation des imprimés et broderies Assurer la mise au point des placements d'imprimés et de broderies en vue de leur production. Élaborer les dossiers techniques de placements et intégrer les motifs dans les constructions pr…\nContrat indiqué : contract | Temps indiqué : full_time",
+    "status": "À examiner",
+    "source": "Adzuna",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-12",
+    "sources": [
+      "Adzuna"
+    ],
+    "km": 11.3,
+    "trajetMin": 50
+  },
+  {
+    "id": "adz_5924109966",
+    "title": "Chargé(e) de Planification – Flux Presse & Événements Boutique",
+    "company": "LTd",
+    "location": "Paris, Ile-de-France",
+    "dept": "75",
+    "contract": "À vérifier",
+    "category": "vente",
+    "date": "2026-10-12T13:06:15+00:00",
+    "url": "https://www.adzuna.fr/details/5924109966?utm_medium=api&utm_source=9d94d17b",
+    "notes": "Une Maison de Luxe recherche un(e) Chargé(e) de Planification pour accompagner le suivi de production des pièces destinées aux activités Presse et aux événements en boutique, notamment les Commandes Vitrine TrunkShow (CVT). En collaboration avec le Responsable Planification et les fabricants situés en France et en Italie, vous participez à la coordination des flux, au suivi des commandes et à l'optimisation des outils de pilotage de production. Missions principales Planification et suivi de pro…\nContrat indiqué : contract | Temps indiqué : full_time",
+    "status": "À examiner",
+    "source": "Adzuna",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-12",
+    "sources": [
+      "Adzuna"
+    ],
+    "km": 11.3,
+    "trajetMin": 50
+  },
+  {
     "id": "adz_5924078325",
     "title": "Magasinier avec livraisons et évolution technicien (H/F)",
     "company": "Adsearch",
@@ -18,7 +133,9 @@
     "created": "2026-10-12",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 19.8,
+    "trajetMin": 99
   },
   {
     "id": "jooble_6919db38bd401502",
@@ -32,7 +149,7 @@
     "notes": "Technicien logistique / Magasinier Hospitalier -... ...avec notre Préparatrice en pharmacie... ...Gestion des stocks - Réception... ...rangement des commandes des DM,...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -40,7 +157,9 @@
       "Jooble"
     ],
     "dept": "75",
-    "updated": "2026-10-12T11:50:39.907000"
+    "updated": "2026-10-12T11:50:39.907000",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "adz_5924044749",
@@ -82,7 +201,9 @@
     "created": "2026-10-12",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 25.1,
+    "trajetMin": 92
   },
   {
     "id": "jooble_32929e1536bf75b6",
@@ -97,14 +218,16 @@
     "notes": "...Nous recherchons un(e) Employé(e) Libre-Service en CDI pour assurer la mise en rayon, le réapprovisionnement des produits, l'accueil et l'encaissement...\nType indiqué : Temps plein | Salaire indiqué : 1 960 €",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-12T02:51:12.878870+00:00"
+    "updated": "2026-10-12T02:51:12.878870+00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_790224a9446fa272",
@@ -119,14 +242,16 @@
     "notes": "...recherchons pour une enseigne, leader de la grande distribution, des employés de mise de rayon H/F pour le drive de l'hypermarché. L'environnement de...\nType indiqué : Temps plein | Salaire indiqué : 2 174 € a 2 630 €",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-12T00:00:00"
+    "updated": "2026-10-12T00:00:00",
+    "km": 25.8,
+    "trajetMin": 85
   },
   {
     "id": "jooble_a8ef67bac6d3ec8c",
@@ -141,14 +266,16 @@
     "notes": "...secteur de la mode et du prêt-à-porter, des Vendeurs F/H pour... ...les ventes du magasin et la fidélisation... ...Les Conseillers et... ...Personnaliser le conseil client -...\nType indiqué : Temps plein | Salaire indiqué : 4 333 € a 5 243 €",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-12T00:00:00"
+    "updated": "2026-10-12T00:00:00",
+    "km": 13.5,
+    "trajetMin": 78
   },
   {
     "id": "jooble_540fdfd2ae6dccd1",
@@ -163,14 +290,206 @@
     "notes": "...dans la vente de produits... ... Vendeurs multimédia F/H en renfort... ...ventes du magasin et la fidélisation... ..., le conseil et la... ...informatique, téléphonie, image et...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-12T00:00:00"
+    "updated": "2026-10-12T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
+  },
+  {
+    "id": "jooble_52269b6da5005a31",
+    "title": "MAGASINIER-GESTIONNAIRE DE STOCKS (F/H)",
+    "company": "Randstad",
+    "location": "Chalmaison, 77650",
+    "contract": "À vérifier",
+    "category": "stock",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/5582118220115168818?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=6&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=7&brelb=110&bscr=2760.9385&scr=2760.9385",
+    "notes": "...piloter les flux logistiques en tant que Magasinier-gestionnaire de stocks (F/H) ? Vous assurez... ...- Vous préparez les commandes, vérifiez leur conformité...\nSalaire indiqué : 12.31 €/heure",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "created": "2026-10-10",
+    "lastSeen": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-10-12T00:00:00",
+    "dept": "77",
+    "km": 72.1,
+    "trajetMin": 150
+  },
+  {
+    "id": "jooble_89d30c0f421659bb",
+    "title": "MAGASINIER CARISTE (F/H)",
+    "company": "Randstad",
+    "location": "Montereau-Fault-Yonne, Seine-et-Marne",
+    "contract": "Intérim",
+    "category": "stock",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/6083752183471094780?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=34&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=7&brelb=110&bscr=1489.5139&scr=1489.5139",
+    "notes": "...route et de la logistique, proposent de... ...missions de Magasinier cariste (F/H)... ...des stocks. - Valider... ...le suivi des commandes Processus...\nType indiqué : Intérimaire | Salaire indiqué : 12.02 €/heure",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "created": "2026-10-10",
+    "lastSeen": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-10-12T00:00:00",
+    "dept": "77",
+    "km": 66.8,
+    "trajetMin": 170
+  },
+  {
+    "id": "jooble_e3a7c053938d0c27",
+    "title": "Vendeur(se) produits multimédia H/F",
+    "company": "Gojob",
+    "location": "Le Chesnay, Yvelines",
+    "dept": "78",
+    "contract": "À vérifier",
+    "category": "vente",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-6330097885410308239?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=25&groupId=-1837074271&elckey=-1427509207064504980&p=1&aq=57692970248192542&cid=843&jobAge=25&brelb=100&bscr=978292.56&scr=978292.56",
+    "notes": "...leader dans la vente de... ...plusieurs Vendeurs de Produits... ...ventes du magasin et la fidélisation... ..., le conseil et la... ...informatique, téléphonie, image et...\nType indiqué : Temps plein",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-11",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-10-12T00:00:00",
+    "km": 28.1,
+    "trajetMin": 96
+  },
+  {
+    "id": "jooble_41f73bf5a4354f2b",
+    "title": "Employé libre service H/F",
+    "company": "Gojob",
+    "location": "Bourg-la-Reine, Hauts-de-Seine",
+    "dept": "92",
+    "contract": "À vérifier",
+    "category": "rayon",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/467612359084860140?ckey=mise+en+rayon%2c+employ%c3%a9+libre-service%2c+rayoniste%2c+employ%c3%a9+de+rayon%2c+r%c3%a9assort&rgn=12&pos=17&groupId=-594307577&elckey=8356641035032566877&p=1&aq=-6423470592951880024&cid=843&jobAge=25&brelb=100&bscr=377.28323&scr=377.28323",
+    "notes": "...grande distribution, un Employé libre service H/F pour démarrer... ...des rayons et garantir une présentation... ...livraisons - Assurer la mise en rayon des...\nType indiqué : Temps plein | Salaire indiqué : 2 011 € a 2 433 €",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-10",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-10-12T00:00:00",
+    "km": 18.5,
+    "trajetMin": 68
+  },
+  {
+    "id": "jooble_c0e874358efbc00d",
+    "title": "Vendeur/se Paris 18 - samedi+dimanche+lundi CDI H/F",
+    "company": "LES SAISONNIERS",
+    "location": "Paris",
+    "dept": "75",
+    "contract": "CDI",
+    "category": "vente",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/1722041522063234326?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=43&groupId=-1837074271&elckey=-1787121510873636582&p=1&aq=-8070671731391558370&cid=843&jobAge=79&brelb=100&bscr=535346.8&scr=535346.8",
+    "notes": "...un(e) Super- Vendeur/ se chez les... ...dans notre boutique à Paris 17... ...produits en magasins (... ...retirer de la vente ceux que tu... ...que tu sois prêt( e)s à décharger...\nType indiqué : Temps plein | Salaire indiqué : 1 120 €",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-10",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-10-12T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
+  },
+  {
+    "id": "jooble_1c57931f0ef5727b",
+    "title": "MAGASINIER CARISTE (F/H)",
+    "company": "RANDSTAD",
+    "location": "La Genevraye, 77690",
+    "contract": "Intérim",
+    "category": "stock",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-4608449519291499532?ckey=magasinier%2c+stockiste%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement%2c+mise+en+rayon%2c+vendeur%2c+pr%c3%aat-%c3%a0-porter&rgn=12&pos=42&groupId=919549411&elckey=2293722896929104724&p=1&aq=2116367875103685931&cid=843&jobAge=370&brelb=110&bscr=1487.9436&scr=1487.9436",
+    "notes": "...route et de la logistique, proposent... ..., un(e) Magasinier Cariste C3.... ...parc & des stocks : Effectuer... ...logistique : Préparer les commandes destinées aux...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 €/heure",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "created": "2026-10-10",
+    "updated": "2026-10-12T00:00:00",
+    "dept": "77",
+    "sources": [
+      "Jooble"
+    ],
+    "lastSeen": "2026-10-12",
+    "km": 67.6
+  },
+  {
+    "id": "jooble_23e858e18b6a70ea",
+    "title": "Vendeur/se Volant/e - L-V 35h CDI H/F",
+    "company": "LES SAISONNIERS",
+    "location": "Paris",
+    "dept": "75",
+    "contract": "CDI",
+    "category": "vente",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-2464929835254974952?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=41&groupId=-1837074271&elckey=-1427509207064504980&p=1&aq=57692970248192542&cid=843&jobAge=73&brelb=100&bscr=492608.84&scr=492608.84",
+    "notes": "...(e) Super- Vendeur/ se chez les... ...toutes les boutiques où tu es... ...différents magasins et retrouver... ...retirer de la vente ceux que tu... ...tu sois prêt( e)s à décharger...\nType indiqué : Temps plein | Salaire indiqué : 1 932 € a 2 200 €",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-10",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-10-12T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
+  },
+  {
+    "id": "jooble_7f9cd27f63f7867e",
+    "title": "MAGASINIER-GESTIONNAIRE DE STOCKS (F/H)",
+    "company": "Randstad",
+    "location": "Vaux-le-Pénil, 77000",
+    "contract": "À vérifier",
+    "category": "stock",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-6002206557329037344?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=6&groupId=-1940496825&elckey=-6296806224278106221&p=1&aq=4770700465663640730&cid=843&jobAge=19&brelb=110&bscr=2760.7305&scr=2760.7305",
+    "notes": "...les flux logistiques en tant que Magasinier-gestionnaire de stocks (F/H) ?... ...stocks - Préparer les commandes au... ...commandes et approvisionnement d'...\nSalaire indiqué : 13 €/heure",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "created": "2026-10-10",
+    "lastSeen": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-10-12T00:00:00",
+    "dept": "77",
+    "km": 44.2
   },
   {
     "id": "jooble_38be8b48e9cacd62",
@@ -192,161 +511,8 @@
       "Jooble"
     ],
     "dept": "78",
-    "updated": "2026-10-12T00:00:00"
-  },
-  {
-    "id": "jooble_52269b6da5005a31",
-    "title": "MAGASINIER-GESTIONNAIRE DE STOCKS (F/H)",
-    "company": "Randstad",
-    "location": "Chalmaison, 77650",
-    "contract": "À vérifier",
-    "category": "stock",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/5582118220115168818?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=6&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=7&brelb=110&bscr=2760.9385&scr=2760.9385",
-    "notes": "...piloter les flux logistiques en tant que Magasinier-gestionnaire de stocks (F/H) ? Vous assurez... ...- Vous préparez les commandes, vérifiez leur conformité...\nSalaire indiqué : 12.31 €/heure",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "created": "2026-10-10",
-    "lastSeen": "2026-10-12",
-    "sources": [
-      "Jooble"
-    ],
     "updated": "2026-10-12T00:00:00",
-    "dept": "77"
-  },
-  {
-    "id": "jooble_89d30c0f421659bb",
-    "title": "MAGASINIER CARISTE (F/H)",
-    "company": "Randstad",
-    "location": "Montereau-Fault-Yonne, Seine-et-Marne",
-    "contract": "Intérim",
-    "category": "stock",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/6083752183471094780?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=34&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=7&brelb=110&bscr=1489.5139&scr=1489.5139",
-    "notes": "...route et de la logistique, proposent de... ...missions de Magasinier cariste (F/H)... ...des stocks. - Valider... ...le suivi des commandes Processus...\nType indiqué : Intérimaire | Salaire indiqué : 12.02 €/heure",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "created": "2026-10-10",
-    "lastSeen": "2026-10-12",
-    "sources": [
-      "Jooble"
-    ],
-    "updated": "2026-10-12T00:00:00",
-    "dept": "77"
-  },
-  {
-    "id": "jooble_e3a7c053938d0c27",
-    "title": "Vendeur(se) produits multimédia H/F",
-    "company": "Gojob",
-    "location": "Le Chesnay, Yvelines",
-    "dept": "78",
-    "contract": "À vérifier",
-    "category": "vente",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/-6330097885410308239?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=25&groupId=-1837074271&elckey=-1427509207064504980&p=1&aq=57692970248192542&cid=843&jobAge=25&brelb=100&bscr=978292.56&scr=978292.56",
-    "notes": "...leader dans la vente de... ...plusieurs Vendeurs de Produits... ...ventes du magasin et la fidélisation... ..., le conseil et la... ...informatique, téléphonie, image et...\nType indiqué : Temps plein",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "lastSeen": "2026-10-12",
-    "created": "2026-10-11",
-    "sources": [
-      "Jooble"
-    ],
-    "updated": "2026-10-12T00:00:00"
-  },
-  {
-    "id": "jooble_41f73bf5a4354f2b",
-    "title": "Employé libre service H/F",
-    "company": "Gojob",
-    "location": "Bourg-la-Reine, Hauts-de-Seine",
-    "dept": "92",
-    "contract": "À vérifier",
-    "category": "rayon",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/467612359084860140?ckey=mise+en+rayon%2c+employ%c3%a9+libre-service%2c+rayoniste%2c+employ%c3%a9+de+rayon%2c+r%c3%a9assort&rgn=12&pos=17&groupId=-594307577&elckey=8356641035032566877&p=1&aq=-6423470592951880024&cid=843&jobAge=25&brelb=100&bscr=377.28323&scr=377.28323",
-    "notes": "...grande distribution, un Employé libre service H/F pour démarrer... ...des rayons et garantir une présentation... ...livraisons - Assurer la mise en rayon des...\nType indiqué : Temps plein | Salaire indiqué : 2 011 € a 2 433 €",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "lastSeen": "2026-10-12",
-    "created": "2026-10-10",
-    "sources": [
-      "Jooble"
-    ],
-    "updated": "2026-10-12T00:00:00"
-  },
-  {
-    "id": "jooble_c0e874358efbc00d",
-    "title": "Vendeur/se Paris 18 - samedi+dimanche+lundi CDI H/F",
-    "company": "LES SAISONNIERS",
-    "location": "Paris",
-    "dept": "75",
-    "contract": "CDI",
-    "category": "vente",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/1722041522063234326?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=43&groupId=-1837074271&elckey=-1787121510873636582&p=1&aq=-8070671731391558370&cid=843&jobAge=79&brelb=100&bscr=535346.8&scr=535346.8",
-    "notes": "...un(e) Super- Vendeur/ se chez les... ...dans notre boutique à Paris 17... ...produits en magasins (... ...retirer de la vente ceux que tu... ...que tu sois prêt( e)s à décharger...\nType indiqué : Temps plein | Salaire indiqué : 1 120 €",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "lastSeen": "2026-10-12",
-    "created": "2026-10-10",
-    "sources": [
-      "Jooble"
-    ],
-    "updated": "2026-10-12T00:00:00"
-  },
-  {
-    "id": "jooble_1c57931f0ef5727b",
-    "title": "MAGASINIER CARISTE (F/H)",
-    "company": "RANDSTAD",
-    "location": "La Genevraye, 77690",
-    "contract": "Intérim",
-    "category": "stock",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/-4608449519291499532?ckey=magasinier%2c+stockiste%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement%2c+mise+en+rayon%2c+vendeur%2c+pr%c3%aat-%c3%a0-porter&rgn=12&pos=42&groupId=919549411&elckey=2293722896929104724&p=1&aq=2116367875103685931&cid=843&jobAge=370&brelb=110&bscr=1487.9436&scr=1487.9436",
-    "notes": "...route et de la logistique, proposent... ..., un(e) Magasinier Cariste C3.... ...parc & des stocks : Effectuer... ...logistique : Préparer les commandes destinées aux...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 €/heure",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "created": "2026-10-10",
-    "updated": "2026-10-12T00:00:00",
-    "dept": "77",
-    "sources": [
-      "Jooble"
-    ],
-    "lastSeen": "2026-10-12"
-  },
-  {
-    "id": "jooble_23e858e18b6a70ea",
-    "title": "Vendeur/se Volant/e - L-V 35h CDI H/F",
-    "company": "LES SAISONNIERS",
-    "location": "Paris",
-    "dept": "75",
-    "contract": "CDI",
-    "category": "vente",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/-2464929835254974952?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=41&groupId=-1837074271&elckey=-1427509207064504980&p=1&aq=57692970248192542&cid=843&jobAge=73&brelb=100&bscr=492608.84&scr=492608.84",
-    "notes": "...(e) Super- Vendeur/ se chez les... ...toutes les boutiques où tu es... ...différents magasins et retrouver... ...retirer de la vente ceux que tu... ...tu sois prêt( e)s à décharger...\nType indiqué : Temps plein | Salaire indiqué : 1 932 € a 2 200 €",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "lastSeen": "2026-10-12",
-    "created": "2026-10-10",
-    "sources": [
-      "Jooble"
-    ],
-    "updated": "2026-10-12T00:00:00"
+    "km": 55.2
   },
   {
     "id": "jooble_ba48fc35b07fc396",
@@ -368,7 +534,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-12T00:00:00"
+    "updated": "2026-10-12T00:00:00",
+    "km": 11.3
   },
   {
     "id": "jooble_273fa67490dbcb64",
@@ -390,7 +557,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-12T00:00:00"
+    "updated": "2026-10-12T00:00:00",
+    "km": 11.3
   },
   {
     "id": "adz_5923538524",
@@ -411,7 +579,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 9.3
   },
   {
     "id": "adz_5923529369",
@@ -432,7 +601,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 20.7
   },
   {
     "id": "adz_5923529000",
@@ -474,7 +644,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 20.7
   },
   {
     "id": "adz_5923526123",
@@ -495,7 +666,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 14.2
   },
   {
     "id": "adz_5923166541",
@@ -516,7 +688,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 27.8
   },
   {
     "id": "adz_5923166324",
@@ -537,7 +710,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 27.8
   },
   {
     "id": "adz_5923165261",
@@ -558,7 +732,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 34.2
   },
   {
     "id": "adz_5923165229",
@@ -579,7 +754,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 36.0
   },
   {
     "id": "adz_5923165148",
@@ -600,7 +776,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 34.5
   },
   {
     "id": "adz_5923160914",
@@ -621,7 +798,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 10.8
   },
   {
     "id": "adz_5923160326",
@@ -636,7 +814,7 @@
     "notes": "...activité (BTP, logistique, industrie,... ..., un(e) Magasinier( ère) pour... ...gestion des stocks, ce poste est... ...- Préparation des commandes avec rigueur...\nType indiqué : Intérimaire",
     "status": "À examiner",
     "source": "Adzuna",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-11",
@@ -644,7 +822,8 @@
       "Adzuna",
       "Jooble"
     ],
-    "updated": "2026-10-10T22:53:35.182298+00:00"
+    "updated": "2026-10-10T22:53:35.182298+00:00",
+    "km": 23.0
   },
   {
     "id": "adz_5923159224",
@@ -665,7 +844,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 27.8
   },
   {
     "id": "jooble_858ded19afdc72f6",
@@ -687,7 +867,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-11T08:51:49.847384+00:00"
+    "updated": "2026-10-11T08:51:49.847384+00:00",
+    "km": 28.1,
+    "trajetMin": 96
   },
   {
     "id": "adz_5922937503",
@@ -708,7 +890,9 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "adz_5922936888",
@@ -729,7 +913,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 34.0
   },
   {
     "id": "adz_5922936750",
@@ -750,7 +935,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 14.3
   },
   {
     "id": "adz_5922907221",
@@ -771,7 +957,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 18.5
   },
   {
     "id": "adz_5922907188",
@@ -792,7 +979,8 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 11.3
   },
   {
     "id": "adz_5922892830",
@@ -813,7 +1001,9 @@
     "created": "2026-10-11",
     "sources": [
       "Adzuna"
-    ]
+    ],
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_bb140faca33421ea",
@@ -835,7 +1025,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-11T02:51:34.343804+00:00"
+    "updated": "2026-10-11T02:51:34.343804+00:00",
+    "km": 28.1,
+    "trajetMin": 96
   },
   {
     "id": "jooble_5c87b915b238b0ca",
@@ -847,17 +1039,18 @@
     "category": "vente",
     "date": "",
     "url": "https://fr.jooble.org/desc/1067544497010635600?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=44&groupId=-1837074271&elckey=-1787121510873636582&p=1&aq=-8070671731391558370&cid=843&jobAge=487&brelb=100&bscr=493435.28&scr=493435.28",
-    "notes": "...notre nombre de boutiques. Un objectif... ...recrute son : VENDEUR H/F CDI... ...au sein du magasin Et l'organisation... ...domaine de la vente et/ou avez une...\nType indiqué : Temps plein",
+    "notes": "...recrute son : VENDEUR H/F CDI... ...propre au sein du magasin Et l'... ...domaine de la vente et/ou avez une... ...notre nombre de boutiques. Un objectif motivant...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-12",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-11T00:00:00"
+    "updated": "2026-10-11T00:00:00",
+    "km": 16.5
   },
   {
     "id": "jooble_6636d04c2f3194c0",
@@ -879,29 +1072,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-11T00:00:00"
-  },
-  {
-    "id": "jooble_7f9cd27f63f7867e",
-    "title": "MAGASINIER-GESTIONNAIRE DE STOCKS (F/H)",
-    "company": "Randstad",
-    "location": "Vaux-le-Pénil, 77000",
-    "contract": "À vérifier",
-    "category": "stock",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/-6002206557329037344?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=6&groupId=-1940496825&elckey=-6296806224278106221&p=1&aq=4770700465663640730&cid=843&jobAge=19&brelb=110&bscr=2760.7305&scr=2760.7305",
-    "notes": "...gratuit mis à disposition... ...flux logistiques en tant que Magasinier- ... ...stocks - Préparer les commandes au magasin... ...commandes et approvisionnement d'...\nSalaire indiqué : 13 €/heure",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-10T12:26:05.592702+00:00",
-    "demo": false,
-    "created": "2026-10-10",
-    "lastSeen": "2026-10-11",
-    "sources": [
-      "Jooble"
-    ],
     "updated": "2026-10-11T00:00:00",
-    "dept": "77"
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_cd44b28fedbbc9e9",
@@ -916,14 +1089,15 @@
     "notes": "...pour son hypermarché un(e) : Employé de rayon (H/F ) Alimentaire :... ..., droguerie ou produit frais libre service Non alimentaire : Bazar, textile...\nType indiqué : Temps plein | Salaire indiqué : 850.2 €",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-11",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T21:25:15.905997+00:00"
+    "updated": "2026-10-10T21:25:15.905997+00:00",
+    "km": 31.6
   },
   {
     "id": "jooble_ed1791409bfc5fa3",
@@ -945,7 +1119,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T21:25:15.578362+00:00"
+    "updated": "2026-10-10T21:25:15.578362+00:00",
+    "km": 3.3
   },
   {
     "id": "jooble_d0b4993515ab49a8",
@@ -967,7 +1142,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T21:25:15.449388+00:00"
+    "updated": "2026-10-10T21:25:15.449388+00:00",
+    "km": 55.2
   },
   {
     "id": "jooble_a7ff92b1cc5e9470",
@@ -989,7 +1165,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T20:54:17.657376+00:00"
+    "updated": "2026-10-10T20:54:17.657376+00:00",
+    "km": 72.1,
+    "trajetMin": 150
   },
   {
     "id": "jooble_76414c511c39a628",
@@ -1011,7 +1189,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T19:25:16.242423+00:00"
+    "updated": "2026-10-10T19:25:16.242423+00:00",
+    "km": 13.9
   },
   {
     "id": "jooble_2de72a58a5f721f6",
@@ -1033,7 +1212,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T19:25:15.540281+00:00"
+    "updated": "2026-10-10T19:25:15.540281+00:00",
+    "km": 9.8
   },
   {
     "id": "jooble_0200dfda981fc0e1",
@@ -1048,14 +1228,15 @@
     "notes": "...intégration pendant laquelle vous vous familiariserez avec les différents rayons puis nos process et méthodes dans le rayon, vous serez responsable de...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T14:41:00.092774+00:00"
+    "updated": "2026-10-10T14:41:00.092774+00:00",
+    "km": 17.0
   },
   {
     "id": "jooble_a1a37c6065829e36",
@@ -1077,7 +1258,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T14:37:45.263380+00:00"
+    "updated": "2026-10-10T14:37:45.263380+00:00",
+    "km": 19.2
   },
   {
     "id": "jooble_9b7befd88ce30834",
@@ -1099,7 +1281,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T01:16:01.567000"
+    "updated": "2026-10-10T01:16:01.567000",
+    "km": 28.1
   },
   {
     "id": "jooble_738bbebcfb11fed9",
@@ -1121,7 +1304,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T01:15:54.303000"
+    "updated": "2026-10-10T01:15:54.303000",
+    "km": 43.7
   },
   {
     "id": "jooble_44eb69bb2babeeb5",
@@ -1135,7 +1319,7 @@
     "notes": "...recruter un Magasinier- Cariste (H/F... ...marchandises, préparer les commandes avec soin,... ...gestion des stocks, en veillant... ...optimisation des flux logistiques, contribuant...\nType indiqué : Intérimaire",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -1143,7 +1327,54 @@
       "Jooble"
     ],
     "dept": "92",
-    "updated": "2026-10-10T00:00:00"
+    "updated": "2026-10-10T00:00:00",
+    "km": 17.4
+  },
+  {
+    "id": "jooble_47d53a8ce86ce7fc",
+    "title": "Vendeur(se) Luxe H/F - Bijouterie & Maroquinerie",
+    "company": "Olivier Mery",
+    "location": "Claye-Souilly, Seine-et-Marne",
+    "dept": "77",
+    "contract": "À vérifier",
+    "category": "vente",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-7500057212904028713?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=13&groupId=-1837074271&elckey=-1787121510873636582&p=1&aq=-8070671731391558370&cid=843&jobAge=55&brelb=100&bscr=1374095.1&scr=1374095.1",
+    "notes": "...fascinant de la mode de luxe d'... ...tant que Vendeur( se) de... ...passion pour la vente d'articles... ...en magasin et sur notre... ...et toujours prêt( e) à améliorer...\nSalaire indiqué : 22k € a 25k €/an",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-10-10T00:00:00",
+    "km": 14.1
+  },
+  {
+    "id": "jooble_eb0e35298c772cbc",
+    "title": "Employe de rayon epicerie (H/F)",
+    "company": "Entreprise à vérifier",
+    "location": "Saulx-les-Chartreux, 91160",
+    "dept": "91",
+    "contract": "À vérifier",
+    "category": "rayon",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-2691265595468497404?ckey=mise+en+rayon%2c+employ%c3%a9+libre-service%2c+rayoniste%2c+employ%c3%a9+de+rayon%2c+r%c3%a9assort&rgn=12&pos=34&groupId=-594307577&elckey=-4767151037999131975&p=1&aq=-8705464920153416068&cid=843&jobAge=60&brelb=110&bscr=218.94044&scr=218.94044",
+    "notes": "...activement à la bonne tenue du rayon avec un réassort quotidien. Vous assurez le... ...enthousiaste vous possédez le sens du service et du conseil client. Nous...",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "updated": "2026-10-10T00:00:00",
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "km": 28.9
   },
   {
     "id": "jooble_92d2c0e98c8af930",
@@ -1165,29 +1396,8 @@
     "created": "2026-10-12",
     "sources": [
       "Jooble"
-    ]
-  },
-  {
-    "id": "jooble_47d53a8ce86ce7fc",
-    "title": "Vendeur(se) Luxe H/F - Bijouterie & Maroquinerie",
-    "company": "Olivier Mery",
-    "location": "Claye-Souilly, Seine-et-Marne",
-    "dept": "77",
-    "contract": "À vérifier",
-    "category": "vente",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/-7500057212904028713?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=13&groupId=-1837074271&elckey=-1787121510873636582&p=1&aq=-8070671731391558370&cid=843&jobAge=55&brelb=100&bscr=1374095.1&scr=1374095.1",
-    "notes": "...fascinant de la mode de luxe d'... ...tant que Vendeur( se) de... ...passion pour la vente d'articles... ...en magasin et sur notre... ...et toujours prêt( e) à améliorer...\nSalaire indiqué : 22k € a 25k €/an",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T10:52:50.485966+00:00",
-    "demo": false,
-    "lastSeen": "2026-10-12",
-    "created": "2026-10-12",
-    "sources": [
-      "Jooble"
     ],
-    "updated": "2026-10-10T00:00:00"
+    "km": 28.9
   },
   {
     "id": "jooble_f8b61b026ed62f06",
@@ -1209,7 +1419,8 @@
     "created": "2026-10-12",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 28.9
   },
   {
     "id": "jooble_853bd4f4c487cf89",
@@ -1231,7 +1442,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T00:00:00"
+    "updated": "2026-10-10T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_6bfad6367be9ed68",
@@ -1253,7 +1466,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T00:00:00"
+    "updated": "2026-10-10T00:00:00",
+    "km": 37.1
   },
   {
     "id": "jooble_1f5937839875d7a1",
@@ -1275,7 +1489,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T00:00:00"
+    "updated": "2026-10-10T00:00:00",
+    "km": 16.2
   },
   {
     "id": "jooble_0113224d269cf425",
@@ -1297,7 +1512,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T00:00:00"
+    "updated": "2026-10-10T00:00:00",
+    "km": 20.9
   },
   {
     "id": "jooble_23ce23abb7498145",
@@ -1319,7 +1535,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T00:00:00"
+    "updated": "2026-10-10T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_9275d648561c7dd0",
@@ -1341,7 +1559,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T00:00:00"
+    "updated": "2026-10-10T00:00:00",
+    "km": 19.2
   },
   {
     "id": "jooble_725f480ecbf5cbc7",
@@ -1363,7 +1582,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T00:00:00"
+    "updated": "2026-10-10T00:00:00",
+    "km": 16.2
   },
   {
     "id": "jooble_add5fa30fe36c1c7",
@@ -1385,7 +1605,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T00:00:00"
+    "updated": "2026-10-10T00:00:00",
+    "km": 18.5
   },
   {
     "id": "jooble_d68bb23c033c8bd8",
@@ -1407,7 +1628,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T00:00:00"
+    "updated": "2026-10-10T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_e2c9fee4b01bfc47",
@@ -1429,7 +1652,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-10T00:00:00"
+    "updated": "2026-10-10T00:00:00",
+    "km": 28.9
   },
   {
     "id": "jooble_fe423a7d638a9357",
@@ -1450,7 +1674,8 @@
     "dept": "95",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 19.7
   },
   {
     "id": "jooble_0de5bf1c3dfaf112",
@@ -1471,7 +1696,8 @@
     "dept": "93",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 8.6
   },
   {
     "id": "jooble_f92c7bb99b66d286",
@@ -1493,7 +1719,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T22:54:28.215935+00:00"
+    "updated": "2026-10-09T22:54:28.215935+00:00",
+    "km": 17.5
   },
   {
     "id": "jooble_6dcaba37986bd5ac",
@@ -1508,14 +1735,15 @@
     "notes": "...dans la grande distribution, un Employé libre service à Besançon en CDI. Le poste... ...brut - Réapprovisionnement des rayons en marchandises - Étiquetage...\nType indiqué : Intérimaire | Salaire indiqué : 2 000 €",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T22:54:06.934364+00:00"
+    "updated": "2026-10-09T22:54:06.934364+00:00",
+    "km": 35.6
   },
   {
     "id": "jooble_304930f1c80e1b27",
@@ -1537,7 +1765,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T20:51:31.816591+00:00"
+    "updated": "2026-10-09T20:51:31.816591+00:00",
+    "km": 27.4
   },
   {
     "id": "jooble_77db5a2cc3865470",
@@ -1559,7 +1788,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T17:51:12.210000"
+    "updated": "2026-10-09T17:51:12.210000",
+    "km": 40.9
   },
   {
     "id": "jooble_1cf7c559cafef6de",
@@ -1581,7 +1811,8 @@
       "Jooble"
     ],
     "dept": "95",
-    "updated": "2026-10-09T17:40:31.620000"
+    "updated": "2026-10-09T17:40:31.620000",
+    "km": 35.6
   },
   {
     "id": "jooble_9eeb4f99164bfafb",
@@ -1603,7 +1834,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T15:04:43.399823+00:00"
+    "updated": "2026-10-09T15:04:43.399823+00:00",
+    "km": 25.2
   },
   {
     "id": "jooble_4adaf823b943e959",
@@ -1625,7 +1857,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T14:59:17.422242+00:00"
+    "updated": "2026-10-09T14:59:17.422242+00:00",
+    "km": 58.2
   },
   {
     "id": "jooble_aa300d9217c78e6f",
@@ -1640,14 +1873,15 @@
     "notes": "...En tant que Vendeur chez H&M, vous... ...travers votre magasin et les aiderez... ...en matière de mode et de produits... ...la surface de vente et le stock soient...\nSalaire indiqué : 12.31 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-11",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T14:44:44.227014+00:00"
+    "updated": "2026-10-09T14:44:44.227014+00:00",
+    "km": 3.3
   },
   {
     "id": "jooble_025bada8b18973b9",
@@ -1669,7 +1903,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T05:24:21.022989+00:00"
+    "updated": "2026-10-09T05:24:21.022989+00:00",
+    "km": 24.1
   },
   {
     "id": "jooble_7e5af37dc383177a",
@@ -1684,14 +1919,15 @@
     "notes": "...recherche un : Employé de Rayon Charcuterie (F... ...des ventes et mise en avant des... ...et le sens du service client La... ...traditionnels et libre- service...\nType indiqué : Temps plein | Salaire indiqué : 1 800 € a 1 896 €",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T05:24:19.161897+00:00"
+    "updated": "2026-10-09T05:24:19.161897+00:00",
+    "km": 23.1
   },
   {
     "id": "jooble_abbf6198595cf4d6",
@@ -1706,14 +1942,15 @@
     "notes": "...Market Gometz-la-Ville un : Employé de Rayon PVP (pains, viennoiseries, pâtisseries... ...est recommandée. Sens du service client Rigueur et...\nType indiqué : Temps plein | Salaire indiqué : 1 834.6 €",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T05:24:19.035219+00:00"
+    "updated": "2026-10-09T05:24:19.035219+00:00",
+    "km": 37.0
   },
   {
     "id": "jooble_8ffdeed48ab4d780",
@@ -1728,14 +1965,16 @@
     "notes": "...… Mettez-les en avant dans notre rayon poissonnerie. Prenez plaisir à préparer... ...toutes leurs formes. Devenez Employé( e) commercial(e) au rayon poissonnerie...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-11T00:32:04.588909+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
-    "lastSeen": "2026-10-11",
+    "lastSeen": "2026-10-12",
     "created": "2026-10-11",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T04:51:46.596179+00:00"
+    "updated": "2026-10-09T04:51:46.596179+00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_4e272577c015dab3",
@@ -1757,7 +1996,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T04:51:46.069062+00:00"
+    "updated": "2026-10-09T04:51:46.069062+00:00",
+    "km": 19.2
   },
   {
     "id": "jooble_b85fef7e5cf927d4",
@@ -1779,7 +2019,8 @@
     "created": "2026-10-12",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 18.5
   },
   {
     "id": "jooble_8b84710e710e8fe7",
@@ -1801,7 +2042,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T04:51:44.086524+00:00"
+    "updated": "2026-10-09T04:51:44.086524+00:00",
+    "km": 16.2
   },
   {
     "id": "jooble_77717c9aa510c80b",
@@ -1823,7 +2065,31 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T04:51:40.535990+00:00"
+    "updated": "2026-10-09T04:51:40.535990+00:00",
+    "km": 16.2
+  },
+  {
+    "id": "jooble_97faefc8d5338bac",
+    "title": "Employé de rayon à service crèmerie coupe F/H - - Monoprix",
+    "company": "Ideuzo",
+    "location": "Boulogne-Billancourt",
+    "dept": "92",
+    "contract": "À vérifier",
+    "category": "rayon",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-8040969764372307563?ckey=mise+en+rayon%2c+employ%c3%a9+libre-service%2c+rayoniste%2c+employ%c3%a9+de+rayon%2c+r%c3%a9assort&rgn=12&pos=41&groupId=-594307577&elckey=-4767151037999131975&p=1&aq=-8705464920153416068&cid=843&jobAge=84&brelb=100&bscr=163.66827&scr=163.66827",
+    "notes": "...terroirs et faire découvrir les saveurs à nos clients. Devenez Employé( e) commercial(e) au rayon c rèmerie coupe chez Monoprix et prenez plaisir à...",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "updated": "2026-10-09T04:51:39.859667+00:00",
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "km": 19.2
   },
   {
     "id": "jooble_06cae2ca795f7f6c",
@@ -1838,14 +2104,15 @@
     "notes": "...recrutement d'un vendeur en animalerie... ...Le plus grand magasin d'EUREA, entièrement... ...maîtres mots : conseil, commerce et... ...l'activité de vente et les espèces...\nType indiqué : Temps plein | Salaire indiqué : 24.6k € a 29.2k €/an",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T04:29:13.923000"
+    "updated": "2026-10-09T04:29:13.923000",
+    "km": 32.6
   },
   {
     "id": "jooble_81b198048b0ef734",
@@ -1859,7 +2126,7 @@
     "notes": "...activités industrielles et logistiques, nous anticipons les besoins... ...clients et recherchons des Préparateurs de commandes (H/F) pour des missions à venir...\nType indiqué : Temps plein | Salaire indiqué : 12.31 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -1867,7 +2134,8 @@
       "Jooble"
     ],
     "updated": "2026-10-09T01:29:13.473631+00:00",
-    "dept": "94"
+    "dept": "94",
+    "km": 19.7
   },
   {
     "id": "jooble_1089776717b59163",
@@ -1882,14 +2150,16 @@
     "notes": "? Mission du Vendeur en Boulangerie... ...réduction sur notre boutique Café offert... ...En plus de la vente de produits... ...et les conseiller - Prendre les...\nSalaire indiqué : 120 €/jour",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T00:00:00"
+    "updated": "2026-10-09T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_427ef1124e270572",
@@ -1911,7 +2181,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T00:00:00"
+    "updated": "2026-10-09T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_2e6696c64426b6c9",
@@ -1933,7 +2205,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T00:00:00"
+    "updated": "2026-10-09T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_fbcbc6372b453056",
@@ -1955,7 +2229,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T00:00:00"
+    "updated": "2026-10-09T00:00:00",
+    "km": 18.3
   },
   {
     "id": "jooble_0f07e57ff8a5c2de",
@@ -1977,7 +2252,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T00:00:00"
+    "updated": "2026-10-09T00:00:00",
+    "km": 21.3
   },
   {
     "id": "jooble_46ea97e262d817bc",
@@ -1999,7 +2275,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T00:00:00"
+    "updated": "2026-10-09T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_4819030643086911",
@@ -2021,7 +2299,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T00:00:00"
+    "updated": "2026-10-09T00:00:00",
+    "km": 16.2
   },
   {
     "id": "jooble_35e2524ee124dc86",
@@ -2043,7 +2322,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-09T00:00:00"
+    "updated": "2026-10-09T00:00:00",
+    "km": 7.2
   },
   {
     "id": "jooble_51b7bb3192ab796b",
@@ -2065,7 +2345,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-08T22:54:29.016047+00:00"
+    "updated": "2026-10-08T22:54:29.016047+00:00",
+    "km": 11.3
   },
   {
     "id": "jooble_c57600e1f95833ff",
@@ -2087,7 +2368,8 @@
     "created": "2026-10-12",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 11.3
   },
   {
     "id": "jooble_8e5168cd1ecd5b93",
@@ -2105,7 +2387,8 @@
     "demo": false,
     "created": "2026-10-10",
     "updated": "2026-10-08T22:38:09.0000000",
-    "dept": "77"
+    "dept": "77",
+    "km": 70.6
   },
   {
     "id": "jooble_519fa49d3bd26bfc",
@@ -2127,7 +2410,8 @@
       "Jooble"
     ],
     "updated": "2026-10-08T17:40:31.990000",
-    "dept": "77"
+    "dept": "77",
+    "km": 19.3
   },
   {
     "id": "jooble_602175fde23cc5f5",
@@ -2148,7 +2432,8 @@
     "dept": "94",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 19.7
   },
   {
     "id": "jooble_72742e33a2d7b159",
@@ -2159,10 +2444,10 @@
     "category": "stock",
     "date": "",
     "url": "https://fr.jooble.org/desc/-6330586651662413957?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=18&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=103&brelb=100&bscr=1797.9995&scr=1797.9995",
-    "notes": "...grande distribution portées haut et fort par... ...points de vente, de la logistique à l’immobilier, en... ...Mousquetaires, l’ approvisionnement des 2 860 points...",
+    "notes": "...service des points de vente, de la logistique à l’immobilier, en passant par... ...Groupement Mousquetaires, l’ approvisionnement des 2 860 points de vente...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-10T12:26:05.592702+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -2170,7 +2455,8 @@
       "Jooble"
     ],
     "updated": "2026-10-08T14:49:54.808733+00:00",
-    "dept": "91"
+    "dept": "91",
+    "km": 37.1
   },
   {
     "id": "jooble_ec44bc382416f3b3",
@@ -2184,7 +2470,7 @@
     "notes": "...recrute un(e) Magasinier Cariste CACES 1-3-5 / Agent Logistique Aéronautique (... ...mouvements de stock sur système embarqué... ...aux bons de commande et de travail....\nType indiqué : Intérimaire | Salaire indiqué : 12.31 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -2192,7 +2478,8 @@
       "Jooble"
     ],
     "updated": "2026-10-08T14:36:23.239002+00:00",
-    "dept": "78"
+    "dept": "78",
+    "km": 30.5
   },
   {
     "id": "jooble_93a029b7d33539d9",
@@ -2207,14 +2494,15 @@
     "notes": "...Le poste de Magasinier/ Cariste H/F... ...suivantes : * Préparer les commandes, * Gérer les stocks, * Assurer... ...de la logistique ; Vous maîtrisez...\nType indiqué : Intérimaire",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-08T07:12:27.097854+00:00"
+    "updated": "2026-10-08T07:12:27.097854+00:00",
+    "km": 35.6
   },
   {
     "id": "jooble_ccb96b4aff9d61d1",
@@ -2229,14 +2517,15 @@
     "notes": "...Import-Export, Logistique et Transport... ...un poste de magasinier cariste dans... ...missions de : - Préparer les commandes clients et approvisionner la production...\nType indiqué : Temps plein | Salaire indiqué : 27k € a 30k €/an",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-11",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-08T05:40:38.960000"
+    "updated": "2026-10-08T05:40:38.960000",
+    "km": 28.9
   },
   {
     "id": "jooble_31c5956cee6f69de",
@@ -2250,7 +2539,7 @@
     "notes": "...du renforcement de ses équipes logistiques, notre client recherchons plusieurs Préparateurs de Commandes / Magasiniers (H/F) titulaires des CACES 1...\nType indiqué : Intérimaire",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -2258,7 +2547,100 @@
       "Jooble"
     ],
     "updated": "2026-10-08T01:52:02.337000",
-    "dept": "94"
+    "dept": "94",
+    "km": 20.8
+  },
+  {
+    "id": "jooble_f322999bb32eac88",
+    "title": "Vendeur MultiMedia Téléphonie H/F",
+    "company": "Olivier Mery",
+    "location": "Claye-Souilly, Seine-et-Marne",
+    "dept": "77",
+    "contract": "À vérifier",
+    "category": "vente",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/7120581454783102612?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=3&groupId=-1837074271&elckey=-1787121510873636582&p=1&aq=-8070671731391558370&cid=843&jobAge=103&brelb=100&bscr=3516241&scr=3516241",
+    "notes": "...spécialisé dans la vente et le rachat... ...un(e) Vendeur( se) et Acheteur... ...! Vente & Conseil en Téléphonie Accueillir... ...Dynamisme du Magasin Participer...\nSalaire indiqué : 21.7k € a 25k €/an",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-10",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-10-08T00:00:00",
+    "km": 14.1
+  },
+  {
+    "id": "jooble_5f4fd8071ee6c1f5",
+    "title": "Planificateur Logistique (h/f)",
+    "company": "Adecco - France",
+    "location": "Lisses, Essonne",
+    "contract": "Intérim",
+    "category": "stock",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/5711916321478916965?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=16&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=103&brelb=100&bscr=2132.8782&scr=2132.8782",
+    "notes": "...Planificateur Logistique (H/F) en... ..., suivre les stocks et piloter les... ...processus d’ approvisionnement et de distribution... ...pour préparer votre avenir...\nType indiqué : Intérimaire",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "created": "2026-10-10",
+    "lastSeen": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-10-08T00:00:00",
+    "dept": "91",
+    "km": 34.2
+  },
+  {
+    "id": "jooble_68c93f999804347f",
+    "title": "(H/F) Conseiller(e) vendeur(se) PARIS 1er 25H",
+    "company": "MINISO",
+    "location": "Paris 1er",
+    "dept": "75",
+    "contract": "À vérifier",
+    "category": "vente",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-8005304913641874719?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=40&groupId=-1837074271&elckey=-1427509207064504980&p=1&aq=57692970248192542&cid=843&jobAge=97&brelb=100&bscr=492608.84&scr=492608.84",
+    "notes": "...de 6 000 magasins dans le monde... ...un(e) Vendeur( se) polyvalent... ...de ses boutiques. Prêt( e) à vivre... ...clients et les conseiller sur nos... ...de vente fixés et contribuer...\nType indiqué : Temps plein | Salaire indiqué : 1 600 € a 1 800 €",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-10",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-10-08T00:00:00",
+    "km": 11.3
+  },
+  {
+    "id": "jooble_ef232fbd28c977c7",
+    "title": "Employé de libre-service polyvalent H/F",
+    "company": "LINK RH Recrutement",
+    "location": "L'Île-Saint-Denis, Seine-Saint-Denis",
+    "dept": "93",
+    "contract": "À vérifier",
+    "category": "rayon",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-3857752330223033051?ckey=mise+en+rayon%2c+employ%c3%a9+libre-service%2c+rayoniste%2c+employ%c3%a9+de+rayon%2c+r%c3%a9assort&rgn=12&pos=29&groupId=-594307577&elckey=-4767151037999131975&p=1&aq=-8705464920153416068&cid=843&jobAge=108&brelb=100&bscr=284.15564&scr=284.15564",
+    "notes": "...le biais de LINK RH, des Employé(e)s de libre-service polyvalents H/F, dans le cadre... ...à la réception et la mise en rayon des marchandises, la gestion...\nSalaire indiqué : 783.9 € a 1 823.03 €",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "updated": "2026-10-08T00:00:00",
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "km": 11.3
   },
   {
     "id": "jooble_155820553fb36d01",
@@ -2280,7 +2662,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-08T00:00:00"
+    "updated": "2026-10-08T00:00:00",
+    "km": 44.2
   },
   {
     "id": "jooble_ee9f969d7f1726eb",
@@ -2302,51 +2685,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-08T00:00:00"
-  },
-  {
-    "id": "jooble_f322999bb32eac88",
-    "title": "Vendeur MultiMedia Téléphonie H/F",
-    "company": "Olivier Mery",
-    "location": "Claye-Souilly, Seine-et-Marne",
-    "dept": "77",
-    "contract": "À vérifier",
-    "category": "vente",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/7120581454783102612?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=3&groupId=-1837074271&elckey=-1787121510873636582&p=1&aq=-8070671731391558370&cid=843&jobAge=103&brelb=100&bscr=3516241&scr=3516241",
-    "notes": "...spécialisé dans la vente et le rachat... ...un(e) Vendeur( se) et Acheteur... ...! Vente & Conseil en Téléphonie Accueillir... ...Dynamisme du Magasin Participer...\nSalaire indiqué : 21.7k € a 25k €/an",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "lastSeen": "2026-10-12",
-    "created": "2026-10-10",
-    "sources": [
-      "Jooble"
-    ],
-    "updated": "2026-10-08T00:00:00"
-  },
-  {
-    "id": "jooble_5f4fd8071ee6c1f5",
-    "title": "Planificateur Logistique (h/f)",
-    "company": "Adecco - France",
-    "location": "Lisses, Essonne",
-    "contract": "Intérim",
-    "category": "stock",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/5711916321478916965?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=16&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=103&brelb=100&bscr=2132.8782&scr=2132.8782",
-    "notes": "...Planificateur Logistique (H/F) en... ..., suivre les stocks et piloter les... ...processus d’ approvisionnement et de distribution... ...pour préparer votre avenir...\nType indiqué : Intérimaire",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "created": "2026-10-10",
-    "lastSeen": "2026-10-12",
-    "sources": [
-      "Jooble"
-    ],
     "updated": "2026-10-08T00:00:00",
-    "dept": "91"
+    "km": 17.6
   },
   {
     "id": "jooble_c6e79b9d9ed79c00",
@@ -2368,29 +2708,8 @@
       "Jooble"
     ],
     "updated": "2026-10-08T00:00:00",
-    "dept": "91"
-  },
-  {
-    "id": "jooble_68c93f999804347f",
-    "title": "(H/F) Conseiller(e) vendeur(se) PARIS 1er 25H",
-    "company": "MINISO",
-    "location": "Paris 1er",
-    "dept": "75",
-    "contract": "À vérifier",
-    "category": "vente",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/-8005304913641874719?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=40&groupId=-1837074271&elckey=-1427509207064504980&p=1&aq=57692970248192542&cid=843&jobAge=97&brelb=100&bscr=492608.84&scr=492608.84",
-    "notes": "...de 6 000 magasins dans le monde... ...un(e) Vendeur( se) polyvalent... ...de ses boutiques. Prêt( e) à vivre... ...clients et les conseiller sur nos... ...de vente fixés et contribuer...\nType indiqué : Temps plein | Salaire indiqué : 1 600 € a 1 800 €",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "lastSeen": "2026-10-12",
-    "created": "2026-10-10",
-    "sources": [
-      "Jooble"
-    ],
-    "updated": "2026-10-08T00:00:00"
+    "dept": "91",
+    "km": 33.0
   },
   {
     "id": "jooble_f98b3aab3e5a3213",
@@ -2412,7 +2731,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-08T00:00:00"
+    "updated": "2026-10-08T00:00:00",
+    "km": 14.8
   },
   {
     "id": "jooble_be33cbf4676507cd",
@@ -2434,7 +2754,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-08T00:00:00"
+    "updated": "2026-10-08T00:00:00",
+    "km": 8.6
   },
   {
     "id": "jooble_169dca8259366b18",
@@ -2456,7 +2777,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-08T00:00:00"
+    "updated": "2026-10-08T00:00:00",
+    "km": 18.1
   },
   {
     "id": "jooble_9640d617ca37fb74",
@@ -2478,7 +2800,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-08T00:00:00"
+    "updated": "2026-10-08T00:00:00",
+    "km": 20.8
   },
   {
     "id": "jooble_a4e908df5f0bbf05",
@@ -2500,7 +2823,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-08T00:00:00"
+    "updated": "2026-10-08T00:00:00",
+    "km": 17.0
   },
   {
     "id": "jooble_44b5f68d399e3c05",
@@ -2522,7 +2846,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-08T00:00:00"
+    "updated": "2026-10-08T00:00:00",
+    "km": 18.0
   },
   {
     "id": "jooble_f308f4fb57edad25",
@@ -2537,14 +2862,15 @@
     "notes": "...Acteur majeur de l’ emploi depuis près de 70 ans, Manpower est implanté... ...détail et spécialisée, un Employé de libre-service (H/F) Les missions: -...\nType indiqué : Intérimaire | Salaire indiqué : 12.75 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-07T23:51:36.580000"
+    "updated": "2026-10-07T23:51:36.580000",
+    "km": 39.3
   },
   {
     "id": "jooble_bdc8c2dd63d25848",
@@ -2565,7 +2891,8 @@
     "dept": "94",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 14.5
   },
   {
     "id": "jooble_e01ae0b60b6df5f0",
@@ -2587,7 +2914,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-07T22:52:59.221727+00:00"
+    "updated": "2026-10-07T22:52:59.221727+00:00",
+    "km": 11.3
   },
   {
     "id": "jooble_6b177a28dae3d203",
@@ -2609,7 +2937,8 @@
       "Jooble"
     ],
     "dept": "92",
-    "updated": "2026-10-07T17:41:07.663000"
+    "updated": "2026-10-07T17:41:07.663000",
+    "km": 17.4
   },
   {
     "id": "jooble_7895bd16b3c0be76",
@@ -2624,14 +2953,15 @@
     "notes": "...industrie, de la logistique, ainsi que... ...Cariste - Magasinier( e) motivé(e)... ... Préparer les commandes avec précision... ...gestion des stocks Identifier...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-07T15:29:05.212446+00:00"
+    "updated": "2026-10-07T15:29:05.212446+00:00",
+    "km": 25.7
   },
   {
     "id": "jooble_a903b447375450ac",
@@ -2653,7 +2983,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-07T15:03:45.155713+00:00"
+    "updated": "2026-10-07T15:03:45.155713+00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_c5f4af2394ac478d",
@@ -2675,7 +3007,8 @@
     "created": "2026-10-12",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 20.7
   },
   {
     "id": "jooble_573f7229e9b22cb4",
@@ -2690,14 +3023,16 @@
     "notes": "...première marque de mode française née... ...un(e) Premier vendeur pour rejoindre... ...techniques de vente en faisant... ...l’activité en boutique ( planning journalier...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-07T07:08:52.890000"
+    "updated": "2026-10-07T07:08:52.890000",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_18cfea171bf413cc",
@@ -2711,7 +3046,7 @@
     "notes": "Chez SUPRAERO, préparer une commande, c'est bien plus que... ...et mouvements de stocks - Déballer, contrôler... ...de commandes, la logistique ou la gestion des...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -2719,7 +3054,31 @@
       "Jooble"
     ],
     "dept": "91",
-    "updated": "2026-10-07T01:28:40.061863+00:00"
+    "updated": "2026-10-07T01:28:40.061863+00:00",
+    "km": 33.4
+  },
+  {
+    "id": "jooble_09ae9406bb063860",
+    "title": "EMPLOYE LIBRE SERVICE H/F",
+    "company": "CRIT NOGENT-SUR-SEINE",
+    "location": "Nogent-sur-Seine, Aube",
+    "dept": "",
+    "contract": "Intérim",
+    "category": "rayon",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-4816186452385085173?ckey=mise+en+rayon%2c+employ%c3%a9+libre-service%2c+rayoniste%2c+employ%c3%a9+de+rayon%2c+r%c3%a9assort&rgn=12&pos=17&groupId=-594307577&elckey=7997028731223435275&p=1&aq=-7340287375003299779&cid=843&jobAge=127&brelb=100&bscr=380.6284&scr=380.6284",
+    "notes": "...ouvrons tous nos emplois aux candidats en situation... ...distribution, un employé libre-service à Nogent-sur-Seine... ...des rayons en marchandises...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 € a 13 €/heure",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-10",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-10-07T00:00:00",
+    "km": 7.4
   },
   {
     "id": "jooble_16291d160b289e3f",
@@ -2741,29 +3100,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-07T00:00:00"
-  },
-  {
-    "id": "jooble_09ae9406bb063860",
-    "title": "EMPLOYE LIBRE SERVICE H/F",
-    "company": "CRIT NOGENT-SUR-SEINE",
-    "location": "Nogent-sur-Seine, Aube",
-    "dept": "",
-    "contract": "Intérim",
-    "category": "rayon",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/-4816186452385085173?ckey=mise+en+rayon%2c+employ%c3%a9+libre-service%2c+rayoniste%2c+employ%c3%a9+de+rayon%2c+r%c3%a9assort&rgn=12&pos=17&groupId=-594307577&elckey=7997028731223435275&p=1&aq=-7340287375003299779&cid=843&jobAge=127&brelb=100&bscr=380.6284&scr=380.6284",
-    "notes": "...ouvrons tous nos emplois aux candidats en situation... ...distribution, un employé libre-service à Nogent-sur-Seine... ...des rayons en marchandises...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 € a 13 €/heure",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "lastSeen": "2026-10-12",
-    "created": "2026-10-10",
-    "sources": [
-      "Jooble"
-    ],
-    "updated": "2026-10-07T00:00:00"
+    "updated": "2026-10-07T00:00:00",
+    "km": 33.0
   },
   {
     "id": "jooble_22a484ff1fe48674",
@@ -2785,7 +3123,8 @@
       "Jooble"
     ],
     "updated": "2026-10-07T00:00:00",
-    "dept": "77"
+    "dept": "77",
+    "km": 24.9
   },
   {
     "id": "jooble_0f791ffd47eb5cc1",
@@ -2807,7 +3146,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-07T00:00:00"
+    "updated": "2026-10-07T00:00:00",
+    "km": 19.8,
+    "trajetMin": 99
   },
   {
     "id": "jooble_e637f49028c9adbd",
@@ -2825,7 +3166,8 @@
     "demo": false,
     "created": "2026-10-10",
     "updated": "2026-10-07T00:00:00.0000000",
-    "dept": "95"
+    "dept": "95",
+    "km": 57.3
   },
   {
     "id": "jooble_3804a7279b742073",
@@ -2847,7 +3189,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-06T22:53:22.770700+00:00"
+    "updated": "2026-10-06T22:53:22.770700+00:00",
+    "km": 11.3
   },
   {
     "id": "jooble_868932c37ec0df5f",
@@ -2868,7 +3211,8 @@
     "dept": "75",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 11.3
   },
   {
     "id": "jooble_02dc3792ce90028a",
@@ -2890,7 +3234,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-06T11:51:10.163000"
+    "updated": "2026-10-06T11:51:10.163000",
+    "km": 17.5
   },
   {
     "id": "jooble_f4fe281eb7685b96",
@@ -2905,14 +3250,38 @@
     "notes": "...son client un Magasinier gestionnaire de stocks (H/F) -... ...stockage. - Préparer les commandes selon les bons... ...expérience en logistique ou magasinage...\nType indiqué : Intérimaire | Salaire indiqué : 12.5 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-12",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-06T00:00:00"
+    "updated": "2026-10-06T00:00:00",
+    "km": 66.1
+  },
+  {
+    "id": "jooble_557bc2763c7a267f",
+    "title": "Gestionnaire de stocks magasinier (H/F)",
+    "company": "Manpower",
+    "location": "Wissous, Essonne",
+    "contract": "Intérim",
+    "category": "stock",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/4959624214606698310?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=11&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=151&brelb=110&bscr=2724.9236&scr=2724.9236",
+    "notes": "...recherche un(e) Gestionnaire de Stock / Magasinier H/F,... ...de l'équipe logistique, vous serez en... ...camions. - Préparer les commandes conformément...\nType indiqué : Intérimaire | Salaire indiqué : 16 €/heure",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "created": "2026-10-10",
+    "lastSeen": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-10-06T00:00:00",
+    "dept": "91",
+    "km": 21.6
   },
   {
     "id": "jooble_aa0e6513be4b1349",
@@ -2934,29 +3303,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-06T00:00:00"
-  },
-  {
-    "id": "jooble_557bc2763c7a267f",
-    "title": "Gestionnaire de stocks magasinier (H/F)",
-    "company": "Manpower",
-    "location": "Wissous, Essonne",
-    "contract": "Intérim",
-    "category": "stock",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/4959624214606698310?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=11&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=151&brelb=110&bscr=2724.9236&scr=2724.9236",
-    "notes": "...recherche un(e) Gestionnaire de Stock / Magasinier H/F,... ...de l'équipe logistique, vous serez en... ...camions. - Préparer les commandes conformément...\nType indiqué : Intérimaire | Salaire indiqué : 16 €/heure",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "created": "2026-10-10",
-    "lastSeen": "2026-10-12",
-    "sources": [
-      "Jooble"
-    ],
     "updated": "2026-10-06T00:00:00",
-    "dept": "91"
+    "km": 28.9
   },
   {
     "id": "jooble_76eba585c07a85a7",
@@ -2978,7 +3326,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-05T23:53:21.397000"
+    "updated": "2026-10-05T23:53:21.397000",
+    "km": 16.2
   },
   {
     "id": "jooble_ecbdb665de6ac572",
@@ -2993,14 +3342,15 @@
     "notes": "...au sein des magasins Gamm vert !... ...points de vente ont rapidement... ...et de conseils au coeur des... ...magasins, portés par le pôle... ...Bois (95), un Vendeur en...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-05T22:53:26.275170+00:00"
+    "updated": "2026-10-05T22:53:26.275170+00:00",
+    "km": 21.4
   },
   {
     "id": "jooble_13c1acbf1dddd7c2",
@@ -3022,7 +3372,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-05T20:53:28.194539+00:00"
+    "updated": "2026-10-05T20:53:28.194539+00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_e84f46d8c69fe75d",
@@ -3044,7 +3396,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-05T20:53:26.759370+00:00"
+    "updated": "2026-10-05T20:53:26.759370+00:00",
+    "km": 19.2
   },
   {
     "id": "jooble_89619019f59bcb4b",
@@ -3066,7 +3419,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-05T20:53:22.271717+00:00"
+    "updated": "2026-10-05T20:53:22.271717+00:00",
+    "km": 19.2
   },
   {
     "id": "jooble_ce4d6a37b1eabfda",
@@ -3088,7 +3442,31 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-05T20:53:21.993672+00:00"
+    "updated": "2026-10-05T20:53:21.993672+00:00",
+    "km": 28.9
+  },
+  {
+    "id": "jooble_f8bdf5899ccfabfd",
+    "title": "Employée, employé de rayon à service charcuterie coupe, Issy-les-Moulineaux",
+    "company": "Ideuzo",
+    "location": "Issy-les-Moulineaux, Hauts-de-Seine",
+    "dept": "92",
+    "contract": "À vérifier",
+    "category": "rayon",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-4312011848978558699?ckey=mise+en+rayon%2c+employ%c3%a9+libre-service%2c+rayoniste%2c+employ%c3%a9+de+rayon%2c+r%c3%a9assort&rgn=12&pos=48&groupId=-594307577&elckey=-4767151037999131975&p=1&aq=-8705464920153416068&cid=843&jobAge=180&brelb=100&bscr=161.61694&scr=161.61694",
+    "notes": "...opportunité en faisant défiler la page maintenant. Devenez Employé Commercial(e) au rayon charcuterie chez Monoprix et développez votre talent d’...",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "updated": "2026-10-05T20:53:20.754760+00:00",
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "km": 18.5
   },
   {
     "id": "jooble_1a3aa31d5851d841",
@@ -3103,14 +3481,15 @@
     "notes": "...un CDD, un(e) Vendeur( euse) épicerie... ...de points de vente (dont une majorité... ...Accueillir et conseiller la clientèle... ...de la boutique # Vous avez...\nType indiqué : Intérimaire",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-05T17:37:42.393000"
+    "updated": "2026-10-05T17:37:42.393000",
+    "km": 11.3
   },
   {
     "id": "jooble_ef2901b082b229d4",
@@ -3132,7 +3511,8 @@
       "Jooble"
     ],
     "updated": "2026-10-05T11:07:49.189306+00:00",
-    "dept": "77"
+    "dept": "77",
+    "km": 22.8
   },
   {
     "id": "jooble_c52631f36332a5cb",
@@ -3150,7 +3530,8 @@
     "demo": false,
     "created": "2026-10-10",
     "updated": "2026-10-05T11:07:49.1893061+00:00",
-    "dept": "77"
+    "dept": "77",
+    "km": 22.8
   },
   {
     "id": "jooble_b89c8ee675f5a8e9",
@@ -3165,14 +3546,15 @@
     "notes": "...notre équipe logistique un(e) : MANUTENTIONNAIRE... ...MOBILIER / MAGASINIER (H/F) Votre... ...d’assurer la préparation et le montage... ...Préparer les commandes clients ; •...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-11",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-05T07:22:37.062713+00:00"
+    "updated": "2026-10-05T07:22:37.062713+00:00",
+    "km": 22.8
   },
   {
     "id": "jooble_75522176ba7f21e6",
@@ -3187,14 +3569,15 @@
     "notes": "...opportunités d’ emploi en grande distribution... ...faire de notre rayon vin un espace... ...Au-delà de la mise en rayon... ...Temps plein Service : Employé de rayon...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-11",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-04T17:51:10.437000"
+    "updated": "2026-10-04T17:51:10.437000",
+    "km": 5.8
   },
   {
     "id": "jooble_ec7ef833bd7ff83b",
@@ -3216,7 +3599,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-04T17:51:10.117000"
+    "updated": "2026-10-04T17:51:10.117000",
+    "km": 48.2
   },
   {
     "id": "jooble_484c77a97b50fb2c",
@@ -3238,7 +3622,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-04T05:51:53.743000"
+    "updated": "2026-10-04T05:51:53.743000",
+    "km": 20.7
   },
   {
     "id": "jooble_2e31c7e1df7f433e",
@@ -3260,7 +3645,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-04T05:51:41.647000"
+    "updated": "2026-10-04T05:51:41.647000",
+    "km": 18.3
   },
   {
     "id": "jooble_73fbde8700500421",
@@ -3275,14 +3661,15 @@
     "notes": "...) Cariste Magasinier Polyvalent... ...les équipes logistiques. Vos... ...marchandises * Approvisionnement des postes... ...* Préparation des commandes et expéditions...\nType indiqué : Intérimaire",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T10:52:50.485966+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-11",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-04T00:26:49.544607+00:00"
+    "updated": "2026-10-04T00:26:49.544607+00:00",
+    "km": 15.3
   },
   {
     "id": "jooble_3f14e877bb48e9da",
@@ -3297,14 +3684,16 @@
     "notes": "...e) Premier(e) Vendeur( se)(F/H) situé... ...les orienter en magasin * Fournir un niveau de conseil sur les... ...selon planning boutique avec week-ends...\nType indiqué : Temps plein | Salaire indiqué : 1 800 € a 2 000 €",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-04T00:00:00"
+    "updated": "2026-10-04T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_085fa1213e76c3c9",
@@ -3326,7 +3715,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-03T17:35:34.987000"
+    "updated": "2026-10-03T17:35:34.987000",
+    "km": 25.1,
+    "trajetMin": 92
   },
   {
     "id": "jooble_2d7e0c07558e0fac",
@@ -3347,7 +3738,8 @@
     "dept": "93",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 7.3
   },
   {
     "id": "jooble_96d1aa8c8305a222",
@@ -3361,7 +3753,7 @@
     "notes": "...industrielles et logistiques, nous... ...recherchons des Magasinier / Cariste (... ...- Sortir du stock et acheminer... ...en préparation de commandes en milieu industriel...\nType indiqué : Temps plein | Salaire indiqué : 12.31 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -3369,7 +3761,8 @@
       "Jooble"
     ],
     "updated": "2026-10-03T01:28:45.007917+00:00",
-    "dept": ""
+    "dept": "",
+    "km": 53.6
   },
   {
     "id": "jooble_4726c7d2631f658e",
@@ -3384,14 +3777,16 @@
     "notes": "...douce en prêt-à-porter, maroquinerie... ...d'une mode toujours plus... ...leur vent de liberté... ...prestigieux grands magasins parisiens... ...que 1er.e Vendeur. se, vous...\nType indiqué : Temps partiel",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-02T14:58:29.569953+00:00"
+    "updated": "2026-10-02T14:58:29.569953+00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_3330f8cd29cfaec1",
@@ -3413,7 +3808,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-02T05:51:16.283000"
+    "updated": "2026-10-02T05:51:16.283000",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_e6b6eef8857cec7c",
@@ -3435,7 +3832,8 @@
     "created": "2026-10-12",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 19.9
   },
   {
     "id": "jooble_9f2045d74320a202",
@@ -3457,7 +3855,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-02T05:51:14.287000"
+    "updated": "2026-10-02T05:51:14.287000",
+    "km": 8.6
   },
   {
     "id": "jooble_d58b4235a48ef79b",
@@ -3472,14 +3871,15 @@
     "notes": "...spécialisé en logistique, recrute... ...(95), un magasinier cariste.... ..., stocke et prépare les produits... ...inventaire des stocks. ... ...Préparation de commandes selon les...\nType indiqué : Temps plein | Salaire indiqué : 12.5 € a 13 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-02T00:00:00"
+    "updated": "2026-10-02T00:00:00",
+    "km": 19.9
   },
   {
     "id": "jooble_ed7d999ef4b5114c",
@@ -3493,7 +3893,7 @@
     "notes": "...spécialisé en logistique, recrute pour... ...gestion globale du stock de pièces... ...- Picking & Approvisionnement : préparation des commandes de pièces et mise...\nType indiqué : Temps plein | Salaire indiqué : 12.31 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -3501,7 +3901,8 @@
       "Jooble"
     ],
     "updated": "2026-10-02T00:00:00",
-    "dept": "95"
+    "dept": "95",
+    "km": 22.0
   },
   {
     "id": "jooble_f9fb4439a05f3431",
@@ -3515,7 +3916,7 @@
     "notes": "...RECRUTEMENT – MAGASINIER / CARISTE... ...spécialisée dans la préparation de... ...CACES 1/3/5 ✅ Approvisionnement des zones de... ...opérations logistiques ❄️ Conditions...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -3523,7 +3924,8 @@
       "Jooble"
     ],
     "updated": "2026-10-02T00:00:00",
-    "dept": "95"
+    "dept": "95",
+    "km": 10.8
   },
   {
     "id": "jooble_f245495a8b7e9c86",
@@ -3538,14 +3940,15 @@
     "notes": "...et spécialisée, un Conseiller vendeur luxe horlogerie (H/... ...sein d'un réseau de boutiques situées en zone... ...- Développer les ventes en valorisant les produits...\nType indiqué : Temps plein | Salaire indiqué : 24k €/an",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-01T23:51:33.680000"
+    "updated": "2026-10-01T23:51:33.680000",
+    "km": 19.1
   },
   {
     "id": "jooble_47921528a3a0f20c",
@@ -3560,14 +3963,15 @@
     "notes": "...stratégie au service d'une alimentation... ...? Devenez Employé( e) commercial(e) libre- service rayon liquides chez... ...objectifs de réassortiment des boissons...\nType indiqué : Intérimaire",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-01T22:52:59.938267+00:00"
+    "updated": "2026-10-01T22:52:59.938267+00:00",
+    "km": 11.3
   },
   {
     "id": "jooble_10d377b6aa55041f",
@@ -3589,7 +3993,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-01T22:52:59.551682+00:00"
+    "updated": "2026-10-01T22:52:59.551682+00:00",
+    "km": 20.9
   },
   {
     "id": "jooble_744c50aff103837f",
@@ -3611,7 +4016,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-01T22:52:57.350576+00:00"
+    "updated": "2026-10-01T22:52:57.350576+00:00",
+    "km": 28.9
   },
   {
     "id": "jooble_3eb0aa2c68b53ccf",
@@ -3633,7 +4039,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-01T22:52:56.844508+00:00"
+    "updated": "2026-10-01T22:52:56.844508+00:00",
+    "km": 57.4
   },
   {
     "id": "jooble_ff786d398af547a4",
@@ -3655,7 +4062,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-01T17:51:16.437000"
+    "updated": "2026-10-01T17:51:16.437000",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_c827ed9822717329",
@@ -3669,7 +4078,7 @@
     "notes": "...recherche pour son client un Magasinier gestionnaire de stocks (H/F) situé en ZONE... ...magasinage et gérer le comptoir logistique - Accueillir et...\nType indiqué : Intérimaire | Salaire indiqué : 2 150 € a 2 250 €",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -3677,7 +4086,8 @@
       "Jooble"
     ],
     "updated": "2026-10-01T17:40:38.913000",
-    "dept": "95"
+    "dept": "95",
+    "km": 10.8
   },
   {
     "id": "jooble_232f4981bf586599",
@@ -3691,7 +4101,7 @@
     "notes": "...ses équipes logistiques et recherche un magasinier capable d'... ...stockage, préparation et... ...Gestion des stocks • Effectuer... ...Préparation des commandes • Préparer...\nType indiqué : Intérimaire",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -3699,7 +4109,8 @@
       "Jooble"
     ],
     "dept": "78",
-    "updated": "2026-10-01T16:17:38.080000"
+    "updated": "2026-10-01T16:17:38.080000",
+    "km": 28.9
   },
   {
     "id": "jooble_dbff7535949bd4c8",
@@ -3721,7 +4132,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-01T14:50:59.450017+00:00"
+    "updated": "2026-10-01T14:50:59.450017+00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_d12cb227e8105783",
@@ -3743,7 +4156,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-01T01:29:02.238616+00:00"
+    "updated": "2026-10-01T01:29:02.238616+00:00",
+    "km": 25.2
   },
   {
     "id": "jooble_744e2b8590511399",
@@ -3758,14 +4172,15 @@
     "notes": "...transports, un magasinier cariste /... ...- Gestion du stock de matériel ;... ...inventaires ; - Préparation du matériel... ...de la base logistique. - Personne...\nType indiqué : Intérimaire | Salaire indiqué : 1 867.06 € a 2 000 €",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T10:52:50.485966+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-12",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-01T00:00:00"
+    "updated": "2026-10-01T00:00:00",
+    "km": 25.6
   },
   {
     "id": "jooble_76e3b3ea3916721f",
@@ -3780,14 +4195,16 @@
     "notes": "...historique de la mode ... ...dans le prêt-à-porter féminin.... ...de 700 magasins, des ouvertures... ...un(e) Vendeur( se) en... ...de vente à travers... ...Accueillir, conseiller et...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T10:52:50.485966+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-11",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-01T00:00:00"
+    "updated": "2026-10-01T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_c90ffd554eb55f69",
@@ -3802,14 +4219,16 @@
     "notes": "...hui un(e) : Vendeur( se) Chasse &... ...comme véritable conseiller( ère) auprès de... ...de la boutique. À ce titre, vos... ...Réaliser les ventes d’armes, munitions...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-10T18:23:54.283851+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
-    "lastSeen": "2026-10-11",
+    "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-10-01T00:00:00"
+    "updated": "2026-10-01T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_5c8e01d423de9bbb",
@@ -3831,7 +4250,8 @@
       "Jooble"
     ],
     "updated": "2026-10-01T00:00:00",
-    "dept": "77"
+    "dept": "77",
+    "km": 29.9
   },
   {
     "id": "jooble_cf50f3095edd352c",
@@ -3846,14 +4266,15 @@
     "notes": "...activités, dans un rayon de 40 km... ...bassin d' emploi et de son... ...à votre service ses ressources... ...de libre service rayon... ...mission : - Mise en rayon des...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-30T22:53:05.518893+00:00"
+    "updated": "2026-09-30T22:53:05.518893+00:00",
+    "km": 7.4
   },
   {
     "id": "jooble_be0de7d45ebab612",
@@ -3868,14 +4289,15 @@
     "notes": "...stratégie au service d'une... ...Devenez Employé( e) commercial libre- service rayon crèmerie LS... ...goût, la mise en valeur... ...objectifs de réassortiment. Implantez...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-11T00:32:04.588909+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-11",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-30T22:52:57.063958+00:00"
+    "updated": "2026-09-30T22:52:57.063958+00:00",
+    "km": 7.2
   },
   {
     "id": "jooble_ec6616eedddc033c",
@@ -3890,14 +4312,15 @@
     "notes": "..., réductions en magasin. En qualité de Vendeur H/F pour notre univers... ...à accueillir, conseiller et accompagner... ...dans la vente, nous recherchons...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-30T00:00:00"
+    "updated": "2026-09-30T00:00:00",
+    "km": 37.9
   },
   {
     "id": "jooble_bc0c32a8f9df1e07",
@@ -3919,7 +4342,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-30T00:00:00"
+    "updated": "2026-09-30T00:00:00",
+    "km": 44.6
   },
   {
     "id": "jooble_426e6d8025391dfc",
@@ -3933,7 +4357,7 @@
     "notes": "...activités industrielles et logistiques, nous anticipons les besoins... ...clients et recherchons des Préparateurs de commandes (H/F) pour des missions à venir...\nType indiqué : Temps plein | Salaire indiqué : 12.31 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -3941,7 +4365,8 @@
       "Jooble"
     ],
     "dept": "91",
-    "updated": "2026-09-29T01:29:04.568252+00:00"
+    "updated": "2026-09-29T01:29:04.568252+00:00",
+    "km": 33.4
   },
   {
     "id": "jooble_64607aea376ef1d9",
@@ -3955,7 +4380,7 @@
     "notes": "...nous recherchons un Magasinier Cariste (H/F).... ...) au Responsable Logistique (H/F), vos principales... ...Assurer la préparation de commandes pour les livraisons...\nType indiqué : Intérimaire",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -3963,7 +4388,8 @@
       "Jooble"
     ],
     "dept": "92",
-    "updated": "2026-09-28T22:53:32.687416+00:00"
+    "updated": "2026-09-28T22:53:32.687416+00:00",
+    "km": 14.3
   },
   {
     "id": "jooble_033798c8ac220a45",
@@ -3985,7 +4411,9 @@
     "created": "2026-10-12",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_1918cd0af7090dcb",
@@ -4000,14 +4428,15 @@
     "notes": "...mot d'ordre porté par les... ...plus de 400 boutiques en France... ...tant que VENDEUR (H/F/X) vous... ...des ventes de A à Z (... ...suivantes : Conseiller les clients...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-28T15:03:58.948987+00:00"
+    "updated": "2026-09-28T15:03:58.948987+00:00",
+    "km": 25.2
   },
   {
     "id": "jooble_1dc272b41571a281",
@@ -4029,7 +4458,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-28T14:54:10.458493+00:00"
+    "updated": "2026-09-28T14:54:10.458493+00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_3b4886352e17d987",
@@ -4051,7 +4482,8 @@
     "created": "2026-10-12",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 11.3
   },
   {
     "id": "jooble_5a1ec3aa36c01e77",
@@ -4065,7 +4497,7 @@
     "notes": "...Denis, un(e) magasinier cariste (H/... ...opérations logistiques ... ...gestion des stocks et des déplacements... ...stock - la préparation des commandes à l'aide d'...\nType indiqué : Intérimaire | Salaire indiqué : 13 € a 14 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -4073,7 +4505,8 @@
       "Jooble"
     ],
     "dept": "93",
-    "updated": "2026-09-28T02:18:12.003000"
+    "updated": "2026-09-28T02:18:12.003000",
+    "km": 9.8
   },
   {
     "id": "jooble_92ea641a35dfb4fa",
@@ -4117,7 +4550,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-27T00:00:00"
+    "updated": "2026-09-27T00:00:00",
+    "km": 16.5
   },
   {
     "id": "jooble_a5861e7a591d7433",
@@ -4139,7 +4573,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-27T00:00:00"
+    "updated": "2026-09-27T00:00:00",
+    "km": 5.2
   },
   {
     "id": "jooble_a2b87e24dfe8ffc4",
@@ -4153,7 +4588,7 @@
     "notes": "...Planificateur Logistique (H/F) en... ..., suivre les stocks et piloter les... ...processus d' approvisionnement et de distribution... ...pour préparer votre avenir...\nType indiqué : Intérimaire",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -4161,7 +4596,8 @@
       "Jooble"
     ],
     "updated": "2026-09-26T17:40:44.683000",
-    "dept": "91"
+    "dept": "91",
+    "km": 34.2
   },
   {
     "id": "jooble_35459d5de0eb69d2",
@@ -4176,14 +4612,16 @@
     "notes": "...intégration pendant laquelle vous vous familiariserez avec les différents rayons puis nos process et méthodes dans le rayon, vous serez responsable de...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-26T05:51:12.387000"
+    "updated": "2026-09-26T05:51:12.387000",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_69239fe8957194bf",
@@ -4205,7 +4643,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-26T00:00:00"
+    "updated": "2026-09-26T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_07a8480e3ca0e6db",
@@ -4227,7 +4667,31 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-25T22:53:46.453699+00:00"
+    "updated": "2026-09-25T22:53:46.453699+00:00",
+    "km": 28.9
+  },
+  {
+    "id": "jooble_1a8df8de10c9a69a",
+    "title": "Opérateur logistique(Magasinier) H/F",
+    "company": "CRIT ROSNY AERONAUTIQUE",
+    "location": "Roissy-en-France, Val-d'Oise",
+    "contract": "Intérim",
+    "category": "stock",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/4208637623911538402?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=2&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=415&brelb=100&bscr=6305.5&scr=6305.5",
+    "notes": "...aéronautique, un opérateur logistique (Magasinier) à ROISSY EN... ...et suivi des stocks magasin - Réalisation... ..., rangement et préparation des marchandises...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 € a 15 €/heure",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "created": "2026-10-10",
+    "lastSeen": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-09-25T22:53:25.652293+00:00",
+    "dept": "95",
+    "km": 10.8
   },
   {
     "id": "jooble_5b89e59911fab3f1",
@@ -4241,7 +4705,7 @@
     "notes": "...flux logistiques, de la... ...entrée en stock des... ...Réalisation des approvisionnements ... ... Préparation : Préparation... ...des commandes sur... .../BEP magasinier/ ...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -4249,7 +4713,8 @@
       "Jooble"
     ],
     "dept": "77",
-    "updated": "2026-09-25T14:53:46.518592+00:00"
+    "updated": "2026-09-25T14:53:46.518592+00:00",
+    "km": 13.3
   },
   {
     "id": "jooble_41be4ffcb9fe8df8",
@@ -4264,7 +4729,7 @@
     "notes": "...historique de la mode ... ...dans le prêt-à-porter féminin.... ...de 700 magasins, des ouvertures... ...un(e) Vendeur( se) en... ...de vente à travers... ...Accueillir, conseiller et...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-11",
@@ -4272,28 +4737,6 @@
       "Jooble"
     ],
     "updated": "2026-09-25T00:00:00"
-  },
-  {
-    "id": "jooble_1a8df8de10c9a69a",
-    "title": "Opérateur logistique(Magasinier) H/F",
-    "company": "CRIT ROSNY AERONAUTIQUE",
-    "location": "Roissy-en-France, Val-d'Oise",
-    "contract": "Intérim",
-    "category": "stock",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/4208637623911538402?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=2&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=415&brelb=100&bscr=6305.5&scr=6305.5",
-    "notes": "...aéronautique, un opérateur logistique (Magasinier) à ROISSY EN... ...et suivi des stocks magasin - Réalisation... ..., rangement et préparation des marchandises...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 € a 15 €/heure",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "created": "2026-10-10",
-    "lastSeen": "2026-10-12",
-    "sources": [
-      "Jooble"
-    ],
-    "updated": "2026-09-25T00:00:00",
-    "dept": "95"
   },
   {
     "id": "jooble_14a4b432943695cc",
@@ -4315,7 +4758,32 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-25T00:00:00"
+    "updated": "2026-09-25T00:00:00",
+    "km": 55.2
+  },
+  {
+    "id": "jooble_c2e92e2518a4ca2f",
+    "title": "Magasinier cariste H/F",
+    "company": "SUP INTERIM MONTEREAU-FAULT-YONNE",
+    "location": "Montereau-Fault-Yonne, Seine-et-Marne",
+    "contract": "Intérim",
+    "category": "stock",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/7268413266845622599?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=30&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=439&brelb=110&bscr=1489.5139&scr=1489.5139",
+    "notes": "...dans la préparation, le conditionnement... ...un Magasinier Cariste H... ...des commandes pour la production... ...de stocks. Vous... ...aimez la logistique, la conduite...\nType indiqué : Intérimaire | Salaire indiqué : 20k € a 25k €/an",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "created": "2026-10-10",
+    "lastSeen": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-09-24T22:55:17.159814+00:00",
+    "dept": "77",
+    "km": 66.8,
+    "trajetMin": 170
   },
   {
     "id": "jooble_f439c43bbcb6494b",
@@ -4330,36 +4798,15 @@
     "notes": "...stratégie au service d'une... ...organiser la mise en rayon de vos... ...? Devenez Employé( e) commercial... ...charcuterie libre- service... ...objectifs de réassortiment. Implantez...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-24T22:55:05.299496+00:00"
-  },
-  {
-    "id": "jooble_c2e92e2518a4ca2f",
-    "title": "Magasinier cariste H/F",
-    "company": "SUP INTERIM MONTEREAU-FAULT-YONNE",
-    "location": "Montereau-Fault-Yonne, Seine-et-Marne",
-    "contract": "Intérim",
-    "category": "stock",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/7268413266845622599?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=30&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=439&brelb=110&bscr=1489.5139&scr=1489.5139",
-    "notes": "...dans la préparation, le conditionnement... ...un Magasinier Cariste H... ...des commandes pour la production... ...de stocks. Vous... ...aimez la logistique, la conduite...\nType indiqué : Intérimaire | Salaire indiqué : 20k € a 25k €/an",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "created": "2026-10-10",
-    "lastSeen": "2026-10-12",
-    "sources": [
-      "Jooble"
-    ],
-    "updated": "2026-09-24T21:00:34.770000",
-    "dept": "77"
+    "updated": "2026-09-24T22:55:05.299496+00:00",
+    "km": 11.3
   },
   {
     "id": "jooble_444c17efa3067f59",
@@ -4374,14 +4821,15 @@
     "notes": "...spécialisé dans le prêt-à-porter des vendeur polyvalent H/F pour leur magasin situé à... ...en matière de mode et de... ...la surface de vente et le stock soient...\nType indiqué : Temps plein | Salaire indiqué : 22.41k €/an",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-24T01:29:07.624412+00:00"
+    "updated": "2026-09-24T01:29:07.624412+00:00",
+    "km": 32.5
   },
   {
     "id": "jooble_74563b71068bcb19",
@@ -4403,7 +4851,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-24T01:29:06.785676+00:00"
+    "updated": "2026-09-24T01:29:06.785676+00:00",
+    "km": 27.6
   },
   {
     "id": "jooble_e0cc77e14c5e3747",
@@ -4417,7 +4866,7 @@
     "notes": "...nos clients, un magasinier logistique en contrat CDI.... ...quantité) et mise en stock des produits à l... ...du caces 3. - Preparation des commandes : vous devrez...\nType indiqué : Temps plein | Salaire indiqué : 20k € a 25k €/an",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -4425,7 +4874,8 @@
       "Jooble"
     ],
     "updated": "2026-09-24T00:00:00",
-    "dept": "77"
+    "dept": "77",
+    "km": 16.0
   },
   {
     "id": "jooble_e8d5f07e65ee361c",
@@ -4447,7 +4897,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-24T00:00:00"
+    "updated": "2026-09-24T00:00:00",
+    "km": 28.0
   },
   {
     "id": "jooble_62f9becb7bf07c4d",
@@ -4462,14 +4913,15 @@
     "notes": "...nouvelles offres d' emploi disponibles chaque jour... ..., un(e) employé de libre-service (H/F) sur le secteur... ...des rayons et maintenir une présentation...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-23T22:53:28.299229+00:00"
+    "updated": "2026-09-23T22:53:28.299229+00:00",
+    "km": 64.9
   },
   {
     "id": "jooble_3928e5024ffa74cd",
@@ -4483,7 +4935,7 @@
     "notes": "...plusieurs Agents Magasiniers H/F... ...environnement logistique dynamique. Nous... ...tant qu'Agent Magasinier, vous êtes chargé... ...chariots Préparation et rangement...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T10:52:50.485966+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -4491,7 +4943,8 @@
       "Jooble"
     ],
     "updated": "2026-09-23T22:53:19.451648+00:00",
-    "dept": "94"
+    "dept": "94",
+    "km": 19.7
   },
   {
     "id": "jooble_ef5e8b7ff45d0c50",
@@ -4513,7 +4966,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-23T04:28:53.687000"
+    "updated": "2026-09-23T04:28:53.687000",
+    "km": 46.1
   },
   {
     "id": "jooble_afd4b2f9890ac6ee",
@@ -4528,7 +4982,7 @@
     "notes": "...historique de la mode ... ...dans le prêt-à-porter féminin.... ...de 700 magasins, des ouvertures... ...un(e) Vendeur( se) en... ...de vente à travers... ...Accueillir, conseiller et...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
@@ -4550,14 +5004,15 @@
     "notes": "...intégration pendant laquelle vous vous familiariserez avec les différents rayons puis nos process et méthodes dans le rayon, vous serez responsable de...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-22T17:51:11.630000"
+    "updated": "2026-09-22T17:51:11.630000",
+    "km": 30.5
   },
   {
     "id": "jooble_ac8d8fa164e18126",
@@ -4571,7 +5026,7 @@
     "notes": "...matériaux avancés, un Magasinier logistique à GENNEVILLIERS -... ..., de tenue des stocks, selon les procédures... ...de suivi de commande - Effectue l'inventaire...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 € a 16 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -4579,7 +5034,8 @@
       "Jooble"
     ],
     "dept": "92",
-    "updated": "2026-09-22T00:00:00"
+    "updated": "2026-09-22T00:00:00",
+    "km": 14.3
   },
   {
     "id": "jooble_9751501d80f66c9f",
@@ -4593,7 +5049,7 @@
     "notes": "...Import-Export, Logistique et Transport... ...actuelle un magasinier/gestionnaire de stock F/H pour une... ...des stocks, la préparation des commandes et contribuez...\nType indiqué : Temps plein | Salaire indiqué : 28k € a 30k €/an",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -4601,7 +5057,8 @@
       "Jooble"
     ],
     "updated": "2026-09-22T00:00:00",
-    "dept": "77"
+    "dept": "77",
+    "km": 24.9
   },
   {
     "id": "jooble_8623c0d9624fc076",
@@ -4615,7 +5072,7 @@
     "notes": "...société de transport logistique à ARGENTEUIL (95) un MAGASINIER avec CACES 1 3 5... ...Poste polyvalent : préparation de commandes, réception, utilisation...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 € a 14 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T10:52:50.485966+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -4623,7 +5080,30 @@
       "Jooble"
     ],
     "dept": "95",
-    "updated": "2026-09-21T22:52:58.025902+00:00"
+    "updated": "2026-09-21T22:52:58.025902+00:00",
+    "km": 18.0
+  },
+  {
+    "id": "jooble_0ceb31ace521e1f8",
+    "title": "MAGASINIER CARISTE - ARGENTEUIL (95)",
+    "company": "Chronos Méry sur Oise",
+    "location": "Val-d'Oise (95)",
+    "contract": "Intérim",
+    "category": "stock",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-6104174034410007800?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=41&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=511&brelb=100&bscr=1484.55&scr=1484.55",
+    "notes": "...société de transport logistique à ARGENTEUIL (95) un MAGASINIER avec CACES 1 3 5... ...Poste polyvalent : préparation de commandes, réception, utilisation...\nType indiqué : Intérimaire | Salaire indiqué : 13.5 €/heure",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "created": "2026-10-10",
+    "lastSeen": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "dept": "95",
+    "updated": "2026-09-21T00:00:00"
   },
   {
     "id": "jooble_d32a45558f50a4bb",
@@ -4648,28 +5128,6 @@
     "updated": "2026-09-21T00:00:00"
   },
   {
-    "id": "jooble_0ceb31ace521e1f8",
-    "title": "MAGASINIER CARISTE - ARGENTEUIL (95)",
-    "company": "Chronos Méry sur Oise",
-    "location": "Val-d'Oise (95)",
-    "contract": "Intérim",
-    "category": "stock",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/-6104174034410007800?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=41&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=511&brelb=100&bscr=1484.55&scr=1484.55",
-    "notes": "...société de transport logistique à ARGENTEUIL (95) un MAGASINIER avec CACES 1 3 5... ...Poste polyvalent : préparation de commandes, réception, utilisation...\nType indiqué : Intérimaire | Salaire indiqué : 13.5 €/heure",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T10:52:50.485966+00:00",
-    "demo": false,
-    "created": "2026-10-10",
-    "lastSeen": "2026-10-12",
-    "sources": [
-      "Jooble"
-    ],
-    "dept": "95",
-    "updated": "2026-09-21T00:00:00"
-  },
-  {
     "id": "jooble_c2f908ae7a21f0ba",
     "title": "Magasinier - Gestionnaire de stock",
     "company": "Fed Finance",
@@ -4689,7 +5147,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-21T00:00:00"
+    "updated": "2026-09-21T00:00:00",
+    "km": 24.9
   },
   {
     "id": "jooble_40b2e6f0ef081cf3",
@@ -4707,7 +5166,8 @@
     "demo": false,
     "created": "2026-10-10",
     "updated": "2026-09-21T00:00:00.0000000",
-    "dept": "92"
+    "dept": "92",
+    "km": 18.3
   },
   {
     "id": "jooble_9ea0a6fd0d9d1d54",
@@ -4722,14 +5182,15 @@
     "notes": "...L' employé libre-service approvisionne en marchandises les rayons d'un magasin. Il dispose les différents produits et articles dans un ordre précis....\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-20T17:51:15.843000"
+    "updated": "2026-09-20T17:51:15.843000",
+    "km": 32.7
   },
   {
     "id": "jooble_9ce87f219453c0c6",
@@ -4744,14 +5205,15 @@
     "notes": "...des opportunités d’ emploi en grande distribution... ...bien frais ! Mise en rayon / tiquetage et suivi... ...CDI Temps plein Service : Employé de rayon...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-11T18:24:49.189049+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
-    "lastSeen": "2026-10-11",
+    "lastSeen": "2026-10-12",
     "created": "2026-10-11",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-20T11:51:09.557000"
+    "updated": "2026-09-20T11:51:09.557000",
+    "km": 24.6
   },
   {
     "id": "jooble_3eb16fef1bd3afda",
@@ -4773,7 +5235,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-20T05:51:24.527000"
+    "updated": "2026-09-20T05:51:24.527000",
+    "km": 24.6
   },
   {
     "id": "jooble_a4f58a33fed625bf",
@@ -4788,14 +5251,15 @@
     "notes": "...apporter à chaque magasin U indépendant... ...terroir. Vente et conseil aux clients /... ...de conseiller vendeur rayon... ...vos clients, prêt à répondre à leurs...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-20T00:00:00"
+    "updated": "2026-09-20T00:00:00",
+    "km": 24.6
   },
   {
     "id": "jooble_bce0e8be842b96ec",
@@ -4817,7 +5281,31 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-19T04:29:04.097000"
+    "updated": "2026-09-19T04:29:04.097000",
+    "km": 55.8
+  },
+  {
+    "id": "jooble_25b90dcecde1d60b",
+    "title": "Employé Libre Service",
+    "company": "MCCORMICK MERCHANDISING FRANCE",
+    "location": "Brétigny-sur-Orge, Essonne",
+    "dept": "91",
+    "contract": "CDI",
+    "category": "rayon",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-8094130654746962784?ckey=mise+en+rayon%2c+employ%c3%a9+libre-service%2c+rayoniste%2c+employ%c3%a9+de+rayon%2c+r%c3%a9assort&rgn=12&pos=17&groupId=-594307577&elckey=-4767151037999131975&p=1&aq=-8705464920153416068&cid=843&jobAge=560&brelb=100&bscr=373.47043&scr=373.47043",
+    "notes": "...visible ! Chaque rayon optimisé, chaque implantation... ...recherchons un(e) Employé(e) Libre Service H/F en CDI ASAP... ..., nos offres d' emploi sont handi-...\nType indiqué : Temps plein | Salaire indiqué : 12.92 €/heure",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "updated": "2026-09-19T04:29:04.090000",
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "km": 36.1
   },
   {
     "id": "jooble_5fa9ae74d647e257",
@@ -4839,7 +5327,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-19T04:29:03.757000"
+    "updated": "2026-09-19T04:29:03.757000",
+    "km": 58.4
   },
   {
     "id": "jooble_1537e1b07a99c0a4",
@@ -4854,14 +5343,38 @@
     "notes": "...sa stratégie au service d'une... ...chou ! Devenez Employé( e) commercial(e) au rayon Fruits et Légumes... ...les objectifs de réassortiment. Implantez et mettez...\nType indiqué : Intérimaire",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-18T22:54:03.264039+00:00"
+    "updated": "2026-09-18T22:54:03.264039+00:00",
+    "km": 11.3
+  },
+  {
+    "id": "jooble_5397f5c7fed564b6",
+    "title": "Réserviste CDD F/H",
+    "company": "Entreprise à vérifier",
+    "location": "Lieusaint, Seine-et-Marne",
+    "dept": "77",
+    "contract": "CDD",
+    "category": "rayon",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-7215588621869592749?ckey=mise+en+rayon%2c+employ%c3%a9+libre-service%2c+rayoniste%2c+employ%c3%a9+de+rayon%2c+r%c3%a9assort&rgn=12&pos=26&groupId=-594307577&elckey=-4767151037999131975&p=1&aq=-8705464920153416068&cid=843&jobAge=588&brelb=100&bscr=361.59286&scr=361.59286",
+    "notes": "...recherche d’une expérience au service d’une marque patrimoniale,... ...Optimisation de l'espace réserve, Réassort/ mise en rayon, Gestion des stocks en...\nType indiqué : Intérimaire",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "updated": "2026-09-18T09:10:32.547000",
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "km": 30.9
   },
   {
     "id": "jooble_65bb6005bfdec271",
@@ -4883,7 +5396,8 @@
     "created": "2026-10-12",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 30.9
   },
   {
     "id": "jooble_7282d22e84838feb",
@@ -4905,7 +5419,8 @@
     "created": "2026-10-12",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 30.9
   },
   {
     "id": "jooble_fa1559d33f8f4b43",
@@ -4927,7 +5442,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-18T09:10:32.547000"
+    "updated": "2026-09-18T09:10:32.547000",
+    "km": 30.9
   },
   {
     "id": "jooble_39ff79d2e59de1ca",
@@ -4949,7 +5465,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-18T05:51:12.723000"
+    "updated": "2026-09-18T05:51:12.723000",
+    "km": 22.2
   },
   {
     "id": "jooble_207b91a667c18819",
@@ -4971,7 +5488,31 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-18T05:51:10.843000"
+    "updated": "2026-09-18T05:51:10.843000",
+    "km": 17.5
+  },
+  {
+    "id": "jooble_dee67260f13d5f55",
+    "title": "Employé commercial libre service H/F",
+    "company": "U Les Commerçants",
+    "location": "Montreuil",
+    "dept": "93",
+    "contract": "À vérifier",
+    "category": "rayon",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-925255148671219347?ckey=mise+en+rayon%2c+employ%c3%a9+libre-service%2c+rayoniste%2c+employ%c3%a9+de+rayon%2c+r%c3%a9assort&rgn=12&pos=31&groupId=-594307577&elckey=-4767151037999131975&p=1&aq=-8705464920153416068&cid=843&jobAge=588&brelb=110&bscr=284.15564&scr=284.15564",
+    "notes": "...opportunités d’ emploi en grande distribution... ...tenue des rayons. Grâce à votre... ...! Mise en rayon / tiquetage... ...Temps plein Service : Employé de rayon...\nType indiqué : Temps plein | Salaire indiqué : 11.88 €/heure",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "updated": "2026-09-18T05:51:09.993000",
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "km": 5.2
   },
   {
     "id": "jooble_23c171b5823963b7",
@@ -4993,7 +5534,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-18T04:28:48.153000"
+    "updated": "2026-09-18T04:28:48.153000",
+    "km": 49.1
   },
   {
     "id": "jooble_79c12d2c55ed13a3",
@@ -5015,7 +5557,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-18T04:28:47.970000"
+    "updated": "2026-09-18T04:28:47.970000",
+    "km": 39.9
   },
   {
     "id": "jooble_b8d7be427185a11a",
@@ -5029,7 +5572,7 @@
     "notes": "...CHATILLLON (92), un Magasinier Cariste (H/F... ...; Préparer les commandes ; Charger... ...les stocks ; Veiller... ...magasinage, logistique ou dans le secteur...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -5037,7 +5580,8 @@
       "Jooble"
     ],
     "updated": "2026-09-18T00:00:00",
-    "dept": "92"
+    "dept": "92",
+    "km": 18.3
   },
   {
     "id": "jooble_bd12878fab2610fc",
@@ -5051,7 +5595,7 @@
     "notes": "...secteur de la logistique, un Cariste / Magasinier H/F situé à... ...- La mise en stock et le rangement... ...- La préparation des commandes - L'expédition...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 € a 13 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -5059,7 +5603,8 @@
       "Jooble"
     ],
     "updated": "2026-09-17T22:53:44.765780+00:00",
-    "dept": "77"
+    "dept": "77",
+    "km": 65.4
   },
   {
     "id": "jooble_82a822bad8984f2c",
@@ -5081,7 +5626,31 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-17T01:28:44.160361+00:00"
+    "updated": "2026-09-17T01:28:44.160361+00:00",
+    "km": 31.6
+  },
+  {
+    "id": "jooble_9a015bce77447dbc",
+    "title": "VENDEUR SPECIALISÉ EN MULTIMEDIA H/F THIAIS",
+    "company": "JOB LINK VILLEPINTE",
+    "location": "Thiais, Val-de-Marne",
+    "dept": "94",
+    "contract": "Intérim",
+    "category": "vente",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/7259241164049972753?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=11&groupId=-1837074271&elckey=-1431367594880850448&p=1&aq=-5276166804381224111&cid=843&jobAge=583&brelb=100&bscr=1625020.5&scr=1625020.5",
+    "notes": "...dans la vente de produits multimédias et culturels... ...des VENDEURS EXPÉRIMENTÉS... ...H/F EN TÉLÉPHONIE, MICRO-... ...et les conseiller sur les... ...par le magasin et accompagner...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 €/heure",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-10",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-09-17T00:00:00",
+    "km": 17.5
   },
   {
     "id": "jooble_1e574eaa1c0eaf91",
@@ -5103,29 +5672,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-17T00:00:00"
-  },
-  {
-    "id": "jooble_9a015bce77447dbc",
-    "title": "VENDEUR SPECIALISÉ EN MULTIMEDIA H/F THIAIS",
-    "company": "JOB LINK VILLEPINTE",
-    "location": "Thiais, Val-de-Marne",
-    "dept": "94",
-    "contract": "Intérim",
-    "category": "vente",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/7259241164049972753?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=11&groupId=-1837074271&elckey=-1431367594880850448&p=1&aq=-5276166804381224111&cid=843&jobAge=583&brelb=100&bscr=1625020.5&scr=1625020.5",
-    "notes": "...dans la vente de produits multimédias et culturels... ...des VENDEURS EXPÉRIMENTÉS... ...H/F EN TÉLÉPHONIE, MICRO-... ...et les conseiller sur les... ...par le magasin et accompagner...\nType indiqué : Intérimaire | Salaire indiqué : 12.31 €/heure",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T10:52:50.485966+00:00",
-    "demo": false,
-    "lastSeen": "2026-10-12",
-    "created": "2026-10-10",
-    "sources": [
-      "Jooble"
-    ],
-    "updated": "2026-09-17T00:00:00"
+    "updated": "2026-09-17T00:00:00",
+    "km": 11.3
   },
   {
     "id": "jooble_0e4117999682d4c1",
@@ -5147,7 +5695,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-17T00:00:00"
+    "updated": "2026-09-17T00:00:00",
+    "km": 22.8
   },
   {
     "id": "jooble_3122393f9dd2db70",
@@ -5169,7 +5718,31 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-16T22:54:40.785194+00:00"
+    "updated": "2026-09-16T22:54:40.785194+00:00",
+    "km": 6.0
+  },
+  {
+    "id": "jooble_1873218c1ca094fe",
+    "title": "Magasinier Cariste H/F",
+    "company": "CRIT CERGY",
+    "location": "Sartrouville, Yvelines",
+    "contract": "CDI",
+    "category": "stock",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-6548198947464317874?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=48&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=631&brelb=100&bscr=1481.5088&scr=1481.5088",
+    "notes": "...spécialisé dans le secteur de la logistique, un magasinier à SARTROUVILLE en CDI. Le... ...aux inventaires - Mise en stocks avec caces 5 Modalités du poste...\nType indiqué : Temps plein | Salaire indiqué : 2 000 €",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "created": "2026-10-10",
+    "lastSeen": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "dept": "78",
+    "updated": "2026-09-16T22:54:34.505302+00:00",
+    "km": 23.0
   },
   {
     "id": "jooble_029f2c0ef2f45efa",
@@ -5191,7 +5764,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-16T22:02:53.142093+00:00"
+    "updated": "2026-09-16T22:02:53.142093+00:00",
+    "km": 4.2
   },
   {
     "id": "jooble_cf9fdbe780e17372",
@@ -5213,7 +5787,8 @@
       "Jooble"
     ],
     "dept": "93",
-    "updated": "2026-09-16T05:40:31.977000"
+    "updated": "2026-09-16T05:40:31.977000",
+    "km": 6.9
   },
   {
     "id": "jooble_c3d2f5de06d58bd3",
@@ -5235,7 +5810,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-16T04:28:43.810000"
+    "updated": "2026-09-16T04:28:43.810000",
+    "km": 3.8
   },
   {
     "id": "jooble_037e3c98eab2b456",
@@ -5250,14 +5826,15 @@
     "notes": "...un Merchandiser / Employé de rayon pour des grandes marques... ...° - Assurer la mise en place et la... ...les opérations de réassortiment des produits afin de...\nType indiqué : Temps plein | Salaire indiqué : 12.02 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-16T04:28:43.747000"
+    "updated": "2026-09-16T04:28:43.747000",
+    "km": 59.8
   },
   {
     "id": "jooble_7089093f19f6eacb",
@@ -5279,7 +5856,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-16T04:28:43.710000"
+    "updated": "2026-09-16T04:28:43.710000",
+    "km": 72.6
   },
   {
     "id": "jooble_37a2a43733fcb83f",
@@ -5301,7 +5879,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-16T04:28:43.693000"
+    "updated": "2026-09-16T04:28:43.693000",
+    "km": 6.0
   },
   {
     "id": "jooble_cdcd773a2d36c0e5",
@@ -5315,7 +5894,7 @@
     "notes": "...recherche son ou sa Cariste Magasinier. Notre futur... ...'à leur sortie des stocks de l'agence, tout en... ...participerez au développement logistique de l'agence Le...\nType indiqué : Temps plein | Salaire indiqué : 24k € a 29k €/an",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -5323,7 +5902,8 @@
       "Jooble"
     ],
     "dept": "92",
-    "updated": "2026-09-16T01:28:37.080256+00:00"
+    "updated": "2026-09-16T01:28:37.080256+00:00",
+    "km": 19.2
   },
   {
     "id": "jooble_47a57a934b952b7b",
@@ -5338,36 +5918,15 @@
     "notes": "...caractéristiques et les conseils d’utilisation ou d’... ...de réaliser la vente de produits auprès d'... ...clientèle. Les missions du vendeur varient en fonction...\nSalaire indiqué : 450 €",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-11",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-16T00:00:00"
-  },
-  {
-    "id": "jooble_1873218c1ca094fe",
-    "title": "Magasinier Cariste H/F",
-    "company": "CRIT CERGY",
-    "location": "Sartrouville, Yvelines",
-    "contract": "CDI",
-    "category": "stock",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/-6548198947464317874?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=48&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=631&brelb=100&bscr=1481.5088&scr=1481.5088",
-    "notes": "...spécialisé dans le secteur de la logistique, un magasinier à SARTROUVILLE en CDI. Le... ...aux inventaires - Mise en stocks avec caces 5 Modalités du poste...\nType indiqué : Temps plein | Salaire indiqué : 2 000 €",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "created": "2026-10-10",
-    "lastSeen": "2026-10-12",
-    "sources": [
-      "Jooble"
-    ],
-    "dept": "78",
-    "updated": "2026-09-16T00:00:00"
+    "updated": "2026-09-16T00:00:00",
+    "km": 19.2
   },
   {
     "id": "jooble_46ada6a489604455",
@@ -5382,14 +5941,15 @@
     "notes": "...chaîne de valeur au service de nos clients. Que... ...Seine recherche un : Employé Libre- Service (F/H) -... ...et l'attractivité du rayon . Vos missions :...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-15T07:24:42.729876+00:00"
+    "updated": "2026-09-15T07:24:42.729876+00:00",
+    "km": 50.7
   },
   {
     "id": "jooble_d1a31951e594b470",
@@ -5411,7 +5971,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-15T05:51:21.840000"
+    "updated": "2026-09-15T05:51:21.840000",
+    "km": 34.1
   },
   {
     "id": "jooble_bc7a6592242882fa",
@@ -5426,14 +5987,15 @@
     "notes": "...consolider ses équipes de services d'appui, jouant ainsi un rôle... ...du groupement. EMPLOYE LIBRE SERVICE MISE EN RAYON + CAISSE AUCUNE...\nType indiqué : Intérimaire | Salaire indiqué : 1 840 €",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-14T23:51:17.957000"
+    "updated": "2026-09-14T23:51:17.957000",
+    "km": 33.4
   },
   {
     "id": "jooble_ae6dac3a9bc50b92",
@@ -5455,7 +6017,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-14T14:55:40.588797+00:00"
+    "updated": "2026-09-14T14:55:40.588797+00:00",
+    "km": 25.0
   },
   {
     "id": "jooble_2bce9c9a4783028b",
@@ -5470,14 +6033,15 @@
     "notes": "...approvisionnement des rayons. - Garantir l... ...et naturel. Mise en rayon... ...contact et du service : Ton sourire et... ...que tu as déjà mis en pratique....\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-14T00:00:00"
+    "updated": "2026-09-14T00:00:00",
+    "km": 11.3
   },
   {
     "id": "jooble_ca3730413e9ba50c",
@@ -5499,7 +6063,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-14T00:00:00"
+    "updated": "2026-09-14T00:00:00",
+    "km": 19.2
   },
   {
     "id": "jooble_aeb7bc975d4313b1",
@@ -5521,7 +6086,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-13T17:10:30.750000"
+    "updated": "2026-09-13T17:10:30.750000",
+    "km": 14.1
   },
   {
     "id": "jooble_091d005a9bd0e080",
@@ -5543,7 +6109,9 @@
       "Jooble"
     ],
     "dept": "75",
-    "updated": "2026-09-13T01:28:49.187337+00:00"
+    "updated": "2026-09-13T01:28:49.187337+00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_63de22706da8d8b4",
@@ -5565,7 +6133,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-12T22:55:12.241339+00:00"
+    "updated": "2026-09-12T22:55:12.241339+00:00",
+    "km": 11.3
   },
   {
     "id": "jooble_0114826bf27b3e60",
@@ -5587,7 +6156,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-12T22:55:10.860508+00:00"
+    "updated": "2026-09-12T22:55:10.860508+00:00",
+    "km": 11.3
   },
   {
     "id": "jooble_f807cd328a0b64b3",
@@ -5609,7 +6179,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-12T22:55:09.795360+00:00"
+    "updated": "2026-09-12T22:55:09.795360+00:00",
+    "km": 11.3
   },
   {
     "id": "jooble_800327c60b9424ba",
@@ -5631,7 +6202,8 @@
       "Jooble"
     ],
     "updated": "2026-09-11T01:28:43.723768+00:00",
-    "dept": "95"
+    "dept": "95",
+    "km": 38.4
   },
   {
     "id": "jooble_12b45fa4d83732e2",
@@ -5653,7 +6225,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-10T16:32:42.991842+00:00"
+    "updated": "2026-09-10T16:32:42.991842+00:00",
+    "km": 59.6
   },
   {
     "id": "jooble_fb2ade9655040bf5",
@@ -5668,7 +6241,7 @@
     "notes": "...Dans nos magasins, les équipes... ...temps, on conseille avec le... ...tant que Vendeur en animalerie... ...commerciale & conseil client... ...liés à la vente d'animaux....\nType indiqué : Temps plein | Salaire indiqué : 22k €/an",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
@@ -5689,7 +6262,7 @@
     "notes": "...cherchons un(e) Magasinier( e) Cariste... ...: Préparer les commandes des clients... ...problème de stock Participer... ...responsable logistique de l'agence...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "created": "2026-10-10",
     "lastSeen": "2026-10-12",
@@ -5697,7 +6270,8 @@
       "Jooble"
     ],
     "updated": "2026-09-09T15:55:46.558646+00:00",
-    "dept": "95"
+    "dept": "95",
+    "km": 16.0
   },
   {
     "id": "jooble_acff9076455b0fa0",
@@ -5719,7 +6293,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-09T00:00:00"
+    "updated": "2026-09-09T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_d2c104dc0ac1f64f",
@@ -5741,7 +6317,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-09T00:00:00"
+    "updated": "2026-09-09T00:00:00",
+    "km": 17.5
   },
   {
     "id": "jooble_5f01b5fcf63d5b68",
@@ -5756,14 +6333,15 @@
     "notes": "...BTP, un Magasinier/ Cariste... ...Gérer la logistique du magasin... ...rapport à la commande ... ...traçabilité Préparer et effectuer... ...Gérer l' approvisionnement des EPI...\nSalaire indiqué : 13 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-09-04T16:32:58.619083+00:00"
+    "updated": "2026-09-04T16:32:58.619083+00:00",
+    "km": 9.8
   },
   {
     "id": "jooble_ce818cdc239690b4",
@@ -5778,14 +6356,15 @@
     "notes": "...’un réseau de 90 magasins de vente en direct et sur... ...recrutons un(e) vendeur(se) conseil pour intégrer notre... ...belle iloise en boutique Clothilde et Antoine...\nType indiqué : Temps partiel | Salaire indiqué : 13.13 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-10T18:23:54.283851+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
-    "lastSeen": "2026-10-11",
+    "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-08-27T18:43:49.967000"
+    "updated": "2026-08-27T18:43:49.967000",
+    "km": 11.3
   },
   {
     "id": "jooble_d4d2182083934b06",
@@ -5800,14 +6379,15 @@
     "notes": "...France, 100 boutiques et des... ...tant que vendeur/ se en... ...Vendeur(se) en prêt-à-porter pour... ...tenue du magasin et des vitrines... ...; ~ Conseils et vente de...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-08-27T16:26:46.832144+00:00"
+    "updated": "2026-08-27T16:26:46.832144+00:00",
+    "km": 7.4
   },
   {
     "id": "jooble_98759d6f3b5185e3",
@@ -5829,7 +6409,8 @@
       "Jooble"
     ],
     "updated": "2026-08-27T04:28:49.130000",
-    "dept": "95"
+    "dept": "95",
+    "km": 33.3
   },
   {
     "id": "jooble_d8a46b8d00a9dabb",
@@ -5851,7 +6432,8 @@
       "Jooble"
     ],
     "dept": "95",
-    "updated": "2026-08-27T00:26:52.036396+00:00"
+    "updated": "2026-08-27T00:26:52.036396+00:00",
+    "km": 35.6
   },
   {
     "id": "jooble_1954bd4da452a6bb",
@@ -5866,14 +6448,15 @@
     "notes": "...point de vente. ... ...sport, la mode, la tech... ...pertinent en magasin. Description... ...des vendeurs et... ...sein de boutiques spécialisées... ...de conseils techniques...\nType indiqué : Temps partiel | Salaire indiqué : 12.31 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-08-14T19:55:11.160000"
+    "updated": "2026-08-14T19:55:11.160000",
+    "km": 11.3
   },
   {
     "id": "jooble_5540649ccbd03854",
@@ -5888,14 +6471,15 @@
     "notes": "...son client un employé libre service de Stand-... ...découpe et la mise en barquette... ...Veiller au réassort et à la présentation... ...employés du rayon et s’adapter...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-08-13T16:45:25.727363+00:00"
+    "updated": "2026-08-13T16:45:25.727363+00:00",
+    "km": 9.8
   },
   {
     "id": "jooble_5bdbf630e82a87a4",
@@ -5917,29 +6501,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-08-11T19:33:12.213000"
-  },
-  {
-    "id": "jooble_4d39a271e0529023",
-    "title": "Magasinier stockiste H/F",
-    "company": "Intersport",
-    "location": "Serris, Seine-et-Marne",
-    "dept": "77",
-    "contract": "À vérifier",
-    "category": "stock",
-    "date": "",
-    "url": "https://fr.jooble.org/desc/8236306777351582160?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=9&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=1639&brelb=100&bscr=2750.831&scr=2750.831",
-    "notes": "...réductions en magasin. En qualité de Magasinier H/F, votre challenge consiste à... ...et sécurisée des produits. • Préparer et étiqueter les articles pour...\nType indiqué : Temps plein",
-    "status": "À examiner",
-    "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
-    "demo": false,
-    "lastSeen": "2026-10-12",
-    "created": "2026-10-10",
-    "sources": [
-      "Jooble"
-    ],
-    "updated": "2026-08-05T14:53:53.160783+00:00"
+    "updated": "2026-08-11T19:33:12.213000",
+    "km": 36.1
   },
   {
     "id": "jooble_0a1d59149a533965",
@@ -5954,14 +6517,38 @@
     "notes": "...en point de vente. Nous... ...sport, la mode, les nouvelles... ...en magasin. Description... ...recherchons des vendeurs et... ...sportive. Les conseiller dans le choix...\nType indiqué : Temps partiel | Salaire indiqué : 12.31 €/heure",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-07-24T20:19:35.097000"
+    "updated": "2026-08-06T19:47:58.173000",
+    "km": 14.1
+  },
+  {
+    "id": "jooble_4d39a271e0529023",
+    "title": "Magasinier stockiste H/F",
+    "company": "Intersport",
+    "location": "Serris, Seine-et-Marne",
+    "dept": "77",
+    "contract": "À vérifier",
+    "category": "stock",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/8236306777351582160?ckey=magasinier%2c+stockiste%2c+gestionnaire+de+stock%2c+logistique%2c+pr%c3%a9parateur+de+commandes%2c+approvisionnement&rgn=12&pos=9&groupId=-1940496825&elckey=-6550637562645563810&p=1&aq=-1178206104365355864&cid=843&jobAge=1639&brelb=100&bscr=2750.831&scr=2750.831",
+    "notes": "...réductions en magasin. En qualité de Magasinier H/F, votre challenge consiste à... ...et sécurisée des produits. • Préparer et étiqueter les articles pour...\nType indiqué : Temps plein",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-10",
+    "sources": [
+      "Jooble"
+    ],
+    "updated": "2026-08-05T14:53:53.160783+00:00",
+    "km": 22.8
   },
   {
     "id": "jooble_ebbc123ca944b119",
@@ -5976,14 +6563,16 @@
     "notes": "...au Directeur de Boutique Baccarat Paris... ...Développement des ventes & performance... ..., design, mode, actualités culturelles... ...les nouveaux vendeurs et partager les...\nType indiqué : Temps plein | Salaire indiqué : 60k € a 80k €/an",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-07-23T10:38:11.437000"
+    "updated": "2026-07-23T10:38:11.437000",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_997e05a85ac0a68d",
@@ -6004,7 +6593,31 @@
     "dept": "78",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 25.2
+  },
+  {
+    "id": "jooble_a77aeb413d8c1653",
+    "title": "Vendeur F/H du",
+    "company": "Entreprise à vérifier",
+    "location": "Guyancourt, Yvelines",
+    "dept": "78",
+    "contract": "À vérifier",
+    "category": "vente",
+    "date": "",
+    "url": "https://fr.jooble.org/desc/-3652062256408972672?ckey=vendeur+en+boutique%2c+vendeur+en+magasin%2c+conseiller+de+vente%2c+vendeur+multim%c3%a9dia%2c+vendeur+t%c3%a9l%c3%a9phonie%2c+vendeur+pr%c3%aat-%c3%a0-porter%2c+vendeur+mode&rgn=12&pos=47&groupId=-1837074271&elckey=3895442793613347784&p=1&aq=2178228421528206475&cid=843&jobAge=3444&brelb=110&bscr=488088.2&scr=488088.2",
+    "notes": "...’accueil/ Vendeur pour notre... ...Accueil et conseil client en... ...anglais Vente des produits de la boutique. Tenue... ...qualification téléphonique ~1er...\nSalaire indiqué : 1 823.07 €",
+    "status": "À examiner",
+    "source": "Jooble",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
+    "demo": false,
+    "updated": "2026-05-22T00:00:00",
+    "lastSeen": "2026-10-12",
+    "created": "2026-10-12",
+    "sources": [
+      "Jooble"
+    ],
+    "km": 33.7
   },
   {
     "id": "jooble_f009cad51b3abb0b",
@@ -6025,7 +6638,8 @@
     "dept": "77",
     "sources": [
       "Jooble"
-    ]
+    ],
+    "km": 30.9
   },
   {
     "id": "jooble_fcccc04228a1da01",
@@ -6040,14 +6654,16 @@
     "notes": "...Nous menons un mode de vie actif, nous... .... Nos magasins sont les premiers... ...en tant que : Vendeur Polyvalent adidas... ...expérience dans la vente ou un autre...\nType indiqué : Temps plein",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-10T15:55:23.131151+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
-    "lastSeen": "2026-10-11",
+    "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-04-09T00:00:00"
+    "updated": "2026-04-09T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_6cb5eededf9f4e9a",
@@ -6062,14 +6678,15 @@
     "notes": "...des connaissance en tant que Employé commercial Libre service. Votre mission : -... ...contribuez à l'organisation du rayon. - Vous gérez le rayon en...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-03-30T00:00:00"
+    "updated": "2026-03-30T00:00:00",
+    "km": 21.3
   },
   {
     "id": "jooble_6452272c2ee23e18",
@@ -6084,14 +6701,15 @@
     "notes": "...en avant dans notre rayon poissonnerie. Prenez... ...leurs formes. Devenez Employé( e) commercial(e) au rayon... ...votre sens du service. Vous avez les qualités...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-03-29T00:00:00"
+    "updated": "2026-03-29T00:00:00",
+    "km": 20.9
   },
   {
     "id": "jooble_54c41649be0903c1",
@@ -6106,14 +6724,16 @@
     "notes": "...partager vos conseils avisés avec nos clients ? Devenez Employé( e) commercial(e) libre-service rayon parapharmacie chez Monoprix, on appréciera votre...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-03-28T00:00:00"
+    "updated": "2026-03-28T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_cc5825880fd4a1c9",
@@ -6128,14 +6748,16 @@
     "notes": "...tente ? Alors devenez Employé( e) commercial(e) libre-service caisse rayon textile chez Monoprix,... ...dans le textile ou la mise en rayon. Créatif(...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-03-28T00:00:00"
+    "updated": "2026-03-28T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_238bb9bffc15f29c",
@@ -6157,7 +6779,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-03-28T00:00:00"
+    "updated": "2026-03-28T00:00:00",
+    "km": 19.2
   },
   {
     "id": "jooble_596e9fd2a0ef5645",
@@ -6172,14 +6795,16 @@
     "notes": "...moderne de la mode. La... ...mondial du prêt-à-porter et des... ...métier Le vendeur accueille... ...surface de vente et de la boutique ... ...offrant des conseils personnalisés...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-03-27T00:00:00"
+    "updated": "2026-03-27T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_5354f23ccd6a7211",
@@ -6194,14 +6819,16 @@
     "notes": "...Leclerc recherche actuellement un Employé Libre Service en CDI pour rejoindre notre... ...des marchandises, de la mise en rayon, de l'étiquetage des...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-03-26T00:00:00"
+    "updated": "2026-03-26T00:00:00",
+    "km": 19.8,
+    "trajetMin": 99
   },
   {
     "id": "jooble_e01372fe59d1f610",
@@ -6216,14 +6843,15 @@
     "notes": "Description de l'offre Description Poste disponible de suite. Poste à temps plein - Horaires de travail du lundi au samedi (1 repos hebdomadaire...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-03-25T00:00:00"
+    "updated": "2026-03-25T00:00:00",
+    "km": 19.1
   },
   {
     "id": "jooble_4288d83d56eb93ca",
@@ -6238,14 +6866,16 @@
     "notes": "...les produits de beauté du quotidien, devenez Employé( e) commercial(e) libre-service caisse - rayon parfumerie chez Monoprix, nous laisserons votre...",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-12T11:22:40.058156+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-10",
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-03-25T00:00:00"
+    "updated": "2026-03-25T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_8e91fc2e41d077b7",
@@ -6267,7 +6897,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-03-25T00:00:00"
+    "updated": "2026-03-25T00:00:00",
+    "km": 20.5
   },
   {
     "id": "jooble_4c1408b7fb403915",
@@ -6289,7 +6920,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-03-25T00:00:00"
+    "updated": "2026-03-25T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_69c6f1d6890fd6a0",
@@ -6311,7 +6944,9 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-02-05T00:00:00"
+    "updated": "2026-02-05T00:00:00",
+    "km": 11.3,
+    "trajetMin": 50
   },
   {
     "id": "jooble_0d085b4d21ee2246",
@@ -6333,7 +6968,8 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2026-01-09T00:00:00"
+    "updated": "2026-01-09T00:00:00",
+    "km": 10.9
   },
   {
     "id": "jooble_9ffce414092fba83",
@@ -6348,14 +6984,15 @@
     "notes": "...Nous recherchons plusieurs employé(e)s libre-service pour rejoindre notre équipe... ...entreprise Participer à la mise en rayon et au réapprovisionnement...\nType indiqué : Temps plein | Salaire indiqué : 1 800 € a 2 600 €",
     "status": "À examiner",
     "source": "Jooble",
-    "collectedAt": "2026-10-11T00:32:04.588909+00:00",
+    "collectedAt": "2026-10-12T11:53:40.834195+00:00",
     "demo": false,
     "lastSeen": "2026-10-12",
     "created": "2026-10-11",
     "sources": [
       "Jooble"
     ],
-    "updated": "2025-11-27T14:38:12.676006+00:00"
+    "updated": "2025-11-27T14:38:12.676006+00:00",
+    "km": 13.6
   },
   {
     "id": "jooble_6701f335fb368d1a",
@@ -6377,6 +7014,7 @@
     "sources": [
       "Jooble"
     ],
-    "updated": "2025-11-27T14:38:10.209737+00:00"
+    "updated": "2025-11-27T14:38:10.209737+00:00",
+    "km": 20.7
   }
 ]
