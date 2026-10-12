@@ -15,6 +15,10 @@ jobs:
     steps:
       - name: Récupérer le dépôt
         uses: actions/checkout@v4
+        with:
+          # Toujours la dernière version : une collecte en attente (GitHub en
+          # déclenche parfois deux à la fois) repart des offres déjà enregistrées.
+          ref: main
       - name: Installer Python
         uses: actions/setup-python@v5
         with:
@@ -41,7 +45,14 @@ jobs:
           if ! git diff --cached --quiet; then
             git commit -m "Mise à jour des offres collectées"
             # Un commit a pu être poussé pendant la collecte : on s'aligne avant d'envoyer.
-            git pull --rebase
+            if ! git pull --rebase; then
+              # Une autre collecte vient d'enregistrer les offres : on lui laisse
+              # la place (sans erreur ni alerte en double), la suivante reprendra.
+              git rebase --abort
+              rm -f .alerte.json
+              echo "Collecte concurrente déjà enregistrée : celle-ci est ignorée."
+              exit 0
+            fi
             git push
           else
             echo "Aucun changement à enregistrer."
