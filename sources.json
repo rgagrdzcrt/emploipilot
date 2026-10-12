@@ -183,7 +183,8 @@
   },
   "trajets": {
     "enabled": true,
-    "origine": { "label": "Bondy", "lat": 48.903653, "lon": 2.48526 }
+    "origine": { "label": "Bondy", "lat": 48.903653, "lon": 2.48526 },
+    "distanceMaxKm": 30
   },
   "ashby": {
     "enabled": true,

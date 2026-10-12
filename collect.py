@@ -1675,12 +1675,23 @@ def main():
         return (pub_ts, offer.get("collectedAt", ""))
 
     offers = sorted(kept, key=sort_key, reverse=True)
+    travel_cfg = config.get("trajets") or {}
     try:
-        add_travel_info(offers, config.get("trajets") or {})
+        add_travel_info(offers, travel_cfg)
     except Exception as exc:  # un problème de trajets ne bloque jamais la collecte
         print(f"Trajets ignorés ({type(exc).__name__}).")
+
+    # Trop loin du domicile : retirée, sauf offre suivie ou lieu inconnu.
+    max_km = travel_cfg.get("distanceMaxKm")
+    if max_km:
+        too_far = [o for o in offers
+                   if isinstance(o.get("km"), (int, float)) and o["km"] > max_km and not is_tracked(o)]
+        if too_far:
+            offers = [o for o in offers if o not in too_far]
+            removed_by_rule[f"à plus de {max_km} km"] = len(too_far)
+
     write_offers(offers)
-    save_pending_alert([item for item in new_items if item in kept])
+    save_pending_alert([item for item in new_items if item in offers])
 
     print(f"Offres conservées : {len(offers)} (nouvelles : {new_count}, mises à jour : {updated_count})")
     print(f"Offres purgées (obsolètes) : {removed}")
