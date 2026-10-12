@@ -92,7 +92,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .stat strong { font-size: 34px; font-weight: 700; color: var(--ink); letter-spacing: -1px; }
 
 /* ---------- Actions rapides et objectif ---------- */
-.pilot-bar button { font-size: 14px; padding: 11px 15px; }
+/* Même grille de 3 colonnes que les onglets métiers : les bords s'alignent. */
+.pilot-bar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: stretch; }
+.pilot-bar button { justify-content: center; font-size: 15px; padding: 11px 15px; }
+.pilot-bar .goal { min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+.pilot-bar .sync-state { grid-column: 1 / -1; text-align: right; margin-top: -4px; }
+.pilot-bar .sync-state:empty { display: none; }
 .pilot-bar .count { background: rgba(255, 255, 255, .18); color: inherit; }
 #triageBtn { background: var(--ink); color: #fff; }
 .goal { background: #fff; border: var(--border); border-radius: 12px; padding: 8px 12px; box-shadow: var(--shadow-sm); color: var(--muted); }
@@ -238,6 +243,8 @@ button.secondary kbd, button.ghost kbd { background: #eceae4; color: #4a4d55; }
 [data-theme="dark"] .modal, [data-theme="dark"] .pilot { background: rgba(0, 0, 0, .6); }
 
 @media (max-width: 650px) {
+  .pilot-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .pilot-bar .goal { grid-column: 1 / -1; }
   .category-tabs { gap: 8px; }
   .category-tabs button { flex-direction: column; gap: 4px; min-height: 76px; font-size: 14px; padding: 10px 6px; }
   .pilot-card { border-radius: 0; box-shadow: none; }
