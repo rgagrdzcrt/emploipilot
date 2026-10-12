@@ -239,7 +239,7 @@ function today() { return new Date().toLocaleDateString('sv-SE'); }
 
 /* ---------- Objectif du jour ---------- */
 
-const DEFAULT_DAILY_GOAL = 10;
+const DEFAULT_DAILY_GOAL = 50;
 let lastGoalCount = null;
 
 function goalOf() { return Math.max(1, Number(profile.dailyGoal) || DEFAULT_DAILY_GOAL); }
@@ -833,6 +833,13 @@ function toggleTheme() {
 /* ---------- Initialisation ---------- */
 
 function pilotInit() {
+  // Ancien objectif par défaut (10) enregistré avec « Mes infos » : passe à 50.
+  if (!profile.goalMigrated) {
+    if (Number(profile.dailyGoal) === 10) delete profile.dailyGoal;
+    profile.goalMigrated = true;
+    store(PROFILE, JSON.stringify(profile));
+  }
+
   // Les statuts posés avant cette version sont aussi synchronisés (priorité minimale).
   offers.forEach(o => { if (!o.trackedAt && isTracked(o)) o.trackedAt = 1; });
 
