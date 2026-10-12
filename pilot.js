@@ -1,0 +1,615 @@
+/* ZCRT — outils de candidature rapide.
+ *
+ * - Tri au clavier des nouvelles offres (À postuler / Ignorer).
+ * - File de candidature : ouvre l'annonce, copie la lettre personnalisée,
+ *   marque la candidature envoyée.
+ * - Modèles de lettre par métier et « Mes infos » à copier en un clic.
+ * - Score de priorité (zone, contrat, fraîcheur) et relances automatiques.
+ * - Synchronisation téléphone / PC via un gist GitHub secret.
+ *
+ * Chargé avant le script principal d'index.html : ce fichier ne fait que
+ * déclarer des fonctions ; pilotInit() est appelé à la fin du script principal.
+ */
+
+const CATS = ['stock', 'rayon', 'vente'];
+const CAT_LABELS = { stock: 'Stock & logistique', rayon: 'Magasins & grande distribution', vente: 'Vente' };
+const RELANCE_DAYS = 7;
+
+const DEFAULT_TEMPLATES = {
+  stock: `Objet : candidature au poste de {poste}
+
+Madame, Monsieur,
+
+Votre offre de {poste} chez {entreprise} a retenu toute mon attention. Le travail en entrepôt ou en réserve correspond à ce que je recherche : des missions concrètes, un rythme soutenu et des résultats visibles chaque jour.
+
+Réception et contrôle des marchandises, préparation des commandes, rangement et suivi des stocks : j'aborde ces tâches avec rigueur, dans le respect des procédures, des consignes de sécurité et des délais. La fiabilité et la ponctualité font partie de mes points forts, et je m'adapte rapidement à de nouveaux outils comme à une nouvelle équipe.
+
+{accroche}
+
+Je suis disponible {disponibilite} et reste à votre disposition pour un entretien.
+
+Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
+
+{prenom} {nom}
+{telephone} — {email}`,
+  rayon: `Objet : candidature au poste de {poste}
+
+Madame, Monsieur,
+
+Votre offre de {poste} chez {entreprise} a retenu toute mon attention. Travailler en magasin, au contact des produits et de la clientèle, correspond à ce que je recherche.
+
+Mise en rayon, réassort, rotation des produits, contrôle des dates et des prix, rayon propre et bien présenté : j'aborde ces missions avec rigueur et efficacité, y compris aux heures de forte affluence. Je prends aussi le temps de renseigner les clients avec amabilité. La ponctualité, l'esprit d'équipe et la polyvalence font partie de mes points forts.
+
+{accroche}
+
+Je suis disponible {disponibilite} et reste à votre disposition pour un entretien.
+
+Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
+
+{prenom} {nom}
+{telephone} — {email}`,
+  vente: `Objet : candidature au poste de {poste}
+
+Madame, Monsieur,
+
+Votre offre de {poste} chez {entreprise} a retenu toute mon attention. La vente en magasin correspond à ce que je recherche : un métier de contact, où l'écoute et la qualité du service font la différence.
+
+Accueillir chaque client, comprendre son besoin, le conseiller et conclure la vente, tout en participant à la mise en valeur du magasin, à l'encaissement et au réassort : ce sont des missions qui me motivent. J'ai le sens du contact, le souci d'une bonne présentation et le goût du travail en équipe pour atteindre les objectifs.
+
+{accroche}
+
+Je suis disponible {disponibilite} et reste à votre disposition pour un entretien.
+
+Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
+
+{prenom} {nom}
+{telephone} — {email}`,
+};
+
+const INFO_FIELDS = [
+  ['prenom', 'Prénom'], ['nom', 'Nom'], ['telephone', 'Téléphone'], ['email', 'E-mail'],
+  ['adresse', 'Adresse / ville'], ['disponibilite', 'Disponibilité'],
+  ['permis', 'Permis / CACES'], ['accroche', 'Phrase d’accroche (facultative)'],
+];
+const DEFAULT_INFOS = { disponibilite: 'immédiatement' };
+
+function templatesOf() { return { ...DEFAULT_TEMPLATES, ...(profile.templates || {}) }; }
+function infosOf() { return { ...DEFAULT_INFOS, ...(profile.infos || {}) }; }
+function cvOf(cat) { return (profile.cv || {})[cat] || ''; }
+
+function jobCategory(o) {
+  if (CATS.includes(o.category)) return o.category;
+  const c = categoryOf(o);
+  return CATS.includes(c) ? c : 'stock';
+}
+
+function cleanTitle(t) {
+  let s = String(t || '')
+    .replace(/\(?\b[hfx]\s*\/\s*[hfx](\s*\/\s*[hfx])?\b\)?/gi, ' ')
+    .replace(/\s{2,}/g, ' ').replace(/[\s\-–|]+$/, '').trim();
+  // « Vendeur - Paris 10e » → « Vendeur » : on retire les suffixes de lieu.
+  let parts = s.split(/\s+[-–|]\s+/);
+  while (parts.length > 1) {
+    const tail = parts[parts.length - 1];
+    if (!/\d{2}/.test(tail) && !deptOf({ location: tail })) break;
+    parts.pop();
+  }
+  s = parts.join(' - ');
+  if (s && s === s.toUpperCase()) s = s.charAt(0) + s.slice(1).toLowerCase();
+  return s;
+}
+
+function cityOf(o) {
+  const c = String(o.location || '').split(/[,(]/)[0].replace(/\b\d{5}\b/g, '').trim();
+  return /vérifier/i.test(c) ? '' : c;
+}
+
+function fillTemplate(o) {
+  const company = (!o.company || /à vérifier/i.test(o.company)) ? 'votre entreprise' : o.company;
+  const vars = { ...infosOf(), poste: cleanTitle(o.title), entreprise: company, ville: cityOf(o) };
+  return templatesOf()[jobCategory(o)]
+    .replace(/\{(\w+)\}/g, (m, k) => (k in vars ? (vars[k] || '') : m))
+    .replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
+/* ---------- Score de priorité ---------- */
+
+const ZONE_ORDERS = {
+  'Paris 10e et alentours → Paris → Bondy/93 → Île-de-France': ['p10', '75', '93', 'idf'],
+  'Paris → Bondy/93 → Île-de-France': ['75', '93', 'idf'],
+  'Bondy/93 → Paris → Île-de-France': ['93', '75', 'idf'],
+};
+const NEAR_10E = /(^|[\s,(])(pantin|aubervilliers|saint-denis)\b/i;
+
+function zoneKey(o) {
+  const d = deptOf(o), l = o.location || '';
+  if ((d === '75' && /(^|\D)(2|9|10|11|19)\s*(e|er|ème|eme)\b/i.test(l)) || NEAR_10E.test(l)) return 'p10';
+  if (d === '75') return '75';
+  if (d === '93') return '93';
+  return d ? 'idf' : '';
+}
+
+function score(o) {
+  const order = ZONE_ORDERS[profile.priority] || Object.values(ZONE_ORDERS)[0];
+  let z = zoneKey(o);
+  if (z === 'p10' && !order.includes('p10')) z = NEAR_10E.test(o.location || '') ? '93' : '75';
+  const zi = order.indexOf(z);
+  let s = zi >= 0 ? [40, 30, 20, 10][zi] : 5;
+  s += { CDI: 15, CDD: 10, 'Intérim': 8 }[o.contract] || 4;
+  const d = parseDate(offerDate(o) || o.created);
+  const days = d ? (Date.now() - d.getTime()) / 864e5 : 99;
+  s += days <= 2 ? 20 : days <= 7 ? 12 : days <= 14 ? 6 : 0;
+  return s;
+}
+
+/* ---------- Statuts ---------- */
+
+function today() { return new Date().toISOString().slice(0, 10); }
+
+function setTrack(o, status) {
+  o.status = status;
+  o.trackedAt = Date.now();
+  if (status === 'Candidature envoyée' && !o.appliedDate) o.appliedDate = today();
+}
+
+function autoRelances() {
+  const limit = Date.now() - RELANCE_DAYS * 864e5;
+  let n = 0;
+  offers.forEach(o => {
+    if (o.status === 'Candidature envoyée' && !o.relanceAuto && o.appliedDate && Date.parse(o.appliedDate) <= limit) {
+      setTrack(o, 'À relancer');
+      o.relanceAuto = true;
+      n++;
+    }
+  });
+  if (n) { save(); toast(n + ' candidature(s) à relancer'); }
+}
+
+/* ---------- Tri et file de candidature ---------- */
+
+let pilot = null; // { mode: 'triage' | 'queue', ids, i, undo }
+
+function pilotList(mode) {
+  const wanted = mode === 'triage' ? 'À examiner' : 'À postuler';
+  const hideExcluded = document.getElementById('hideExcluded')?.checked;
+  return offers
+    .filter(o => (o.status || 'À examiner') === wanted && !(hideExcluded && isExcluded(o)))
+    .sort((a, b) => score(b) - score(a));
+}
+
+function updatePilotBar() {
+  const t = document.getElementById('triageCount'), q = document.getElementById('queueCount');
+  if (t) t.textContent = pilotList('triage').length;
+  if (q) q.textContent = pilotList('queue').length;
+}
+
+function openPilot(mode) {
+  pilot = { mode, ids: pilotList(mode).map(o => o.id), i: 0, undo: [] };
+  document.getElementById('pilot').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  drawPilot();
+}
+
+function closePilot() {
+  pilot = null;
+  document.getElementById('pilot').classList.remove('open');
+  document.body.style.overflow = '';
+  render();
+}
+
+function currentOffer() {
+  if (!pilot) return null;
+  while (pilot.i < pilot.ids.length) {
+    const o = offers.find(x => x.id === pilot.ids[pilot.i]);
+    if (o) return o;
+    pilot.i++;
+  }
+  return null;
+}
+
+function metaLine(o) {
+  const d = deptOf(o);
+  const when = o.date ? fmtDate(o.date) : o.updated ? 'Mise à jour le ' + fmtDate(o.updated) : 'Date à vérifier';
+  return `<span>▣ ${esc(o.company)}</span><span>⌖ ${esc(o.location || 'Lieu non précisé')}${d && d !== 'IDF' ? ' (' + esc(d) + ')' : ''}</span><span>◷ ${esc(o.contract || 'Contrat à confirmer')}</span><span>${esc(when)}</span>`;
+}
+
+function drawPilot() {
+  const card = document.getElementById('pilotCard');
+  const o = currentOffer();
+  const total = pilot.ids.length;
+  const title = pilot.mode === 'triage' ? 'Tri des nouvelles offres' : 'File de candidature';
+  if (!o) {
+    card.innerHTML = `<div class="pilot-head"><strong>${title}</strong><button class="ghost" data-act="close">Fermer (Échap)</button></div>
+      <div class="empty">${total ? 'Terminé : ' + total + ' offre(s) traitée(s).' : 'Rien à traiter pour le moment.'}
+      ${pilot.mode === 'triage' ? '<p><button data-act="toqueue">Passer à la file de candidature</button></p>' : ''}
+      ${pilot.undo.length ? '<p><button class="ghost" data-act="undo">← Annuler la dernière action</button></p>' : ''}</div>`;
+    return;
+  }
+  const cat = jobCategory(o);
+  const head = `<div class="pilot-head"><span class="pill blue">${title} · ${pilot.i + 1} / ${total}</span>
+    <span class="pill">${esc(CAT_LABELS[cat])}</span><span class="pill">Score ${score(o)}</span>
+    <button class="ghost" data-act="close">Fermer (Échap)</button></div>
+    <h2>${esc(o.title)}</h2><div class="job-meta">${metaLine(o)}</div>`;
+
+  if (pilot.mode === 'triage') {
+    card.innerHTML = `${head}
+      <p class="pilot-notes">${esc((o.notes || 'Pas de description.').slice(0, 600))}</p>
+      <div class="pilot-actions">
+        <button data-act="apply"><kbd>A</kbd> À postuler</button>
+        <button class="secondary" data-act="ignore"><kbd>X</kbd> Ignorer</button>
+        <button class="secondary" data-act="open"><kbd>O</kbd> Ouvrir l’annonce</button>
+        <button class="ghost" data-act="skip"><kbd>→</kbd> Plus tard</button>
+        <button class="ghost" data-act="undo" ${pilot.undo.length ? '' : 'disabled'}><kbd>←</kbd> Annuler</button>
+      </div>`;
+    return;
+  }
+
+  const infos = infosOf();
+  const chips = INFO_FIELDS.filter(([k]) => infos[k])
+    .map(([k, label]) => `<button class="chip" data-copy="${k}" title="${esc(infos[k])}">${esc(label)}</button>`).join('');
+  const cv = cvOf(cat);
+  card.innerHTML = `${head}
+    <div class="pilot-hint">CV à joindre : <b>${cv ? esc(cv) : 'à définir dans Critères & modèles'}</b></div>
+    <textarea id="pilotLetter" rows="12" aria-label="Lettre de motivation">${esc(fillTemplate(o))}</textarea>
+    <div class="pilot-chips"><span class="small muted">Copier :</span> <button class="chip" data-copy="__letter">Lettre</button> ${chips || '<span class="small muted">renseigne « Mes infos » dans Critères & modèles</span>'}</div>
+    <div class="pilot-actions">
+      <button data-act="go"><kbd>Entrée</kbd> Ouvrir l’annonce + copier la lettre</button>
+      <button class="ok" data-act="sent"><kbd>Espace</kbd> Candidature envoyée</button>
+      <button class="ghost" data-act="skip"><kbd>→</kbd> Plus tard</button>
+      <button class="ghost" data-act="ignore"><kbd>X</kbd> Retirer</button>
+      <button class="ghost" data-act="undo" ${pilot.undo.length ? '' : 'disabled'}><kbd>←</kbd> Annuler</button>
+    </div>`;
+}
+
+function copyText(text, label) {
+  const done = () => toast(label + ' copié(e)');
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(done).catch(() => legacyCopy(text) && done());
+  } else if (legacyCopy(text)) {
+    done();
+  }
+}
+
+function legacyCopy(text) {
+  const t = document.createElement('textarea');
+  t.value = text;
+  t.style.position = 'fixed';
+  t.style.opacity = '0';
+  document.body.appendChild(t);
+  t.select();
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+  t.remove();
+  if (!ok) toast('Copie impossible : sélectionne le texte à la main');
+  return ok;
+}
+
+function letterText() {
+  const area = document.getElementById('pilotLetter');
+  return area ? area.value : '';
+}
+
+function pilotAct(action) {
+  if (action === 'close') return closePilot();
+  if (action === 'toqueue') return openPilot('queue');
+  if (action === 'undo') {
+    const u = pilot.undo.pop();
+    if (!u) return;
+    const o = offers.find(x => x.id === u.id);
+    if (o) {
+      o.status = u.status;
+      if (u.appliedDate) o.appliedDate = u.appliedDate; else delete o.appliedDate;
+      o.trackedAt = Date.now();
+    }
+    pilot.i = u.i;
+    save();
+    return drawPilot();
+  }
+  const o = currentOffer();
+  if (!o) return;
+  if (action === 'open') { if (o.url) window.open(o.url, '_blank', 'noopener'); return; }
+  if (action === 'go') {
+    copyText(letterText(), 'Lettre');
+    if (o.url) window.open(o.url, '_blank', 'noopener');
+    return;
+  }
+  if (action === 'skip') { pilot.i++; return drawPilot(); }
+  const status = { apply: 'À postuler', ignore: 'Ignorée', sent: 'Candidature envoyée' }[action];
+  if (!status) return;
+  pilot.undo.push({ id: o.id, status: o.status, appliedDate: o.appliedDate, i: pilot.i });
+  setTrack(o, status);
+  pilot.i++;
+  save();
+  drawPilot();
+}
+
+function pilotKey(e) {
+  if (!pilot) return;
+  if (e.key === 'Escape') { e.preventDefault(); return closePilot(); }
+  const typing = /^(TEXTAREA|INPUT|SELECT)$/.test(e.target.tagName);
+  if (typing) {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); pilotAct('go'); }
+    return;
+  }
+  const k = e.key.toLowerCase();
+  const map = pilot.mode === 'triage'
+    ? { a: 'apply', x: 'ignore', o: 'open', arrowright: 'skip', arrowleft: 'undo' }
+    : { enter: 'go', ' ': 'sent', x: 'ignore', arrowright: 'skip', arrowleft: 'undo' };
+  if (map[k]) { e.preventDefault(); pilotAct(map[k]); }
+}
+
+/* ---------- Modèles et « Mes infos » ---------- */
+
+function fillTemplateForm() {
+  const t = templatesOf(), i = infosOf();
+  CATS.forEach(c => {
+    const area = document.getElementById('tpl_' + c);
+    if (area) area.value = t[c];
+    const cv = document.getElementById('cv_' + c);
+    if (cv) cv.value = cvOf(c);
+  });
+  INFO_FIELDS.forEach(([k]) => {
+    const input = document.getElementById('info_' + k);
+    if (input) input.value = i[k] || '';
+  });
+}
+
+function saveTemplates() {
+  profile.templates = {};
+  profile.cv = {};
+  CATS.forEach(c => {
+    const v = document.getElementById('tpl_' + c).value.trim();
+    if (v && v !== DEFAULT_TEMPLATES[c]) profile.templates[c] = v;
+    profile.cv[c] = document.getElementById('cv_' + c).value.trim();
+  });
+  profile.infos = {};
+  INFO_FIELDS.forEach(([k]) => { profile.infos[k] = document.getElementById('info_' + k).value.trim(); });
+  saveProfileState();
+  toast('Modèles et infos enregistrés');
+}
+
+function resetTemplate(c) {
+  document.getElementById('tpl_' + c).value = DEFAULT_TEMPLATES[c];
+}
+
+function saveProfileState() {
+  profile.updatedAt = Date.now();
+  localStorage.setItem(PROFILE, JSON.stringify(profile));
+  render();
+  syncSchedule();
+}
+
+/* ---------- Synchronisation téléphone / PC (gist GitHub secret) ---------- */
+
+const SYNC_TOKEN = 'zcrt_sync_token', SYNC_GIST = 'zcrt_sync_gist', SYNC_CACHE = 'zcrt_sync_cache';
+const SYNC_FILE = 'zcrt-suivi.json';
+const IGNORED_KEEP_DAYS = 90;
+let syncTimer = null, syncBusy = false, syncAgain = false;
+
+function store(key, value) {
+  try { if (value === null) localStorage.removeItem(key); else localStorage.setItem(key, value); } catch (e) { /* stockage indisponible */ }
+}
+function stored(key) {
+  try { return localStorage.getItem(key) || ''; } catch (e) { return ''; }
+}
+
+function setSyncState(text, error) {
+  ['syncState', 'syncState2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.textContent = text; el.classList.toggle('sync-error', !!error); }
+  });
+}
+
+async function gh(path, options = {}) {
+  const response = await fetch('https://api.github.com' + path, {
+    ...options,
+    headers: {
+      Accept: 'application/vnd.github+json',
+      Authorization: 'Bearer ' + stored(SYNC_TOKEN),
+      ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+    },
+  });
+  if (!response.ok) throw new Error('GitHub ' + response.status);
+  return response.json();
+}
+
+async function findGist() {
+  const known = stored(SYNC_GIST);
+  if (known) return known;
+  for (let page = 1; page <= 5; page++) {
+    const list = await gh('/gists?per_page=100&page=' + page);
+    const found = list.find(g => g.files && g.files[SYNC_FILE]);
+    if (found) { store(SYNC_GIST, found.id); return found.id; }
+    if (list.length < 100) break;
+  }
+  const created = await gh('/gists', {
+    method: 'POST',
+    body: JSON.stringify({
+      description: 'ZCRT — suivi des candidatures (synchronisation)',
+      public: false,
+      files: { [SYNC_FILE]: { content: JSON.stringify(syncState()) } },
+    }),
+  });
+  store(SYNC_GIST, created.id);
+  return created.id;
+}
+
+async function readGist(id) {
+  const gist = await gh('/gists/' + id);
+  const file = gist.files && gist.files[SYNC_FILE];
+  if (!file) return {};
+  const content = file.truncated ? await (await fetch(file.raw_url)).text() : file.content;
+  return JSON.parse(content || '{}');
+}
+
+/** État partagé : suivi des offres (statut, dates, notes) + critères et modèles. */
+function syncState() {
+  const now = Date.now();
+  const cache = safeJson(stored(SYNC_CACHE));
+  const local = new Set(offers.map(o => o.id));
+  const entries = {};
+  // Entrées connues ailleurs mais pas encore chargées ici : on les garde.
+  Object.values(cache.entries || {}).forEach(e => {
+    if (local.has(e.id)) return;
+    if (e.status === 'Ignorée' && now - (e.trackedAt || 0) > IGNORED_KEEP_DAYS * 864e5) return;
+    entries[e.id] = e;
+  });
+  offers.forEach(o => {
+    if (o.demo) return;
+    const manual = !o.source;
+    if (!manual && !o.trackedAt) return;
+    if (o.status === 'Ignorée' && !manual) {
+      if (now - (o.trackedAt || 0) <= IGNORED_KEEP_DAYS * 864e5) {
+        entries[o.id] = { id: o.id, status: o.status, trackedAt: o.trackedAt, url: o.url };
+      }
+      return;
+    }
+    entries[o.id] = { ...o };
+  });
+  return { version: 1, updatedAt: now, profileUpdatedAt: profile.updatedAt || 0, profile, entries };
+}
+
+function safeJson(text) {
+  try { return JSON.parse(text || '{}') || {}; } catch (e) { return {}; }
+}
+
+const TRACK_FIELDS = ['status', 'appliedDate', 'notes', 'notesEdited', 'trackedAt', 'relanceAuto'];
+
+/** Applique l'état distant : pour chaque offre, la modification la plus récente gagne. */
+function applySync(state) {
+  if (!state || !state.entries) return false;
+  let changed = false;
+  const byId = new Map(offers.map(o => [o.id, o]));
+  Object.values(state.entries).forEach(e => {
+    const o = byId.get(e.id);
+    if (o) {
+      if ((e.trackedAt || 0) <= (o.trackedAt || 0)) return;
+      const fields = o.source ? TRACK_FIELDS : Object.keys(e);
+      fields.forEach(k => { if (k in e) o[k] = e[k]; else if (o.source) delete o[k]; });
+      changed = true;
+    } else if (e.title && e.status !== 'Ignorée') {
+      offers.push({ ...e });
+      changed = true;
+    }
+  });
+  if ((state.profileUpdatedAt || 0) > (profile.updatedAt || 0) && state.profile) {
+    profile = { ...profile, ...state.profile };
+    store(PROFILE, JSON.stringify(profile));
+    refreshProfileForms();
+    changed = true;
+  }
+  return changed;
+}
+
+function applySyncCache() {
+  applySync(safeJson(stored(SYNC_CACHE)));
+}
+
+function refreshProfileForms() {
+  document.getElementById('keywords').value = profile.keywords || '';
+  document.getElementById('excluded').value = (profile.excluded || []).join(', ');
+  document.getElementById('priority').value = profile.priority;
+  fillTemplateForm();
+}
+
+function sameEntries(a, b) {
+  const ka = Object.keys(a || {}), kb = Object.keys(b || {});
+  if (ka.length !== kb.length) return false;
+  return ka.every(k => b[k] && (a[k].trackedAt || 0) === (b[k].trackedAt || 0));
+}
+
+async function syncNow() {
+  if (!stored(SYNC_TOKEN)) return;
+  if (syncBusy) { syncAgain = true; return; }
+  syncBusy = true;
+  setSyncState('Synchronisation…');
+  try {
+    let id = await findGist();
+    let remote;
+    try {
+      remote = await readGist(id);
+    } catch (e) {
+      if (!/404/.test(e.message)) throw e;
+      store(SYNC_GIST, null); // gist supprimé : on en retrouve ou recrée un
+      id = await findGist();
+      remote = await readGist(id);
+    }
+    store(SYNC_CACHE, JSON.stringify(remote));
+    if (applySync(remote)) { store(KEY, JSON.stringify(offers)); render(); }
+    const local = syncState();
+    if (!sameEntries(local.entries, remote.entries) || local.profileUpdatedAt !== (remote.profileUpdatedAt || 0)) {
+      await gh('/gists/' + id, {
+        method: 'PATCH',
+        body: JSON.stringify({ files: { [SYNC_FILE]: { content: JSON.stringify(local) } } }),
+      });
+      store(SYNC_CACHE, JSON.stringify(local));
+    }
+    setSyncState('Synchronisé à ' + new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }));
+  } catch (e) {
+    const hint = /401|403/.test(e.message) ? ' : jeton refusé ou sans accès aux gists' : '';
+    setSyncState('Synchro en échec (' + e.message + ')' + hint, true);
+  } finally {
+    syncBusy = false;
+    if (syncAgain) { syncAgain = false; syncNow(); }
+  }
+}
+
+function syncSchedule() {
+  if (!stored(SYNC_TOKEN)) return;
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(syncNow, 1500);
+}
+
+function enableSync() {
+  const input = document.getElementById('syncTokenInput');
+  const token = input.value.trim();
+  if (!token) return toast('Colle d’abord le jeton GitHub');
+  store(SYNC_TOKEN, token);
+  input.value = '';
+  syncNow();
+}
+
+function disableSync() {
+  [SYNC_TOKEN, SYNC_GIST, SYNC_CACHE].forEach(k => store(k, null));
+  setSyncState('Synchronisation désactivée sur cet appareil');
+}
+
+/* ---------- Initialisation ---------- */
+
+function pilotInit() {
+  // Les statuts posés avant cette version sont aussi synchronisés (priorité minimale).
+  offers.forEach(o => { if (!o.trackedAt && isTracked(o)) o.trackedAt = 1; });
+
+  const overlay = document.createElement('div');
+  overlay.id = 'pilot';
+  overlay.className = 'pilot';
+  overlay.innerHTML = '<div class="pilot-card" id="pilotCard" role="dialog" aria-modal="true"></div>';
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    if (btn.dataset.act) pilotAct(btn.dataset.act);
+    if (btn.dataset.copy) {
+      const k = btn.dataset.copy;
+      if (k === '__letter') copyText(letterText(), 'Lettre');
+      else copyText(infosOf()[k] || '', (INFO_FIELDS.find(f => f[0] === k) || [k, k])[1]);
+    }
+  });
+  document.addEventListener('keydown', pilotKey);
+  document.getElementById('triageBtn').onclick = () => openPilot('triage');
+  document.getElementById('queueBtn').onclick = () => openPilot('queue');
+
+  fillTemplateForm();
+  document.getElementById('saveTemplates').onclick = saveTemplates;
+  document.querySelectorAll('[data-reset-tpl]').forEach(b => { b.onclick = () => resetTemplate(b.dataset.resetTpl); });
+
+  document.getElementById('syncEnable').onclick = enableSync;
+  document.getElementById('syncDisable').onclick = disableSync;
+  document.getElementById('syncNowBtn').onclick = syncNow;
+  setSyncState(stored(SYNC_TOKEN) ? 'Synchronisation…' : 'Synchronisation non activée');
+
+  autoRelances();
+  updatePilotBar();
+  syncNow();
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncNow(); });
+}
