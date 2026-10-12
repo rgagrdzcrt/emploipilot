@@ -134,6 +134,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .source-credit { border: var(--border); color: var(--ink); }
 .empty { border: 2px dashed rgba(21, 22, 27, .4); background: #fffdf8; color: var(--muted); }
 
+/* ---------- Types de postes à masquer ---------- */
+.job-types { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; }
+.job-types label { display: flex; gap: 8px; align-items: center; padding: 9px 11px; background: #fff; border: var(--border); border-radius: 10px; cursor: pointer; font-weight: 600; }
+.job-types label:has(input:checked) { background: #ffe1e8; text-decoration: line-through; text-decoration-thickness: 2px; }
+.job-types input { accent-color: var(--vente); width: 17px; height: 17px; }
+
 /* ---------- Tableaux, fenêtres, divers ---------- */
 .table-wrap { border: var(--border); box-shadow: var(--shadow-sm); }
 th { background: #fff6e0; color: var(--ink); border-bottom: var(--border); }

@@ -154,6 +154,58 @@ function score(o) {
   return s;
 }
 
+/* ---------- Types de postes à masquer (réglables dans Critères & modèles) ---------- */
+
+const JOB_TYPES = [
+  { id: 'luxe', label: 'Luxe / bijouterie / horlogerie', re: /luxe|luxury|bijou|joaill|horlog|maroquin/i },
+  { id: 'bouche', label: 'Métiers de bouche (boucherie, charcuterie, poissonnerie, fromagerie, traiteur, boulangerie)', re: /bouch|charcut|poisson|fromag|traiteur|cr[eè]merie|boulangerie|p[aâ]tiss|viennois|\bcoupe\b/i },
+  { id: 'cosmetique', label: 'Cosmétique / parfumerie', re: /cosm[eé]t|parfum|beaut[eé]/i },
+  { id: 'animalerie', label: 'Animalerie', re: /animal/i },
+  { id: 'auto', label: 'Automobile', re: /automobile|v[eé]hicule|pneu|\bauto\b/i },
+  { id: 'cariste', label: 'Cariste / CACES', re: /cariste|caces|chariot/i },
+  { id: 'weekend', label: 'Week-end / étudiant', re: /week.?end|samedi|dimanche|[eé]tudiant/i },
+  { id: 'caisse', label: 'Caisse (vendeur-caissier, hôte de caisse)', re: /caiss/i },
+  { id: 'partiel', label: 'Temps partiel (moins de 35 h)', re: /temps partiel|\b(1\d|2\d|3[0-4])\s?h\b/i },
+  { id: 'mode', label: 'Mode / prêt-à-porter / chaussures', re: /\bmode\b|pr[eê]t.{0,3}[àa].{0,3}porter|fashion|textile|chauss/i },
+  { id: 'multimedia', label: 'Multimédia / téléphonie / électroménager', re: /multim|t[eé]l[eé]phon|[eé]lectrom|high.?tech/i },
+];
+const DEFAULT_HIDDEN_TYPES = ['luxe', 'bouche', 'cosmetique', 'animalerie', 'auto', 'cariste', 'weekend', 'caisse'];
+
+function hiddenTypes() { return Array.isArray(profile.hiddenTypes) ? profile.hiddenTypes : DEFAULT_HIDDEN_TYPES; }
+
+function excludedWords() {
+  return String(profile.excludedWords || '').split(',').map(w => norm(w)).filter(Boolean);
+}
+
+/** Offre d'un type masqué ou contenant un mot exclu (les offres suivies restent visibles). */
+function isHiddenType(o) {
+  if (isTracked(o)) return false;
+  const title = o.title || '';
+  const hidden = hiddenTypes();
+  if (JOB_TYPES.some(t => hidden.includes(t.id) && t.re.test(title))) return true;
+  const t = norm(title);
+  return excludedWords().some(w => t.includes(w));
+}
+
+function fillJobTypesForm() {
+  const box = document.getElementById('jobTypes');
+  if (!box) return;
+  const hidden = hiddenTypes();
+  box.innerHTML = JOB_TYPES.map(t => {
+    const n = offers.filter(o => t.re.test(o.title || '')).length;
+    return `<label><input type="checkbox" value="${t.id}" ${hidden.includes(t.id) ? 'checked' : ''}> ${esc(t.label)} <span class="muted small">(${n})</span></label>`;
+  }).join('');
+  document.getElementById('excludedWords').value = profile.excludedWords || '';
+}
+
+function saveJobTypes() {
+  profile.hiddenTypes = [...document.querySelectorAll('#jobTypes input:checked')].map(i => i.value);
+  profile.excludedWords = document.getElementById('excludedWords').value.trim();
+  saveProfileState();
+  const n = offers.filter(isHiddenType).length;
+  toast(n + ' offre(s) masquée(s)');
+}
+
 /* ---------- Trajet depuis le domicile (calculé par collect.py) ---------- */
 
 function travelLabel(o) {
@@ -247,6 +299,7 @@ function updatePilotBar() {
 let openOnLoad = '';
 
 function afterRemoteLoad() {
+  fillJobTypesForm(); // compteurs par type sur les offres publiées
   if (!openOnLoad) return;
   const mode = openOnLoad;
   openOnLoad = '';
@@ -433,6 +486,7 @@ function fillTemplateForm() {
   });
   const goal = document.getElementById('goalInput');
   if (goal) goal.value = goalOf();
+  fillJobTypesForm();
 }
 
 function saveTemplates() {
@@ -683,6 +737,7 @@ function pilotInit() {
 
   fillTemplateForm();
   document.getElementById('saveTemplates').onclick = saveTemplates;
+  document.getElementById('saveJobTypes').onclick = saveJobTypes;
   document.querySelectorAll('[data-reset-tpl]').forEach(b => { b.onclick = () => resetTemplate(b.dataset.resetTpl); });
 
   document.getElementById('syncEnable').onclick = enableSync;
