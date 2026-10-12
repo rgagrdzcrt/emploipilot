@@ -68,7 +68,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .side-note { color: #8d9097; }
 
 /* ---------- En-tête ---------- */
-.top { border-bottom: 1px solid var(--line); }
+/* Titre centré ; la bascule du mode nuit reste dans le coin droit. */
+.top { position: relative; justify-content: center; align-items: center; text-align: center; padding-left: 48px; padding-right: 48px; border-bottom: 1px solid var(--line); }
+.top > div:last-child { position: absolute; top: 0; right: 0; }
 .eyebrow { color: var(--muted); background: none; padding: 0; border: 0; letter-spacing: 1.2px; }
 .top h1 { font-size: clamp(26px, 3vw, 36px); font-weight: 700; letter-spacing: -1px; }
 .pill { background: #f1efe9; color: #4a4d55; border: 0; font-weight: 600; }
