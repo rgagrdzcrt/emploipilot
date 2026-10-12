@@ -1,0 +1,23 @@
+{
+  "name": "ZCRT — Recherche d'emploi",
+  "short_name": "ZCRT",
+  "description": "Offres de stock, de rayon et de vente en Île-de-France, tri rapide et suivi des candidatures.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4efe6",
+  "theme_color": "#15161b",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Trier les nouvelles offres", "short_name": "Trier", "url": "./#trier",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Postuler", "short_name": "Postuler", "url": "./#postuler",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

@@ -242,14 +242,15 @@ function updatePilotBar() {
   updateGoal();
 }
 
-/* Lien de l'alerte téléphone (…/#trier) : le tri s'ouvre dès que les offres
-   publiées sont chargées. */
-let openTriageOnLoad = false;
+/* Lien de l'alerte téléphone (…/#trier) et raccourcis de l'appli (#trier,
+   #postuler) : la fenêtre s'ouvre dès que les offres publiées sont chargées. */
+let openOnLoad = '';
 
 function afterRemoteLoad() {
-  if (!openTriageOnLoad) return;
-  openTriageOnLoad = false;
-  openPilot('triage');
+  if (!openOnLoad) return;
+  const mode = openOnLoad;
+  openOnLoad = '';
+  openPilot(mode);
 }
 
 function openPilot(mode) {
@@ -689,9 +690,15 @@ function pilotInit() {
   document.getElementById('syncNowBtn').onclick = syncNow;
   setSyncState(stored(SYNC_TOKEN) ? 'Synchronisation…' : 'Synchronisation non activée');
 
-  if (location.hash === '#trier') {
+  const hashMode = { '#trier': 'triage', '#postuler': 'queue' }[location.hash];
+  if (hashMode) {
     history.replaceState(null, '', location.pathname + location.search);
-    openTriageOnLoad = true;
+    openOnLoad = hashMode;
+  }
+
+  // Appli installable sur le téléphone (fonctionne aussi hors ligne).
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === '127.0.0.1')) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
   }
 
   autoRelances();
