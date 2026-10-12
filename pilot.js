@@ -545,7 +545,16 @@ async function gh(path, options = {}) {
       ...(options.body ? { 'Content-Type': 'application/json' } : {}),
     },
   });
-  if (!response.ok) throw new Error('GitHub ' + response.status);
+  if (!response.ok) {
+    // Raison exacte donnée par GitHub (ex. « Resource not accessible by
+    // personal access token ») et étape concernée, pour diagnostiquer.
+    let reason = '';
+    try { reason = (await response.json()).message || ''; } catch (e) { /* pas de JSON */ }
+    const step = (options.method || 'GET') === 'GET'
+      ? (path.startsWith('/gists?') ? 'liste des gists' : 'lecture du gist')
+      : (options.method === 'POST' ? 'création du gist' : 'enregistrement du gist');
+    throw new Error('GitHub ' + response.status + ' – ' + step + (reason ? ' : ' + reason : ''));
+  }
   return response.json();
 }
 
@@ -682,7 +691,9 @@ async function syncNow() {
     }
     setSyncState('Synchronisé à ' + new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }));
   } catch (e) {
-    const hint = /401|403/.test(e.message) ? ' : jeton refusé ou sans accès aux gists' : '';
+    const hint = /GitHub 401/.test(e.message) ? ' → jeton invalide ou expiré : recolle-le'
+      : /GitHub 403/.test(e.message) ? ' → jeton sans accès aux gists : utilise un jeton classique avec la case « gist »'
+      : '';
     setSyncState('Synchro en échec (' + e.message + ')' + hint, true);
   } finally {
     syncBusy = false;
