@@ -520,7 +520,13 @@ function saveProfileState() {
 const SYNC_TOKEN = 'zcrt_sync_token', SYNC_GIST = 'zcrt_sync_gist', SYNC_CACHE = 'zcrt_sync_cache';
 const SYNC_FILE = 'zcrt-suivi.json';
 const IGNORED_KEEP_DAYS = 90;
+const SYNC_MIN_INTERVAL = 15000;           // au plus une synchro automatique toutes les 15 s
+const SYNC_BREAKER = { max: 40, windowMs: 10 * 60000, pauseMs: 15 * 60000 };
 let syncTimer = null, syncBusy = false, syncAgain = false;
+let lastSyncAt = 0, syncBlockedUntil = 0;
+const ghCalls = [];                        // horodatage des appels à l'API (disjoncteur)
+
+function hhmm(ts) { return new Date(ts).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }); }
 
 function store(key, value) {
   try { if (value === null) localStorage.removeItem(key); else localStorage.setItem(key, value); } catch (e) { /* stockage indisponible */ }
@@ -537,6 +543,14 @@ function setSyncState(text, error) {
 }
 
 async function gh(path, options = {}) {
+  // Disjoncteur : quelle que soit la cause, jamais de rafale de requêtes vers GitHub.
+  const now = Date.now();
+  while (ghCalls.length && now - ghCalls[0] > SYNC_BREAKER.windowMs) ghCalls.shift();
+  if (ghCalls.length >= SYNC_BREAKER.max) {
+    syncBlockedUntil = now + SYNC_BREAKER.pauseMs;
+    throw new Error('trop de requêtes en peu de temps, pause de sécurité');
+  }
+  ghCalls.push(now);
   const response = await fetch('https://api.github.com' + path, {
     ...options,
     headers: {
@@ -550,6 +564,12 @@ async function gh(path, options = {}) {
     // personal access token ») et étape concernée, pour diagnostiquer.
     let reason = '';
     try { reason = (await response.json()).message || ''; } catch (e) { /* pas de JSON */ }
+    // Limite de requêtes : on attend l'heure de reprise donnée par GitHub.
+    if (response.status === 429 || /rate limit/i.test(reason) || response.headers.get('x-ratelimit-remaining') === '0') {
+      const reset = Number(response.headers.get('x-ratelimit-reset')) * 1000;
+      syncBlockedUntil = reset > Date.now() ? reset + 5000 : Date.now() + SYNC_BREAKER.pauseMs;
+      throw new Error('limite de requêtes GitHub atteinte');
+    }
     const step = (options.method || 'GET') === 'GET'
       ? (path.startsWith('/gists?') ? 'liste des gists' : 'lecture du gist')
       : (options.method === 'POST' ? 'création du gist' : 'enregistrement du gist');
@@ -663,9 +683,21 @@ function sameEntries(a, b) {
   return ka.every(k => b[k] && (a[k].trackedAt || 0) === (b[k].trackedAt || 0));
 }
 
-async function syncNow() {
+async function syncNow(force = false) {
   if (!stored(SYNC_TOKEN)) return;
+  if (Date.now() < syncBlockedUntil) {
+    setSyncState('Synchro en pause jusqu’à ' + hhmm(syncBlockedUntil) + ' (limite GitHub)', true);
+    return;
+  }
   if (syncBusy) { syncAgain = true; return; }
+  // Hors clic sur « Synchroniser maintenant », pas plus d'une synchro toutes les 15 s.
+  const wait = SYNC_MIN_INTERVAL - (Date.now() - lastSyncAt);
+  if (!force && wait > 0) {
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(syncNow, wait);
+    return;
+  }
+  lastSyncAt = Date.now();
   syncBusy = true;
   setSyncState('Synchronisation…');
   try {
@@ -691,13 +723,17 @@ async function syncNow() {
     }
     setSyncState('Synchronisé à ' + new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }));
   } catch (e) {
-    const hint = /GitHub 401/.test(e.message) ? ' → jeton invalide ou expiré : recolle-le'
-      : /GitHub 403/.test(e.message) ? ' → jeton sans accès aux gists : utilise un jeton classique avec la case « gist »'
-      : '';
-    setSyncState('Synchro en échec (' + e.message + ')' + hint, true);
+    if (Date.now() < syncBlockedUntil) {
+      setSyncState('Synchro en pause jusqu’à ' + hhmm(syncBlockedUntil) + ' (' + e.message + ')', true);
+    } else {
+      const hint = /GitHub 401/.test(e.message) ? ' → jeton invalide ou expiré : recolle-le'
+        : /GitHub 403/.test(e.message) ? ' → jeton sans accès aux gists : utilise un jeton classique avec la case « gist »'
+        : '';
+      setSyncState('Synchro en échec (' + e.message + ')' + hint, true);
+    }
   } finally {
     syncBusy = false;
-    if (syncAgain) { syncAgain = false; syncNow(); }
+    if (syncAgain) { syncAgain = false; syncSchedule(); }
   }
 }
 
@@ -713,7 +749,7 @@ function enableSync() {
   if (!token) return toast('Colle d’abord le jeton GitHub');
   store(SYNC_TOKEN, token);
   input.value = '';
-  syncNow();
+  syncNow(true);
 }
 
 function disableSync() {
@@ -753,7 +789,7 @@ function pilotInit() {
 
   document.getElementById('syncEnable').onclick = enableSync;
   document.getElementById('syncDisable').onclick = disableSync;
-  document.getElementById('syncNowBtn').onclick = syncNow;
+  document.getElementById('syncNowBtn').onclick = () => syncNow(true);
   setSyncState(stored(SYNC_TOKEN) ? 'Synchronisation…' : 'Synchronisation non activée');
 
   const hashMode = { '#trier': 'triage', '#postuler': 'queue' }[location.hash];
