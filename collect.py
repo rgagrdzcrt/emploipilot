@@ -57,8 +57,15 @@ CATEGORY_RE = {
         r"|r[eé]assort|r[eé]serviste|grande distribution",
         re.I,
     ),
+    # Postes de vente en magasin uniquement : « boutique » ou « vente » seuls
+    # attrapaient des postes de bureau (assistant des ventes, planification…)
+    # et d'encadrement (responsable de boutique).
     "vente": re.compile(
-        r"vendeu(?:r|se)|vente|boutique|pr[eê]t[- ]?[àa][- ]?porter|conseill(?:er|[eè]re) de vente",
+        r"vendeu(?:r|se)|conseill[\w.·()]*(?:\s+\w+)?\s+(?:de |en |des )?ventes?"
+        r"|conseill[\w.·()]*\s+(?:de )?mode|caissi|h[oô]te(?:sse)?\s*de\s*caisse"
+        r"|sales\s*(?:associate|advisor)|stylist\w*\s*conseil"
+        r"|conseill[\w.·()]*\s+client\w*\s+(?:en\s+)?(?:boutique|magasin)"
+        r"|[eé]quipier\w*\s+(?:de\s+)?vente|employ[eé]\w*.{0,20}points?\s+de\s+ventes?",
         re.I,
     ),
 }
@@ -1692,7 +1699,8 @@ PLACES_FILE = ROOT / "lieux.json"  # cache des positions et trajets, commité av
 GEOCODE_URL = "https://data.geopf.fr/geocodage/search"
 PRIM_JOURNEYS_URL = "https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/journeys"
 TRAVEL_REFRESH_DAYS = 30
-TRAVEL_MAX_PER_RUN = 80  # le reste est calculé aux collectes suivantes
+TRAVEL_MAX_PER_RUN = 60  # le reste est calculé aux collectes suivantes
+TRAVEL_PAUSE = 4.5  # PRIM accepte environ 15 calculs par minute
 ARROND_RE = re.compile(r"\b(\d{1,2})\s*(?:e|er|ème|eme)\b", re.I)
 
 
@@ -1794,7 +1802,7 @@ def transit_minutes_retry(origin, place, api_key):
     except HTTPError as exc:
         if exc.code != 429:
             raise
-        time.sleep(10)
+        time.sleep(60)  # la limite de PRIM est comptée par minute
         return transit_minutes(origin, place, api_key)
 
 
@@ -1837,7 +1845,7 @@ def add_travel_info(offers, cfg):
                 minutes = transit_minutes_retry(origin, place, api_key)
                 place["min"], place["minAt"] = minutes, today.isoformat()
                 timed += 1
-                time.sleep(1)  # PRIM limite le nombre de requêtes par seconde
+                time.sleep(TRAVEL_PAUSE)
             except (HTTPError, URLError, TimeoutError, ValueError) as exc:
                 code = getattr(exc, "code", "")
                 print(f"Trajet non calculé ({type(exc).__name__} {code}).".replace(" )", ")"))
