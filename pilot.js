@@ -171,7 +171,7 @@ const JOB_TYPES = [
   { id: 'interim', label: 'Missions d’intérim', test: o => norm(o.contract) === 'interim' },
   { id: 'direction', label: 'Postes de direction (directeur, head of)', re: /directeur|directrice|\bdirection\b|head of/i },
 ];
-const MAX_OFFER_AGE_DAYS = 60; // annonces publiées il y a plus de 2 mois : masquées
+const MAX_OFFER_AGE_DAYS = 15; // annonces publiées il y a plus de 15 jours : masquées
 
 function matchesType(type, o) {
   return type.test ? type.test(o) : type.re.test(o.title || '');

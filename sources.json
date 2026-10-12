@@ -391,7 +391,7 @@
         "location": "Paris"
       }
     ],
-    "maxDaysOld": 60
+    "maxDaysOld": 15
   },
   "joblet": {
     "enabled": true,

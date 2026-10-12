@@ -29,9 +29,9 @@ UA = "EmploiPilot/0.3 (personal job-search tool)"
 # dépasse MAX_AGE_DAYS ET si elle n'a plus été revue par une source depuis
 # MAX_UNSEEN_DAYS (elle a donc quitté la première page des résultats).
 MAX_AGE_DAYS = 45
-# Annonce publiée (ou mise à jour, pour Jooble) il y a plus de 2 mois : retirée
+# Annonce publiée (ou mise à jour, pour Jooble) il y a plus de 15 jours : retirée
 # même si une source la propose encore.
-MAX_PUBLICATION_DAYS = 60
+MAX_PUBLICATION_DAYS = 15
 MAX_UNSEEN_DAYS = 30
 
 STAGE_RE = re.compile(
