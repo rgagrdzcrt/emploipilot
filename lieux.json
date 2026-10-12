@@ -47,12 +47,6 @@
   "lat": 48.92713,
   "lon": 2.21488
  },
- "boissy-l'aillerie||95": {
-  "km": 38.4,
-  "label": "Boissy-l'Aillerie",
-  "lat": 49.07524,
-  "lon": 2.02883
- },
  "bondoufle||91": {
   "km": 33.4,
   "label": "Bondoufle",
@@ -86,12 +80,6 @@
   "min": 68,
   "minAt": "2026-10-12"
  },
- "breuillet||91": {
-  "km": 43.7,
-  "label": "Breuillet",
-  "lat": 48.5713,
-  "lon": 2.1661
- },
  "brunoy||91": {
   "km": 23.1,
   "label": "Brunoy",
@@ -104,12 +92,6 @@
   "lat": 48.60356,
   "lon": 2.29631
  },
- "buchelay|78200|78": {
-  "km": 59.6,
-  "label": "Buchelay",
-  "lat": 48.98184,
-  "lon": 1.67767
- },
  "buc||78": {
   "km": 30.5,
   "label": "Buc",
@@ -121,12 +103,6 @@
   "label": "Dourdan",
   "lat": 48.53577,
   "lon": 2.01224
- },
- "canton de milly-la-forêt||": {
-  "km": 55.8,
-  "label": "Milly-la-Forêt",
-  "lat": 48.4017,
-  "lon": 2.45828
  },
  "cergy||95": {
   "km": 35.6,
@@ -165,12 +141,6 @@
   "label": "Roissy-en-France",
   "lat": 48.9989,
   "lon": 2.51116
- },
- "chartrettes|77590|77": {
-  "km": 49.1,
-  "label": "Chartrettes",
-  "lat": 48.48805,
-  "lon": 2.7124
  },
  "chatou||78": {
   "km": 24.6,
@@ -246,12 +216,6 @@
   "lat": 48.66087,
   "lon": 2.56202
  },
- "corbeil-essonnes||91": {
-  "km": 34.0,
-  "label": "Corbeil-Essonnes",
-  "lat": 48.59823,
-  "lon": 2.46504
- },
  "cormeilles-en-parisis||95": {
   "dept": "95",
   "km": 22.4,
@@ -298,30 +262,12 @@
   "lat": 48.67783,
   "lon": 2.41214
  },
- "ennery|95300|95": {
-  "km": 33.3,
-  "label": "Ennery",
-  "lat": 49.07048,
-  "lon": 2.10569
- },
  "faremoutiers||IDF": {
   "dept": "77",
   "km": 39.6,
   "label": "Faremoutiers",
   "lat": 48.79381,
   "lon": 2.99964
- },
- "fontainebleau||77": {
-  "km": 57.4,
-  "label": "Fontainebleau",
-  "lat": 48.40781,
-  "lon": 2.70278
- },
- "fontenay-le-fleury||78": {
-  "km": 34.1,
-  "label": "Fontenay-le-Fleury",
-  "lat": 48.81093,
-  "lon": 2.04163
  },
  "fontenay-sous-bois||94": {
   "km": 6.0,
@@ -372,7 +318,8 @@
   "lat": 48.77215,
   "lon": 2.07035
  },
- "hardricourt|78250|78": {
+ "hardricourt||IDF": {
+  "dept": "78",
   "km": 44.6,
   "label": "Hardricourt",
   "lat": 49.00776,
@@ -479,18 +426,6 @@
   "lat": 48.81651,
   "lon": 1.98385
  },
- "les essarts-le-roi||78": {
-  "km": 48.2,
-  "label": "Les Essarts-le-Roi",
-  "lat": 48.72024,
-  "lon": 1.88938
- },
- "les ulis||91": {
-  "km": 33.0,
-  "label": "Les Ulis",
-  "lat": 48.68185,
-  "lon": 2.18615
- },
  "levallois-perret||92": {
   "dept": "92",
   "km": 14.5,
@@ -516,29 +451,11 @@
   "lat": 48.6409,
   "lon": 2.28403
  },
- "longueville|77650|77": {
-  "km": 70.6,
-  "label": "Longueville",
-  "lat": 48.51645,
-  "lon": 3.24728
- },
  "louvres||95": {
   "km": 16.0,
   "label": "Louvres",
   "lat": 49.04735,
   "lon": 2.50393
- },
- "magny-en-vexin||95": {
-  "km": 57.3,
-  "label": "Magny-en-Vexin",
-  "lat": 49.1548,
-  "lon": 1.79853
- },
- "magny-les-hameaux||78": {
-  "km": 36.0,
-  "label": "Magny-les-Hameaux",
-  "lat": 48.73322,
-  "lon": 2.06784
  },
  "maisons-laffitte||78": {
   "km": 25.0,
@@ -736,12 +653,6 @@
   "lat": 48.84011,
   "lon": 2.55149
  },
- "orgeval||78": {
-  "km": 37.1,
-  "label": "Orgeval",
-  "lat": 48.9262,
-  "lon": 1.97809
- },
  "orly||94": {
   "km": 19.1,
   "label": "Orly",
@@ -849,12 +760,6 @@
   "lat": 48.88416,
   "lon": 2.2372
  },
- "rambouillet||78": {
-  "km": 55.2,
-  "label": "Rambouillet",
-  "lat": 48.64197,
-  "lon": 1.84467
- },
  "rocquencourt|78150|78": {
   "km": 28.1,
   "label": "Le Chesnay-Rocquencourt",
@@ -893,12 +798,6 @@
   "lat": 48.74999,
   "lon": 2.35147
  },
- "réau||": {
-  "km": 34.5,
-  "label": "Réau",
-  "lat": 48.60726,
-  "lon": 2.62431
- },
  "saint-cloud||92": {
   "km": 20.9,
   "label": "Saint-Cloud",
@@ -910,12 +809,6 @@
   "label": "Saint-Denis",
   "lat": 48.93748,
   "lon": 2.3615
- },
- "saint-fargeau-ponthierry||77": {
-  "km": 39.9,
-  "label": "Saint-Fargeau-Ponthierry",
-  "lat": 48.546,
-  "lon": 2.52861
  },
  "saint-germain-en-laye-sud||78": {
   "km": 27.4,
@@ -943,12 +836,6 @@
   "label": "Saint-Michel-sur-Orge",
   "lat": 48.63317,
   "lon": 2.31272
- },
- "sainte-geneviève-des-bois||91": {
-  "km": 31.6,
-  "label": "Sainte-Geneviève-des-Bois",
-  "lat": 48.63904,
-  "lon": 2.3282
  },
  "santeny|94440|94": {
   "km": 20.8,
@@ -1096,12 +983,6 @@
   "lat": 48.73878,
   "lon": 2.4497
  },
- "villiers-en-bière|77190|77": {
-  "km": 46.1,
-  "label": "Villiers-en-Bière",
-  "lat": 48.49559,
-  "lon": 2.59742
- },
  "villiers-sur-marne||IDF": {
   "dept": "94",
   "km": 9.6,
@@ -1145,11 +1026,5 @@
   "label": "Épinay-sur-Seine",
   "lat": 48.95522,
   "lon": 2.31712
- },
- "étampes||91": {
-  "km": 58.4,
-  "label": "Étampes",
-  "lat": 48.42773,
-  "lon": 2.14952
  }
 }
