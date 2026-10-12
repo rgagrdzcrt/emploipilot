@@ -169,6 +169,7 @@ const JOB_TYPES = [
   { id: 'mode', label: 'Mode / prêt-à-porter / chaussures', re: /\bmode\b|pr[eê]t.{0,3}[àa].{0,3}porter|fashion|textile|chauss/i },
   { id: 'multimedia', label: 'Multimédia / téléphonie / électroménager', re: /multim|t[eé]l[eé]phon|[eé]lectrom|high.?tech/i },
   { id: 'interim', label: 'Missions d’intérim', test: o => norm(o.contract) === 'interim' },
+  { id: 'direction', label: 'Postes de direction (directeur, head of)', re: /directeur|directrice|\bdirection\b|head of/i },
 ];
 const MAX_OFFER_AGE_DAYS = 60; // annonces publiées il y a plus de 2 mois : masquées
 
@@ -180,7 +181,7 @@ function tooOld(o) {
   const d = parseDate(offerDate(o));
   return !!d && Date.now() - d.getTime() > MAX_OFFER_AGE_DAYS * 864e5;
 }
-const DEFAULT_HIDDEN_TYPES = ['luxe', 'bouche', 'cosmetique', 'animalerie', 'auto', 'cariste', 'weekend', 'caisse'];
+const DEFAULT_HIDDEN_TYPES = ['luxe', 'bouche', 'cosmetique', 'animalerie', 'auto', 'cariste', 'weekend', 'caisse', 'direction'];
 
 function hiddenTypes() { return Array.isArray(profile.hiddenTypes) ? profile.hiddenTypes : DEFAULT_HIDDEN_TYPES; }
 
@@ -837,6 +838,13 @@ function pilotInit() {
   if (!profile.goalMigrated) {
     if (Number(profile.dailyGoal) === 10) delete profile.dailyGoal;
     profile.goalMigrated = true;
+    store(PROFILE, JSON.stringify(profile));
+  }
+
+  // Nouveau type « direction » : masqué aussi si les types ont déjà été enregistrés.
+  if (Array.isArray(profile.hiddenTypes) && !profile.directionAdded) {
+    if (!profile.hiddenTypes.includes('direction')) profile.hiddenTypes.push('direction');
+    profile.directionAdded = true;
     store(PROFILE, JSON.stringify(profile));
   }
 
