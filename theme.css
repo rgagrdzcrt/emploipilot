@@ -1,0 +1,159 @@
+/* ZCRT — thème « sticker » : fond crème, contours francs, ombres décalées
+   et une couleur par métier. Chargé après les styles d'origine d'index.html,
+   qu'il surcharge sans les modifier. */
+
+:root {
+  --bg: #f4efe6;
+  --panel: #fffdf8;
+  --ink: #15161b;
+  --muted: #5f5a52;
+  --line: #15161b;
+  --accent: #15161b;
+  --accent-dark: #000;
+  --accent-soft: #efe9ff;
+  --lime: #c8f169;
+  --green: #1f9d63;
+  --stock: #ff8a3d;
+  --rayon: #34c98b;
+  --vente: #ff5fa2;
+  --interim: #8f7bff;
+  --radius: 14px;
+  --border: 2px solid var(--ink);
+  --shadow: 4px 4px 0 var(--ink);
+  --shadow-sm: 2px 2px 0 var(--ink);
+  --display: "Bricolage Grotesque", "Inter", system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--bg);
+  background-image: radial-gradient(rgba(21, 22, 27, .09) 1px, transparent 1px);
+  background-size: 18px 18px;
+  font-family: "Inter", ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif;
+  color: var(--ink);
+}
+
+h1, h2, h3, .brand, .stat strong, .pilot-card h2 { font-family: var(--display); }
+
+/* ---------- Boutons ---------- */
+button {
+  border: var(--border);
+  border-radius: 11px;
+  background: var(--lime);
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+button:hover { background: #b9e64f; transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--ink); }
+button:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--ink); }
+button.secondary { background: #fff; color: var(--ink); box-shadow: var(--shadow-sm); }
+button.secondary:hover { background: #fff6e0; box-shadow: 3px 3px 0 var(--ink); }
+button.ghost { background: transparent; border: 2px dashed rgba(21, 22, 27, .45); color: var(--ink); box-shadow: none; }
+button.ghost:hover { background: rgba(255, 255, 255, .6); border-style: solid; box-shadow: none; }
+button.ok { background: var(--rayon); color: var(--ink); }
+button.ok:hover { background: #2bb57b; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--vente); outline-offset: 2px;
+}
+
+/* ---------- Barre latérale ---------- */
+.side { background: var(--ink); box-shadow: none; border-right: var(--border); }
+.side:after { border-color: rgba(200, 241, 105, .12); box-shadow: 0 0 0 28px rgba(200, 241, 105, .04), 0 0 0 58px rgba(200, 241, 105, .03); }
+.brand { font-size: 30px; font-weight: 800; letter-spacing: -1.2px; color: #fff; }
+.brand span { color: var(--lime); }
+.nav button { border: 2px solid transparent; box-shadow: none; color: #c9c5bb; border-radius: 10px; }
+.nav button:hover { background: rgba(255, 255, 255, .06); color: #fff; transform: none; box-shadow: none; }
+.nav button.active { background: var(--lime); color: var(--ink); border-color: var(--lime); box-shadow: none; }
+.side-note { color: #9d988d; }
+
+/* ---------- En-tête ---------- */
+.top { border-bottom: var(--border); }
+.eyebrow { color: var(--ink); background: var(--lime); display: inline-block; padding: 3px 8px; border: var(--border); border-radius: 6px; letter-spacing: 1px; }
+.top h1 { font-size: clamp(28px, 3.4vw, 40px); font-weight: 800; letter-spacing: -1.4px; }
+.pill { background: #fff; color: var(--ink); border: var(--border); font-weight: 700; }
+.pill.blue { background: var(--accent-soft); color: var(--ink); }
+.pill.green { background: #d7f7e7; color: var(--ink); }
+
+/* ---------- Bandeau et statistiques ---------- */
+.notice { background: #fff6e0; border: var(--border); color: var(--ink); box-shadow: var(--shadow-sm); border-radius: 12px; }
+.notice b { color: var(--ink); }
+.stat, .panel, .job { background: var(--panel); border: var(--border); box-shadow: var(--shadow); border-radius: var(--radius); }
+.stat:before { display: none; }
+.stat:nth-child(1) { background: var(--lime); }
+.stat:nth-child(2) { background: #ffd9a8; }
+.stat:nth-child(3) { background: #bdf1d8; }
+.stat:nth-child(4) { background: #e3dcff; }
+.stat label { color: var(--ink); font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: .6px; }
+.stat strong { font-size: 40px; font-weight: 800; color: var(--ink); letter-spacing: -1.5px; }
+
+/* ---------- Actions rapides et objectif ---------- */
+.pilot-bar button { font-size: 15px; padding: 12px 16px; }
+.pilot-bar .count { background: var(--ink); color: #fff; }
+#triageBtn { background: var(--lime); }
+.goal { background: #fff; border: var(--border); border-radius: 12px; padding: 8px 12px; box-shadow: var(--shadow-sm); color: var(--ink); }
+.goal-bar { height: 10px; background: #efe9dd; border: 2px solid var(--ink); }
+.goal-bar i { background: var(--stock); }
+.goal.done .goal-bar i { background: var(--rayon); }
+
+/* ---------- Onglets métiers ---------- */
+.category-tabs button { background: #fff; color: var(--ink); border: var(--border); box-shadow: var(--shadow-sm); font-size: 14px; padding: 9px 14px; }
+.category-tabs button:hover { background: #fff6e0; box-shadow: 3px 3px 0 var(--ink); }
+.category-tabs button[data-category="stock"].active { background: var(--stock); }
+.category-tabs button[data-category="rayon"].active { background: var(--rayon); }
+.category-tabs button[data-category="vente"].active { background: var(--vente); }
+.category-tabs button[data-category="interim"].active { background: var(--interim); }
+.category-tabs button.active { color: var(--ink); box-shadow: var(--shadow); }
+
+/* ---------- Formulaires ---------- */
+.field label { color: var(--ink); font-weight: 700; }
+.field input, .field select, .field textarea, .job-actions select, #sortMode, .pilot-card textarea {
+  border: var(--border) !important; border-radius: 10px !important; background: #fff !important; color: var(--ink);
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--ink); box-shadow: var(--shadow-sm); }
+.checks { color: var(--ink); }
+.checks input { accent-color: var(--ink); }
+.panel h2 { font-size: 20px; font-weight: 800; letter-spacing: -.4px; }
+
+/* ---------- Cartes d'offres ---------- */
+.job { --cat: var(--stock); border-left: 10px solid var(--cat); transition: transform .12s ease, box-shadow .12s ease; }
+.job[data-cat="rayon"] { --cat: var(--rayon); }
+.job[data-cat="vente"] { --cat: var(--vente); }
+.job[data-cat="interim"] { --cat: var(--interim); }
+.job:hover { transform: translate(-2px, -2px); border-left-color: var(--cat); box-shadow: 6px 6px 0 var(--ink); }
+.job h3 { font-size: 18px; font-weight: 700; letter-spacing: -.3px; }
+.job-meta { color: var(--muted); font-weight: 500; }
+.job-meta span:first-child { color: var(--ink); font-weight: 700; }
+.job p { color: #45413a; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+/* Actions empilées dans une colonne étroite : le texte de l'offre garde la place. */
+.job-actions { flex-direction: column; align-items: stretch; justify-content: flex-start; width: 180px; }
+.job-actions > * { width: 100%; text-align: center; }
+.job-actions select { max-width: none !important; }
+.job-actions a { color: var(--ink); background: #fff; border: var(--border); border-radius: 10px; padding: 7px 10px; box-shadow: var(--shadow-sm); text-decoration: none; }
+.job-actions a:hover { background: #fff6e0; text-decoration: none; }
+.source-credit { border: var(--border); color: var(--ink); }
+.empty { border: 2px dashed rgba(21, 22, 27, .4); background: #fffdf8; color: var(--muted); }
+
+/* ---------- Tableaux, fenêtres, divers ---------- */
+.table-wrap { border: var(--border); box-shadow: var(--shadow-sm); }
+th { background: #fff6e0; color: var(--ink); border-bottom: var(--border); }
+td { border-bottom: 1px solid rgba(21, 22, 27, .15); }
+.toast { background: var(--ink); color: #fff; border: 2px solid var(--lime); box-shadow: 4px 4px 0 var(--lime); }
+.modal, .pilot { background: rgba(21, 22, 27, .55); backdrop-filter: blur(2px); }
+.modal-card, .pilot-card { background: var(--panel); border: var(--border); box-shadow: 8px 8px 0 var(--ink); border-radius: 18px; }
+.pilot-card h2 { font-size: 26px; font-weight: 800; letter-spacing: -.6px; }
+.pilot-hint { background: #fff6e0; border: var(--border); color: var(--ink); }
+.chip { background: #fff; border: var(--border); box-shadow: var(--shadow-sm); color: var(--ink); }
+.chip:hover { background: var(--lime); }
+kbd { background: var(--ink); color: #fff; }
+button.secondary kbd, button.ghost kbd { background: var(--ink); color: #fff; }
+.footer { color: var(--muted); }
+.sync-state { color: var(--muted); font-weight: 600; }
+.sync-error { color: #c0262d; }
+
+@media (max-width: 650px) {
+  .pilot-card { border-radius: 0; box-shadow: none; border: 0; }
+  .stat strong { font-size: 32px; }
+  .job { border-left-width: 8px; }
+  .job-actions { flex-direction: row; flex-wrap: wrap; width: auto; }
+  .job-actions > * { width: auto; flex: 1 1 40%; }
+}
