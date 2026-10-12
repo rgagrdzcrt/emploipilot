@@ -1025,6 +1025,7 @@ def fetch_adzuna(cfg):
     # 4 collectes par jour → au plus ~20 requêtes par collecte.
     budget = max(1, int(cfg.get("maxRequestsPerRun", 18)))
     used = 0
+    title_supported = True
     offers = []
 
     for query in queries:
@@ -1034,20 +1035,27 @@ def fetch_adzuna(cfg):
             print(f"Adzuna : quota de la collecte atteint ({budget} requêtes), recherches suivantes reportées.")
             break
         results, api_count, pages = [], 0, 0
+        # "titleOnly" : mots cherchés dans le titre seulement (sinon Adzuna les
+        # trouve dans les descriptions et ramène des postes hors sujet).
+        title_only = bool(query.get("titleOnly")) and title_supported
         for page in range(1, max_pages + 1):
             if used >= budget:
                 break
+            if title_only:
+                search = {"title_only": query["keywords"]}
+            elif query.get("phrase"):
+                search = {"what_phrase": query["keywords"]}  # expression exacte
+            else:
+                search = {"what_or": query["keywords"]}  # métiers synonymes
             params = urlencode(
                 {
                     "app_id": app_id,
                     "app_key": app_key,
                     "results_per_page": per_page,
-                    # "phrase" : expression exacte (« employé libre service ») ;
-                    # sinon métiers synonymes, dont un seul doit apparaître.
-                    **({"what_phrase": query["keywords"]} if query.get("phrase")
-                       else {"what_or": query["keywords"]}),
+                    **search,
                     "where": query.get("location") or location,
                     "distance": max(1, int(query.get("distance", distance))),
+                    "max_days_old": int(cfg.get("maxDaysOld", 60)),
                     "sort_by": "date",
                     "content-type": "application/json",
                 }
@@ -1056,6 +1064,20 @@ def fetch_adzuna(cfg):
             used += 1
             try:
                 data = api_json(url, f"Adzuna [{query.get('name', '?')}] page {page}")
+            except HTTPError as exc:
+                if exc.code == 400 and title_only and used < budget:
+                    # Paramètre non reconnu : on retombe sur la recherche classique.
+                    print(f"Adzuna [{query.get('name', '?')}] : recherche dans le titre refusée, repli.")
+                    title_only = title_supported = False  # inutile de réessayer cette collecte
+                    used += 1
+                    try:
+                        data = api_json(url.replace("title_only=", "what_or="),
+                                        f"Adzuna [{query.get('name', '?')}] page {page}")
+                    except Exception:
+                        break
+                else:
+                    print(f"Adzuna [{query.get('name', '?')}] page {page} : requête ignorée (HTTP {exc.code}).")
+                    break
             except Exception as exc:
                 print(f"Adzuna [{query.get('name', '?')}] page {page} : requête ignorée ({type(exc).__name__}).")
                 break
@@ -1617,7 +1639,8 @@ def main():
             if not query.get("enabled", True) or not query.get("keywords"):
                 continue
             try:
-                fresh.extend(fetch_jooble(api_key, query, max_pages=jooble_pages))
+                pages = max(1, int(query.get("maxPages", jooble_pages)))
+                fresh.extend(fetch_jooble(api_key, query, max_pages=pages))
                 time.sleep(2)
             except Exception as exc:
                 errors.append(

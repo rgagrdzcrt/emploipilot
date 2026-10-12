@@ -15,7 +15,8 @@
       "category": "stock",
       "keywords": "préparateur de commandes",
       "location": "Bondy",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "gestionnaire de stock · Bondy",
@@ -31,7 +32,8 @@
       "category": "stock",
       "keywords": "agent logistique",
       "location": "Bondy",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "réceptionnaire · Bondy",
@@ -39,7 +41,8 @@
       "category": "stock",
       "keywords": "réceptionnaire",
       "location": "Bondy",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "employé libre service · Bondy",
@@ -55,7 +58,8 @@
       "category": "rayon",
       "keywords": "employé commercial",
       "location": "Bondy",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 1
     },
     {
       "name": "mise en rayon · Bondy",
@@ -63,7 +67,8 @@
       "category": "rayon",
       "keywords": "mise en rayon",
       "location": "Bondy",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "employé de rayon · Bondy",
@@ -79,7 +84,8 @@
       "category": "vente",
       "keywords": "vendeur",
       "location": "Bondy",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "conseiller de vente · Bondy",
@@ -87,7 +93,8 @@
       "category": "vente",
       "keywords": "conseiller de vente",
       "location": "Bondy",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "vendeuse · Bondy",
@@ -95,7 +102,8 @@
       "category": "vente",
       "keywords": "vendeuse",
       "location": "Bondy",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "magasinier · Paris",
@@ -111,7 +119,8 @@
       "category": "stock",
       "keywords": "préparateur de commandes",
       "location": "Paris",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "gestionnaire de stock · Paris",
@@ -127,7 +136,8 @@
       "category": "stock",
       "keywords": "agent logistique",
       "location": "Paris",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "réceptionnaire · Paris",
@@ -135,7 +145,8 @@
       "category": "stock",
       "keywords": "réceptionnaire",
       "location": "Paris",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "employé libre service · Paris",
@@ -151,7 +162,8 @@
       "category": "rayon",
       "keywords": "employé commercial",
       "location": "Paris",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 1
     },
     {
       "name": "mise en rayon · Paris",
@@ -159,7 +171,8 @@
       "category": "rayon",
       "keywords": "mise en rayon",
       "location": "Paris",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "employé de rayon · Paris",
@@ -175,7 +188,8 @@
       "category": "vente",
       "keywords": "vendeur",
       "location": "Paris",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "conseiller de vente · Paris",
@@ -183,7 +197,8 @@
       "category": "vente",
       "keywords": "conseiller de vente",
       "location": "Paris",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "vendeuse · Paris",
@@ -191,7 +206,8 @@
       "category": "vente",
       "keywords": "vendeuse",
       "location": "Paris",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     }
   ],
   "franceTravail": {
@@ -231,26 +247,35 @@
     "maxRequestsPerRun": 18,
     "queries": [
       {
-        "name": "magasinier stockiste · Bondy",
+        "name": "magasinier · Bondy",
         "enabled": true,
         "category": "stock",
-        "keywords": "magasinier stockiste",
+        "keywords": "magasinier",
+        "titleOnly": true,
         "location": "Bondy"
       },
       {
-        "name": "préparateur de commandes · Bondy",
+        "name": "stockiste · Bondy",
         "enabled": true,
         "category": "stock",
-        "keywords": "préparateur de commandes",
-        "phrase": true,
+        "keywords": "stockiste",
+        "titleOnly": true,
         "location": "Bondy"
       },
       {
-        "name": "employé libre service · Bondy",
+        "name": "préparateur commandes · Bondy",
         "enabled": true,
-        "category": "rayon",
-        "keywords": "employé libre service",
-        "phrase": true,
+        "category": "stock",
+        "keywords": "préparateur commandes",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "réceptionnaire · Bondy",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "réceptionnaire",
+        "titleOnly": true,
         "location": "Bondy"
       },
       {
@@ -258,45 +283,71 @@
         "enabled": true,
         "category": "rayon",
         "keywords": "employé commercial",
-        "phrase": true,
+        "titleOnly": true,
         "location": "Bondy"
       },
       {
-        "name": "vendeur vendeuse · Bondy",
-        "enabled": true,
-        "category": "vente",
-        "keywords": "vendeur vendeuse",
-        "location": "Bondy"
-      },
-      {
-        "name": "conseiller de vente · Bondy",
-        "enabled": true,
-        "category": "vente",
-        "keywords": "conseiller de vente",
-        "phrase": true,
-        "location": "Bondy"
-      },
-      {
-        "name": "magasinier stockiste · Paris",
-        "enabled": true,
-        "category": "stock",
-        "keywords": "magasinier stockiste",
-        "location": "Paris"
-      },
-      {
-        "name": "préparateur de commandes · Paris",
-        "enabled": true,
-        "category": "stock",
-        "keywords": "préparateur de commandes",
-        "phrase": true,
-        "location": "Paris"
-      },
-      {
-        "name": "employé libre service · Paris",
+        "name": "libre service · Bondy",
         "enabled": true,
         "category": "rayon",
-        "keywords": "employé libre service",
-        "phrase": true,
+        "keywords": "libre service",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "rayon · Bondy",
+        "enabled": true,
+        "category": "rayon",
+        "keywords": "rayon",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "vendeur · Bondy",
+        "enabled": true,
+        "category": "vente",
+        "keywords": "vendeur",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "conseiller vente · Bondy",
+        "enabled": true,
+        "category": "vente",
+        "keywords": "conseiller vente",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "magasinier · Paris",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "magasinier",
+        "titleOnly": true,
+        "location": "Paris"
+      },
+      {
+        "name": "stockiste · Paris",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "stockiste",
+        "titleOnly": true,
+        "location": "Paris"
+      },
+      {
+        "name": "préparateur commandes · Paris",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "préparateur commandes",
+        "titleOnly": true,
+        "location": "Paris"
+      },
+      {
+        "name": "réceptionnaire · Paris",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "réceptionnaire",
+        "titleOnly": true,
         "location": "Paris"
       },
       {
@@ -304,25 +355,43 @@
         "enabled": true,
         "category": "rayon",
         "keywords": "employé commercial",
-        "phrase": true,
+        "titleOnly": true,
         "location": "Paris"
       },
       {
-        "name": "vendeur vendeuse · Paris",
+        "name": "libre service · Paris",
         "enabled": true,
-        "category": "vente",
-        "keywords": "vendeur vendeuse",
+        "category": "rayon",
+        "keywords": "libre service",
+        "titleOnly": true,
         "location": "Paris"
       },
       {
-        "name": "conseiller de vente · Paris",
+        "name": "rayon · Paris",
+        "enabled": true,
+        "category": "rayon",
+        "keywords": "rayon",
+        "titleOnly": true,
+        "location": "Paris"
+      },
+      {
+        "name": "vendeur · Paris",
         "enabled": true,
         "category": "vente",
-        "keywords": "conseiller de vente",
-        "phrase": true,
+        "keywords": "vendeur",
+        "titleOnly": true,
+        "location": "Paris"
+      },
+      {
+        "name": "conseiller vente · Paris",
+        "enabled": true,
+        "category": "vente",
+        "keywords": "conseiller vente",
+        "titleOnly": true,
         "location": "Paris"
       }
-    ]
+    ],
+    "maxDaysOld": 60
   },
   "joblet": {
     "enabled": true,
