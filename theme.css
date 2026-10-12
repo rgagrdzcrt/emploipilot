@@ -157,6 +157,9 @@ button.secondary kbd, button.ghost kbd { background: #eceae4; color: #4a4d55; }
 .sync-state { color: var(--muted); font-weight: 500; }
 .sync-error { color: #c0392b; }
 
+/* ---------- Phrase de motivation ---------- */
+.motto { font-weight: 600; font-style: italic; color: var(--ink); opacity: .78; }
+
 /* ---------- Bouton mode nuit ---------- */
 .theme-toggle { padding: 6px 10px; font-size: 15px; line-height: 1; border-radius: 999px; vertical-align: middle; }
 

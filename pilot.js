@@ -768,6 +768,53 @@ function disableSync() {
   setSyncState('Synchronisation désactivée sur cet appareil');
 }
 
+/* ---------- Phrase de motivation (une différente à chaque ouverture) ---------- */
+
+function mottos() {
+  const g = goalOf();
+  return [
+    'Personne ne viendra te chercher. Postule.',
+    'Tu n’es pas fatigué. Tu es à 40 % de ce que tu peux donner.',
+    'Le refus d’hier, c’est l’entraînement d’aujourd’hui.',
+    'Fais ce que tu n’as pas envie de faire. C’est là que tout change.',
+    'Une candidature de plus. Puis encore une.',
+    'Le confort ne t’a jamais rien donné. Va chercher.',
+    'Pas de motivation ? Pas grave. De la discipline.',
+    'Chaque « non » te rapproche du « oui ». Encaisse et avance.',
+    'Personne ne se souviendra de tes excuses.',
+    'Tu as survécu à toutes tes pires journées. Celle-ci aussi.',
+    'Le CV ne s’envoie pas tout seul.',
+    'Sois plus dur que la situation.',
+    'Tes objectifs se fichent de ton humeur.',
+    'Aujourd’hui, tu fais ce que les autres repoussent à demain.',
+    'Gagne la matinée, et tu gagnes la journée.',
+    'Le silence d’un recruteur n’est pas une réponse. Relance.',
+    'Dur aujourd’hui, fier demain.',
+    'Le bon moment ne vient pas. Il se crée.',
+    'Ton futur employeur est quelque part dans cette liste. Trouve-le.',
+    'La douleur passe. Le regret reste. Postule.',
+    'Tu n’as pas besoin d’y croire. Tu as besoin de le faire.',
+    `${g} candidatures. Pas ${g - 1}. ${g}.`,
+    'Le mental d’abord. Le reste suit.',
+    'Quand tu as envie de lâcher, c’est que tu commences à peine.',
+    'Personne ne te doit rien. Va le prendre.',
+    'Les excuses ne paient pas le loyer.',
+    'Moins de scroll, plus de candidatures.',
+    'Tu veux du changement ? Commence par cliquer sur « Postuler ».',
+  ];
+}
+
+function showMotto() {
+  const el = document.getElementById('motto');
+  if (!el) return;
+  const list = mottos();
+  const last = Number(stored('zcrt_motto'));
+  let i = Math.floor(Math.random() * list.length);
+  if (i === last) i = (i + 1) % list.length; // jamais deux fois la même d'affilée
+  store('zcrt_motto', String(i));
+  el.textContent = list[i];
+}
+
 /* ---------- Mode nuit ---------- */
 
 function applyTheme(theme) {
@@ -806,6 +853,7 @@ function pilotInit() {
   });
   document.addEventListener('keydown', pilotKey);
   applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
+  showMotto();
   document.getElementById('themeToggle').onclick = toggleTheme;
   document.getElementById('triageBtn').onclick = () => openPilot('triage');
   document.getElementById('queueBtn').onclick = () => openPilot('queue');
