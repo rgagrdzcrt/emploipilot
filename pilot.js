@@ -155,7 +155,38 @@ function score(o) {
 
 /* ---------- Statuts ---------- */
 
-function today() { return new Date().toISOString().slice(0, 10); }
+// Date locale (et non UTC) : une candidature envoyée à 0 h 30 compte pour le bon jour.
+function today() { return new Date().toLocaleDateString('sv-SE'); }
+
+/* ---------- Objectif du jour ---------- */
+
+const DEFAULT_DAILY_GOAL = 10;
+let lastGoalCount = null;
+
+function goalOf() { return Math.max(1, Number(profile.dailyGoal) || DEFAULT_DAILY_GOAL); }
+
+function weekStart() {
+  const d = new Date();
+  d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); // lundi
+  return d.toLocaleDateString('sv-SE');
+}
+
+function updateGoal() {
+  const t = today(), from = weekStart(), goal = goalOf();
+  const sent = offers.filter(o => o.appliedDate === t).length;
+  const week = offers.filter(o => o.appliedDate && o.appliedDate >= from && o.appliedDate <= t).length;
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('goalToday', sent);
+  set('goalTarget', goal);
+  set('goalWeek', week);
+  const fill = document.getElementById('goalFill');
+  if (fill) fill.style.width = Math.min(100, Math.round(sent / goal * 100)) + '%';
+  document.getElementById('goalBox')?.classList.toggle('done', sent >= goal);
+  if (lastGoalCount !== null && lastGoalCount < goal && sent >= goal) {
+    setTimeout(() => toast('🎉 Objectif du jour atteint : ' + sent + ' candidatures !'), 800);
+  }
+  lastGoalCount = sent;
+}
 
 function setTrack(o, status) {
   o.status = status;
@@ -192,6 +223,17 @@ function updatePilotBar() {
   const t = document.getElementById('triageCount'), q = document.getElementById('queueCount');
   if (t) t.textContent = pilotList('triage').length;
   if (q) q.textContent = pilotList('queue').length;
+  updateGoal();
+}
+
+/* Lien de l'alerte téléphone (…/#trier) : le tri s'ouvre dès que les offres
+   publiées sont chargées. */
+let openTriageOnLoad = false;
+
+function afterRemoteLoad() {
+  if (!openTriageOnLoad) return;
+  openTriageOnLoad = false;
+  openPilot('triage');
 }
 
 function openPilot(mode) {
@@ -372,6 +414,8 @@ function fillTemplateForm() {
     const input = document.getElementById('info_' + k);
     if (input) input.value = i[k] || '';
   });
+  const goal = document.getElementById('goalInput');
+  if (goal) goal.value = goalOf();
 }
 
 function saveTemplates() {
@@ -384,6 +428,7 @@ function saveTemplates() {
   });
   profile.infos = {};
   INFO_FIELDS.forEach(([k]) => { profile.infos[k] = document.getElementById('info_' + k).value.trim(); });
+  profile.dailyGoal = Math.max(1, Number(document.getElementById('goalInput').value) || DEFAULT_DAILY_GOAL);
   saveProfileState();
   toast('Modèles et infos enregistrés');
 }
@@ -627,6 +672,11 @@ function pilotInit() {
   document.getElementById('syncDisable').onclick = disableSync;
   document.getElementById('syncNowBtn').onclick = syncNow;
   setSyncState(stored(SYNC_TOKEN) ? 'Synchronisation…' : 'Synchronisation non activée');
+
+  if (location.hash === '#trier') {
+    history.replaceState(null, '', location.pathname + location.search);
+    openTriageOnLoad = true;
+  }
 
   autoRelances();
   updatePilotBar();

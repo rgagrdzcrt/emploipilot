@@ -44,3 +44,11 @@ jobs:
           else
             echo "Aucun changement à enregistrer."
           fi
+
+      - name: Envoyer l'alerte des nouvelles offres
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          # Laisse à GitHub Pages le temps de publier la mise à jour avant l'alerte.
+          if [ -f .alerte.json ] && [ -n "$NTFY_TOPIC" ]; then sleep 60; fi
+          python collect.py --alerte

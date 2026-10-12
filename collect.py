@@ -1624,6 +1624,7 @@ def main():
     # et dates de candidature existants sont toujours conservés.
     new_count = 0
     updated_count = 0
+    new_items = []
     for item in fresh:
         item["collectedAt"] = now
         item["lastSeen"] = today.isoformat()
@@ -1639,6 +1640,7 @@ def main():
             if item.get("source"):
                 item.setdefault("sources", [item["source"]])
             merged.append(item)
+            new_items.append(item)
             match = item
         # Index recalculé : les variantes déjà vues pointent vers la même offre.
         for key in keys | offer_keys(match):
@@ -1665,6 +1667,7 @@ def main():
 
     offers = sorted(kept, key=sort_key, reverse=True)
     write_offers(offers)
+    save_pending_alert([item for item in new_items if item in kept])
 
     print(f"Offres conservées : {len(offers)} (nouvelles : {new_count}, mises à jour : {updated_count})")
     print(f"Offres purgées (obsolètes) : {removed}")
@@ -1679,5 +1682,87 @@ def main():
         raise SystemExit("ERREUR : aucune source n'a renvoyé d'offre lors de cette collecte.")
 
 
+ALERT_FILE = ROOT / ".alerte.json"  # jamais commité : le workflow n'ajoute que offres.json
+ALERT_MAX = 5
+NEAR_10E_RE = re.compile(r"(^|[\s,(])(pantin|aubervilliers|saint-denis)\b", re.I)
+ARRONDISSEMENTS_RE = re.compile(r"(^|\D)(2|9|10|11|19)\s*(e|er|ème|eme)\b", re.I)
+
+
+def alert_priority(offer):
+    """Même logique que le score du site : Paris 10e et alentours, Paris, 93,
+    reste de l'Île-de-France, puis le type de contrat."""
+    location = offer.get("location") or ""
+    dept = offer.get("dept") or ""
+    if (dept == "75" and ARRONDISSEMENTS_RE.search(location)) or NEAR_10E_RE.search(location):
+        score = 40
+    elif dept == "75":
+        score = 30
+    elif dept == "93":
+        score = 20
+    else:
+        score = 10 if dept else 5
+    return score + {"CDI": 15, "CDD": 10, "Intérim": 8}.get(offer.get("contract"), 4)
+
+
+def save_pending_alert(new_items):
+    """Prépare l'alerte des meilleures nouvelles offres ; elle est envoyée par
+    `python collect.py --alerte` une fois le site mis à jour."""
+    if not new_items:
+        ALERT_FILE.unlink(missing_ok=True)
+        return
+    best = sorted(new_items, key=alert_priority, reverse=True)[:ALERT_MAX]
+    ALERT_FILE.write_text(json.dumps({
+        "count": len(new_items),
+        "offers": [
+            {k: o.get(k, "") for k in ("title", "company", "location", "contract")}
+            for o in best
+        ],
+    }, ensure_ascii=False), encoding="utf-8")
+
+
+def send_alert():
+    """Notification ntfy (appli gratuite) : sujet lu dans le secret NTFY_TOPIC.
+    Une alerte qui échoue ne fait jamais échouer la collecte."""
+    topic = os.environ.get("NTFY_TOPIC", "").strip()
+    if not topic or not ALERT_FILE.exists():
+        print("Alerte : rien à envoyer." if topic else "Alerte ignorée : secret NTFY_TOPIC absent.")
+        return
+    data = json.loads(ALERT_FILE.read_text(encoding="utf-8"))
+    count = data.get("count", 0)
+    lines = []
+    for o in data.get("offers", []):
+        place = re.split(r"[,(]", o.get("location") or "", maxsplit=1)[0].strip()
+        details = " · ".join(x for x in (o.get("company"), place, o.get("contract")) if x)
+        lines.append(f"• {o.get('title')} — {details}")
+    if count > len(lines):
+        lines.append(f"… et {count - len(lines)} autre(s).")
+    repo = os.environ.get("GITHUB_REPOSITORY", "")
+    owner, _, name = repo.partition("/")
+    payload = {
+        "topic": topic,
+        "title": f"ZCRT : {count} nouvelle(s) offre(s)",
+        "message": "\n".join(lines),
+        "tags": ["briefcase"],
+    }
+    if owner and name:
+        payload["click"] = f"https://{owner}.github.io/{name}/#trier"
+    request = Request(
+        "https://ntfy.sh/",
+        data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+        headers={"Content-Type": "application/json", "User-Agent": UA},
+        method="POST",
+    )
+    try:
+        with urlopen(request, timeout=20):
+            pass
+        print(f"Alerte envoyée ({count} nouvelle(s) offre(s)).")
+    except (HTTPError, URLError, TimeoutError) as exc:
+        print(f"Alerte non envoyée ({type(exc).__name__}).")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+    if "--alerte" in sys.argv:
+        send_alert()
+    else:
+        main()
