@@ -29,6 +29,9 @@ UA = "EmploiPilot/0.3 (personal job-search tool)"
 # dépasse MAX_AGE_DAYS ET si elle n'a plus été revue par une source depuis
 # MAX_UNSEEN_DAYS (elle a donc quitté la première page des résultats).
 MAX_AGE_DAYS = 45
+# Annonce publiée (ou mise à jour, pour Jooble) il y a plus de 2 mois : retirée
+# même si une source la propose encore.
+MAX_PUBLICATION_DAYS = 60
 MAX_UNSEEN_DAYS = 30
 
 STAGE_RE = re.compile(
@@ -1689,6 +1692,20 @@ def main():
         if too_far:
             offers = [o for o in offers if o not in too_far]
             removed_by_rule[f"à plus de {max_km} km"] = len(too_far)
+
+    def published_days(offer):
+        pub = parse_date(offer.get("date") or offer.get("updated"))
+        if pub is None:
+            return None
+        if pub.tzinfo is None:
+            pub = pub.replace(tzinfo=timezone.utc)
+        return (datetime.now(timezone.utc) - pub).days
+
+    too_old = [o for o in offers
+               if (published_days(o) or 0) > MAX_PUBLICATION_DAYS and not is_tracked(o)]
+    if too_old:
+        offers = [o for o in offers if o not in too_old]
+        removed_by_rule[f"publiées il y a plus de {MAX_PUBLICATION_DAYS} jours"] = len(too_old)
 
     write_offers(offers)
     save_pending_alert([item for item in new_items if item in offers])

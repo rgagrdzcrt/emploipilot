@@ -168,7 +168,18 @@ const JOB_TYPES = [
   { id: 'partiel', label: 'Temps partiel (moins de 35 h)', re: /temps partiel|\b(1\d|2\d|3[0-4])\s?h\b/i },
   { id: 'mode', label: 'Mode / prêt-à-porter / chaussures', re: /\bmode\b|pr[eê]t.{0,3}[àa].{0,3}porter|fashion|textile|chauss/i },
   { id: 'multimedia', label: 'Multimédia / téléphonie / électroménager', re: /multim|t[eé]l[eé]phon|[eé]lectrom|high.?tech/i },
+  { id: 'interim', label: 'Missions d’intérim', test: o => norm(o.contract) === 'interim' },
 ];
+const MAX_OFFER_AGE_DAYS = 60; // annonces publiées il y a plus de 2 mois : masquées
+
+function matchesType(type, o) {
+  return type.test ? type.test(o) : type.re.test(o.title || '');
+}
+
+function tooOld(o) {
+  const d = parseDate(offerDate(o));
+  return !!d && Date.now() - d.getTime() > MAX_OFFER_AGE_DAYS * 864e5;
+}
 const DEFAULT_HIDDEN_TYPES = ['luxe', 'bouche', 'cosmetique', 'animalerie', 'auto', 'cariste', 'weekend', 'caisse'];
 
 function hiddenTypes() { return Array.isArray(profile.hiddenTypes) ? profile.hiddenTypes : DEFAULT_HIDDEN_TYPES; }
@@ -180,10 +191,10 @@ function excludedWords() {
 /** Offre d'un type masqué ou contenant un mot exclu (les offres suivies restent visibles). */
 function isHiddenType(o) {
   if (isTracked(o)) return false;
-  const title = o.title || '';
+  if (tooOld(o)) return true;
   const hidden = hiddenTypes();
-  if (JOB_TYPES.some(t => hidden.includes(t.id) && t.re.test(title))) return true;
-  const t = norm(title);
+  if (JOB_TYPES.some(t => hidden.includes(t.id) && matchesType(t, o))) return true;
+  const t = norm(o.title || '');
   return excludedWords().some(w => t.includes(w));
 }
 
@@ -192,7 +203,7 @@ function fillJobTypesForm() {
   if (!box) return;
   const hidden = hiddenTypes();
   box.innerHTML = JOB_TYPES.map(t => {
-    const n = offers.filter(o => t.re.test(o.title || '')).length;
+    const n = offers.filter(o => matchesType(t, o)).length;
     return `<label><input type="checkbox" value="${t.id}" ${hidden.includes(t.id) ? 'checked' : ''}> ${esc(t.label)} <span class="muted small">(${n})</span></label>`;
   }).join('');
   document.getElementById('excludedWords').value = profile.excludedWords || '';
