@@ -354,7 +354,7 @@ function currentOffer() {
 function metaLine(o) {
   const d = deptOf(o);
   const when = o.date ? fmtDate(o.date) : o.updated ? 'Mise à jour le ' + fmtDate(o.updated) : 'Date à vérifier';
-  return `<span>▣ ${esc(o.company)}</span><span>⌖ ${esc(o.location || 'Lieu non précisé')}${d && d !== 'IDF' ? ' (' + esc(d) + ')' : ''}</span><span>◷ ${esc(o.contract || 'Contrat à confirmer')}</span>${travelLabel(o) ? `<span class="travel">${esc(travelLabel(o))}</span>` : ''}<span>${esc(when)}</span>`;
+  return `<span class="m-company">${esc(o.company)}</span><span>${ic('pin')}${esc(o.location || 'Lieu non précisé')}${d && d !== 'IDF' ? ' (' + esc(d) + ')' : ''}</span>${uiContract(o.contract)}${travelLabel(o) ? `<span class="travel">${ic('route')}${esc(uiTravel(o))}</span>` : ''}<span>${ic('clock')}${esc(when)}</span>`;
 }
 
 function drawPilot() {
@@ -822,7 +822,7 @@ function showMotto() {
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   const btn = document.getElementById('themeToggle');
-  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  if (btn) btn.innerHTML = `<svg class="ic" aria-hidden="true"><use href="#i-${theme === 'dark' ? 'sun' : 'moon'}"/></svg>`;
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0f1014' : '#15161b');
 }
 
