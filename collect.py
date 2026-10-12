@@ -73,6 +73,8 @@ CATEGORY_RE = {
     ),
 }
 CATEGORIES = set(CATEGORY_RE)
+# Métiers de l'informatique dont le titre contient « stockage » ou « stock ».
+NOT_TARGET_RE = re.compile(r"\bcloud\b|\bsre\b|devops|backup|sauvegarde|data ?cent(?:er|re)|stockage de donn[eé]es", re.I)
 
 PLACEHOLDER_COMPANY = "Entreprise à vérifier"
 PLACEHOLDER_LOCATION = "Lieu à vérifier dans l’annonce"
@@ -271,8 +273,14 @@ def url_key(url):
     if parsed.scheme not in {"http", "https"} or not parsed.netloc:
         return ""
     key = f"{parsed.scheme}://{parsed.netloc}{parsed.path}"
-    if parsed.query:
-        key += "?" + parsed.query
+    # Jooble et Adzuna ajoutent au lien le mot-clé de la recherche (?ckey=…) ou
+    # du suivi (utm_…) : la même annonce trouvée par deux recherches doit avoir
+    # la même clé. Pour les autres sites, la query identifie parfois l'offre.
+    host = parsed.netloc.lower()
+    if parsed.query and not host.endswith(("jooble.org", "adzuna.fr", "adzuna.com")):
+        query = "&".join(p for p in parsed.query.split("&") if not p.lower().startswith(("utm_", "ckey=")))
+        if query:
+            key += "?" + query
     return key.rstrip("/")
 
 
@@ -365,6 +373,8 @@ def classify_category(title):
     La catégorie de la requête n'est donc qu'indicative : sans mot-clé métier
     dans le titre, l'offre est écartée."""
     title = title or ""
+    if NOT_TARGET_RE.search(title):
+        return None
     for name, pattern in CATEGORY_RE.items():  # stock, puis rayon, puis vente
         if pattern.search(title):
             return name
