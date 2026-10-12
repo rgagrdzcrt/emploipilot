@@ -2,7 +2,7 @@
  * Le site reste toujours à jour quand le réseau est là ; sans réseau (métro),
  * la dernière version chargée s'ouvre quand même. */
 
-const CACHE = 'zcrt-v1';
+const CACHE = 'zcrt-v2';
 
 self.addEventListener('install', () => self.skipWaiting());
 
@@ -19,7 +19,10 @@ self.addEventListener('fetch', event => {
   // Seulement les fichiers du site lui-même (pas GitHub, ntfy ni les polices).
   if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
   event.respondWith(
-    fetch(request)
+    // « no-cache » : le navigateur revérifie auprès de GitHub au lieu de
+    // reprendre sa copie en mémoire (gardée 10 min) ; une mise à jour du
+    // site est donc visible dès le rechargement suivant.
+    fetch(request.url, { cache: 'no-cache', credentials: 'same-origin' })
       .then(response => {
         if (response.ok) {
           const copy = response.clone();
