@@ -1732,7 +1732,11 @@ def send_alert():
     lines = []
     for o in data.get("offers", []):
         place = re.split(r"[,(]", o.get("location") or "", maxsplit=1)[0].strip()
-        details = " · ".join(x for x in (o.get("company"), place, o.get("contract")) if x)
+        # Les valeurs inconnues (« Entreprise à vérifier », « À vérifier ») sont omises.
+        company = "" if o.get("company") == PLACEHOLDER_COMPANY else o.get("company")
+        contract = "" if o.get("contract") == "À vérifier" else o.get("contract")
+        place = "" if place == PLACEHOLDER_LOCATION else place
+        details = " · ".join(x for x in (company, place, contract) if x)
         lines.append(f"• {o.get('title')} — {details}")
     if count > len(lines):
         lines.append(f"… et {count - len(lines)} autre(s).")
