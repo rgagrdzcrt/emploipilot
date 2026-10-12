@@ -29,6 +29,7 @@ jobs:
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
           WORKOPIA_CLIENT_ID: ${{ secrets.WORKOPIA_CLIENT_ID }}
           WORKOPIA_REFRESH_TOKEN: ${{ secrets.WORKOPIA_REFRESH_TOKEN }}
+          PRIM_API_KEY: ${{ secrets.PRIM_API_KEY }}
         run: python collect.py
 
       - name: Enregistrer les changements
@@ -36,6 +37,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add offres.json
+          if [ -f lieux.json ]; then git add lieux.json; fi
           if ! git diff --cached --quiet; then
             git commit -m "Mise à jour des offres collectées"
             # Un commit a pu être poussé pendant la collecte : on s'aligne avant d'envoyer.

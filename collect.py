@@ -1666,6 +1666,10 @@ def main():
         return (pub_ts, offer.get("collectedAt", ""))
 
     offers = sorted(kept, key=sort_key, reverse=True)
+    try:
+        add_travel_info(offers, config.get("trajets") or {})
+    except Exception as exc:  # un problème de trajets ne bloque jamais la collecte
+        print(f"Trajets ignorés ({type(exc).__name__}).")
     write_offers(offers)
     save_pending_alert([item for item in new_items if item in kept])
 
@@ -1680,6 +1684,150 @@ def main():
     if not fresh:
         # Échec visible dans GitHub Actions (et notification par e-mail).
         raise SystemExit("ERREUR : aucune source n'a renvoyé d'offre lors de cette collecte.")
+
+
+PLACES_FILE = ROOT / "lieux.json"  # cache des positions et trajets, commité avec les offres
+GEOCODE_URL = "https://data.geopf.fr/geocodage/search"
+PRIM_JOURNEYS_URL = "https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/journeys"
+TRAVEL_REFRESH_DAYS = 30
+ARROND_RE = re.compile(r"\b(\d{1,2})\s*(?:e|er|ème|eme)\b", re.I)
+
+
+def place_query(location, dept=""):
+    """Commune (et code postal pour un arrondissement de Paris) d'un libellé libre.
+    « Hauts-de-Seine, Ile-de-France » ne donne rien : seul le département est connu."""
+    raw = (location or "").strip()
+    if not raw or raw == PLACEHOLDER_LOCATION:
+        return None
+    first = re.split(r"[,(]", raw, maxsplit=1)[0].strip()
+    postcode = (re.search(r"\b(\d{5})\b", raw) or [None, None])[1]
+    in_paris = dept in ("75", "") and (
+        slug(first).startswith("paris") or (slug(first)[:1].isdigit() and "paris" in slug(raw))
+    )
+    if in_paris:
+        m = ARROND_RE.search(raw)
+        if m and 1 <= int(m.group(1)) <= 20:
+            return ("Paris", f"750{int(m.group(1)):02d}")
+        return ("Paris", None)
+    city = re.sub(r"\b\d{5}\b", " ", first).strip(" -")
+    if not city or slug(city) in {slug(p) for p in DEPT_NAMES_ONLY}:
+        return None
+    return (city, postcode)
+
+
+DEPT_NAMES_ONLY = ["seine-et-marne", "yvelines", "essonne", "hauts-de-seine", "seine-saint-denis",
+                   "val-de-marne", "val-d'oise", "ile-de-france", "île-de-france"]
+
+
+PLACE_ALIASES = {  # lieux qui ne sont pas des communes
+    "la-defense": ("Puteaux", "92800"), "paris-la-defense": ("Puteaux", "92800"),
+    "charles-de-gaulle-aeroport": ("Roissy-en-France", "95700"),
+    "charles-de-gaulles-aeroport": ("Roissy-en-France", "95700"),
+    "aeroport-charles-de-gaulle": ("Roissy-en-France", "95700"),
+    "orly-aeroport": ("Orly", "94310"),
+}
+
+
+def geocode(city, postcode, dept):
+    """Coordonnées d'une commune via le service public de géocodage (sans clé).
+    Un code postal faux (« Vauhallan, 89160 ») est ignoré au second essai."""
+    city, postcode = PLACE_ALIASES.get(slug(city), (city, postcode))
+    for code in ([postcode, None] if postcode else [None]):
+        params = {"q": city, "type": "municipality", "limit": 5}
+        if code:
+            params["postcode"] = code
+        data = http_json(Request(f"{GEOCODE_URL}?{urlencode(params)}", headers={"User-Agent": UA}), timeout=15)
+        found = _pick_place(data, city, dept)
+        if found:
+            return found
+    return None
+
+
+def _pick_place(data, city, dept):
+    for feature in data.get("features", []):
+        props = feature.get("properties") or {}
+        code = str(props.get("postcode") or props.get("citycode") or "")
+        # Homonymes : on garde la commune du bon département quand il est connu.
+        if dept in IDF_DEPTS and not code.startswith(dept):
+            continue
+        if not dept and code[:2] not in IDF_DEPTS:
+            continue
+        lon, lat = feature["geometry"]["coordinates"]
+        return {"lat": round(lat, 5), "lon": round(lon, 5), "label": props.get("label", city)}
+    return None
+
+
+def distance_km(a, b):
+    from math import radians, sin, cos, asin, sqrt
+    dlat, dlon = radians(b["lat"] - a["lat"]), radians(b["lon"] - a["lon"])
+    h = sin(dlat / 2) ** 2 + cos(radians(a["lat"])) * cos(radians(b["lat"])) * sin(dlon / 2) ** 2
+    return round(2 * 6371 * asin(sqrt(h)), 1)
+
+
+def transit_minutes(origin, place, api_key):
+    """Durée en transports (calculateur Île-de-France Mobilités), un mardi à 8 h 30."""
+    from datetime import timedelta
+    day = datetime.now(timezone.utc).date()
+    day += timedelta(days=(1 - day.weekday()) % 7 or 7)  # prochain mardi
+    params = urlencode({
+        "from": f"{origin['lon']};{origin['lat']}",
+        "to": f"{place['lon']};{place['lat']}",
+        "datetime": day.strftime("%Y%m%d") + "T083000",
+    })
+    data = http_json(Request(f"{PRIM_JOURNEYS_URL}?{params}",
+                             headers={"User-Agent": UA, "apikey": api_key, "Accept": "application/json"}),
+                     timeout=20)
+    durations = [j.get("duration") for j in data.get("journeys", []) if j.get("duration")]
+    return round(min(durations) / 60) if durations else None
+
+
+def add_travel_info(offers, cfg):
+    """Ajoute à chaque offre la distance depuis le domicile (km) et, si le secret
+    PRIM_API_KEY est configuré, le temps de trajet en transports (min)."""
+    if not cfg.get("enabled", True):
+        return
+    origin = cfg.get("origine") or {"lat": 48.903653, "lon": 2.48526}
+    try:
+        cache = json.loads(PLACES_FILE.read_text(encoding="utf-8")) if PLACES_FILE.exists() else {}
+    except (json.JSONDecodeError, OSError):
+        cache = {}
+    api_key = os.environ.get("PRIM_API_KEY", "").strip()
+    today = datetime.now(timezone.utc).date()
+    geocoded = timed = 0
+    for offer in offers:
+        query = place_query(offer.get("location"), offer.get("dept") or "")
+        if not query:
+            continue
+        key = "|".join([query[0].lower(), query[1] or "", offer.get("dept") or ""])
+        place = cache.get(key)
+        if place is None:
+            try:
+                place = geocode(query[0], query[1], offer.get("dept") or "") or {}
+            except (HTTPError, URLError, TimeoutError, ValueError):
+                continue  # réessayé à la prochaine collecte
+            if place:
+                place["km"] = distance_km(origin, place)
+            cache[key] = place
+            geocoded += 1
+            time.sleep(0.05)
+        if not place:
+            continue
+        stale = not place.get("minAt") or (today - datetime.fromisoformat(place["minAt"]).date()).days > TRAVEL_REFRESH_DAYS
+        if api_key and stale:
+            try:
+                minutes = transit_minutes(origin, place, api_key)
+                place["min"], place["minAt"] = minutes, today.isoformat()
+                timed += 1
+                time.sleep(0.2)
+            except (HTTPError, URLError, TimeoutError, ValueError) as exc:
+                print(f"Trajet non calculé ({type(exc).__name__}).")
+                api_key = ""  # quota ou clé refusée : on arrête pour cette collecte
+        offer["km"] = place.get("km")
+        if place.get("min") is not None:
+            offer["trajetMin"] = place["min"]
+    PLACES_FILE.write_text(json.dumps(cache, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+    print(f"Trajets : {geocoded} lieu(x) géolocalisé(s), {timed} temps de trajet calculé(s)"
+          + ("" if os.environ.get("PRIM_API_KEY") else " (secret PRIM_API_KEY absent : distance seulement)."))
 
 
 ALERT_FILE = ROOT / ".alerte.json"  # jamais commité : le workflow n'ajoute que offres.json

@@ -158,8 +158,32 @@
         "name": "Courir",
         "identifier": "courir",
         "enabled": true
+      },
+      {
+        "name": "SMCP (Sandro, Maje, Claudie Pierlot)",
+        "identifier": "SMCP",
+        "enabled": true
+      },
+      {
+        "name": "Kiabi",
+        "identifier": "Kiabi",
+        "enabled": true
+      },
+      {
+        "name": "Galeries Lafayette",
+        "identifier": "Galerieslafayette",
+        "enabled": true
+      },
+      {
+        "name": "Primark",
+        "identifier": "Primark",
+        "enabled": true
       }
     ]
+  },
+  "trajets": {
+    "enabled": true,
+    "origine": { "label": "Bondy", "lat": 48.903653, "lon": 2.48526 }
   },
   "ashby": {
     "enabled": true,

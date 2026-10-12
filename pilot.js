@@ -146,11 +146,27 @@ function score(o) {
   if (z === 'p10' && !order.includes('p10')) z = NEAR_10E.test(o.location || '') ? '93' : '75';
   const zi = order.indexOf(z);
   let s = zi >= 0 ? [40, 30, 20, 10][zi] : 5;
+  if (typeof o.km === 'number') s += o.km <= 8 ? 8 : o.km <= 15 ? 4 : o.km > 40 ? -6 : 0;
   s += { CDI: 15, CDD: 10, 'Intérim': 8 }[o.contract] || 4;
   const d = parseDate(offerDate(o) || o.created);
   const days = d ? (Date.now() - d.getTime()) / 864e5 : 99;
   s += days <= 2 ? 20 : days <= 7 ? 12 : days <= 14 ? 6 : 0;
   return s;
+}
+
+/* ---------- Trajet depuis le domicile (calculé par collect.py) ---------- */
+
+function travelLabel(o) {
+  if (typeof o.trajetMin === 'number') return '🚇 ≈ ' + o.trajetMin + ' min';
+  if (typeof o.km === 'number') return '📍 ' + String(o.km).replace('.', ',') + ' km';
+  return '';
+}
+
+/** Pour trier : minutes si connues, sinon distance convertie (≈ 3 min/km). */
+function travelCost(o) {
+  if (typeof o.trajetMin === 'number') return o.trajetMin;
+  if (typeof o.km === 'number') return o.km * 3;
+  return 1e6;
 }
 
 /* ---------- Statuts ---------- */
@@ -272,7 +288,7 @@ function currentOffer() {
 function metaLine(o) {
   const d = deptOf(o);
   const when = o.date ? fmtDate(o.date) : o.updated ? 'Mise à jour le ' + fmtDate(o.updated) : 'Date à vérifier';
-  return `<span>▣ ${esc(o.company)}</span><span>⌖ ${esc(o.location || 'Lieu non précisé')}${d && d !== 'IDF' ? ' (' + esc(d) + ')' : ''}</span><span>◷ ${esc(o.contract || 'Contrat à confirmer')}</span><span>${esc(when)}</span>`;
+  return `<span>▣ ${esc(o.company)}</span><span>⌖ ${esc(o.location || 'Lieu non précisé')}${d && d !== 'IDF' ? ' (' + esc(d) + ')' : ''}</span><span>◷ ${esc(o.contract || 'Contrat à confirmer')}</span>${travelLabel(o) ? `<span class="travel">${esc(travelLabel(o))}</span>` : ''}<span>${esc(when)}</span>`;
 }
 
 function drawPilot() {

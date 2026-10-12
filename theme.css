@@ -123,6 +123,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .job h3 { font-size: 18px; font-weight: 700; letter-spacing: -.3px; }
 .job-meta { color: var(--muted); font-weight: 500; }
 .job-meta span:first-child { color: var(--ink); font-weight: 700; }
+.job-meta .travel { color: var(--ink); background: #e6f6ff; border: 1.5px solid var(--ink); border-radius: 999px; padding: 0 8px; font-weight: 700; }
 .job p { color: #45413a; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 /* Actions empilées dans une colonne étroite : le texte de l'offre garde la place. */
 .job-actions { flex-direction: column; align-items: stretch; justify-content: flex-start; width: 180px; }
