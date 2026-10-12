@@ -146,12 +146,6 @@ DEFAULT_ADZUNA_QUERIES = [
     },
 ]
 
-DEFAULT_SMARTRECRUITERS_QUERIES = [
-    {"name": "stock-logistique", "category": "stock", "keywords": "magasinier logistique stock"},
-    {"name": "rayon", "category": "rayon", "keywords": "employé rayon libre-service"},
-    {"name": "vente", "category": "vente", "keywords": "vendeur vente boutique"},
-]
-
 # Lieux connus pour déduire le département depuis un libellé libre. Un lieu
 # n'est reconnu que s'il forme des mots entiers du libellé, et le lieu le plus
 # long l'emporte : « Clichy-sous-Bois » (93) n'est donc plus pris pour
@@ -1172,35 +1166,43 @@ def fetch_smartrecruiters(cfg):
     if not companies:
         print("SmartRecruiters ignoré : aucune entreprise configurée.")
         return []
-    queries = cfg.get("queries") or DEFAULT_SMARTRECRUITERS_QUERIES
-    limit = min(max(int(cfg.get("resultsPerQuery", 50)), 1), 100)
-    max_details = min(max(int(cfg.get("maxDetailsPerCompany", 30)), 1), 100)
+    max_postings = min(max(int(cfg.get("maxPostingsPerCompany", 500)), 1), 2000)
+    max_details = min(max(int(cfg.get("maxDetailsPerCompany", 60)), 1), 200)
     offers = []
     for company_cfg in companies:
         identifier = quote(str(company_cfg["identifier"]).strip(), safe="")
         company_name = company_cfg.get("name") or company_cfg["identifier"]
+        # Toutes les offres de la région, puis tri par métier sur le titre :
+        # la recherche plein texte de SmartRecruiters exige tous les mots
+        # (« vendeur vente boutique ») et rate « Conseiller de vente ».
         candidates = {}
-        for query in queries:
-            if not query.get("enabled", True) or not query.get("keywords"):
-                continue
+        offset = 0
+        while offset < max_postings:
             params = urlencode({
-                "q": query["keywords"],
-                "limit": limit,
-                "offset": 0,
-                "country": cfg.get("country", "FR"),
+                "limit": 100,
+                "offset": offset,
+                # En majuscules (« FR »), l'API ne renvoie aucune offre.
+                "country": str(cfg.get("country", "fr")).lower(),
                 **({"region": cfg["region"]} if cfg.get("region") else {}),
             })
             try:
                 data = api_json(
                     f"https://api.smartrecruiters.com/v1/companies/{identifier}/postings?{params}",
-                    f"SmartRecruiters [{company_name}/{query.get('name', '?')}]",
+                    f"SmartRecruiters [{company_name}]",
                 )
             except Exception:
-                continue
-            for posting in data.get("content", []):
+                break
+            page = data.get("content", [])
+            for posting in page:
                 posting_id = str(posting.get("id") or posting.get("uuid") or "")
-                if posting_id:
-                    candidates.setdefault(posting_id, (posting, query.get("category")))
+                title = posting.get("name") or ""
+                category = classify_category(title)
+                if posting_id and category and not STAGE_RE.search(title):
+                    candidates.setdefault(posting_id, (posting, category))
+            offset += len(page)
+            if len(page) < 100 or offset >= int(data.get("totalFound") or 0):
+                break
+            time.sleep(0.25)
 
         count = 0
         for posting_id, (posting, category) in list(candidates.items())[:max_details]:
@@ -1690,6 +1692,7 @@ PLACES_FILE = ROOT / "lieux.json"  # cache des positions et trajets, commité av
 GEOCODE_URL = "https://data.geopf.fr/geocodage/search"
 PRIM_JOURNEYS_URL = "https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/journeys"
 TRAVEL_REFRESH_DAYS = 30
+TRAVEL_MAX_PER_RUN = 80  # le reste est calculé aux collectes suivantes
 ARROND_RE = re.compile(r"\b(\d{1,2})\s*(?:e|er|ème|eme)\b", re.I)
 
 
@@ -1707,7 +1710,8 @@ def place_query(location, dept=""):
     if in_paris:
         m = ARROND_RE.search(raw)
         if m and 1 <= int(m.group(1)) <= 20:
-            return ("Paris", f"750{int(m.group(1)):02d}")
+            n = int(m.group(1))
+            return (f"Paris {n}{'er' if n == 1 else 'e'} Arrondissement", f"750{n:02d}")
         return ("Paris", None)
     city = re.sub(r"\b\d{5}\b", " ", first).strip(" -")
     if not city or slug(city) in {slug(p) for p in DEPT_NAMES_ONLY}:
@@ -1747,13 +1751,15 @@ def _pick_place(data, city, dept):
     for feature in data.get("features", []):
         props = feature.get("properties") or {}
         code = str(props.get("postcode") or props.get("citycode") or "")
-        # Homonymes : on garde la commune du bon département quand il est connu.
+        # Homonymes : on garde la commune du bon département quand il est connu,
+        # sinon une commune d'Île-de-France.
         if dept in IDF_DEPTS and not code.startswith(dept):
             continue
-        if not dept and code[:2] not in IDF_DEPTS:
+        if dept not in IDF_DEPTS and code[:2] not in IDF_DEPTS:
             continue
         lon, lat = feature["geometry"]["coordinates"]
-        return {"lat": round(lat, 5), "lon": round(lon, 5), "label": props.get("label", city)}
+        return {"lat": round(lat, 5), "lon": round(lon, 5), "label": props.get("label", city),
+                "dept": code[:2]}
     return None
 
 
@@ -1781,6 +1787,17 @@ def transit_minutes(origin, place, api_key):
     return round(min(durations) / 60) if durations else None
 
 
+def transit_minutes_retry(origin, place, api_key):
+    """Une seconde tentative après une pause si PRIM limite le débit (HTTP 429)."""
+    try:
+        return transit_minutes(origin, place, api_key)
+    except HTTPError as exc:
+        if exc.code != 429:
+            raise
+        time.sleep(10)
+        return transit_minutes(origin, place, api_key)
+
+
 def add_travel_info(offers, cfg):
     """Ajoute à chaque offre la distance depuis le domicile (km) et, si le secret
     PRIM_API_KEY est configuré, le temps de trajet en transports (min)."""
@@ -1794,11 +1811,13 @@ def add_travel_info(offers, cfg):
     api_key = os.environ.get("PRIM_API_KEY", "").strip()
     today = datetime.now(timezone.utc).date()
     geocoded = timed = 0
+    used = set()
     for offer in offers:
         query = place_query(offer.get("location"), offer.get("dept") or "")
         if not query:
             continue
         key = "|".join([query[0].lower(), query[1] or "", offer.get("dept") or ""])
+        used.add(key)
         place = cache.get(key)
         if place is None:
             try:
@@ -1813,18 +1832,25 @@ def add_travel_info(offers, cfg):
         if not place:
             continue
         stale = not place.get("minAt") or (today - datetime.fromisoformat(place["minAt"]).date()).days > TRAVEL_REFRESH_DAYS
-        if api_key and stale:
+        if api_key and stale and timed < TRAVEL_MAX_PER_RUN:
             try:
-                minutes = transit_minutes(origin, place, api_key)
+                minutes = transit_minutes_retry(origin, place, api_key)
                 place["min"], place["minAt"] = minutes, today.isoformat()
                 timed += 1
-                time.sleep(0.2)
+                time.sleep(1)  # PRIM limite le nombre de requêtes par seconde
             except (HTTPError, URLError, TimeoutError, ValueError) as exc:
-                print(f"Trajet non calculé ({type(exc).__name__}).")
-                api_key = ""  # quota ou clé refusée : on arrête pour cette collecte
+                code = getattr(exc, "code", "")
+                print(f"Trajet non calculé ({type(exc).__name__} {code}).".replace(" )", ")"))
+                api_key = ""  # quota ou clé refusée : on reprendra à la prochaine collecte
         offer["km"] = place.get("km")
+        if offer.get("dept") in ("", "IDF", None) and place.get("dept") in IDF_DEPTS:
+            offer["dept"] = place["dept"]  # « Maulette, IDF » → 78
         if place.get("min") is not None:
             offer["trajetMin"] = place["min"]
+        else:
+            offer.pop("trajetMin", None)  # ancienne valeur d'un lieu mal situé
+    # Seuls les lieux des offres actuelles sont gardés : le cache ne grossit pas indéfiniment.
+    cache = {k: v for k, v in cache.items() if k in used}
     PLACES_FILE.write_text(json.dumps(cache, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
     print(f"Trajets : {geocoded} lieu(x) géolocalisé(s), {timed} temps de trajet calculé(s)"
           + ("" if os.environ.get("PRIM_API_KEY") else " (secret PRIM_API_KEY absent : distance seulement)."))

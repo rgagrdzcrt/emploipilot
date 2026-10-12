@@ -139,10 +139,10 @@
   },
   "smartRecruiters": {
     "enabled": true,
-    "country": "FR",
+    "country": "fr",
     "region": "Île-de-France",
-    "resultsPerQuery": 50,
-    "maxDetailsPerCompany": 30,
+    "maxPostingsPerCompany": 500,
+    "maxDetailsPerCompany": 60,
     "companies": [
       {
         "name": "Groupement Mousquetaires (Intermarché, Netto, Bricorama)",
