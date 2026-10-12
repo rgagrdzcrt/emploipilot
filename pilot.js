@@ -768,6 +768,21 @@ function disableSync() {
   setSyncState('Synchronisation désactivée sur cet appareil');
 }
 
+/* ---------- Mode nuit ---------- */
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0f1014' : '#15161b');
+}
+
+function toggleTheme() {
+  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  store('zcrt_theme', next);
+  applyTheme(next);
+}
+
 /* ---------- Initialisation ---------- */
 
 function pilotInit() {
@@ -790,6 +805,8 @@ function pilotInit() {
     }
   });
   document.addEventListener('keydown', pilotKey);
+  applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
+  document.getElementById('themeToggle').onclick = toggleTheme;
   document.getElementById('triageBtn').onclick = () => openPilot('triage');
   document.getElementById('queueBtn').onclick = () => openPilot('queue');
 

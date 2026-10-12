@@ -157,6 +157,73 @@ button.secondary kbd, button.ghost kbd { background: #eceae4; color: #4a4d55; }
 .sync-state { color: var(--muted); font-weight: 500; }
 .sync-error { color: #c0392b; }
 
+/* ---------- Bouton mode nuit ---------- */
+.theme-toggle { padding: 6px 10px; font-size: 15px; line-height: 1; border-radius: 999px; vertical-align: middle; }
+
+/* ---------- Mode nuit ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #111217;
+  --panel: #1a1c23;
+  --ink: #eceef2;
+  --muted: #9aa0ab;
+  --line: #2a2d36;
+  --line-strong: #3a3e49;
+  --accent-soft: #29264a;
+  --lime-soft: #232f18;
+  --green: #3aa877;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 6px 20px rgba(0, 0, 0, .28);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4);
+  --shadow-lg: 0 2px 4px rgba(0, 0, 0, .4), 0 14px 34px rgba(0, 0, 0, .45);
+}
+[data-theme="dark"] .side { background: #0c0d11; }
+[data-theme="dark"] button,
+[data-theme="dark"] #triageBtn,
+[data-theme="dark"] .job-actions a { background: #e6e8ec; color: #14161b; }
+[data-theme="dark"] button:hover,
+[data-theme="dark"] .job-actions a:hover { background: #fff; }
+[data-theme="dark"] .pilot-bar .count { background: rgba(0, 0, 0, .12); }
+[data-theme="dark"] button.ok .count { background: rgba(255, 255, 255, .2); }
+[data-theme="dark"] button.ok { background: var(--green); color: #fff; }
+[data-theme="dark"] button.ok:hover { background: #31956a; }
+[data-theme="dark"] button.secondary,
+[data-theme="dark"] .category-tabs button { background: var(--panel); color: #d4d7dd; border-color: var(--line-strong); }
+[data-theme="dark"] button.secondary:hover,
+[data-theme="dark"] .category-tabs button:hover { background: #23262e; color: var(--ink); }
+[data-theme="dark"] .category-tabs button.active { background: #23262e; color: var(--ink); }
+[data-theme="dark"] button.ghost { background: transparent; color: var(--muted); border-color: var(--line-strong); }
+[data-theme="dark"] button.ghost:hover { background: #23262e; color: var(--ink); }
+[data-theme="dark"] .nav button { background: transparent; color: #a9adb6; }
+[data-theme="dark"] .nav button:hover { background: rgba(255, 255, 255, .06); color: #fff; }
+[data-theme="dark"] .nav button.active { background: rgba(201, 236, 125, .12); color: #fff; }
+[data-theme="dark"] .pill { background: #262932; color: #c9ccd3; }
+[data-theme="dark"] .pill.blue { background: #2a2748; color: #bdb7ff; }
+[data-theme="dark"] .pill.green { background: #1c3328; color: #8fd6ae; }
+[data-theme="dark"] .notice { background: var(--panel); color: #b9bdc5; }
+[data-theme="dark"] .goal { background: var(--panel); }
+[data-theme="dark"] .goal-bar { background: #2a2d36; }
+[data-theme="dark"] .field label { color: #b9bdc5; }
+[data-theme="dark"] .field input, [data-theme="dark"] .field select, [data-theme="dark"] .field textarea,
+[data-theme="dark"] .job-actions select, [data-theme="dark"] #sortMode, [data-theme="dark"] .pilot-card textarea {
+  background: #14161c !important; color: var(--ink) !important; border-color: var(--line-strong) !important;
+}
+[data-theme="dark"] .field input::placeholder, [data-theme="dark"] .field textarea::placeholder { color: #6f7480; }
+[data-theme="dark"] .job-meta .travel { background: #1f2a3a; color: #9cc0ea; }
+[data-theme="dark"] .job p, [data-theme="dark"] .pilot-notes { color: #a6abb4; }
+[data-theme="dark"] .source-credit { background: transparent; color: #c4c8cf; border-color: var(--line-strong); }
+[data-theme="dark"] .empty { background: var(--panel); }
+[data-theme="dark"] .job-types label { background: var(--panel); }
+[data-theme="dark"] .job-types label:has(input:checked) { background: #35202b; border-color: #5a3445; color: #e7a6bd; }
+[data-theme="dark"] .table-wrap { background: var(--panel); }
+[data-theme="dark"] th { background: #20232b; color: #b9bdc5; }
+[data-theme="dark"] .toast { background: #2a2d36; color: var(--ink); }
+[data-theme="dark"] .pilot-hint { color: #c8e39a; }
+[data-theme="dark"] .chip { background: #262932; color: var(--ink); }
+[data-theme="dark"] .chip:hover { background: #30333d; }
+[data-theme="dark"] button kbd { background: rgba(0, 0, 0, .15); }
+[data-theme="dark"] button.secondary kbd, [data-theme="dark"] button.ghost kbd { background: #30333d; color: #c4c8cf; }
+[data-theme="dark"] .modal, [data-theme="dark"] .pilot { background: rgba(0, 0, 0, .6); }
+
 @media (max-width: 650px) {
   .pilot-card { border-radius: 0; box-shadow: none; }
   .stat strong { font-size: 28px; }
