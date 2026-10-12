@@ -398,6 +398,7 @@ function drawPilot() {
     <div class="pilot-chips"><span class="small muted">Copier :</span> <button class="chip" data-copy="__letter">Lettre</button> ${chips || '<span class="small muted">renseigne « Mes infos » dans Critères & modèles</span>'}</div>
     <div class="pilot-actions">
       <button data-act="go"><kbd>Entrée</kbd> Ouvrir l’annonce + copier la lettre</button>
+      <button class="secondary" data-act="open" ${o.url ? '' : 'disabled title="Pas de lien pour cette offre"'}><kbd>O</kbd> Ouvrir l’annonce</button>
       <button class="ok" data-act="sent"><kbd>Espace</kbd> Candidature envoyée</button>
       <button class="ghost" data-act="skip"><kbd>→</kbd> Plus tard</button>
       <button class="ghost" data-act="ignore"><kbd>X</kbd> Retirer</button>
@@ -478,7 +479,7 @@ function pilotKey(e) {
   const k = e.key.toLowerCase();
   const map = pilot.mode === 'triage'
     ? { a: 'apply', x: 'ignore', o: 'open', arrowright: 'skip', arrowleft: 'undo' }
-    : { enter: 'go', ' ': 'sent', x: 'ignore', arrowright: 'skip', arrowleft: 'undo' };
+    : { enter: 'go', ' ': 'sent', o: 'open', x: 'ignore', arrowright: 'skip', arrowleft: 'undo' };
   if (map[k]) { e.preventDefault(); pilotAct(map[k]); }
 }
 
