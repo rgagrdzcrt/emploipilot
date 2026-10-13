@@ -136,7 +136,9 @@
   "km": 15.9,
   "label": "Bois-Colombes",
   "lat": 48.91533,
-  "lon": 2.26884
+  "lon": 2.26884,
+  "min": 59,
+  "minAt": "2026-10-13"
  },
  "bois-d'arcy||78": {
   "dept": "78",
@@ -264,6 +266,13 @@
   "min": 91,
   "minAt": "2026-10-13"
  },
+ "charenton-le-pont||94": {
+  "dept": "94",
+  "km": 10.5,
+  "label": "Charenton-le-Pont",
+  "lat": 48.82395,
+  "lon": 2.40713
+ },
  "charles-de-gaulles aéroport||95": {
   "km": 10.8,
   "label": "Roissy-en-France",
@@ -277,7 +286,9 @@
   "km": 24.1,
   "label": "Chaville",
   "lat": 48.80904,
-  "lon": 2.18881
+  "lon": 2.18881,
+  "min": 77,
+  "minAt": "2026-10-13"
  },
  "chelles||77": {
   "dept": "77",
@@ -297,6 +308,13 @@
   "lon": 2.5415,
   "min": 81,
   "minAt": "2026-10-12"
+ },
+ "chessy|77700|77": {
+  "dept": "77",
+  "km": 20.7,
+  "label": "Chessy",
+  "lat": 48.87144,
+  "lon": 2.76478
  },
  "chessy||77": {
   "km": 20.7,
@@ -481,7 +499,9 @@
   "km": 3.8,
   "label": "Drancy",
   "lat": 48.92416,
-  "lon": 2.4442
+  "lon": 2.4442,
+  "min": 38,
+  "minAt": "2026-10-13"
  },
  "draveil||91": {
   "km": 25.7,
@@ -586,6 +606,13 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829
+ },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -672,7 +699,9 @@
   "km": 22.0,
   "label": "Houilles",
   "lat": 48.92657,
-  "lon": 2.18655
+  "lon": 2.18655,
+  "min": 78,
+  "minAt": "2026-10-13"
  },
  "issy-les-moulineaux||92": {
   "km": 18.5,
@@ -763,14 +792,18 @@
   "km": 16.5,
   "label": "Lagny-sur-Marne",
   "lat": 48.87388,
-  "lon": 2.70579
+  "lon": 2.70579,
+  "min": 76,
+  "minAt": "2026-10-13"
  },
  "le blanc-mesnil||93": {
   "dept": "93",
   "km": 4.2,
   "label": "Le Blanc-Mesnil",
   "lat": 48.93668,
-  "lon": 2.45783
+  "lon": 2.45783,
+  "min": 35,
+  "minAt": "2026-10-13"
  },
  "le bourget||93": {
   "dept": "93",
@@ -810,7 +843,9 @@
   "km": 28.0,
   "label": "Le Pecq",
   "lat": 48.89259,
-  "lon": 2.1023
+  "lon": 2.1023,
+  "min": 91,
+  "minAt": "2026-10-13"
  },
  "le plessis-robinson||92": {
   "km": 21.3,
@@ -1219,7 +1254,9 @@
   "km": 27.9,
   "label": "Palaiseau",
   "lat": 48.71645,
-  "lon": 2.2325
+  "lon": 2.2325,
+  "min": 96,
+  "minAt": "2026-10-13"
  },
  "pantin||93": {
   "dept": "93",
@@ -1235,7 +1272,9 @@
   "km": 9.5,
   "label": "Paris 10e Arrondissement",
   "lat": 48.87606,
-  "lon": 2.36227
+  "lon": 2.36227,
+  "min": 50,
+  "minAt": "2026-10-13"
  },
  "paris 11e arrondissement|75011|75": {
   "dept": "75",
@@ -1350,6 +1389,15 @@
   "lat": 48.85404,
   "lon": 2.35684
  },
+ "paris 5e arrondissement|75005|75": {
+  "dept": "75",
+  "km": 11.8,
+  "label": "Paris 5e Arrondissement",
+  "lat": 48.84528,
+  "lon": 2.35055,
+  "min": 62,
+  "minAt": "2026-10-13"
+ },
  "paris 6e arrondissement|75006|75": {
   "dept": "75",
   "km": 12.8,
@@ -1443,6 +1491,15 @@
   "min": 60,
   "minAt": "2026-10-12"
  },
+ "ris-orangis||91": {
+  "dept": "91",
+  "km": 29.1,
+  "label": "Ris-Orangis",
+  "lat": 48.64556,
+  "lon": 2.41604,
+  "min": 109,
+  "minAt": "2026-10-13"
+ },
  "rocquencourt|78150|78": {
   "km": 28.1,
   "label": "Le Chesnay-Rocquencourt",
@@ -1487,7 +1544,9 @@
   "km": 3.3,
   "label": "Rosny-sous-Bois",
   "lat": 48.87386,
-  "lon": 2.4874
+  "lon": 2.4874,
+  "min": 43,
+  "minAt": "2026-10-13"
  },
  "rueil-malmaison||92": {
   "km": 22.5,
