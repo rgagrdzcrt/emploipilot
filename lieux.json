@@ -1,4 +1,13 @@
 {
+ "ablon-sur-seine||94": {
+  "dept": "94",
+  "km": 20.4,
+  "label": "Ablon-sur-Seine",
+  "lat": 48.7247,
+  "lon": 2.42285,
+  "min": 91,
+  "minAt": "2026-10-13"
+ },
  "alfortville||94": {
   "dept": "94",
   "km": 12.7,
@@ -266,13 +275,6 @@
   "min": 91,
   "minAt": "2026-10-13"
  },
- "charenton-le-pont||94": {
-  "dept": "94",
-  "km": 10.5,
-  "label": "Charenton-le-Pont",
-  "lat": 48.82395,
-  "lon": 2.40713
- },
  "charles-de-gaulles aéroport||95": {
   "km": 10.8,
   "label": "Roissy-en-France",
@@ -280,6 +282,13 @@
   "lon": 2.51116,
   "min": 56,
   "minAt": "2026-10-12"
+ },
+ "chatou||78": {
+  "dept": "78",
+  "km": 24.6,
+  "label": "Chatou",
+  "lat": 48.89663,
+  "lon": 2.14827
  },
  "chaville||92": {
   "dept": "92",
@@ -308,13 +317,6 @@
   "lon": 2.5415,
   "min": 81,
   "minAt": "2026-10-12"
- },
- "chessy|77700|77": {
-  "dept": "77",
-  "km": 20.7,
-  "label": "Chessy",
-  "lat": 48.87144,
-  "lon": 2.76478
  },
  "chessy||77": {
   "km": 20.7,
@@ -372,6 +374,15 @@
   "lon": 2.66878,
   "min": 67,
   "minAt": "2026-10-12"
+ },
+ "clichy-sous-bois||93": {
+  "dept": "93",
+  "km": 4.0,
+  "label": "Clichy-sous-Bois",
+  "lat": 48.90645,
+  "lon": 2.53953,
+  "min": 46,
+  "minAt": "2026-10-13"
  },
  "clichy||92": {
   "dept": "92",
@@ -671,6 +682,13 @@
   "min": 85,
   "minAt": "2026-10-12"
  },
+ "guyancourt||78": {
+  "dept": "78",
+  "km": 33.7,
+  "label": "Guyancourt",
+  "lat": 48.77215,
+  "lon": 2.07035
+ },
  "hardricourt||IDF": {
   "dept": "78",
   "km": 44.6,
@@ -853,6 +871,15 @@
   "lat": 48.78133,
   "lon": 2.26106,
   "min": 92,
+  "minAt": "2026-10-13"
+ },
+ "le plessis-trévise||94": {
+  "dept": "94",
+  "km": 12.3,
+  "label": "Le Plessis-Trévise",
+  "lat": 48.81014,
+  "lon": 2.57623,
+  "min": 68,
   "minAt": "2026-10-13"
  },
  "le pré-saint-gervais||93": {
@@ -1084,13 +1111,6 @@
   "lon": 2.03301,
   "min": 105,
   "minAt": "2026-10-12"
- },
- "montigny-lès-cormeilles||95": {
-  "dept": "95",
-  "km": 23.5,
-  "label": "Montigny-lès-Cormeilles",
-  "lat": 48.99333,
-  "lon": 2.19375
  },
  "montmagny||IDF": {
   "dept": "95",
@@ -1589,6 +1609,13 @@
   "min": 76,
   "minAt": "2026-10-13"
  },
+ "saint-cyr-l'école||78": {
+  "dept": "78",
+  "km": 32.8,
+  "label": "Saint-Cyr-l'École",
+  "lat": 48.80279,
+  "lon": 2.06362
+ },
  "saint-denis-sud||93": {},
  "saint-denis||93": {
   "km": 9.8,
@@ -1900,13 +1927,6 @@
   "label": "Villebon-sur-Yvette",
   "lat": 48.69789,
   "lon": 2.23543
- },
- "villecresnes||94": {
-  "dept": "94",
-  "km": 20.7,
-  "label": "Villecresnes",
-  "lat": 48.72004,
-  "lon": 2.5296
  },
  "villejuif||94": {
   "dept": "94",
