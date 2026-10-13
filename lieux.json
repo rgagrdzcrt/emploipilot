@@ -4,14 +4,18 @@
   "km": 12.7,
   "label": "Alfortville",
   "lat": 48.79718,
-  "lon": 2.42152
+  "lon": 2.42152,
+  "min": 70,
+  "minAt": "2026-10-13"
  },
  "andrésy||78": {
   "dept": "78",
   "km": 32.4,
   "label": "Andrésy",
   "lat": 48.97664,
-  "lon": 2.05598
+  "lon": 2.05598,
+  "min": 103,
+  "minAt": "2026-10-13"
  },
  "antony|92160|92": {
   "dept": "92",
@@ -57,7 +61,9 @@
   "km": 22.9,
   "label": "Athis-Mons",
   "lat": 48.70896,
-  "lon": 2.38459
+  "lon": 2.38459,
+  "min": 108,
+  "minAt": "2026-10-13"
  },
  "aubervilliers||93": {
   "km": 7.3,
@@ -95,7 +101,9 @@
   "km": 24.9,
   "label": "Bailly-Romainvilliers",
   "lat": 48.84898,
-  "lon": 2.81517
+  "lon": 2.81517,
+  "min": 86,
+  "minAt": "2026-10-13"
  },
  "bezons||95": {
   "km": 19.9,
@@ -110,7 +118,9 @@
   "km": 3.1,
   "label": "Bobigny",
   "lat": 48.90736,
-  "lon": 2.44334
+  "lon": 2.44334,
+  "min": 31,
+  "minAt": "2026-10-13"
  },
  "bois-d'arcy||78": {
   "dept": "78",
@@ -181,7 +191,9 @@
   "km": 7.7,
   "label": "Bry-sur-Marne",
   "lat": 48.83925,
-  "lon": 2.52319
+  "lon": 2.52319,
+  "min": 59,
+  "minAt": "2026-10-13"
  },
  "buc||78": {
   "km": 30.5,
@@ -230,7 +242,9 @@
   "km": 19.3,
   "label": "Chanteloup-en-Brie",
   "lat": 48.85986,
-  "lon": 2.74125
+  "lon": 2.74125,
+  "min": 91,
+  "minAt": "2026-10-13"
  },
  "charles-de-gaulles aéroport||95": {
   "km": 10.8,
@@ -239,12 +253,6 @@
   "lon": 2.51116,
   "min": 56,
   "minAt": "2026-10-12"
- },
- "chatou||78": {
-  "km": 24.6,
-  "label": "Chatou",
-  "lat": 48.89663,
-  "lon": 2.14827
  },
  "chaville||92": {
   "dept": "92",
@@ -352,12 +360,6 @@
   "min": 71,
   "minAt": "2026-10-12"
  },
- "combs-la-ville||77": {
-  "km": 27.6,
-  "label": "Combs-la-Ville",
-  "lat": 48.66087,
-  "lon": 2.56202
- },
  "compans|77290|77": {
   "dept": "77",
   "km": 16.2,
@@ -366,6 +368,15 @@
   "lon": 2.66346,
   "min": 82,
   "minAt": "2026-10-12"
+ },
+ "conflans-sainte-honorine||78": {
+  "dept": "78",
+  "km": 30.1,
+  "label": "Conflans-Sainte-Honorine",
+  "lat": 49.00003,
+  "lon": 2.09968,
+  "min": 85,
+  "minAt": "2026-10-13"
  },
  "cormeilles-en-parisis||95": {
   "dept": "95",
@@ -394,7 +405,9 @@
   "km": 16.7,
   "label": "Courbevoie",
   "lat": 48.89797,
-  "lon": 2.25706
+  "lon": 2.25706,
+  "min": 65,
+  "minAt": "2026-10-13"
  },
  "courbevoie||92": {
   "dept": "92",
@@ -463,14 +476,18 @@
   "km": 6.9,
   "label": "Dugny",
   "lat": 48.95015,
-  "lon": 2.42187
+  "lon": 2.42187,
+  "min": 74,
+  "minAt": "2026-10-13"
  },
  "ecouen||95": {
   "dept": "95",
   "km": 15.7,
   "label": "Écouen",
   "lat": 49.02445,
-  "lon": 2.37457
+  "lon": 2.37457,
+  "min": 88,
+  "minAt": "2026-10-13"
  },
  "ermont||95": {
   "dept": "95",
@@ -519,7 +536,9 @@
   "km": 21.8,
   "label": "Fosses",
   "lat": 49.09881,
-  "lon": 2.50543
+  "lon": 2.50543,
+  "min": 109,
+  "minAt": "2026-10-13"
  },
  "franconville||95": {
   "km": 21.3,
@@ -582,7 +601,9 @@
   "km": 8.2,
   "label": "Gournay-sur-Marne",
   "lat": 48.86071,
-  "lon": 2.57648
+  "lon": 2.57648,
+  "min": 54,
+  "minAt": "2026-10-13"
  },
  "goussainville||95": {
   "km": 13.9,
@@ -651,7 +672,9 @@
   "km": 11.3,
   "label": "L'Île-Saint-Denis",
   "lat": 48.93308,
-  "lon": 2.33764
+  "lon": 2.33764,
+  "min": 63,
+  "minAt": "2026-10-13"
  },
  "la courneuve||93": {
   "km": 6.9,
@@ -673,14 +696,18 @@
   "km": 17.6,
   "label": "La Garenne-Colombes",
   "lat": 48.90716,
-  "lon": 2.24441
+  "lon": 2.24441,
+  "min": 65,
+  "minAt": "2026-10-13"
  },
  "la plaine saint-denis||93": {},
  "la queue-en-brie||94": {
   "km": 14.8,
   "label": "La Queue-en-Brie",
   "lat": 48.78623,
-  "lon": 2.57913
+  "lon": 2.57913,
+  "min": 72,
+  "minAt": "2026-10-13"
  },
  "lagny-sur-marne|77400|77": {
   "km": 16.5,
@@ -711,7 +738,9 @@
   "km": 28.1,
   "label": "Le Chesnay-Rocquencourt",
   "lat": 48.82637,
-  "lon": 2.11896
+  "lon": 2.11896,
+  "min": 96,
+  "minAt": "2026-10-13"
  },
  "le chesnay||78": {
   "km": 28.1,
@@ -732,7 +761,9 @@
   "km": 21.3,
   "label": "Le Plessis-Robinson",
   "lat": 48.78133,
-  "lon": 2.26106
+  "lon": 2.26106,
+  "min": 92,
+  "minAt": "2026-10-13"
  },
  "le pré-saint-gervais||93": {
   "dept": "93",
@@ -793,7 +824,9 @@
   "km": 13.5,
   "label": "Lognes",
   "lat": 48.8334,
-  "lon": 2.63607
+  "lon": 2.63607,
+  "min": 75,
+  "minAt": "2026-10-13"
  },
  "longjumeau||91": {
   "dept": "91",
@@ -808,7 +841,9 @@
   "km": 16.0,
   "label": "Louvres",
   "lat": 49.04735,
-  "lon": 2.50393
+  "lon": 2.50393,
+  "min": 85,
+  "minAt": "2026-10-13"
  },
  "maisons-alfort||94": {
   "dept": "94",
@@ -832,7 +867,9 @@
   "km": 25.0,
   "label": "Maisons-Laffitte",
   "lat": 48.95117,
-  "lon": 2.15141
+  "lon": 2.15141,
+  "min": 79,
+  "minAt": "2026-10-13"
  },
  "malakoff||92": {
   "km": 17.0,
@@ -846,7 +883,9 @@
   "km": 58.2,
   "label": "Mantes-la-Jolie",
   "lat": 48.99478,
-  "lon": 1.69975
+  "lon": 1.69975,
+  "min": 112,
+  "minAt": "2026-10-13"
  },
  "mareil-sur-mauldre||IDF": {
   "dept": "78",
@@ -868,7 +907,9 @@
   "km": 28.9,
   "label": "Marly-le-Roi",
   "lat": 48.87529,
-  "lon": 2.09241
+  "lon": 2.09241,
+  "min": 90,
+  "minAt": "2026-10-13"
  },
  "massy||91": {
   "km": 25.1,
@@ -905,7 +946,9 @@
   "km": 10.9,
   "label": "Mitry-Mory",
   "lat": 48.96321,
-  "lon": 2.6044
+  "lon": 2.6044,
+  "min": 70,
+  "minAt": "2026-10-13"
  },
  "moisselles|95570|95": {
   "km": 19.1,
@@ -930,12 +973,6 @@
   "min": 46,
   "minAt": "2026-10-12"
  },
- "montgeron||91": {
-  "km": 22.2,
-  "label": "Montgeron",
-  "lat": 48.70482,
-  "lon": 2.4554
- },
  "montigny-le-bretonneux||78": {
   "dept": "78",
   "km": 35.9,
@@ -944,13 +981,6 @@
   "lon": 2.03301,
   "min": 105,
   "minAt": "2026-10-12"
- },
- "montigny-lès-cormeilles||95": {
-  "dept": "95",
-  "km": 23.5,
-  "label": "Montigny-lès-Cormeilles",
-  "lat": 48.99333,
-  "lon": 2.19375
  },
  "montmagny||IDF": {
   "dept": "95",
@@ -963,7 +993,9 @@
   "km": 5.2,
   "label": "Montreuil",
   "lat": 48.86373,
-  "lon": 2.44936
+  "lon": 2.44936,
+  "min": 49,
+  "minAt": "2026-10-13"
  },
  "montrouge||92": {
   "dept": "92",
@@ -1065,7 +1097,9 @@
   "km": 7.4,
   "label": "Nogent-sur-Marne",
   "lat": 48.83747,
-  "lon": 2.48091
+  "lon": 2.48091,
+  "min": 54,
+  "minAt": "2026-10-13"
  },
  "noisy-le-grand||93": {
   "km": 8.6,
@@ -1086,7 +1120,9 @@
   "km": 19.1,
   "label": "Orly",
   "lat": 48.74229,
-  "lon": 2.39525
+  "lon": 2.39525,
+  "min": 92,
+  "minAt": "2026-10-13"
  },
  "ormesson-sur-marne||94": {
   "dept": "94",
@@ -1099,14 +1135,18 @@
   "km": 20.5,
   "label": "Ozoir-la-Ferrière",
   "lat": 48.76728,
-  "lon": 2.67328
+  "lon": 2.67328,
+  "min": 76,
+  "minAt": "2026-10-13"
  },
  "pantin||93": {
   "dept": "93",
   "km": 5.6,
   "label": "Pantin",
   "lat": 48.90027,
-  "lon": 2.40946
+  "lon": 2.40946,
+  "min": 43,
+  "minAt": "2026-10-13"
  },
  "paris 10e arrondissement|75010|75": {
   "dept": "75",
@@ -1156,35 +1196,45 @@
   "km": 15.5,
   "label": "Paris 15e Arrondissement",
   "lat": 48.84162,
-  "lon": 2.29529
+  "lon": 2.29529,
+  "min": 70,
+  "minAt": "2026-10-13"
  },
  "paris 16e arrondissement|75016|75": {
   "dept": "75",
   "km": 16.8,
   "label": "Paris 16e Arrondissement",
   "lat": 48.8563,
-  "lon": 2.26703
+  "lon": 2.26703,
+  "min": 68,
+  "minAt": "2026-10-13"
  },
  "paris 17e arrondissement|75017|75": {
   "dept": "75",
   "km": 13.3,
   "label": "Paris 17e Arrondissement",
   "lat": 48.8877,
-  "lon": 2.30484
+  "lon": 2.30484,
+  "min": 59,
+  "minAt": "2026-10-13"
  },
  "paris 18e arrondissement|75018|75": {
   "dept": "75",
   "km": 10.1,
   "label": "Paris 18e Arrondissement",
   "lat": 48.89205,
-  "lon": 2.34873
+  "lon": 2.34873,
+  "min": 49,
+  "minAt": "2026-10-13"
  },
  "paris 19e arrondissement|75019|75": {
   "dept": "75",
   "km": 7.4,
   "label": "Paris 19e Arrondissement",
   "lat": 48.88725,
-  "lon": 2.38771
+  "lon": 2.38771,
+  "min": 42,
+  "minAt": "2026-10-13"
  },
  "paris 1er arrondissement|75001|75": {
   "dept": "75",
@@ -1207,7 +1257,9 @@
   "km": 11.3,
   "label": "Paris 2e Arrondissement",
   "lat": 48.86767,
-  "lon": 2.34116
+  "lon": 2.34116,
+  "min": 51,
+  "minAt": "2026-10-13"
  },
  "paris 4e arrondissement|75004|75": {
   "dept": "75",
@@ -1216,12 +1268,21 @@
   "lat": 48.85404,
   "lon": 2.35684
  },
+ "paris 5e arrondissement|75005|75": {
+  "dept": "75",
+  "km": 11.8,
+  "label": "Paris 5e Arrondissement",
+  "lat": 48.84528,
+  "lon": 2.35055
+ },
  "paris 6e arrondissement|75006|75": {
   "dept": "75",
   "km": 12.8,
   "label": "Paris 6e Arrondissement",
   "lat": 48.84927,
-  "lon": 2.33088
+  "lon": 2.33088,
+  "min": 62,
+  "minAt": "2026-10-13"
  },
  "paris 7e arrondissement|75007|75": {
   "dept": "75",
@@ -1383,14 +1444,9 @@
   "km": 20.9,
   "label": "Saint-Cloud",
   "lat": 48.85059,
-  "lon": 2.21125
- },
- "saint-cyr-l'école||78": {
-  "dept": "78",
-  "km": 32.8,
-  "label": "Saint-Cyr-l'École",
-  "lat": 48.80279,
-  "lon": 2.06362
+  "lon": 2.21125,
+  "min": 76,
+  "minAt": "2026-10-13"
  },
  "saint-denis||93": {
   "km": 9.8,
@@ -1444,7 +1500,9 @@
   "km": 34.7,
   "label": "Saint-Nom-la-Bretèche",
   "lat": 48.85748,
-  "lon": 2.01633
+  "lon": 2.01633,
+  "min": 127,
+  "minAt": "2026-10-13"
  },
  "saint-ouen||93": {
   "dept": "93",
@@ -1460,7 +1518,9 @@
   "km": 14.8,
   "label": "Saint-Thibault-des-Vignes",
   "lat": 48.86172,
-  "lon": 2.67667
+  "lon": 2.67667,
+  "min": 76,
+  "minAt": "2026-10-13"
  },
  "saint-witz|95470|95": {
   "dept": "95",
@@ -1475,7 +1535,9 @@
   "km": 20.8,
   "label": "Santeny",
   "lat": 48.72565,
-  "lon": 2.57267
+  "lon": 2.57267,
+  "min": 117,
+  "minAt": "2026-10-13"
  },
  "sarcelles||95": {
   "dept": "95",
@@ -1515,7 +1577,9 @@
   "km": 22.8,
   "label": "Serris",
   "lat": 48.84696,
-  "lon": 2.78475
+  "lon": 2.78475,
+  "min": 84,
+  "minAt": "2026-10-13"
  },
  "stains||93": {
   "dept": "93",
@@ -1614,12 +1678,6 @@
   "lat": 48.82097,
   "lon": 2.28637
  },
- "vauhallan|89160|91": {
-  "km": 28.0,
-  "label": "Vauhallan",
-  "lat": 48.73368,
-  "lon": 2.20296
- },
  "vauréal||IDF": {
   "dept": "95",
   "km": 36.4,
@@ -1638,7 +1696,9 @@
   "km": 24.1,
   "label": "Verrières-le-Buisson",
   "lat": 48.74836,
-  "lon": 2.25656
+  "lon": 2.25656,
+  "min": 106,
+  "minAt": "2026-10-13"
  },
  "versailles||78": {
   "km": 28.9,
@@ -1670,7 +1730,9 @@
   "km": 21.4,
   "label": "Villaines-sous-Bois",
   "lat": 49.07596,
-  "lon": 2.3561
+  "lon": 2.3561,
+  "min": 105,
+  "minAt": "2026-10-13"
  },
  "villebon-sur-yvette||91": {
   "dept": "91",
@@ -1687,13 +1749,6 @@
   "label": "Villebon-sur-Yvette",
   "lat": 48.69789,
   "lon": 2.23543
- },
- "villecresnes||94": {
-  "dept": "94",
-  "km": 20.7,
-  "label": "Villecresnes",
-  "lat": 48.72004,
-  "lon": 2.5296
  },
  "villejuif||94": {
   "dept": "94",
@@ -1749,7 +1804,9 @@
   "km": 6.8,
   "label": "Villepinte",
   "lat": 48.95651,
-  "lon": 2.53243
+  "lon": 2.53243,
+  "min": 64,
+  "minAt": "2026-10-13"
  },
  "villiers-sur-marne||IDF": {
   "dept": "94",
@@ -1762,7 +1819,9 @@
   "km": 7.2,
   "label": "Vincennes",
   "lat": 48.84728,
-  "lon": 2.43778
+  "lon": 2.43778,
+  "min": 49,
+  "minAt": "2026-10-13"
  },
  "vitry-sur-seine||94": {
   "dept": "94",
@@ -1803,7 +1862,9 @@
   "km": 40.9,
   "label": "Égly",
   "lat": 48.57999,
-  "lon": 2.21978
+  "lon": 2.21978,
+  "min": 121,
+  "minAt": "2026-10-13"
  },
  "élancourt||78": {
   "km": 40.9,
@@ -1816,12 +1877,16 @@
   "km": 13.3,
   "label": "Émerainville",
   "lat": 48.81765,
-  "lon": 2.61157
+  "lon": 2.61157,
+  "min": 76,
+  "minAt": "2026-10-13"
  },
  "épinay-sur-seine||93": {
   "km": 13.6,
   "label": "Épinay-sur-Seine",
   "lat": 48.95522,
-  "lon": 2.31712
+  "lon": 2.31712,
+  "min": 67,
+  "minAt": "2026-10-13"
  }
 }
