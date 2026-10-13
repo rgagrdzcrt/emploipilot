@@ -122,6 +122,22 @@
   "min": 31,
   "minAt": "2026-10-13"
  },
+ "bobigny||93": {
+  "dept": "93",
+  "km": 3.1,
+  "label": "Bobigny",
+  "lat": 48.90736,
+  "lon": 2.44334,
+  "min": 31,
+  "minAt": "2026-10-13"
+ },
+ "bois-colombes||92": {
+  "dept": "92",
+  "km": 15.9,
+  "label": "Bois-Colombes",
+  "lat": 48.91533,
+  "lon": 2.26884
+ },
  "bois-d'arcy||78": {
   "dept": "78",
   "km": 35.5,
@@ -136,7 +152,9 @@
   "km": 17.1,
   "label": "Boissy-Saint-Léger",
   "lat": 48.75128,
-  "lon": 2.52001
+  "lon": 2.52001,
+  "min": 94,
+  "minAt": "2026-10-13"
  },
  "bondoufle||91": {
   "km": 33.4,
@@ -317,7 +335,9 @@
   "km": 18.3,
   "label": "Châtillon",
   "lat": 48.80336,
-  "lon": 2.28634
+  "lon": 2.28634,
+  "min": 84,
+  "minAt": "2026-10-13"
  },
  "clamart||92": {
   "km": 20.7,
@@ -566,6 +586,15 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
+ "garges-lès-gonesse-est||95": {
+  "dept": "95",
+  "km": 9.6,
+  "label": "Garges-lès-Gonesse",
+  "lat": 48.96975,
+  "lon": 2.40086,
+  "min": 75,
+  "minAt": "2026-10-13"
+ },
  "gennevilliers||92": {
   "km": 14.3,
   "label": "Gennevilliers",
@@ -579,7 +608,9 @@
   "km": 14.6,
   "label": "Gentilly",
   "lat": 48.81232,
-  "lon": 2.34261
+  "lon": 2.34261,
+  "min": 64,
+  "minAt": "2026-10-13"
  },
  "gif-sur-yvette||91": {
   "dept": "91",
@@ -613,12 +644,6 @@
   "min": 85,
   "minAt": "2026-10-12"
  },
- "guyancourt||78": {
-  "km": 33.7,
-  "label": "Guyancourt",
-  "lat": 48.77215,
-  "lon": 2.07035
- },
  "hardricourt||IDF": {
   "dept": "78",
   "km": 44.6,
@@ -641,6 +666,13 @@
   "lon": 2.15245,
   "min": 100,
   "minAt": "2026-10-12"
+ },
+ "houilles||78": {
+  "dept": "78",
+  "km": 22.0,
+  "label": "Houilles",
+  "lat": 48.92657,
+  "lon": 2.18655
  },
  "issy-les-moulineaux||92": {
   "km": 18.5,
@@ -667,6 +699,15 @@
   "lon": 2.37079,
   "min": 94,
   "minAt": "2026-10-12"
+ },
+ "l'isle-adam||95": {
+  "dept": "95",
+  "km": 29.7,
+  "label": "L'Isle-Adam",
+  "lat": 49.11083,
+  "lon": 2.22878,
+  "min": 122,
+  "minAt": "2026-10-13"
  },
  "l'île-saint-denis||93": {
   "km": 11.3,
@@ -717,6 +758,13 @@
   "min": 76,
   "minAt": "2026-10-12"
  },
+ "lagny-sur-marne||77": {
+  "dept": "77",
+  "km": 16.5,
+  "label": "Lagny-sur-Marne",
+  "lat": 48.87388,
+  "lon": 2.70579
+ },
  "le blanc-mesnil||93": {
   "dept": "93",
   "km": 4.2,
@@ -757,6 +805,13 @@
   "lat": 48.80818,
   "lon": 2.35582
  },
+ "le pecq||78": {
+  "dept": "78",
+  "km": 28.0,
+  "label": "Le Pecq",
+  "lat": 48.89259,
+  "lon": 2.1023
+ },
  "le plessis-robinson||92": {
   "km": 21.3,
   "label": "Le Plessis-Robinson",
@@ -772,6 +827,15 @@
   "lat": 48.88414,
   "lon": 2.40538
  },
+ "le raincy||93": {
+  "dept": "93",
+  "km": 2.7,
+  "label": "Le Raincy",
+  "lat": 48.89595,
+  "lon": 2.51972,
+  "min": 31,
+  "minAt": "2026-10-13"
+ },
  "les lilas||93": {
   "dept": "93",
   "km": 5.4,
@@ -786,14 +850,18 @@
   "km": 1.5,
   "label": "Les Pavillons-sous-Bois",
   "lat": 48.90679,
-  "lon": 2.50561
+  "lon": 2.50561,
+  "min": 15,
+  "minAt": "2026-10-13"
  },
  "les ulis||91": {
   "dept": "91",
   "km": 33.0,
   "label": "Les Ulis",
   "lat": 48.68185,
-  "lon": 2.18615
+  "lon": 2.18615,
+  "min": 104,
+  "minAt": "2026-10-13"
  },
  "levallois-perret||92": {
   "dept": "92",
@@ -982,6 +1050,13 @@
   "min": 105,
   "minAt": "2026-10-12"
  },
+ "montigny-lès-cormeilles||95": {
+  "dept": "95",
+  "km": 23.5,
+  "label": "Montigny-lès-Cormeilles",
+  "lat": 48.99333,
+  "lon": 2.19375
+ },
  "montmagny||IDF": {
   "dept": "95",
   "km": 12.4,
@@ -1139,6 +1214,13 @@
   "min": 76,
   "minAt": "2026-10-13"
  },
+ "palaiseau||91": {
+  "dept": "91",
+  "km": 27.9,
+  "label": "Palaiseau",
+  "lat": 48.71645,
+  "lon": 2.2325
+ },
  "pantin||93": {
   "dept": "93",
   "km": 5.6,
@@ -1267,13 +1349,6 @@
   "label": "Paris 4e Arrondissement",
   "lat": 48.85404,
   "lon": 2.35684
- },
- "paris 5e arrondissement|75005|75": {
-  "dept": "75",
-  "km": 11.8,
-  "label": "Paris 5e Arrondissement",
-  "lat": 48.84528,
-  "lon": 2.35055
  },
  "paris 6e arrondissement|75006|75": {
   "dept": "75",
@@ -1407,6 +1482,13 @@
   "min": 40,
   "minAt": "2026-10-12"
  },
+ "rosny-sous-bois||93": {
+  "dept": "93",
+  "km": 3.3,
+  "label": "Rosny-sous-Bois",
+  "lat": 48.87386,
+  "lon": 2.4874
+ },
  "rueil-malmaison||92": {
   "km": 22.5,
   "label": "Rueil-Malmaison",
@@ -1448,6 +1530,7 @@
   "min": 76,
   "minAt": "2026-10-13"
  },
+ "saint-denis-sud||93": {},
  "saint-denis||93": {
   "km": 9.8,
   "label": "Saint-Denis",
@@ -1530,6 +1613,15 @@
   "lon": 2.55433,
   "min": 100,
   "minAt": "2026-10-12"
+ },
+ "sannois||95": {
+  "dept": "95",
+  "km": 18.6,
+  "label": "Sannois",
+  "lat": 48.97352,
+  "lon": 2.25369,
+  "min": 80,
+  "minAt": "2026-10-13"
  },
  "santeny|94440|94": {
   "km": 20.8,
@@ -1750,6 +1842,13 @@
   "lat": 48.69789,
   "lon": 2.23543
  },
+ "villecresnes||94": {
+  "dept": "94",
+  "km": 20.7,
+  "label": "Villecresnes",
+  "lat": 48.72004,
+  "lon": 2.5296
+ },
  "villejuif||94": {
   "dept": "94",
   "km": 15.3,
@@ -1789,7 +1888,9 @@
   "km": 19.4,
   "label": "Villeneuve-le-Roi",
   "lat": 48.7348,
-  "lon": 2.42011
+  "lon": 2.42011,
+  "min": 95,
+  "minAt": "2026-10-13"
  },
  "villeneuve-saint-georges||94": {
   "km": 18.5,
@@ -1821,6 +1922,15 @@
   "lat": 48.84728,
   "lon": 2.43778,
   "min": 49,
+  "minAt": "2026-10-13"
+ },
+ "viry-châtillon||91": {
+  "dept": "91",
+  "km": 27.6,
+  "label": "Viry-Châtillon",
+  "lat": 48.66688,
+  "lon": 2.37371,
+  "min": 110,
   "minAt": "2026-10-13"
  },
  "vitry-sur-seine||94": {
