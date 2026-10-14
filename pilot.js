@@ -199,6 +199,9 @@ function isHiddenType(o) {
   return excludedWords().some(w => t.includes(w));
 }
 
+/** Statuts retirés de « Offres repérées » (suivis dans l'onglet Candidatures). */
+const HORS_REPEREES = ['Ignorée', 'Candidature envoyée', 'Entretien', 'Refus', 'À relancer'];
+
 /** Pourquoi une offre est masquée (texte court), ou '' si elle est visible. */
 function hiddenReason(o) {
   if (isTracked(o)) return '';
