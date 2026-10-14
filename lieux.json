@@ -42,13 +42,6 @@
   "min": 75,
   "minAt": "2026-10-12"
  },
- "arcueil||94": {
-  "dept": "94",
-  "km": 15.6,
-  "label": "Arcueil",
-  "lat": 48.80518,
-  "lon": 2.33347
- },
  "argenteuil||95": {
   "km": 18.0,
   "label": "Argenteuil",
@@ -148,15 +141,6 @@
   "lon": 2.26884,
   "min": 59,
   "minAt": "2026-10-13"
- },
- "bois-d'arcy||78": {
-  "dept": "78",
-  "km": 35.5,
-  "label": "Bois-d'Arcy",
-  "lat": 48.8031,
-  "lon": 2.02414,
-  "min": 119,
-  "minAt": "2026-10-12"
  },
  "boissy-saint-léger||94": {
   "dept": "94",
@@ -282,13 +266,6 @@
   "lon": 2.51116,
   "min": 56,
   "minAt": "2026-10-12"
- },
- "chatou||78": {
-  "dept": "78",
-  "km": 24.6,
-  "label": "Chatou",
-  "lat": 48.89663,
-  "lon": 2.14827
  },
  "chaville||92": {
   "dept": "92",
@@ -887,7 +864,9 @@
   "km": 6.2,
   "label": "Le Pré-Saint-Gervais",
   "lat": 48.88414,
-  "lon": 2.40538
+  "lon": 2.40538,
+  "min": 54,
+  "minAt": "2026-10-14"
  },
  "le raincy||93": {
   "dept": "93",
@@ -1016,6 +995,15 @@
   "lon": 1.69975,
   "min": 112,
   "minAt": "2026-10-13"
+ },
+ "marcoussis||91": {
+  "dept": "91",
+  "km": 34.5,
+  "label": "Marcoussis",
+  "lat": 48.64793,
+  "lon": 2.21852,
+  "min": 129,
+  "minAt": "2026-10-14"
  },
  "mareil-sur-mauldre||IDF": {
   "dept": "78",
@@ -2069,6 +2057,15 @@
   "lon": 2.61157,
   "min": 76,
   "minAt": "2026-10-13"
+ },
+ "épinay-sur-orge||91": {
+  "dept": "91",
+  "km": 28.5,
+  "label": "Épinay-sur-Orge",
+  "lat": 48.67197,
+  "lon": 2.32045,
+  "min": 102,
+  "minAt": "2026-10-14"
  },
  "épinay-sur-seine||93": {
   "km": 13.6,
