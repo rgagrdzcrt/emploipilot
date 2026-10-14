@@ -32,7 +32,7 @@ MAX_AGE_DAYS = 45
 # Annonce publiée (ou mise à jour, pour Jooble) il y a plus de 15 jours : retirée
 # même si une source la propose encore.
 MAX_PUBLICATION_DAYS = 15
-MAX_UNSEEN_DAYS = 30
+MAX_UNSEEN_DAYS = 7
 
 STAGE_RE = re.compile(
     r"\b(stage|stagiaire|alternance|alternant|apprentissage|apprentie?)\b", re.I
