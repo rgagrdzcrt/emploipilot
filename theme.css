@@ -344,6 +344,7 @@ input[type="checkbox"] { accent-color: var(--brand); width: 16px; height: 16px; 
 .job-meta > span { display: inline-flex; align-items: center; gap: 5px; }
 .job-meta .ic { width: 14px; height: 14px; color: var(--faint); }
 .job-meta .travel { color: var(--ink-2); font-weight: 500; }
+.job-meta .hidden-why { color: var(--muted); font-style: italic; }
 .job-meta .fresh { color: color-mix(in srgb, var(--st-envoyee) 85%, var(--ink)); font-weight: 600; }
 .job-meta .fresh .ic { color: currentColor; }
 .job p { margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }

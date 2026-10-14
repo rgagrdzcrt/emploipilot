@@ -199,6 +199,21 @@ function isHiddenType(o) {
   return excludedWords().some(w => t.includes(w));
 }
 
+/** Pourquoi une offre est masquée (texte court), ou '' si elle est visible. */
+function hiddenReason(o) {
+  if (isTracked(o)) return '';
+  if (tooOld(o)) return 'publiée il y a plus de ' + MAX_OFFER_AGE_DAYS + ' j';
+  const hidden = hiddenTypes();
+  const type = JOB_TYPES.find(t => hidden.includes(t.id) && matchesType(t, o));
+  if (type) return 'type masqué « ' + type.label + ' »';
+  const t = norm(o.title || '');
+  const word = excludedWords().find(w => t.includes(w));
+  if (word) return 'mot exclu « ' + word + ' »';
+  if (isTooFar(o)) return 'trajet > ' + MAX_TRAJET_HORS_PARIS + ' min';
+  if ((profile.excluded || []).some(x => x.trim() && norm(o.company).includes(norm(x)))) return 'entreprise exclue';
+  return '';
+}
+
 function fillJobTypesForm() {
   const box = document.getElementById('jobTypes');
   if (!box) return;
@@ -230,7 +245,7 @@ function travelLabel(o) {
 const ZONES_TOUJOURS_GARDEES = ['75', '93'];
 const MAX_TRAJET_HORS_PARIS = 60;
 function isTooFar(o) {
-  if (ZONES_TOUJOURS_GARDEES.includes(o.dept) || (o.status || 'À examiner') !== 'À examiner') return false;
+  if (ZONES_TOUJOURS_GARDEES.includes(deptOf(o)) || (o.status || 'À examiner') !== 'À examiner') return false;
   const cost = travelCost(o);
   return cost < 1e6 && cost > MAX_TRAJET_HORS_PARIS;
 }
@@ -362,8 +377,9 @@ function currentOffer() {
 
 function metaLine(o) {
   const d = deptOf(o);
+  const why = hiddenReason(o);
   const when = o.date ? fmtDate(o.date) : o.updated ? 'Mise à jour le ' + fmtDate(o.updated) : 'Date à vérifier';
-  return `<span class="m-company">${esc(o.company)}</span><span>${ic('pin')}${esc(o.location || 'Lieu non précisé')}${d && d !== 'IDF' ? ' (' + esc(d) + ')' : ''}</span>${uiContract(o.contract)}${travelLabel(o) ? `<span class="travel">${ic('route')}${esc(uiTravel(o))}</span>` : ''}<span>${ic('clock')}${esc(when)}</span>`;
+  return `<span class="m-company">${esc(o.company)}</span><span>${ic('pin')}${esc(o.location || 'Lieu non précisé')}${d && d !== 'IDF' ? ' (' + esc(d) + ')' : ''}</span>${uiContract(o.contract)}${travelLabel(o) ? `<span class="travel">${ic('route')}${esc(uiTravel(o))}</span>` : ''}<span>${ic('clock')}${esc(when)}</span>${why ? `<span class="hidden-why">${ic('eyeoff')}Masquée : ${esc(why)}</span>` : ''}`;
 }
 
 function drawPilot() {

@@ -224,6 +224,12 @@ OUTSIDE_IDF_PLACES = [
 IDF_DEPTS = set(DEPT_CITIES)
 # Départements d'Île-de-France reconnus mais trop loin : leurs offres sont écartées.
 EXCLUDED_DEPTS = {"78", "91"}
+# Entreprises dont on ne veut aucune offre (comparaison sans casse ni accents).
+EXCLUDED_COMPANIES = {"gojob"}
+
+
+def is_excluded_company(company):
+    return any(name in slug(company or "") for name in EXCLUDED_COMPANIES)
 
 
 def strip_html(value):
@@ -408,7 +414,8 @@ def make_offer(title, company, location, text, url, date, source, category=None)
 
     # On exclut les stages/alternances, les métiers non recherchés, les lieux
     # hors Île-de-France et les départements exclus.
-    if contract is None or category is None or dept == "HORS" or dept in EXCLUDED_DEPTS:
+    if (contract is None or category is None or dept == "HORS" or dept in EXCLUDED_DEPTS
+            or is_excluded_company(company)):
         return None
 
     parsed_date = parse_date(date)
@@ -1503,6 +1510,8 @@ def refresh_offer(offer):
         if not tracked:
             return "hors Île-de-France"
         dept = ""
+    if is_excluded_company(offer.get("company")) and not tracked:
+        return "entreprise exclue"
     if dept in EXCLUDED_DEPTS and not tracked:
         return "département exclu (" + dept + ")"
     offer["dept"] = dept
