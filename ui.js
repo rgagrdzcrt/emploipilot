@@ -126,10 +126,8 @@ function uiClearFilter(id) {
 
 function uiRefreshCounts() {
   if (typeof offers === 'undefined') return;
-  const visible = o => !(typeof isExcluded === 'function' && isExcluded(o)) && o.status !== 'Ignorée';
   document.querySelectorAll('[data-count]').forEach(el => {
-    const cat = el.dataset.count;
-    el.textContent = offers.filter(o => visible(o) && categoryOf(o) === cat).length;
+    el.textContent = repereesOf(el.dataset.count).length;
   });
   const apps = offers.filter(o => UI_APP_COLUMNS.includes(o.status)).length;
   document.querySelectorAll('[data-nav-count="applications"]').forEach(el => { el.textContent = apps || ''; el.hidden = !apps; });

@@ -202,6 +202,14 @@ function isHiddenType(o) {
 /** Statuts retirés de « Offres repérées » (suivis dans l'onglet Candidatures). */
 const HORS_REPEREES = ['Ignorée', 'Candidature envoyée', 'Entretien', 'Refus', 'À relancer'];
 
+/** Offres repérées d'une catégorie, comptées exactement comme la liste (doublons, masquage, statuts). */
+function repereesOf(cat) {
+  let list = offers.filter(o => categoryOf(o) === cat);
+  if (document.getElementById('hideDuplicates')?.checked) list = dedupe(list);
+  if (document.getElementById('hideExcluded')?.checked) list = list.filter(o => !isExcluded(o));
+  return list.filter(o => !HORS_REPEREES.includes(o.status));
+}
+
 /** Pourquoi une offre est masquée (texte court), ou '' si elle est visible. */
 function hiddenReason(o) {
   if (isTracked(o)) return '';
