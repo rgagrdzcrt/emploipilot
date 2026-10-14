@@ -226,6 +226,15 @@ function travelLabel(o) {
   return '';
 }
 
+/** Hors Paris et 93, on masque les nouvelles offres à plus de 60 min (ces deux-là sont toujours gardés). */
+const ZONES_TOUJOURS_GARDEES = ['75', '93'];
+const MAX_TRAJET_HORS_PARIS = 60;
+function isTooFar(o) {
+  if (ZONES_TOUJOURS_GARDEES.includes(o.dept) || (o.status || 'À examiner') !== 'À examiner') return false;
+  const cost = travelCost(o);
+  return cost < 1e6 && cost > MAX_TRAJET_HORS_PARIS;
+}
+
 /** Pour trier : minutes si connues, sinon distance convertie (≈ 3 min/km). */
 function travelCost(o) {
   if (typeof o.trajetMin === 'number') return o.trajetMin;
