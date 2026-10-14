@@ -222,6 +222,8 @@ OUTSIDE_IDF_PLACES = [
     "bordeaux", "toulouse", "nantes", "nice", "strasbourg", "montpellier", "rennes",
 ]
 IDF_DEPTS = set(DEPT_CITIES)
+# Départements d'Île-de-France reconnus mais trop loin : leurs offres sont écartées.
+EXCLUDED_DEPTS = {"78", "91"}
 
 
 def strip_html(value):
@@ -404,9 +406,9 @@ def make_offer(title, company, location, text, url, date, source, category=None)
     category = classify_category(title_text)  # la catégorie de la requête est indicative
     dept = detect_dept(location) or detect_dept(title_text, postal=False)
 
-    # On exclut les stages/alternances, les métiers non recherchés et les lieux
-    # hors Île-de-France.
-    if contract is None or category is None or dept == "HORS":
+    # On exclut les stages/alternances, les métiers non recherchés, les lieux
+    # hors Île-de-France et les départements exclus.
+    if contract is None or category is None or dept == "HORS" or dept in EXCLUDED_DEPTS:
         return None
 
     parsed_date = parse_date(date)
@@ -1501,6 +1503,8 @@ def refresh_offer(offer):
         if not tracked:
             return "hors Île-de-France"
         dept = ""
+    if dept in EXCLUDED_DEPTS and not tracked:
+        return "département exclu (" + dept + ")"
     offer["dept"] = dept
 
     category = classify_category(title)
