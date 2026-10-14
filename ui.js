@@ -57,6 +57,8 @@ function uiDays(o) {
 function uiAge(o) {
   const days = uiDays(o);
   if (days === null) return 'Date à vérifier';
+  // Sans date de publication : on affiche depuis quand ZCRT connaît l'annonce.
+  if (!o.date) return days === 0 ? "Repérée aujourd'hui" : days === 1 ? 'Repérée hier' : 'Repérée il y a ' + days + ' j';
   if (days === 0) return "Aujourd'hui";
   if (days === 1) return 'Hier';
   return 'Il y a ' + days + ' j';

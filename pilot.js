@@ -123,6 +123,29 @@ function fillTemplate(o) {
     .replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
+/** Message de relance pour une candidature restée sans réponse. */
+function relanceText(o) {
+  const i = infosOf();
+  const company = (!o.company || /à vérifier/i.test(o.company)) ? '' : o.company;
+  let poste = cleanTitle(o.title);
+  if (poste && !/^[A-ZÀ-Ý]{2}/.test(poste)) poste = poste.charAt(0).toLowerCase() + poste.slice(1);
+  const de = /^[aeiouyhàâéèêëîïôûü]/i.test(poste) ? "d'" : 'de ';
+  const quand = o.appliedDate
+    ? 'Le ' + new Date(o.appliedDate + 'T12:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' }) + ', je'
+    : "Il y a quelques jours, j'";
+  const signature = [[i.prenom, i.nom].filter(Boolean).join(' '), i.telephone, i.email].filter(Boolean).join(' — ');
+  return `Objet : Relance – candidature au poste ${de}${poste}
+
+Bonjour,
+
+${quand}${quand.endsWith("j'") ? 'ai' : ' vous ai'} envoyé ma candidature pour le poste ${de}${poste}${company ? ' chez ' + company : ''}. Je me permets de revenir vers vous, car ce poste m'intéresse toujours beaucoup.
+
+Je suis disponible ${i.disponibilite || 'rapidement'} et je peux venir en entretien quand cela vous convient.
+
+Bien cordialement,
+${signature}`.trim();
+}
+
 /* ---------- Score de priorité ---------- */
 
 const ZONE_ORDERS = {
@@ -329,7 +352,8 @@ let pilot = null; // { mode: 'triage' | 'queue', ids, i, undo }
 function pilotList(mode) {
   const wanted = mode === 'triage' ? 'À examiner' : 'À postuler';
   const hideExcluded = document.getElementById('hideExcluded')?.checked;
-  return offers
+  // Mêmes doublons retirés que dans la liste des offres.
+  return (document.getElementById('hideDuplicates')?.checked ? dedupe(offers) : offers)
     .filter(o => (o.status || 'À examiner') === wanted && !(hideExcluded && isExcluded(o)))
     .sort((a, b) => score(b) - score(a));
 }
@@ -428,6 +452,19 @@ function drawPilot() {
   const chips = INFO_FIELDS.filter(([k]) => infos[k])
     .map(([k, label]) => `<button class="chip" data-copy="${k}" title="${esc(infos[k])}">${esc(label)}</button>`).join('');
   const cv = cvOf(cat);
+  if (o.status === 'À relancer') {
+    card.innerHTML = `${head}
+    <div class="pilot-hint">Sans réponse depuis ${RELANCE_DAYS} jours ou plus : envoie ce message par e-mail, sur le site de l’annonce ou appelle le recruteur.</div>
+    <textarea id="pilotLetter" rows="12" aria-label="Message de relance">${esc(relanceText(o))}</textarea>
+    <div class="pilot-chips"><span class="small muted">Copier :</span> <button class="chip" data-copy="__letter">Message de relance</button> ${chips}</div>
+    <div class="pilot-actions">
+      <button data-act="go"><kbd>Entrée</kbd> Ouvrir l’annonce + copier le message</button>
+      <button class="ok" data-act="relanced"><kbd>Espace</kbd> Relance envoyée</button>
+      <button class="ghost" data-act="skip"><kbd>→</kbd> Plus tard</button>
+      <button class="ghost" data-act="undo" ${pilot.undo.length ? '' : 'disabled'}><kbd>←</kbd> Annuler</button>
+    </div>`;
+    return;
+  }
   card.innerHTML = `${head}
     <div class="pilot-hint">CV à joindre : <b>${cv ? esc(cv) : 'à définir dans Critères & modèles'}</b></div>
     <textarea id="pilotLetter" rows="12" aria-label="Lettre de motivation">${esc(fillTemplate(o))}</textarea>
@@ -495,14 +532,17 @@ function pilotAct(action) {
     return;
   }
   if (action === 'skip') { pilot.i++; return drawPilot(); }
-  const status = { apply: 'À postuler', ignore: 'Ignorée', sent: 'Candidature envoyée' }[action];
+  const status = { apply: 'À postuler', ignore: 'Ignorée', sent: 'Candidature envoyée', relanced: 'Candidature envoyée' }[action];
   if (!status) return;
   pilot.undo.push({ id: o.id, status: o.status, appliedDate: o.appliedDate, i: pilot.i });
   setTrack(o, status);
+  if (action === 'relanced') { o.relanceDate = today(); toast('Relance notée'); }
   pilot.i++;
   save();
   drawPilot();
 }
+
+function isRelanceOpen() { const o = currentOffer(); return !!o && o.status === 'À relancer'; }
 
 function pilotKey(e) {
   if (!pilot) return;
@@ -515,7 +555,7 @@ function pilotKey(e) {
   const k = e.key.toLowerCase();
   const map = pilot.mode === 'triage'
     ? { a: 'apply', x: 'ignore', o: 'open', arrowright: 'skip', arrowleft: 'undo' }
-    : { enter: 'go', ' ': 'sent', o: 'open', x: 'ignore', arrowright: 'skip', arrowleft: 'undo' };
+    : { enter: 'go', ' ': isRelanceOpen() ? 'relanced' : 'sent', o: 'open', x: 'ignore', arrowright: 'skip', arrowleft: 'undo' };
   if (map[k]) { e.preventDefault(); pilotAct(map[k]); }
 }
 
@@ -687,7 +727,7 @@ function safeJson(text) {
   try { return JSON.parse(text || '{}') || {}; } catch (e) { return {}; }
 }
 
-const TRACK_FIELDS = ['status', 'appliedDate', 'notes', 'notesEdited', 'trackedAt', 'relanceAuto'];
+const TRACK_FIELDS = ['status', 'appliedDate', 'notes', 'notesEdited', 'trackedAt', 'relanceAuto', 'relanceDate'];
 
 /** Applique l'état distant : pour chaque offre, la modification la plus récente gagne. */
 function applySync(state) {

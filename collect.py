@@ -2023,9 +2023,36 @@ def alert_priority(offer):
     return score + {"CDI": 15, "CDD": 10, "Intérim": 8}.get(offer.get("contract"), 4)
 
 
+# Mêmes règles que le masquage du site (pilot.js) : types de postes masqués par
+# défaut et trajet de plus de 60 min hors Paris et 93. L'alerte ne compte que
+# les offres qui resteront visibles.
+ALERT_HIDDEN_TITLE_RE = re.compile(
+    r"luxe|luxury|bijou|joaill|horlog|maroquin"
+    r"|bouch|charcut|poisson|fromag|traiteur|cr[eè]merie|boulangerie|p[aâ]tiss|viennois|coupe"
+    r"|cosm[eé]t|parfum|beaut[eé]|animal|automobile|v[eé]hicule|pneu|auto"
+    r"|cariste|caces|chariot|week.?end|samedi|dimanche|[eé]tudiant|caiss"
+    r"|directeur|directrice|direction|head of",
+    re.I,
+)
+ALERT_MAX_TRAJET = 60
+ALERT_ZONES_TOUJOURS = {"75", "93"}
+
+
+def alert_visible(offer):
+    if ALERT_HIDDEN_TITLE_RE.search(offer.get("title") or ""):
+        return False
+    if offer.get("dept") in ALERT_ZONES_TOUJOURS:
+        return True
+    minutes = offer.get("trajetMin")
+    if not isinstance(minutes, (int, float)) and isinstance(offer.get("km"), (int, float)):
+        minutes = offer["km"] * 3
+    return not (isinstance(minutes, (int, float)) and minutes > ALERT_MAX_TRAJET)
+
+
 def save_pending_alert(new_items):
     """Prépare l'alerte des meilleures nouvelles offres ; elle est envoyée par
     `python collect.py --alerte` une fois le site mis à jour."""
+    new_items = [o for o in new_items if alert_visible(o)]
     if not new_items:
         ALERT_FILE.unlink(missing_ok=True)
         return
