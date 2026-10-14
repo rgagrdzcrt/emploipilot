@@ -361,7 +361,10 @@ function pilotList(mode) {
 function updatePilotBar() {
   const t = document.getElementById('triageCount'), q = document.getElementById('queueCount');
   if (t) t.textContent = pilotList('triage').length;
-  if (q) q.textContent = pilotList('queue').length;
+  const queued = pilotList('queue').length;
+  if (q) q.textContent = queued;
+  const nq = document.getElementById('navQueueCount');
+  if (nq) { nq.textContent = queued || ''; nq.hidden = !queued; }
   updateGoal();
 }
 
@@ -949,6 +952,7 @@ function pilotInit() {
   document.getElementById('themeToggle').onclick = toggleTheme;
   document.getElementById('triageBtn').onclick = () => openPilot('triage');
   document.getElementById('queueBtn').onclick = () => openPilot('queue');
+  document.getElementById('navQueue').onclick = () => openPilot('queue');
 
   fillTemplateForm();
   document.getElementById('saveTemplates').onclick = saveTemplates;

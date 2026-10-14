@@ -510,7 +510,7 @@ button.secondary kbd, button.ghost kbd { background: var(--surface-3); color: va
     padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); border-top: 1px solid rgba(255, 255, 255, .06);
   }
   .brand, .side-note { display: none; }
-  .nav { grid-template-columns: repeat(4, minmax(0, 1fr)); width: 100%; gap: 4px; }
+  .nav { grid-template-columns: repeat(5, minmax(0, 1fr)); width: 100%; gap: 4px; }
   .nav button { position: relative; flex-direction: column; justify-content: center; gap: 3px; min-height: 52px; padding: 6px 4px; font-size: 11px; text-align: center; }
   .nav button .ic { width: 20px; height: 20px; }
   .nav button.active { background: transparent; }
