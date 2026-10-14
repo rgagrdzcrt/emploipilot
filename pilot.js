@@ -336,7 +336,8 @@ function autoRelances() {
   const limit = Date.now() - RELANCE_DAYS * 864e5;
   let n = 0;
   offers.forEach(o => {
-    if (o.status === 'Candidature envoyée' && !o.relanceAuto && o.appliedDate && Date.parse(o.appliedDate) <= limit) {
+    // Pas de relance quand l'entreprise a déjà répondu par e-mail.
+    if (o.status === 'Candidature envoyée' && !o.relanceAuto && o.mailKind !== 'reponse' && o.appliedDate && Date.parse(o.appliedDate) <= limit) {
       setTrack(o, 'À relancer');
       o.relanceAuto = true;
       n++;
@@ -730,7 +731,9 @@ function safeJson(text) {
   try { return JSON.parse(text || '{}') || {}; } catch (e) { return {}; }
 }
 
-const TRACK_FIELDS = ['status', 'appliedDate', 'notes', 'notesEdited', 'trackedAt', 'relanceAuto', 'relanceDate'];
+// Les champs mail* sont écrits par mail.py (tri Gmail) directement dans le gist.
+const TRACK_FIELDS = ['status', 'appliedDate', 'notes', 'notesEdited', 'trackedAt', 'relanceAuto', 'relanceDate',
+  'mailKind', 'mailAt', 'mailDate', 'mailSubject', 'mailFrom'];
 
 /** Applique l'état distant : pour chaque offre, la modification la plus récente gagne. */
 function applySync(state) {
