@@ -363,8 +363,8 @@ function updatePilotBar() {
   if (t) t.textContent = pilotList('triage').length;
   const queued = pilotList('queue').length;
   if (q) q.textContent = queued;
-  const nq = document.getElementById('navQueueCount');
-  if (nq) { nq.textContent = queued || ''; nq.hidden = !queued; }
+  document.querySelectorAll('[data-nav-count="queue"]').forEach(el => { el.textContent = queued || ''; el.hidden = !queued; });
+  if (typeof uiRenderQueue === 'function') uiRenderQueue();
   updateGoal();
 }
 
@@ -952,7 +952,7 @@ function pilotInit() {
   document.getElementById('themeToggle').onclick = toggleTheme;
   document.getElementById('triageBtn').onclick = () => openPilot('triage');
   document.getElementById('queueBtn').onclick = () => openPilot('queue');
-  document.getElementById('navQueue').onclick = () => openPilot('queue');
+  document.getElementById('queueStart').onclick = () => openPilot('queue');
 
   fillTemplateForm();
   document.getElementById('saveTemplates').onclick = saveTemplates;

@@ -187,6 +187,20 @@ function uiRenderApps() {
   }
 }
 
+/* ---------- À postuler : liste des offres mises de côté ---------- */
+
+function uiRenderQueue() {
+  const rows = document.getElementById('queueRows');
+  if (!rows || typeof pilotList !== 'function') return;
+  const list = pilotList('queue');
+  const summary = document.getElementById('queueSummary');
+  if (summary) summary.textContent = list.length ? list.length + ' offre(s) à postuler, les mieux placées en premier.' : '';
+  const start = document.getElementById('queueStart');
+  if (start) start.disabled = !list.length;
+  rows.innerHTML = list.length ? list.map(o => `<tr><td data-label="Poste"><div class="cell-job">${uiLogo(o.company)}<div><b>${uiEsc(o.title)}</b><span class="muted small">${uiEsc(o.company)}${o.location ? ' · ' + uiEsc(o.location) : ''}</span></div></div></td><td data-label="Publiée">${uiEsc(uiAge(o))}</td><td data-label="Statut">${uiStatusSelect(o, 'compact')}</td><td><div class="row-actions"><button class="secondary small-btn" onclick="prep('${o.id}')">Préparer</button>${o.url ? `<a class="icon-link" href="${uiEsc(o.url)}" target="_blank" rel="noopener" title="Ouvrir l'annonce" aria-label="Ouvrir l'annonce">${ic('external')}</a>` : ''}</div></td></tr>`).join('')
+    : `<tr class="empty-row"><td colspan="4">${uiEmpty('Rien à postuler pour le moment', 'Passe une offre en « À postuler » (touche A pendant le tri) pour la retrouver ici.')}</td></tr>`;
+}
+
 /* ---------- Initialisation ---------- */
 
 function uiInit() {
