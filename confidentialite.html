@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZCRT — Confidentialité</title>
+<link rel="icon" type="image/png" href="icons/favicon-64.png">
+<link rel="stylesheet" href="theme.css">
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('zcrt_theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) { /* stockage indisponible */ }
+})();
+</script>
+<style>
+  body { background: var(--bg); color: var(--ink); }
+  main { max-width: 720px; margin: 0 auto; padding: 32px 16px 64px; line-height: 1.6; }
+  h1 { margin-bottom: 8px; }
+  h2 { margin-top: 28px; font-size: 1.15rem; }
+  ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Règles de confidentialité</h1>
+  <p class="muted">ZCRT est un outil personnel de recherche d'emploi, utilisé par une seule personne : son propriétaire.</p>
+
+  <h2>Accès à Gmail</h2>
+  <p>Le tri des e-mails (<code>mail.py</code>) se connecte au compte Gmail de son propriétaire avec le droit <code>gmail.modify</code>, uniquement pour :</p>
+  <ul>
+    <li>lire les e-mails récents afin de repérer les réponses des entreprises aux candidatures ;</li>
+    <li>leur ajouter des libellés « ZCRT/… » et archiver les alertes d'offres et lettres d'information.</li>
+  </ul>
+  <p>Aucun e-mail n'est supprimé, envoyé ni transmis à un tiers.</p>
+
+  <h2>Données conservées</h2>
+  <p>Seuls la nature de la réponse (entretien, refus, réponse, accusé de réception), sa date, son objet et le nom de l'expéditeur sont inscrits dans le suivi des candidatures, stocké dans un gist GitHub secret appartenant au propriétaire. Le contenu des e-mails n'est pas conservé. Aucune donnée n'est vendue, partagée ni utilisée à des fins publicitaires.</p>
+
+  <h2>Révocation</h2>
+  <p>L'accès peut être retiré à tout moment depuis <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</p>
+
+  <p><a href="./">← Retour à ZCRT</a></p>
+</main>
+</body>
+</html>
