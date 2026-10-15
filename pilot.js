@@ -446,6 +446,7 @@ function drawPilot() {
   if (pilot.mode === 'triage') {
     card.innerHTML = `${head}
       <p class="pilot-notes">${esc((o.notes || 'Pas de description.').slice(0, 600))}</p>
+      <p class="swipe-hint">Glisse la carte : <b>→ À postuler</b> · <b>Ignorer ←</b></p>
       <div class="pilot-actions">
         <button data-act="apply"><kbd>A</kbd> À postuler</button>
         <button class="secondary" data-act="ignore"><kbd>X</kbd> Ignorer</button>
@@ -513,6 +514,67 @@ function legacyCopy(text) {
 function letterText() {
   const area = document.getElementById('pilotLetter');
   return area ? area.value : '';
+}
+
+/* ---------- Tri au doigt : glisser à droite = À postuler, à gauche = Ignorer ---------- */
+
+function initSwipe() {
+  const card = document.getElementById('pilotCard');
+  let start = null, dx = 0;
+
+  const reset = () => {
+    card.style.transform = '';
+    card.style.opacity = '';
+    delete card.dataset.swipe;
+  };
+
+  card.addEventListener('pointerdown', e => {
+    // Au doigt (ou au stylet) seulement : à la souris, les raccourcis clavier suffisent.
+    if (pilot.mode !== 'triage' || e.pointerType === 'mouse' || !currentOffer()
+        || e.target.closest('button, a, textarea, input, select')) return;
+    start = { x: e.clientX, y: e.clientY, id: e.pointerId, horizontal: null };
+    dx = 0;
+  });
+
+  card.addEventListener('pointermove', e => {
+    if (!start || e.pointerId !== start.id) return;
+    const mx = e.clientX - start.x, my = e.clientY - start.y;
+    if (start.horizontal === null) {
+      if (Math.abs(mx) < 10 && Math.abs(my) < 10) return;
+      start.horizontal = Math.abs(mx) > Math.abs(my);
+      if (!start.horizontal) { start = null; return; } // geste vertical : on laisse défiler
+      try { card.setPointerCapture(e.pointerId); } catch (err) { /* capture refusée : le geste marche quand même */ }
+      card.style.transition = 'none';
+    }
+    dx = mx;
+    card.style.transform = `translateX(${dx}px) rotate(${dx / 18}deg)`;
+    if (dx > 50) card.dataset.swipe = 'apply';
+    else if (dx < -50) card.dataset.swipe = 'ignore';
+    else delete card.dataset.swipe;
+  });
+
+  const end = e => {
+    if (!start || e.pointerId !== start.id) return;
+    const wasSwipe = start.horizontal;
+    start = null;
+    if (!wasSwipe) return;
+    const act = Math.abs(dx) > Math.min(110, card.offsetWidth * 0.28) ? (dx > 0 ? 'apply' : 'ignore') : null;
+    card.style.transition = 'transform .22s ease, opacity .22s ease';
+    if (!act) { reset(); return; }
+    // La carte s'envole, puis la suivante arrive.
+    card.style.transform = `translateX(${dx > 0 ? 120 : -120}vw) rotate(${dx > 0 ? 24 : -24}deg)`;
+    card.style.opacity = '0';
+    setTimeout(() => {
+      card.style.transition = 'none';
+      reset();
+      pilotAct(act);
+      card.classList.remove('swipe-in');
+      void card.offsetWidth; // relance l'animation d'arrivée
+      card.classList.add('swipe-in');
+    }, 220);
+  };
+  card.addEventListener('pointerup', end);
+  card.addEventListener('pointercancel', end);
 }
 
 function pilotAct(action) {
@@ -964,6 +1026,7 @@ function pilotInit() {
     }
   });
   document.addEventListener('keydown', pilotKey);
+  initSwipe();
   applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
   showMotto();
   document.getElementById('themeToggle').onclick = toggleTheme;
