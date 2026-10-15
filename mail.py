@@ -261,6 +261,34 @@ def http_json(request, timeout=35):
         return json.loads(raw.decode("utf-8")) if raw else {}
 
 
+class ApiError(Exception):
+    """Refus d'une API, avec l'étape et la raison donnée par le service (jamais le contenu d'un e-mail)."""
+
+    def __init__(self, step, exc):
+        self.code = exc.code
+        reason = ""
+        try:
+            err = json.loads(exc.read().decode("utf-8"))
+            err = err.get("error", err) if isinstance(err, dict) else err
+            if isinstance(err, dict):
+                reason = err.get("message", "")
+                details = err.get("errors") or []
+                if details and details[0].get("reason"):
+                    reason += f" [{details[0]['reason']}]"
+            else:
+                reason = str(err)
+        except Exception:
+            pass
+        super().__init__(f"{step} : HTTP {exc.code}" + (f" – {reason[:200]}" if reason else ""))
+
+
+def api_json(request, step):
+    try:
+        return http_json(request)
+    except HTTPError as exc:
+        raise ApiError(step, exc) from None
+
+
 def google_access_token():
     client_id = os.environ.get("GMAIL_CLIENT_ID", "").strip()
     client_secret = os.environ.get("GMAIL_CLIENT_SECRET", "").strip()
@@ -298,16 +326,25 @@ class Gmail:
         self.token = token
 
     def call(self, path, body=None, method=None):
-        request = Request(
-            GMAIL + path,
-            data=json.dumps(body).encode("utf-8") if body is not None else None,
-            headers={
-                "Authorization": "Bearer " + self.token, "User-Agent": UA,
-                **({"Content-Type": "application/json"} if body is not None else {}),
-            },
-            method=method or ("POST" if body is not None else "GET"),
-        )
-        return http_json(request)
+        method = method or ("POST" if body is not None else "GET")
+        step = "Gmail " + method + " " + re.sub(r"/[0-9a-f]{10,}", "/…", path.split("?")[0])
+        for attempt in range(4):
+            request = Request(
+                GMAIL + path,
+                data=json.dumps(body).encode("utf-8") if body is not None else None,
+                headers={
+                    "Authorization": "Bearer " + self.token, "User-Agent": UA,
+                    **({"Content-Type": "application/json"} if body is not None else {}),
+                },
+                method=method,
+            )
+            try:
+                return api_json(request, step)
+            except ApiError as exc:
+                # Gmail signale ses limites de débit par un 429 ou un 403 « rateLimitExceeded » : on patiente.
+                if attempt == 3 or not (exc.code == 429 or "ateLimit" in str(exc)):
+                    raise
+                time.sleep(2 ** attempt * 2)
 
     def message_ids(self, query):
         ids, page = [], None
@@ -392,7 +429,7 @@ def gist_call(path, body=None):
         },
         method="PATCH" if body is not None else "GET",
     )
-    return http_json(request)
+    return api_json(request, "Gist " + ("PATCH" if body is not None else "GET") + " " + path.split("?")[0].split("/")[1])
 
 
 def find_gist():
@@ -577,6 +614,8 @@ def main():
 if __name__ == "__main__":
     try:
         main()
+    except ApiError as exc:
+        sys.exit(f"Tri Gmail interrompu ({exc}).")
     except (HTTPError, URLError, TimeoutError) as exc:
         code = getattr(exc, "code", "")
         sys.exit(f"Tri Gmail interrompu ({type(exc).__name__} {code}).")
