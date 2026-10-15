@@ -81,7 +81,7 @@ function uiDay(iso) {
 }
 
 /** Dernier e-mail de l'entreprise, trouvé par le tri Gmail (mail.py). */
-const UI_MAIL_KINDS = { entretien: 'Entretien', refus: 'Refus', reponse: 'Réponse', accuse: 'Accusé de réception' };
+const UI_MAIL_KINDS = { entretien: 'Entretien', refus: 'Refus', reponse: 'Réponse', action: 'Action demandée', accuse: 'Accusé de réception' };
 function uiMail(o) {
   if (!o.mailKind || !UI_MAIL_KINDS[o.mailKind]) return '';
   const title = [o.mailFrom, o.mailSubject].filter(Boolean).join(' — ');

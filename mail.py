@@ -49,6 +49,7 @@ LABELS = {
     "entretien": "ZCRT/Entretien",
     "refus": "ZCRT/Refus",
     "reponse": "ZCRT/Réponse",
+    "action": "ZCRT/À faire",
     "accuse": "ZCRT/Accusé",
     "verifier": "ZCRT/À vérifier",
     "bruit": "ZCRT/Bruit",
@@ -56,7 +57,8 @@ LABELS = {
 # Rangés hors de la boîte de réception (toujours retrouvables par leur libellé).
 ARCHIVED = {"accuse", "bruit"}
 
-KIND_NAMES = {"entretien": "Entretien", "refus": "Refus", "reponse": "Réponse", "accuse": "Accusé de réception"}
+KIND_NAMES = {"entretien": "Entretien", "refus": "Refus", "reponse": "Réponse",
+              "action": "Action demandée", "accuse": "Accusé de réception"}
 
 
 # ---------------------------------------------------------------- Texte
@@ -89,7 +91,7 @@ REFUS = [
 
 ENTRETIEN = [
     r"\bvous (rencontrer|recevoir)\b",
-    r"\b(convier|convions|inviter|invitons|convoquer|convoquons)\b.{0,50}\b(entretien|rencontre|rendez vous|echange|job ?dating|session)",
+    r"\b(convier|convions|invite|inviter|invitons|convoquer|convoquons)\b.{0,50}\b(entretien|rencontre|rendez vous|echange|job ?dating|session)",
     r"\bconvocation\b",
     r"\b(proposer|planifier|fixer|organiser|programmer|caler|confirmer) (un |votre |notre |l )?(entretien|rendez vous|rdv|echange|appel)",
     r"\bvos disponibilites\b|\bdisponible pour (un )?(entretien|echange|appel)",
@@ -98,20 +100,48 @@ ENTRETIEN = [
     r"\bcreneau\b|\bcreneaux\b",
     r"\binvitation (a|pour) (un |votre |notre )?(entretien|echange|rencontre)",
     r"\b(appel|echange|entretien) telephonique\b",
-    r"\bprise de poste\b|\bperiode d essai\b|\bpromesse d embauche\b",
+    r"\bpromesse d embauche\b",
 ]
 
 # Phrases conditionnelles : « si votre profil retient notre attention, nous vous proposerons un entretien ».
 CONDITIONNEL = r"\bsi (votre|ta) (profil|candidature)\b|\bsi tel est le cas\b|\ble cas echeant\b|\bsi nous\b|\bdans le cas ou\b"
 
+# Démarche demandée au candidat pour que la candidature aboutisse.
+ACTION = [
+    r"\b(finalis|complet|confirm|valid)(ez|er) (votre|ta) candidature",
+    r"\bn oubliez pas de (completer|repondre|finaliser|confirmer|valider)",
+    r"\brepondre (aux|a quelques|a ces|a nos) questions",
+    r"\b(confirm|valid)(ez|er) (votre|ton|ta) (adresse|compte|e ?mail)",
+    r"\bverification de (votre|ton) compte",
+    r"\benregistr(ant|ez|er) (votre|ta) (reponse )?video",
+]
+
 ACCUSE = [
-    r"\b(bien|avons) recu (votre|ta) candidature",
-    r"\baccuse de reception\b",
-    r"\bmerci (pour|de) (votre|ta) candidature",
-    r"\bcandidature a (bien )?ete (recue|enregistree|transmise|prise en compte)",
+    r"\brecu (votre|ta) (dossier de )?candidature",
+    r"\bbien recu\b.{0,80}\bcandidature",
+    r"\baccus\w* (de |bonne )?reception\b",
+    r"\bmerci (pour|de) (votre|ta) (candidature|interet)",
+    r"\bmerci d avoir (postule|candidate)",
+    r"\bcandidature (a|est) (bien )?(ete )?(recue|enregistree|transmise|prise en compte|envoyee|arrivee|receptionnee|livree)",
+    r"\bbien (receptionne|arrivee)",
+    r"\breponse (est livree|a ete envoyee)",
     r"\bnous (reviendrons|revenons) vers (vous|toi)",
     r"\bconfirm\w* (la )?(bonne )?reception",
-    r"\bremercions (pour|de) (votre|ta) candidature|\bremercions de l interet\b",
+    r"\bconfirmation (de (votre |ta )?candidature|reponse a offre)",
+    r"\bremercions (pour|de) (votre|ta) candidature|\bremercions (de|pour) l interet\b",
+    r"\bvous venez de (postuler|candidater|finaliser)",
+    r"\bavez (postule|candidate)\b",
+    r"\bthank(s| you) for (applying|your application)|\bapplication (received|was submitted)",
+    r"\bvotre demande a ete recue",
+]
+
+# Création de compte candidat ou d'inscription : aucune information sur la candidature.
+INSCRIPTION = [
+    r"\bconfirmation de (votre |ton )?inscription",
+    r"\binscription\b.{0,80}\b(enregistree|confirmee)",
+    r"\bcompte a (bien )?ete cree|\bnouveau compte\b",
+    r"\bprofil a ete cree",
+    r"\bbienvenue (sur|dans l espace)",
 ]
 
 # E-mail qui parle d'une candidature (sert à écarter les correspondances fortuites dans le texte).
@@ -129,6 +159,7 @@ NOISE_DOMAINS = (
     "meteojob.com", "monster.fr", "monster.com", "welcometothejungle.com", "francetravail.fr",
     "pole-emploi.fr", "glassdoor.com", "glassdoor.fr", "adzuna.fr", "jobteaser.com", "staffme.fr",
     "qapa.fr", "studentjob.fr", "regionsjob.com", "cadremploi.fr", "keljob.com", "talent.com",
+    "michaelpage.fr", "distrijob.fr", "jobtransport.com", "jobleads.com", "jobs2web.com",
 )
 
 # Plateformes de recrutement : leurs e-mails concernent une candidature.
@@ -138,6 +169,8 @@ ATS_DOMAINS = (
     "successfactors.eu", "jobaffinity.fr", "flatchr.io", "talent-soft.com", "talentsoft.com",
     "cegid.com", "beetween.com", "recruitee.com", "welcomekit.co", "digitalrecruiters.com",
     "icims.com", "softy.pro", "werecruit.io", "inrecruiting.com", "join.com", "ashbyhq.com",
+    "talentview.io", "recruitmail.com", "workablemail.com", "taleez.com", "recruitee-mailbox.com",
+    "altays-progiciels.com", "mydjob.fr",
 )
 
 STOP_WORDS = {
@@ -173,7 +206,8 @@ def domain_in(domain, domains):
 # ---------------------------------------------------------------- Classement
 
 def detect_kind(subject, body):
-    """Nature de l'e-mail : refus, entretien, accuse ou reponse (par ordre de priorité)."""
+    """Nature de l'e-mail, par ordre de priorité :
+    refus, entretien, action, accuse, inscription ou reponse."""
     text = norm(subject) + " . " + norm(body)
     if has(REFUS, text):
         return "refus"
@@ -182,8 +216,12 @@ def detect_kind(subject, body):
     firm = " . ".join(s for s in map(norm, sentences) if not re.search(CONDITIONNEL, s))
     if has(ENTRETIEN, firm):
         return "entretien"
+    if has(ACTION, text):
+        return "action"
     if has(ACCUSE, text):
         return "accuse"
+    if has(INSCRIPTION, text):
+        return "inscription"
     return "reponse"
 
 
@@ -233,23 +271,37 @@ def classify(mail, applications):
 
     kind = detect_kind(mail["subject"], mail["body"][:6000])
     app, ambiguous = match_application(mail, applications)
+    ats = domain_in(domain, ATS_DOMAINS)
 
-    noisy = (
-        mail["unsubscribe"]
-        and (domain_in(domain, NOISE_DOMAINS)
-             or {"CATEGORY_PROMOTIONS", "CATEGORY_SOCIAL"} & set(mail["labels"])
-             or has(ALERTE, norm(mail["subject"])))
-        and kind not in ("refus", "entretien")
+    # Envoi de masse d'un site d'emploi ou d'une enseigne (alertes, publicités, conseils).
+    # Les adresses « reply. » des sites d'emploi relaient au contraire un vrai recruteur.
+    job_board = domain_in(domain, NOISE_DOMAINS) and not domain.startswith("reply.")
+    marketing = (
+        job_board
+        or (mail["unsubscribe"]
+            and ({"CATEGORY_PROMOTIONS", "CATEGORY_SOCIAL"} & set(mail["labels"])
+                 or has(ALERTE, norm(mail["subject"]))))
     )
 
-    # Une publicité de l'enseigne (« reponse » + désinscription) n'est pas une réponse à la candidature.
-    if app and (mail["related"] or kind != "reponse") and not (noisy and kind == "reponse"):
-        return {"kind": kind, "label": kind, "app": app}
+    bruit = {"kind": "bruit", "label": "bruit", "app": None}
+    if kind == "inscription":
+        return bruit
 
-    if noisy and not ((app or ambiguous) and mail["related"]):
-        return {"kind": "bruit", "label": "bruit", "app": None}
+    if app:
+        if marketing and kind == "reponse":
+            return bruit
+        if mail["related"] or kind != "reponse":
+            return {"kind": kind, "label": kind, "app": app}
 
-    if app or ambiguous or (mail["related"] and (kind != "reponse" or domain_in(domain, ATS_DOMAINS))):
+    # Sans candidature identifiée : la nature de l'e-mail suffit à le ranger,
+    # sans toucher au suivi des candidatures.
+    if marketing and kind not in ("refus", "entretien"):
+        return bruit
+    if kind == "accuse":
+        return {"kind": kind, "label": "accuse", "app": None}
+    if kind in ("refus", "entretien", "action") and (mail["related"] or ats):
+        return {"kind": kind, "label": kind, "app": None}
+    if app or ambiguous or (mail["related"] and ats):
         return {"kind": kind, "label": "verifier", "app": None}
 
     return {"kind": None, "label": None, "app": None}
@@ -587,6 +639,10 @@ def main():
     alerts, urgent, changed = [], False, False
     for mail, d in decisions:
         if not d["app"]:
+            # Entretien ou démarche demandée sans candidature suivie : signalé quand même.
+            if d["label"] in ("entretien", "action"):
+                alerts.append(f"• {KIND_NAMES[d['kind']]} — {mail['from_name'][:60]} (candidature non suivie)")
+                urgent = urgent or d["kind"] == "entretien"
             continue
         entry = entries.get(d["app"]["id"])
         if not entry:
@@ -594,7 +650,7 @@ def main():
         before = entry.get("mailAt")
         new_status = apply_to_entry(entry, mail, d["kind"], now_ms)
         changed = changed or entry.get("mailAt") != before
-        if d["kind"] in ("entretien", "refus", "reponse") and entry.get("mailAt") == mail["at"]:
+        if d["kind"] in ("entretien", "refus", "reponse", "action") and entry.get("mailAt") == mail["at"]:
             alerts.append(f"• {KIND_NAMES[d['kind']]} — {entry.get('company')} ({entry.get('title')})")
             urgent = urgent or d["kind"] == "entretien"
         if new_status:

@@ -433,6 +433,7 @@ tbody tr:last-child td { border-bottom: 0; }
 .mail-entretien, .mail-entretien .ic { color: var(--st-entretien); font-weight: 600; }
 .mail-refus, .mail-refus .ic { color: var(--st-refus); }
 .mail-reponse, .mail-reponse .ic { color: var(--st-envoyee); font-weight: 600; }
+.mail-action, .mail-action .ic { color: var(--st-relancer); font-weight: 600; }
 .kcard-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; }
 .kcard-actions .small-btn { flex: 1; }
 .kcard-actions .status-select { flex: 1 1 100%; width: 100%; min-width: 0; }
