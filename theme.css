@@ -524,7 +524,7 @@ button.secondary kbd, button.ghost kbd { background: var(--surface-3); color: va
     padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); border-top: 1px solid rgba(255, 255, 255, .06);
   }
   .brand, .side-note { display: none; }
-  .nav { grid-template-columns: repeat(6, minmax(0, 1fr)); width: 100%; gap: 2px; }
+  .nav { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); width: 100%; gap: 2px; }
   .nav button { position: relative; flex-direction: column; justify-content: center; gap: 3px; min-height: 52px; padding: 6px 0; font-size: 10px; text-align: center; letter-spacing: -.02em; }
   .nav button span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .nav button .ic { width: 20px; height: 20px; }
