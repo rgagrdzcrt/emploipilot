@@ -373,6 +373,14 @@ function triageRank(o, mode) {
 
 /** Ordre de l'onglet « À postuler » (et de « Lancer la file ») : priorité ou date, plus récentes d'abord. */
 function queueSort() { return stored('zcrt_queue_sort') === 'date' ? 'date' : 'score'; }
+
+/** Filtre métier de l'onglet « À postuler » (mémorisé par profil) : 'all' ou une catégorie du profil. */
+function queueCat() { const c = stored(nsKey('zcrt_queue_cat')); return CATS.includes(c) ? c : 'all'; }
+/** Offres à postuler affichées dans l'onglet, et parcourues par « Lancer la file ». */
+function queueFiltered() {
+  const c = queueCat();
+  return pilotList('queue').filter(o => c === 'all' || categoryOf(o) === c);
+}
 function offerTime(o) { return parseDate(offerDate(o))?.getTime() || 0; }
 
 function updatePilotBar() {
@@ -397,8 +405,8 @@ function afterRemoteLoad() {
   openPilot(mode);
 }
 
-function openPilot(mode) {
-  pilot = { mode, ids: pilotList(mode).map(o => o.id), i: 0, undo: [] };
+function openPilot(mode, list) {
+  pilot = { mode, ids: (list || pilotList(mode)).map(o => o.id), i: 0, undo: [] };
   document.getElementById('pilot').classList.add('open');
   document.body.style.overflow = 'hidden';
   drawPilot();
@@ -1060,7 +1068,7 @@ function pilotInit() {
   document.getElementById('themeToggle').onclick = toggleTheme;
   document.getElementById('triageBtn').onclick = () => openPilot('triage');
   document.getElementById('queueBtn').onclick = () => openPilot('queue');
-  document.getElementById('queueStart').onclick = () => openPilot('queue');
+  document.getElementById('queueStart').onclick = () => openPilot('queue', queueFiltered());
 
   fillTemplateForm();
   document.getElementById('saveTemplates').onclick = saveTemplates;

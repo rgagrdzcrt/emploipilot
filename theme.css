@@ -633,6 +633,9 @@ button.secondary kbd, button.ghost kbd { background: var(--surface-3); color: va
 .touch .chip { min-height: 36px; padding: 6px 12px; }
 .touch .status-select, .touch .filters select, .touch .sort select { min-height: 40px; }
 
+/* Onglet « À postuler » : filtres par métier au-dessus de la liste. */
+.queue-filters { margin-bottom: 14px; }
+
 /* Tri au doigt (glisser la carte) : tampons, indication, arrivée de la carte suivante. */
 .swipe-hint { display: none; margin: 10px 0 0; color: var(--muted); font-size: 13px; text-align: center; }
 .touch .swipe-hint { display: block; }

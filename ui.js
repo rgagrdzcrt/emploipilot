@@ -200,7 +200,16 @@ function uiRenderApps() {
 function uiRenderQueue() {
   const rows = document.getElementById('queueRows');
   if (!rows || typeof pilotList !== 'function') return;
-  const list = pilotList('queue');
+  const all = pilotList('queue');
+  const list = typeof queueFiltered === 'function' ? queueFiltered() : all;
+  // Filtres par métier, avec le nombre d'offres de chacun.
+  const bar = document.getElementById('queueFilters');
+  if (bar) {
+    const current = queueCat();
+    bar.hidden = !all.length;
+    bar.innerHTML = `<button class="seg${current === 'all' ? ' active' : ''}" data-queue-cat="all">Tous <b>${all.length}</b></button>`
+      + CATS.map(c => `<button class="seg${current === c ? ' active' : ''}" data-queue-cat="${c}">${ic(CAT_INFO[c].icon)}${uiEsc(CAT_INFO[c].label)} <b>${all.filter(o => categoryOf(o) === c).length}</b></button>`).join('');
+  }
   const summary = document.getElementById('queueSummary');
   const order = typeof queueSort === 'function' && queueSort() === 'date' ? 'les plus récentes en premier' : 'les mieux placées en premier';
   if (summary) summary.textContent = list.length ? list.length + ' offre(s) à postuler, ' + order + '.' : '';
@@ -279,6 +288,11 @@ function uiInit() {
     try { localStorage.setItem('zcrt_apps_view', b.dataset.appsView); } catch (e) {}
     uiRenderApps();
   });
+  document.getElementById('queueFilters')?.addEventListener('click', e => {
+    const b = e.target.closest('[data-queue-cat]');
+    if (b) { store(nsKey('zcrt_queue_cat'), b.dataset.queueCat); uiRenderQueue(); }
+  });
+
   const queueSortSelect = document.getElementById('queueSort');
   if (queueSortSelect && typeof queueSort === 'function') {
     queueSortSelect.value = queueSort();
