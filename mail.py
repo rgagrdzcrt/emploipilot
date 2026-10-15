@@ -38,6 +38,7 @@ SYNC_FILE = "zcrt-suivi.json"
 MAIL_FILE = "zcrt-mail.json"
 PLACEHOLDER_COMPANY = "Entreprise à vérifier"
 PROCESSED_KEEP = 3000
+MAILS_KEEP = 300  # derniers e-mails triés, affichés dans l'onglet « Mails » du site
 MAX_MESSAGES = 500
 # Attentes (secondes) quand Gmail refuse pour quota par minute : la dernière couvre une minute pleine.
 RATE_WAITS = (20, 40, 65, 65, 65)
@@ -659,9 +660,25 @@ def main():
     if to_check:
         alerts.append(f"• {to_check} e-mail(s) à vérifier (libellé {LABELS['verifier']})")
 
+    # Liste affichée par le site : objet, expéditeur et date seulement (jamais le texte de l'e-mail).
+    mails = {m["id"]: m for m in mail_state.get("mails") or []}
+    for mail, d in decisions:
+        if not d["label"] or d["label"] == "bruit":
+            continue
+        mails[mail["id"]] = {
+            "id": mail["id"], "at": mail["at"],
+            "date": time.strftime("%Y-%m-%d", time.localtime(mail["at"] / 1000)),
+            "from": mail["from_name"][:80], "subject": mail["subject"][:140],
+            "label": d["label"], "kind": d["kind"],
+            **({"appId": d["app"]["id"], "company": d["app"].get("company"), "title": d["app"].get("title")}
+               if d["app"] else {}),
+        }
+    account = mail_state.get("account") or gmail.call("/profile").get("emailAddress", "")
     files = {MAIL_FILE: {"content": json.dumps({
-        "version": 1, "lastRun": now_ms, "processed": processed[-PROCESSED_KEEP:],
-    })}}
+        "version": 1, "lastRun": now_ms, "account": account,
+        "processed": processed[-PROCESSED_KEEP:],
+        "mails": sorted(mails.values(), key=lambda m: m["at"], reverse=True)[:MAILS_KEEP],
+    }, ensure_ascii=False)}}
     if changed:
         state["entries"] = entries
         state["updatedAt"] = now_ms

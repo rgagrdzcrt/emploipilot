@@ -211,6 +211,53 @@ function uiRenderQueue() {
 
 /* ---------- Initialisation ---------- */
 
+/* ---------- Mails : e-mails triés par mail.py (lus dans le gist de synchro) ---------- */
+
+const UI_MAIL_LABELS = {
+  entretien: { name: 'Entretien', icon: 'calendar' },
+  action: { name: 'À faire', icon: 'zap' },
+  reponse: { name: 'Réponse', icon: 'send' },
+  refus: { name: 'Refus', icon: 'xcircle' },
+  verifier: { name: 'À vérifier', icon: 'eyeoff' },
+  accuse: { name: 'Accusé', icon: 'check' },
+};
+let uiMailFilter = 'all';
+
+function uiMailData() {
+  try { return JSON.parse(localStorage.getItem('zcrt_mail_cache') || '{}') || {}; } catch (e) { return {}; }
+}
+
+function uiRenderMails() {
+  const rows = document.getElementById('mailRows');
+  if (!rows) return;
+  const data = uiMailData();
+  const all = (Array.isArray(data.mails) ? data.mails : []).filter(m => UI_MAIL_LABELS[m.label]);
+
+  // Pastille du menu : entretiens et démarches des 14 derniers jours.
+  const recent = Date.now() - 14 * 864e5;
+  const urgent = all.filter(m => (m.label === 'entretien' || m.label === 'action') && m.at >= recent).length;
+  document.querySelectorAll('[data-nav-count="mails"]').forEach(el => { el.textContent = urgent || ''; el.hidden = !urgent; });
+
+  const present = Object.keys(UI_MAIL_LABELS).filter(k => all.some(m => m.label === k));
+  if (uiMailFilter !== 'all' && !present.includes(uiMailFilter)) uiMailFilter = 'all';
+  const bar = document.getElementById('mailFilters');
+  if (bar) bar.innerHTML = all.length ? `<button class="seg${uiMailFilter === 'all' ? ' active' : ''}" data-mail-filter="all">Tous <b>${all.length}</b></button>` +
+    present.map(k => `<button class="seg${uiMailFilter === k ? ' active' : ''}" data-mail-filter="${k}">${ic(UI_MAIL_LABELS[k].icon)}${UI_MAIL_LABELS[k].name} <b>${all.filter(m => m.label === k).length}</b></button>`).join('') : '';
+
+  const summary = document.getElementById('mailSummary');
+  if (summary) summary.textContent = data.lastRun ? 'Dernier tri : ' + new Date(data.lastRun).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
+
+  const list = all.filter(m => uiMailFilter === 'all' || m.label === uiMailFilter);
+  const gmail = id => data.account
+    ? `https://mail.google.com/mail/?authuser=${encodeURIComponent(data.account)}#all/${encodeURIComponent(id)}`
+    : `https://mail.google.com/mail/u/0/#all/${encodeURIComponent(id)}`;
+  rows.innerHTML = list.length ? list.map(m => {
+    const l = UI_MAIL_LABELS[m.label];
+    const linked = m.company ? ' · ' + uiEsc(m.company) + (m.title ? ' — ' + uiEsc(m.title) : '') : '';
+    return `<tr><td data-label="Mail"><div class="cell-job">${uiLogo(m.company || m.from)}<div><b>${uiEsc(m.subject || '(sans objet)')}</b><span class="muted small">${uiEsc(m.from || '')}${linked}</span></div></div></td><td data-label="Type"><span class="mail-tag mail-${m.label}">${ic(l.icon)}${l.name}</span></td><td data-label="Reçu">${uiDay(m.date)}</td><td><div class="row-actions"><a class="icon-link" href="${uiEsc(gmail(m.id))}" target="_blank" rel="noopener" title="Ouvrir dans Gmail" aria-label="Ouvrir dans Gmail">${ic('external')}</a></div></td></tr>`;
+  }).join('') : `<tr class="empty-row"><td colspan="4">${uiEmpty('Aucun mail pour le moment', 'Les mails triés par le robot Gmail apparaissent ici après la synchronisation (onglet Synchro).')}</td></tr>`;
+}
+
 function uiInit() {
   // Panneau de filtres repliable sur mobile.
   const toggle = document.getElementById('filtersToggle');
@@ -231,6 +278,12 @@ function uiInit() {
     try { localStorage.setItem('zcrt_apps_view', b.dataset.appsView); } catch (e) {}
     uiRenderApps();
   });
+  document.getElementById('mailFilters')?.addEventListener('click', e => {
+    const b = e.target.closest('[data-mail-filter]');
+    if (b) { uiMailFilter = b.dataset.mailFilter; uiRenderMails(); }
+  });
+  uiRenderMails();
+
   document.getElementById('appsFilters')?.addEventListener('click', e => {
     const b = e.target.closest('[data-apps-filter]');
     if (b) { uiAppsFilter = b.dataset.appsFilter; uiRenderApps(); }

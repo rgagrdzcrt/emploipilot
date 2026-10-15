@@ -612,6 +612,8 @@ function saveProfileState() {
 
 const SYNC_TOKEN = 'zcrt_sync_token', SYNC_GIST = 'zcrt_sync_gist', SYNC_CACHE = 'zcrt_sync_cache';
 const SYNC_FILE = 'zcrt-suivi.json';
+// Écrit par mail.py (tri Gmail) dans le même gist : liste des e-mails triés.
+const MAIL_FILE = 'zcrt-mail.json', MAIL_CACHE = 'zcrt_mail_cache';
 const IGNORED_KEEP_DAYS = 90;
 const SYNC_MIN_INTERVAL = 15000;           // au plus une synchro automatique toutes les 15 s
 const SYNC_BREAKER = { max: 40, windowMs: 10 * 60000, pauseMs: 15 * 60000 };
@@ -694,6 +696,11 @@ async function findGist() {
 
 async function readGist(id) {
   const gist = await gh('/gists/' + id);
+  const mailFile = gist.files && gist.files[MAIL_FILE];
+  if (mailFile) {
+    store(MAIL_CACHE, mailFile.truncated ? await (await fetch(mailFile.raw_url)).text() : mailFile.content);
+    if (typeof uiRenderMails === 'function') uiRenderMails();
+  }
   const file = gist.files && gist.files[SYNC_FILE];
   if (!file) return {};
   const content = file.truncated ? await (await fetch(file.raw_url)).text() : file.content;
@@ -848,7 +855,8 @@ function enableSync() {
 }
 
 function disableSync() {
-  [SYNC_TOKEN, SYNC_GIST, SYNC_CACHE].forEach(k => store(k, null));
+  [SYNC_TOKEN, SYNC_GIST, SYNC_CACHE, MAIL_CACHE].forEach(k => store(k, null));
+  if (typeof uiRenderMails === 'function') uiRenderMails();
   setSyncState('Synchronisation désactivée sur cet appareil');
 }
 
