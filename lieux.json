@@ -213,6 +213,13 @@
   "min": 91,
   "minAt": "2026-10-13"
  },
+ "charenton-le-pont||94": {
+  "dept": "94",
+  "km": 10.5,
+  "label": "Charenton-le-Pont",
+  "lat": 48.82395,
+  "lon": 2.40713
+ },
  "charles-de-gaulles aéroport||95": {
   "km": 10.8,
   "label": "Roissy-en-France",
@@ -354,7 +361,9 @@
   "km": 29.9,
   "label": "Coubert",
   "lat": 48.67357,
-  "lon": 2.69573
+  "lon": 2.69573,
+  "min": 151,
+  "minAt": "2026-10-15"
  },
  "coubron||93": {
   "dept": "93",
@@ -585,7 +594,9 @@
   "km": 44.6,
   "label": "Hardricourt",
   "lat": 49.00776,
-  "lon": 1.89578
+  "lon": 1.89578,
+  "min": 119,
+  "minAt": "2026-10-15"
  },
  "herblay-sur-seine||95": {
   "dept": "95",
@@ -779,7 +790,9 @@
   "km": 30.9,
   "label": "Lieusaint",
   "lat": 48.62863,
-  "lon": 2.54793
+  "lon": 2.54793,
+  "min": 122,
+  "minAt": "2026-10-15"
  },
  "livry-gargan||93": {
   "dept": "93",
@@ -847,7 +860,9 @@
   "km": 44.7,
   "label": "Mareil-sur-Mauldre",
   "lat": 48.89407,
-  "lon": 1.87329
+  "lon": 1.87329,
+  "min": 131,
+  "minAt": "2026-10-15"
  },
  "marly-la-ville||95": {
   "km": 19.7,
@@ -872,6 +887,15 @@
   "lon": 1.61647,
   "min": 145,
   "minAt": "2026-10-12"
+ },
+ "meudon||92": {
+  "dept": "92",
+  "km": 21.5,
+  "label": "Meudon",
+  "lat": 48.80363,
+  "lon": 2.23399,
+  "min": 90,
+  "minAt": "2026-10-15"
  },
  "mitry-mory||77": {
   "km": 10.9,
@@ -989,7 +1013,9 @@
   "km": 7.4,
   "label": "Nogent-sur-Marne",
   "lat": 48.83747,
-  "lon": 2.48091
+  "lon": 2.48091,
+  "min": 54,
+  "minAt": "2026-10-15"
  },
  "nogent-sur-seine||": {
   "km": 7.4,
@@ -1012,7 +1038,9 @@
   "km": 2.5,
   "label": "Noisy-le-Sec",
   "lat": 48.89149,
-  "lon": 2.45675
+  "lon": 2.45675,
+  "min": 35,
+  "minAt": "2026-10-15"
  },
  "orly||94": {
   "km": 19.1,
@@ -1027,7 +1055,9 @@
   "km": 13.3,
   "label": "Ormesson-sur-Marne",
   "lat": 48.78814,
-  "lon": 2.5342
+  "lon": 2.5342,
+  "min": 84,
+  "minAt": "2026-10-15"
  },
  "ozoir-la-ferrière||77": {
   "km": 20.5,
@@ -1161,12 +1191,23 @@
   "min": 51,
   "minAt": "2026-10-13"
  },
+ "paris 3e arrondissement|75003|75": {
+  "dept": "75",
+  "km": 10.3,
+  "label": "Paris 3e Arrondissement",
+  "lat": 48.86249,
+  "lon": 2.35932,
+  "min": 52,
+  "minAt": "2026-10-15"
+ },
  "paris 4e arrondissement|75004|75": {
   "dept": "75",
   "km": 10.9,
   "label": "Paris 4e Arrondissement",
   "lat": 48.85404,
-  "lon": 2.35684
+  "lon": 2.35684,
+  "min": 59,
+  "minAt": "2026-10-15"
  },
  "paris 5e arrondissement|75005|75": {
   "dept": "75",
@@ -1252,6 +1293,7 @@
   "min": 60,
   "minAt": "2026-10-12"
  },
+ "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
@@ -1273,7 +1315,9 @@
   "km": 4.1,
   "label": "Romainville",
   "lat": 48.88408,
-  "lon": 2.43806
+  "lon": 2.43806,
+  "min": 48,
+  "minAt": "2026-10-15"
  },
  "rosny-sous-bois|93110|93": {
   "km": 3.3,
@@ -1411,6 +1455,15 @@
   "min": 81,
   "minAt": "2026-10-12"
  },
+ "sceaux||92": {
+  "dept": "92",
+  "km": 19.7,
+  "label": "Sceaux",
+  "lat": 48.77719,
+  "lon": 2.29615,
+  "min": 79,
+  "minAt": "2026-10-15"
+ },
  "serris||77": {
   "km": 22.8,
   "label": "Serris",
@@ -1449,7 +1502,9 @@
   "km": 22.0,
   "label": "Survilliers",
   "lat": 49.09802,
-  "lon": 2.53953
+  "lon": 2.53953,
+  "min": 100,
+  "minAt": "2026-10-15"
  },
  "taverny||95": {
   "dept": "95",
@@ -1523,7 +1578,9 @@
   "km": 36.4,
   "label": "Vauréal",
   "lat": 49.02931,
-  "lon": 2.02544
+  "lon": 2.02544,
+  "min": 115,
+  "minAt": "2026-10-15"
  },
  "vaux-le-pénil||77": {
   "dept": "77",
@@ -1665,7 +1722,9 @@
   "km": 19.4,
   "label": "Vémars",
   "lat": 49.06907,
-  "lon": 2.57029
+  "lon": 2.57029,
+  "min": 88,
+  "minAt": "2026-10-15"
  },
  "égly||IDF": {
   "dept": "91",
