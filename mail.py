@@ -46,10 +46,11 @@ RATE_WAITS = (20, 40, 65, 65, 65)
 # Candidatures auxquelles un e-mail peut se rapporter.
 APPLIED_STATUSES = {"Candidature envoyée", "À relancer", "Entretien", "Refus"}
 
+# Libellés Gmail. Une « réponse » n'en a pas : elle reste dans la boîte de réception, sans libellé,
+# mais apparaît sur la candidature et dans l'onglet « Mails » du site.
 LABELS = {
     "entretien": "ZCRT/Entretien",
     "refus": "ZCRT/Refus",
-    "reponse": "ZCRT/Réponse",
     "action": "ZCRT/À faire",
     "accuse": "ZCRT/Accusé",
     "verifier": "ZCRT/À vérifier",
@@ -617,7 +618,7 @@ def reclassify(gmail, gist_id, applications, essai):
     Les accusés ne sont relus que pour réparer le statut : un libellé posé à la main n'est pas modifié."""
     labels = gmail.label_ids(sorted(LABELS.values()))
     found = {}
-    for key in ("refus", "entretien", "reponse", "action", "verifier", "accuse"):
+    for key in ("refus", "entretien", "action", "verifier", "accuse"):
         for message_id in gmail.message_ids(label_id=labels[LABELS[key]]):
             found.setdefault(message_id, key)
     print(f"Reclassement : {len(found)} e-mail(s) déjà libellé(s) à revoir.")
@@ -644,7 +645,7 @@ def reclassify(gmail, gist_id, applications, essai):
         return
 
     for mail, old, d in changes:
-        add = [labels[LABELS[d["label"]]]] if d["label"] else []
+        add = [labels[LABELS[d["label"]]]] if d["label"] in LABELS else []
         remove = [labels[LABELS[old]]]
         if d["label"] in ARCHIVED and "INBOX" in mail["labels"]:
             remove.append("INBOX")
@@ -749,9 +750,9 @@ def main():
         return
 
     # Gmail : libellés et archivage du bruit (jamais de suppression).
-    labels = gmail.label_ids(sorted({LABELS[d["label"]] for _, d in decisions if d["label"]}))
+    labels = gmail.label_ids(sorted({LABELS[d["label"]] for _, d in decisions if d["label"] in LABELS}))
     for mail, d in decisions:
-        if d["label"]:
+        if d["label"] in LABELS:
             remove = ["INBOX"] if d["label"] in ARCHIVED and "INBOX" in mail["labels"] else []
             gmail.modify(mail["id"], [labels[LABELS[d["label"]]]], remove)
         processed.append(mail["id"])

@@ -69,7 +69,8 @@ Le site garde également les notes, statuts et dates de candidature dans le navi
 |---|---|---|
 | `ZCRT/Entretien` | Convocation, demande de disponibilités | Gardé ; statut passé à « Entretien » |
 | `ZCRT/Refus` | Refus | Gardé ; statut passé à « Refus » |
-| `ZCRT/Réponse` | Autre message de l'entreprise | Gardé ; plus de relance automatique |
+| *(aucun libellé)* | Autre message de l'entreprise | Gardé ; plus de relance automatique, visible dans l'onglet Mails |
+| `ZCRT/À faire` | Démarche demandée (finaliser, confirmer, répondre aux questions…) | Gardé |
 | `ZCRT/Accusé` | Accusé de réception | Archivé |
 | `ZCRT/À vérifier` | Lié à une candidature, mais entreprise inconnue ou ambiguë | Gardé |
 | `ZCRT/Bruit` | Alertes d'offres, lettres d'information, publicités | Archivé |
