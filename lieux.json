@@ -213,13 +213,6 @@
   "min": 91,
   "minAt": "2026-10-13"
  },
- "charenton-le-pont||94": {
-  "dept": "94",
-  "km": 10.5,
-  "label": "Charenton-le-Pont",
-  "lat": 48.82395,
-  "lon": 2.40713
- },
  "charles-de-gaulles aéroport||95": {
   "km": 10.8,
   "label": "Roissy-en-France",
@@ -418,6 +411,15 @@
   "min": 98,
   "minAt": "2026-10-12"
  },
+ "domont||95": {
+  "dept": "95",
+  "km": 18.0,
+  "label": "Domont",
+  "lat": 49.02871,
+  "lon": 2.32791,
+  "min": 87,
+  "minAt": "2026-10-15"
+ },
  "drancy||93": {
   "km": 3.8,
   "label": "Drancy",
@@ -459,15 +461,6 @@
   "label": "Faremoutiers",
   "lat": 48.79381,
   "lon": 2.99964
- },
- "ferrières-en-brie||": {
-  "dept": "77",
-  "km": 18.5,
-  "label": "Ferrières-en-Brie",
-  "lat": 48.82469,
-  "lon": 2.70772,
-  "min": 93,
-  "minAt": "2026-10-15"
  },
  "ferrières-en-brie||77": {
   "dept": "77",
@@ -591,6 +584,13 @@
   "minAt": "2026-10-15"
  },
  "herblay-sur-seine||95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Herblay-sur-Seine",
+  "lat": 49.00406,
+  "lon": 2.15245
+ },
+ "herblay||95": {
   "dept": "95",
   "km": 26.7,
   "label": "Herblay-sur-Seine",
@@ -911,6 +911,15 @@
   "lon": 2.56873,
   "min": 46,
   "minAt": "2026-10-12"
+ },
+ "montigny-lès-cormeilles||95": {
+  "dept": "95",
+  "km": 23.5,
+  "label": "Montigny-lès-Cormeilles",
+  "lat": 48.99333,
+  "lon": 2.19375,
+  "min": 93,
+  "minAt": "2026-10-15"
  },
  "montmagny||IDF": {
   "dept": "95",
@@ -1596,13 +1605,6 @@
   "lat": 48.69789,
   "lon": 2.23543
  },
- "villecresnes||94": {
-  "dept": "94",
-  "km": 20.7,
-  "label": "Villecresnes",
-  "lat": 48.72004,
-  "lon": 2.5296
- },
  "villejuif||94": {
   "dept": "94",
   "km": 15.3,
@@ -1655,6 +1657,15 @@
   "lon": 2.53243,
   "min": 64,
   "minAt": "2026-10-13"
+ },
+ "villiers-le-bel||95": {
+  "dept": "95",
+  "km": 12.7,
+  "label": "Villiers-le-Bel",
+  "lat": 49.00324,
+  "lon": 2.39965,
+  "min": 91,
+  "minAt": "2026-10-15"
  },
  "villiers-sur-marne||94": {
   "dept": "94",
