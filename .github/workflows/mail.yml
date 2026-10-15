@@ -11,6 +11,10 @@ on:
         description: 'Mode essai (ne rien modifier)'
         type: boolean
         default: false
+      reclasser:
+        description: 'Reclasser les e-mails déjà libellés (après un changement de règles)'
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -40,4 +44,5 @@ jobs:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           JOURS: ${{ inputs.jours || '3' }}
           ESSAI: ${{ inputs.essai && '--essai' || '' }}
-        run: python mail.py --jours "$JOURS" $ESSAI
+          RECLASSER: ${{ inputs.reclasser && '--reclasser' || '' }}
+        run: python mail.py --jours "$JOURS" $ESSAI $RECLASSER

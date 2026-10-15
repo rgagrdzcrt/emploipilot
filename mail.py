@@ -88,6 +88,7 @@ REFUS = [
     r"\bposte (a ete|est (deja )?) ?pourvu",
     r"\bpas en mesure de (donner suite|retenir|poursuivre)",
     r"\bne (pas )?poursuivre (le processus|votre candidature)",
+    r"\bavec d autres (profils|candidat)",
 ]
 
 ENTRETIEN = [
@@ -104,8 +105,22 @@ ENTRETIEN = [
     r"\bpromesse d embauche\b",
 ]
 
-# Phrases conditionnelles : « si votre profil retient notre attention, nous vous proposerons un entretien ».
-CONDITIONNEL = r"\bsi (votre|ta) (profil|candidature)\b|\bsi tel est le cas\b|\ble cas echeant\b|\bsi nous\b|\bdans le cas ou\b"
+# Phrases conditionnelles, fréquentes dans les accusés de réception :
+# « si votre profil retient notre attention, nous vous proposerons un entretien »,
+# « sans réponse de notre part sous un mois, considérez que votre candidature n'a pas été retenue ».
+CONDITIONNEL = (
+    r"\bsi (votre|ta) (profil|candidature)\b|\bsi tel est le cas\b|\ble cas echeant\b|\bsi nous\b"
+    r"|\bdans le cas ou\b|\bsi vous n\b|\bdans l eventualite\b|\ba defaut de\b"
+    r"|\bsans (reponse|retour|contact|nouvelles?)\b|\bfaute de (reponse|retour)\b"
+    r"|\b(veuillez|merci de|vous pouvez) consider|\bconsiderez\b|\bpasse ce delai\b|\bau dela de ce delai\b"
+)
+
+
+def firm_text(subject, body):
+    """Texte sans les phrases conditionnelles (découpage par phrase)."""
+    # Un retour à la ligne simple coupe souvent une phrase (texte justifié) : seuls les paragraphes comptent.
+    sentences = re.split(r"[.!?;]+|\n\s*\n", (subject or "") + "\n\n" + (body or ""))
+    return " . ".join(s for s in map(norm, sentences) if not re.search(CONDITIONNEL, s))
 
 # Démarche demandée au candidat pour que la candidature aboutisse.
 ACTION = [
@@ -123,6 +138,8 @@ ACCUSE = [
     r"\baccus\w* (de |bonne )?reception\b",
     r"\bmerci (pour|de) (votre|ta) (candidature|interet)",
     r"\bmerci d avoir (postule|candidate)",
+    r"\bremerci\w* (pour|de) (votre|ta) candidature",
+    r"\bmerci de nous avoir (transmis|envoye|adresse)",
     r"\bcandidature (a|est) (bien )?(ete )?(recue|enregistree|transmise|prise en compte|envoyee|arrivee|receptionnee|livree)",
     r"\bbien (receptionne|arrivee)",
     r"\breponse (est livree|a ete envoyee)",
@@ -139,7 +156,8 @@ ACCUSE = [
 # Création de compte candidat ou d'inscription : aucune information sur la candidature.
 INSCRIPTION = [
     r"\bconfirmation de (votre |ton )?inscription",
-    r"\binscription\b.{0,80}\b(enregistree|confirmee)",
+    r"\binscription\b.{0,80}\b(enregistree|confirmee|prise en compte)",
+    r"\bbienvenue chez\b",
     r"\bcompte a (bien )?ete cree|\bnouveau compte\b",
     r"\bprofil a ete cree",
     r"\bbienvenue (sur|dans l espace)",
@@ -210,11 +228,10 @@ def detect_kind(subject, body):
     """Nature de l'e-mail, par ordre de priorité :
     refus, entretien, action, accuse, inscription ou reponse."""
     text = norm(subject) + " . " + norm(body)
-    if has(REFUS, text):
+    # Les phrases conditionnelles ne valent ni refus ni convocation.
+    firm = firm_text(subject, body)
+    if has(REFUS, firm):
         return "refus"
-    # Les phrases conditionnelles ne valent pas convocation.
-    sentences = re.split(r"[.!?\n]+", (subject or "") + "\n" + (body or ""))
-    firm = " . ".join(s for s in map(norm, sentences) if not re.search(CONDITIONNEL, s))
     if has(ENTRETIEN, firm):
         return "entretien"
     if has(ACTION, text):
@@ -296,10 +313,10 @@ def classify(mail, applications):
 
     # Sans candidature identifiée : la nature de l'e-mail suffit à le ranger,
     # sans toucher au suivi des candidatures.
-    if marketing and kind not in ("refus", "entretien"):
-        return bruit
     if kind == "accuse":
         return {"kind": kind, "label": "accuse", "app": None}
+    if marketing and kind not in ("refus", "entretien"):
+        return bruit
     if kind in ("refus", "entretien", "action") and (mail["related"] or ats):
         return {"kind": kind, "label": kind, "app": None}
     if app or ambiguous or (mail["related"] and ats):
@@ -404,10 +421,11 @@ class Gmail:
                     print("Limite Gmail par minute atteinte : pause avant de continuer…")
                 time.sleep(RATE_WAITS[attempt])
 
-    def message_ids(self, query):
+    def message_ids(self, query=None, label_id=None):
         ids, page = [], None
         while len(ids) < MAX_MESSAGES:
-            params = {"q": query, "maxResults": 100, **({"pageToken": page} if page else {})}
+            params = {"maxResults": 100, **({"q": query} if query else {}),
+                      **({"labelIds": label_id} if label_id else {}), **({"pageToken": page} if page else {})}
             data = self.call("/messages?" + urlencode(params))
             ids.extend(m["id"] for m in data.get("messages", []))
             page = data.get("nextPageToken")
@@ -452,7 +470,8 @@ def body_text(payload):
 
     walk(payload)
     if plain:
-        return "\n".join(plain)
+        # Certains outils (SmartRecruiters…) laissent des entités HTML dans la partie texte : « r&eacute;ception ».
+        return html.unescape("\n".join(plain))
     text = "\n".join(rich)
     text = re.sub(r"(?is)<(script|style)\b.*?</\1>", " ", text)
     text = re.sub(r"(?i)<br\s*/?>|</p>|</div>|</tr>|</li>", "\n", text)
@@ -579,9 +598,96 @@ def applications_of(state):
     return apps
 
 
+def reclassify(gmail, gist_id, applications, essai):
+    """Repasse les e-mails déjà libellés (hors bruit) avec les règles actuelles :
+    corrige leur libellé et rend son statut à une candidature passée à tort en Refus ou Entretien.
+    Les accusés ne sont relus que pour réparer le statut : un libellé posé à la main n'est pas modifié."""
+    labels = gmail.label_ids(sorted(LABELS.values()))
+    found = {}
+    for key in ("refus", "entretien", "reponse", "action", "verifier", "accuse"):
+        for message_id in gmail.message_ids(label_id=labels[LABELS[key]]):
+            found.setdefault(message_id, key)
+    print(f"Reclassement : {len(found)} e-mail(s) déjà libellé(s) à revoir.")
+
+    checked, changes = [], []
+    for message_id, old in found.items():
+        try:
+            mail = parse_message(gmail.message(message_id))
+        except ApiError as exc:
+            if exc.code == 404:
+                continue  # supprimé entre-temps
+            raise
+        d = classify(mail, applications)
+        checked.append((mail, d))
+        if d["label"] != old and old != "accuse":
+            changes.append((mail, old, d))
+    moves = {}
+    for _, old, d in changes:
+        key = f"{old}->{d['label'] or 'aucun'}"
+        moves[key] = moves.get(key, 0) + 1
+    print("Changements : " + (", ".join(f"{k} {v}" for k, v in sorted(moves.items())) or "aucun"))
+    if essai:
+        print("Mode essai : rien n'a été modifié.")
+        return
+
+    for mail, old, d in changes:
+        add = [labels[LABELS[d["label"]]]] if d["label"] else []
+        remove = [labels[LABELS[old]]]
+        if d["label"] in ARCHIVED and "INBOX" in mail["labels"]:
+            remove.append("INBOX")
+        gmail.modify(mail["id"], add, remove)
+
+    # Suivi : la candidature dont le statut venait de cet e-mail reprend « Candidature envoyée ».
+    state, mail_state = read_gist(gist_id)
+    entries = state.get("entries") or {}
+    now_ms = int(time.time() * 1000)
+    restored, changed = 0, False
+    wrong_status = {"refus": "Refus", "entretien": "Entretien"}
+    for mail, d in checked:
+        for entry in entries.values():
+            old = entry.get("mailKind")
+            if entry.get("mailAt") != mail["at"] or not old or old == d["kind"]:
+                continue
+            if old in wrong_status and entry.get("status") == wrong_status[old] \
+                    and d["kind"] not in wrong_status:
+                entry["status"] = "Candidature envoyée"
+                restored += 1
+            if d["label"] and d["label"] not in ("bruit", "verifier"):
+                entry["mailKind"] = d["kind"]
+            else:
+                for k in ("mailKind", "mailAt", "mailDate", "mailSubject", "mailFrom"):
+                    entry.pop(k, None)
+            entry["trackedAt"] = max(now_ms, (entry.get("trackedAt") or 0) + 1)
+            changed = True
+
+    # Onglet « Mails » du site : même libellé que dans Gmail (corrigé, ou posé à la main).
+    mails = {m["id"]: m for m in mail_state.get("mails") or []}
+    changed_ids = {mail["id"] for mail, _, _ in changes}
+    for mail, d in checked:
+        if mail["id"] not in mails:
+            continue
+        label = d["label"] if mail["id"] in changed_ids else found[mail["id"]]
+        if label and label != "bruit":
+            mails[mail["id"]].update({"label": label, "kind": d["kind"] if label == d["label"] else label})
+        else:
+            del mails[mail["id"]]
+    mail_state["mails"] = sorted(mails.values(), key=lambda m: m["at"], reverse=True)[:MAILS_KEEP]
+    mail_state["lastRun"] = now_ms
+
+    files = {MAIL_FILE: {"content": json.dumps(mail_state, ensure_ascii=False)}}
+    if changed:
+        state["entries"] = entries
+        state["updatedAt"] = now_ms
+        files[SYNC_FILE] = {"content": json.dumps(state, ensure_ascii=False)}
+    gist_call("/gists/" + gist_id, {"files": files})
+    print(f"{len(changes)} libellé(s) corrigé(s), {restored} candidature(s) remise(s) en « Candidature envoyée ».")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Tri des e-mails de candidature ZCRT.")
     parser.add_argument("--essai", action="store_true", help="ne rien modifier")
+    parser.add_argument("--reclasser", action="store_true",
+                        help="repasser les e-mails déjà libellés avec les règles actuelles")
     parser.add_argument("--jours", type=int, default=3, help="e-mails des N derniers jours")
     parser.add_argument("--detail", action="store_true", help="afficher chaque décision (local seulement)")
     args = parser.parse_args()
@@ -600,6 +706,9 @@ def main():
     gist_id = find_gist()
     state, mail_state = read_gist(gist_id)
     applications = applications_of(state)
+    if args.reclasser:
+        reclassify(gmail, gist_id, applications, args.essai)
+        return
     processed = list(mail_state.get("processed") or [])
     seen = set(processed)
 
