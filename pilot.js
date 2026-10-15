@@ -691,6 +691,22 @@ const ghCalls = [];                        // horodatage des appels à l'API (di
 
 function hhmm(ts) { return new Date(ts).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }); }
 
+/** Copie locale des offres : seulement celles suivies, triées ou ajoutées à la main.
+ * Les autres reviennent à chaque ouverture avec offres.json (gardé aussi hors ligne par sw.js).
+ * Tout garder, pour deux profils, dépassait la limite de Safari (≈ 5 Mo par site) :
+ * l'enregistrement échouait et la liste restait vide. Un échec n'empêche plus l'affichage. */
+function storeOffers() {
+  const keep = offers.filter(o => !o.source || o.trackedAt || isTracked(o)
+    || (o.status && o.status !== 'À examiner')); // y compris les « Ignorée » d'avant trackedAt
+  try {
+    localStorage.setItem(KEY, JSON.stringify(keep));
+    return true;
+  } catch (e) {
+    console.warn('Copie locale des offres impossible (stockage plein ?)', e);
+    return false;
+  }
+}
+
 function store(key, value) {
   try { if (value === null) localStorage.removeItem(key); else localStorage.setItem(key, value); } catch (e) { /* stockage indisponible */ }
 }
@@ -882,7 +898,7 @@ async function syncNow(force = false) {
       remote = await readGist(id);
     }
     store(SYNC_CACHE, JSON.stringify(remote));
-    if (applySync(remote)) { store(KEY, JSON.stringify(offers)); render(); }
+    if (applySync(remote)) { storeOffers(); render(); }
     const local = syncState();
     if (!sameEntries(local.entries, remote.entries) || local.profileUpdatedAt !== (remote.profileUpdatedAt || 0)) {
       await gh('/gists/' + id, {
