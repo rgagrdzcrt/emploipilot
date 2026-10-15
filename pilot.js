@@ -431,7 +431,7 @@ function drawPilot() {
   const total = pilot.ids.length;
   const title = pilot.mode === 'triage' ? 'Tri des nouvelles offres' : 'File de candidature';
   if (!o) {
-    card.innerHTML = `<div class="pilot-head"><strong>${title}</strong><button class="ghost" data-act="close">Fermer (Échap)</button></div>
+    card.innerHTML = `<div class="pilot-head"><strong>${title}</strong><button class="ghost" data-act="close">Fermer<span class="key-hint"> (Échap)</span></button></div>
       <div class="empty">${total ? 'Terminé : ' + total + ' offre(s) traitée(s).' : 'Rien à traiter pour le moment.'}
       ${pilot.mode === 'triage' ? '<p><button data-act="toqueue">Passer à la file de candidature</button></p>' : ''}
       ${pilot.undo.length ? '<p><button class="ghost" data-act="undo">← Annuler la dernière action</button></p>' : ''}</div>`;
@@ -440,7 +440,7 @@ function drawPilot() {
   const cat = jobCategory(o);
   const head = `<div class="pilot-head"><span class="pill blue">${title} · ${pilot.i + 1} / ${total}</span>
     <span class="pill">${esc(CAT_LABELS[cat])}</span><span class="pill">Score ${score(o)}</span>
-    <button class="ghost" data-act="close">Fermer (Échap)</button></div>
+    <button class="ghost" data-act="close">Fermer<span class="key-hint"> (Échap)</span></button></div>
     <h2>${esc(o.title)}</h2><div class="job-meta">${metaLine(o)}</div>`;
 
   if (pilot.mode === 'triage') {

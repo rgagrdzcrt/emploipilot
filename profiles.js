@@ -128,6 +128,60 @@ function profileSwitchHtml() {
     + `<span class="ps-current">${ACTIVE_PROFILE.name}</span><span class="ps-arrow" aria-hidden="true">⇄</span><span class="ps-other">${other.name}</span></button>`;
 }
 
+/* ---------- Premier lancement, installation, stockage durable ---------- */
+
+function storedSafe(key) {
+  try { return localStorage.getItem(key); } catch (e) { return null; }
+}
+
+// Évalué dès le chargement de ce fichier, avant que le site n'enregistre quoi que ce soit.
+const ZCRT_NEW_DEVICE = !storedSafe(ZCRT_PROFILE_KEY)
+  && !Object.values(ZCRT_PROFILES).some(p => storedSafe('emploipilot_v1_data' + p.ns));
+
+/** Nouvel appareil (ou appli tout juste installée) : on demande qui l'utilise. */
+function askProfileIfNew() {
+  if (!ZCRT_NEW_DEVICE || storedSafe(ZCRT_PROFILE_KEY)) return;
+  const box = document.createElement('div');
+  box.className = 'welcome';
+  box.innerHTML = `<div class="welcome-card" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+    <h2 id="welcomeTitle">Qui utilise ZCRT ?</h2><p>Sur cet appareil. Tu pourras changer à tout moment avec le bouton à côté du logo.</p>
+    <div class="welcome-choices">${Object.values(ZCRT_PROFILES).map(p => `<button type="button" data-profile="${p.id}">${p.name}</button>`).join('')}</div></div>`;
+  box.addEventListener('click', e => {
+    const b = e.target.closest('[data-profile]');
+    if (!b) return;
+    try { localStorage.setItem(ZCRT_PROFILE_KEY, b.dataset.profile); } catch (err) { /* stockage indisponible */ }
+    if (b.dataset.profile !== ACTIVE_PROFILE.id) location.reload();
+    else box.remove();
+  });
+  document.body.appendChild(box);
+}
+
+/** iPhone / iPad dans Safari (pas l'appli installée) : Safari peut effacer les données
+ * d'un site non ouvert depuis 7 jours, pas celles d'une appli de l'écran d'accueil. */
+function showInstallHint() {
+  const ios = /iP(hone|ad|od)/.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const installed = navigator.standalone === true
+    || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
+  if (!ios || installed || storedSafe('zcrt_install_hint_done')) return;
+  const hint = document.createElement('div');
+  hint.className = 'install-hint';
+  hint.innerHTML = `<span>📲 Pour ne rien perdre, installe ZCRT : touche <b>Partager</b> <span aria-hidden="true">⬆︎</span> puis <b>« Sur l'écran d'accueil »</b>, et ouvre-le ensuite depuis son icône.</span>`
+    + '<button type="button" class="secondary">OK</button>';
+  hint.querySelector('button').onclick = () => {
+    try { localStorage.setItem('zcrt_install_hint_done', '1'); } catch (e) { /* stockage indisponible */ }
+    hint.remove();
+  };
+  document.body.appendChild(hint);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  askProfileIfNew();
+  showInstallHint();
+  // Demande au navigateur de ne pas effacer les données de ZCRT pour faire de la place.
+  if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+});
+
 /** Onglets métiers du profil actif. */
 function categoryTabsHtml() {
   return ACTIVE_PROFILE.cats.map((c, i) => `<button${i === 0 ? ' class="active"' : ''} data-category="${c}" role="tab">`

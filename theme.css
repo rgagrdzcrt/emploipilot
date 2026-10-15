@@ -624,6 +624,30 @@ button.secondary kbd, button.ghost kbd { background: var(--surface-3); color: va
   .stat-ic { display: none; }
 }
 
+/* ---------- Écrans tactiles (iPhone, iPad) ----------
+   Pas de raccourcis clavier, des cibles à la taille du doigt, et des champs
+   en 16 px : en dessous, Safari zoome sur la page à chaque saisie. */
+.touch kbd, .touch .key-hint { display: none; }
+.touch input, .touch select, .touch textarea { font-size: 16px !important; }
+.touch .pilot-actions button { min-height: 48px; }
+.touch .pilot-actions .ghost { border: 1px solid var(--line); }
+.touch .chip { min-height: 36px; padding: 6px 12px; }
+.touch .status-select, .touch .filters select, .touch .sort select { min-height: 40px; }
+
+/* Premier lancement sur un appareil : choix du profil. */
+.welcome { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 16px; background: rgba(14, 15, 18, .55); }
+.welcome-card { width: min(420px, 100%); padding: 24px 20px 20px; border-radius: 18px; background: var(--surface); color: var(--ink); box-shadow: var(--shadow-lg); text-align: center; }
+.welcome-card h2 { margin-bottom: 6px; font-size: 22px; }
+.welcome-card p { margin: 0 0 18px; color: var(--muted); font-size: 14px; }
+.welcome-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.welcome-choices button { min-height: 64px; border-radius: 14px; font-size: 17px; font-weight: 700; }
+
+/* iPhone / iPad dans Safari : conseil d'installation sur l'écran d'accueil. */
+.install-hint { position: fixed; left: 12px; right: 12px; bottom: calc(76px + env(safe-area-inset-bottom)); z-index: 60; display: flex; align-items: flex-start; gap: 10px; max-width: 520px; margin: 0 auto; padding: 12px 12px 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--ink); box-shadow: var(--shadow-lg); font-size: 14px; line-height: 1.45; }
+.install-hint b { font-weight: 700; }
+.install-hint button { flex: none; min-height: 36px; padding: 6px 12px; }
+@media (min-width: 901px) { .install-hint { bottom: 20px; } }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

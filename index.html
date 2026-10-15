@@ -23,6 +23,10 @@
   try { theme = localStorage.getItem('zcrt_theme') || ''; } catch (e) {}
   if (!theme) theme = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   document.documentElement.setAttribute('data-theme', theme);
+  // Écran tactile (iPhone, iPad…) : réglages d'affichage propres au doigt (theme.css, .touch).
+  if (navigator.maxTouchPoints > 0 || (window.matchMedia && matchMedia('(pointer: coarse)').matches)) {
+    document.documentElement.classList.add('touch');
+  }
 })();
 </script></head><body>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
