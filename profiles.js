@@ -36,6 +36,7 @@ const ZCRT_PROFILES = {
     ns: '__zia',
     syncFile: 'zcrt-suivi-zia.json',
     cats: ['rayon', 'vente', 'restauration'],
+    triageLast: ['rayon'],       // tri au doigt : grande distribution en dernier, pour l'instant
     mails: false,
     feminine: true,
     keywords: 'Employée libre-service, hôtesse de caisse, mise en rayon, grande distribution\n'

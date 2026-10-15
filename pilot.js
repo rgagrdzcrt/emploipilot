@@ -363,7 +363,12 @@ function pilotList(mode) {
     .filter(o => (o.status || 'À examiner') === wanted && CATS.includes(categoryOf(o)) && !(hideExcluded && isExcluded(o)))
     .sort(mode === 'queue' && queueSort() === 'date'
       ? (a, b) => offerTime(b) - offerTime(a) || score(b) - score(a)
-      : (a, b) => score(b) - score(a));
+      : (a, b) => triageRank(a, mode) - triageRank(b, mode) || score(b) - score(a));
+}
+
+/** Tri au doigt : les métiers « triageLast » du profil passent après tous les autres. */
+function triageRank(o, mode) {
+  return mode === 'triage' && (ACTIVE_PROFILE.triageLast || []).includes(categoryOf(o)) ? 1 : 0;
 }
 
 /** Ordre de l'onglet « À postuler » (et de « Lancer la file ») : priorité ou date, plus récentes d'abord. */
