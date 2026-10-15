@@ -45,6 +45,10 @@ RATE_WAITS = (20, 40, 65, 65, 65)
 
 # Candidatures auxquelles un e-mail peut se rapporter.
 APPLIED_STATUSES = {"Candidature envoyée", "À relancer", "Entretien", "Refus"}
+# Offres mises de côté : un accusé de réception (ou une réponse nette) prouve que la candidature est partie.
+PENDING_STATUS = "À postuler"
+SENT_PROOF_KINDS = {"accuse", "entretien", "refus"}
+PENDING_MARGIN_MS = 6 * 3600 * 1000  # e-mail reçu au plus 6 h avant la mise en « À postuler »
 
 # Libellés Gmail. Une « réponse » n'en a pas : elle reste dans la boîte de réception, sans libellé,
 # mais apparaît sur la candidature et dans l'onglet « Mails » du site.
@@ -547,6 +551,15 @@ def apply_to_entry(entry, mail, kind, now_ms):
     """Inscrit l'e-mail sur la candidature. Renvoie le nouveau statut s'il change."""
     if (entry.get("mailAt") or 0) > mail["at"]:
         return None  # une information plus récente est déjà inscrite
+    sent_now = None
+    if entry.get("status") == PENDING_STATUS:
+        # Offre « À postuler » : seul un e-mail reçu après sa mise de côté, et qui prouve l'envoi
+        # (accusé, refus, convocation), la fait passer en « Candidature envoyée ».
+        if kind not in SENT_PROOF_KINDS or mail["at"] < (entry.get("trackedAt") or 0) - PENDING_MARGIN_MS:
+            return None
+        entry["status"] = sent_now = "Candidature envoyée"
+        entry.setdefault("appliedDate", time.strftime("%Y-%m-%d", time.localtime(mail["at"] / 1000)))
+        entry.pop("relanceAuto", None)
     entry["mailKind"] = kind
     entry["mailAt"] = mail["at"]
     entry["mailDate"] = time.strftime("%Y-%m-%d", time.localtime(mail["at"] / 1000))
@@ -557,7 +570,7 @@ def apply_to_entry(entry, mail, kind, now_ms):
     if new_status and entry.get("status") != new_status:
         entry["status"] = new_status
         return new_status
-    return None
+    return sent_now
 
 
 def send_alert(lines, urgent):
@@ -594,7 +607,8 @@ def send_alert(lines, urgent):
 def applications_of(state):
     apps = []
     for entry in (state.get("entries") or {}).values():
-        if entry.get("status") in APPLIED_STATUSES or (entry.get("appliedDate") and entry.get("status") != "Ignorée"):
+        if entry.get("status") in APPLIED_STATUSES or entry.get("status") == PENDING_STATUS \
+                or (entry.get("appliedDate") and entry.get("status") != "Ignorée"):
             apps.append({**entry, "_key": company_key(entry.get("company"))})
     return apps
 
@@ -673,6 +687,16 @@ def reclassify(gmail, gist_id, applications, essai):
                     entry.pop(k, None)
             entry["trackedAt"] = max(now_ms, (entry.get("trackedAt") or 0) + 1)
             changed = True
+
+    # Offres « À postuler » dont l'accusé de réception est déjà arrivé : passées en « Candidature envoyée ».
+    confirmed = 0
+    for mail, d in sorted(checked, key=lambda c: c[0]["at"]):
+        entry = entries.get(d["app"]["id"]) if d["app"] else None
+        if entry and entry.get("status") == PENDING_STATUS and apply_to_entry(entry, mail, d["kind"], now_ms):
+            confirmed += 1
+            changed = True
+    if confirmed:
+        print(f"{confirmed} offre(s) « À postuler » passée(s) en « Candidature envoyée ».")
 
     # Onglet « Mails » du site : tous les e-mails relus, avec le même libellé que dans Gmail
     # (corrigé, ou posé à la main). Remplit aussi la liste des e-mails triés avant l'onglet.
@@ -773,8 +797,11 @@ def main():
         if not entry:
             continue
         before = entry.get("mailAt")
+        was_pending = entry.get("status") == PENDING_STATUS
         new_status = apply_to_entry(entry, mail, d["kind"], now_ms)
         changed = changed or entry.get("mailAt") != before
+        if was_pending and new_status:
+            alerts.append(f"• Candidature confirmée — {entry.get('company')} ({entry.get('title')})")
         if d["kind"] in ("entretien", "refus", "reponse", "action") and entry.get("mailAt") == mail["at"]:
             alerts.append(f"• {KIND_NAMES[d['kind']]} — {entry.get('company')} ({entry.get('title')})")
             urgent = urgent or d["kind"] == "entretien"

@@ -87,6 +87,8 @@ Le site garde également les notes, statuts et dates de candidature dans le navi
 | `ZCRT/À vérifier` | Lié à une candidature, mais entreprise inconnue ou ambiguë | Gardé |
 | `ZCRT/Bruit` | Alertes d'offres, lettres d'information, publicités | Archivé |
 
+Une offre en « À postuler » passe toute seule en « Candidature envoyée » (avec la date de l'e-mail) quand un accusé de réception, un refus ou une convocation de l'entreprise arrive après sa mise de côté ; un « finalisez votre candidature » ne compte pas. L'option « reclasser » du workflow rattrape les accusés déjà triés.
+
 Les autres e-mails ne sont pas touchés. **Aucun e-mail n'est supprimé** : le droit demandé (`gmail.modify`) permet seulement de lire, libeller et archiver. Une alerte ntfy signale chaque réponse d'entreprise, et l'onglet Candidatures affiche le dernier e-mail reçu. L'onglet **Mails** liste les 300 derniers e-mails triés (hors bruit) : objet, expéditeur, date, candidature liée et lien vers Gmail. Le texte des e-mails n'est jamais copié.
 
 Le dépôt étant public, rien n'est écrit dans le dépôt : l'état du tri reste dans le gist secret (`zcrt-mail.json`), et les journaux GitHub Actions n'affichent que des compteurs.
