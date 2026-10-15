@@ -225,8 +225,9 @@ function isHiddenType(o) {
   return excludedWords().some(w => t.includes(w));
 }
 
-/** Statuts retirés de « Offres repérées » (suivis dans l'onglet Candidatures). */
-const HORS_REPEREES = ['Ignorée', 'Candidature envoyée', 'Entretien', 'Refus', 'À relancer'];
+/** Statuts retirés de « Offres repérées » et du compteur « Offres affichées » : seules les offres
+ * à examiner y restent (« À postuler » a son onglet, les autres sont dans Candidatures). */
+const HORS_REPEREES = ['À postuler', 'Ignorée', 'Candidature envoyée', 'Entretien', 'Refus', 'À relancer'];
 
 /** Offres repérées d'une catégorie, comptées exactement comme la liste (doublons, masquage, statuts). */
 function repereesOf(cat) {
