@@ -598,6 +598,19 @@ def applications_of(state):
     return apps
 
 
+def mail_row(mail, d, label=None):
+    """Ligne de l'onglet « Mails » : objet, expéditeur et date seulement (jamais le texte de l'e-mail)."""
+    label = label or d["label"]
+    return {
+        "id": mail["id"], "at": mail["at"],
+        "date": time.strftime("%Y-%m-%d", time.localtime(mail["at"] / 1000)),
+        "from": mail["from_name"][:80], "subject": mail["subject"][:140],
+        "label": label, "kind": d["kind"] if label == d["label"] else label,
+        **({"appId": d["app"]["id"], "company": d["app"].get("company"), "title": d["app"].get("title")}
+           if d["app"] else {}),
+    }
+
+
 def reclassify(gmail, gist_id, applications, essai):
     """Repasse les e-mails déjà libellés (hors bruit) avec les règles actuelles :
     corrige leur libellé et rend son statut à une candidature passée à tort en Refus ou Entretien.
@@ -660,17 +673,18 @@ def reclassify(gmail, gist_id, applications, essai):
             entry["trackedAt"] = max(now_ms, (entry.get("trackedAt") or 0) + 1)
             changed = True
 
-    # Onglet « Mails » du site : même libellé que dans Gmail (corrigé, ou posé à la main).
+    # Onglet « Mails » du site : tous les e-mails relus, avec le même libellé que dans Gmail
+    # (corrigé, ou posé à la main). Remplit aussi la liste des e-mails triés avant l'onglet.
     mails = {m["id"]: m for m in mail_state.get("mails") or []}
     changed_ids = {mail["id"] for mail, _, _ in changes}
     for mail, d in checked:
-        if mail["id"] not in mails:
-            continue
         label = d["label"] if mail["id"] in changed_ids else found[mail["id"]]
         if label and label != "bruit":
-            mails[mail["id"]].update({"label": label, "kind": d["kind"] if label == d["label"] else label})
+            mails[mail["id"]] = mail_row(mail, d, label)
         else:
-            del mails[mail["id"]]
+            mails.pop(mail["id"], None)
+    if not mail_state.get("account"):
+        mail_state["account"] = gmail.call("/profile").get("emailAddress", "")
     mail_state["mails"] = sorted(mails.values(), key=lambda m: m["at"], reverse=True)[:MAILS_KEEP]
     mail_state["lastRun"] = now_ms
 
@@ -774,14 +788,7 @@ def main():
     for mail, d in decisions:
         if not d["label"] or d["label"] == "bruit":
             continue
-        mails[mail["id"]] = {
-            "id": mail["id"], "at": mail["at"],
-            "date": time.strftime("%Y-%m-%d", time.localtime(mail["at"] / 1000)),
-            "from": mail["from_name"][:80], "subject": mail["subject"][:140],
-            "label": d["label"], "kind": d["kind"],
-            **({"appId": d["app"]["id"], "company": d["app"].get("company"), "title": d["app"].get("title")}
-               if d["app"] else {}),
-        }
+        mails[mail["id"]] = mail_row(mail, d)
     account = mail_state.get("account") or gmail.call("/profile").get("emailAddress", "")
     files = {MAIL_FILE: {"content": json.dumps({
         "version": 1, "lastRun": now_ms, "account": account,
