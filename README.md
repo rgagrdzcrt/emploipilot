@@ -61,6 +61,34 @@ Des flux autorisés peuvent être ajoutés à `feeds`. Le collecteur ne visite p
 
 Le site garde également les notes, statuts et dates de candidature dans le navigateur. Pense à exporter une sauvegarde régulièrement.
 
+## Tri des e-mails (Gmail)
+
+`mail.py`, lancé toutes les heures par `.github/workflows/mail.yml`, lit les e-mails reçus et les rapproche des candidatures suivies dans le gist de synchronisation. Il fonctionne par règles, sans IA.
+
+| Libellé Gmail | Quand | Boîte de réception |
+|---|---|---|
+| `ZCRT/Entretien` | Convocation, demande de disponibilités | Gardé ; statut passé à « Entretien » |
+| `ZCRT/Refus` | Refus | Gardé ; statut passé à « Refus » |
+| `ZCRT/Réponse` | Autre message de l'entreprise | Gardé ; plus de relance automatique |
+| `ZCRT/Accusé` | Accusé de réception | Archivé |
+| `ZCRT/À vérifier` | Lié à une candidature, mais entreprise inconnue ou ambiguë | Gardé |
+| `ZCRT/Bruit` | Alertes d'offres, lettres d'information, publicités | Archivé |
+
+Les autres e-mails ne sont pas touchés. **Aucun e-mail n'est supprimé** : le droit demandé (`gmail.modify`) permet seulement de lire, libeller et archiver. Une alerte ntfy signale chaque réponse d'entreprise, et l'onglet Candidatures affiche le dernier e-mail reçu.
+
+Le dépôt étant public, rien n'est écrit dans le dépôt : l'état du tri reste dans le gist secret (`zcrt-mail.json`), et les journaux GitHub Actions n'affichent que des compteurs.
+
+### Mise en place
+
+1. Dans [Google Cloud Console](https://console.cloud.google.com), crée un projet et active **Gmail API**.
+2. Configure l'écran de consentement OAuth (type « Externe », ton adresse en utilisateur test), puis **publie l'application en production**. En mode test, le jeton expire au bout de 7 jours.
+3. Crée un identifiant OAuth de type **Application de bureau** et télécharge son JSON (ne le commite pas).
+4. Sur ton PC : `python gmail_token.py client_secret.json`, puis accepte dans le navigateur.
+5. Ajoute les secrets GitHub `GMAIL_CLIENT_ID`, `GMAIL_CLIENT_SECRET`, `GMAIL_REFRESH_TOKEN` et `ZCRT_GIST_TOKEN` (le même jeton GitHub « gist » que pour la synchro du site). `ZCRT_GIST_ID` est facultatif.
+6. Premier passage : **Actions → Tri des e-mails → Run workflow** avec « Mode essai » coché et 30 jours, pour voir les compteurs sans rien modifier.
+
+En local, `python mail.py --essai --jours 30 --detail` affiche chaque décision (expéditeur, objet, candidature rapprochée), avec les mêmes variables d'environnement.
+
 ## Lancer la collecte
 
 Dans GitHub, ouvre **Actions → Collecte des offres → Run workflow**. Le workflow tourne aussi automatiquement toutes les 6 heures. Sans secrets, les connecteurs qui en ont besoin sont ignorés et les connecteurs d’entreprise sans identifiant ne font aucun appel.

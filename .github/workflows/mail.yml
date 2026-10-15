@@ -1,0 +1,43 @@
+name: Tri des e-mails
+on:
+  schedule:
+    - cron: '23 * * * *'
+  workflow_dispatch:
+    inputs:
+      jours:
+        description: 'E-mails des N derniers jours'
+        default: '3'
+      essai:
+        description: 'Mode essai (ne rien modifier)'
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: tri-emails
+  cancel-in-progress: false
+jobs:
+  tri:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Le dépôt est public : le script n'écrit rien dans le dépôt et
+      # n'affiche que des compteurs (ni expéditeur ni objet).
+      - name: Trier les e-mails
+        env:
+          GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
+          GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
+          GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
+          ZCRT_GIST_TOKEN: ${{ secrets.ZCRT_GIST_TOKEN }}
+          ZCRT_GIST_ID: ${{ secrets.ZCRT_GIST_ID }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          JOURS: ${{ inputs.jours || '3' }}
+          ESSAI: ${{ inputs.essai && '--essai' || '' }}
+        run: python mail.py --jours "$JOURS" $ESSAI

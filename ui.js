@@ -80,6 +80,14 @@ function uiDay(iso) {
   return isNaN(d) ? uiEsc(iso) : d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
 }
 
+/** Dernier e-mail de l'entreprise, trouvé par le tri Gmail (mail.py). */
+const UI_MAIL_KINDS = { entretien: 'Entretien', refus: 'Refus', reponse: 'Réponse', accuse: 'Accusé de réception' };
+function uiMail(o) {
+  if (!o.mailKind || !UI_MAIL_KINDS[o.mailKind]) return '';
+  const title = [o.mailFrom, o.mailSubject].filter(Boolean).join(' — ');
+  return `<div class="kcard-meta mail-${o.mailKind}" title="${uiEsc(title)}">${ic('inbox')}E-mail : ${UI_MAIL_KINDS[o.mailKind]}, ${uiDay(o.mailDate)}</div>`;
+}
+
 function uiStatusSelect(o, extraClass) {
   const st = o.status || 'À examiner';
   return `<select class="status-select${extraClass ? ' ' + extraClass : ''}" aria-label="Changer le statut" onchange="setStatus('${o.id}',this.value)">${UI_ALL_STATUSES.map(s => `<option ${s === st ? 'selected' : ''}>${s}</option>`).join('')}</select>`;
@@ -180,7 +188,7 @@ function uiRenderApps() {
         <div class="kcol-body">${items.length ? items.map(o => `<article class="kcard">
           <div class="kcard-top">${uiLogo(o.company)}<div><h4>${uiEsc(o.title)}</h4><div class="muted small">${uiEsc(o.company)}</div></div></div>
           <div class="kcard-meta">${ic('pin')}${uiEsc(o.location || 'Lieu non précisé')}</div>
-          <div class="kcard-meta">${ic('calendar')}Candidature : ${uiDay(o.appliedDate)}</div>
+          <div class="kcard-meta">${ic('calendar')}Candidature : ${uiDay(o.appliedDate)}</div>${uiMail(o)}
           <div class="kcard-actions">${uiStatusSelect(o, 'compact')}<button class="secondary small-btn" onclick="prep('${o.id}')">Préparer</button>${o.url ? `<a class="icon-link" href="${uiEsc(o.url)}" target="_blank" rel="noopener" title="Ouvrir l'annonce" aria-label="Ouvrir l'annonce">${ic('external')}</a>` : ''}</div>
         </article>`).join('') : '<div class="kempty">Aucune candidature</div>'}</div></div>`;
     }).join('');
