@@ -35,13 +35,6 @@
   "min": 75,
   "minAt": "2026-10-12"
  },
- "arcueil||94": {
-  "dept": "94",
-  "km": 15.6,
-  "label": "Arcueil",
-  "lat": 48.80518,
-  "lon": 2.33347
- },
  "argenteuil||95": {
   "km": 18.0,
   "label": "Argenteuil",
@@ -466,6 +459,15 @@
   "lat": 48.79381,
   "lon": 2.99964
  },
+ "ferrières-en-brie||": {
+  "dept": "77",
+  "km": 18.5,
+  "label": "Ferrières-en-Brie",
+  "lat": 48.82469,
+  "lon": 2.70772,
+  "min": 93,
+  "minAt": "2026-10-15"
+ },
  "ferrières-en-brie||77": {
   "dept": "77",
   "km": 18.5,
@@ -526,13 +528,6 @@
   "lon": 2.54565,
   "min": 43,
   "minAt": "2026-10-12"
- },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
  },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
@@ -1560,6 +1555,13 @@
   "label": "Villebon-sur-Yvette",
   "lat": 48.69789,
   "lon": 2.23543
+ },
+ "villecresnes||94": {
+  "dept": "94",
+  "km": 20.7,
+  "label": "Villecresnes",
+  "lat": 48.72004,
+  "lon": 2.5296
  },
  "villejuif||94": {
   "dept": "94",
