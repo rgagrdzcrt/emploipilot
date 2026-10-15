@@ -186,6 +186,15 @@
   "min": 74,
   "minAt": "2026-10-12"
  },
+ "cachan||94": {
+  "dept": "94",
+  "km": 16.8,
+  "label": "Cachan",
+  "lat": 48.79135,
+  "lon": 2.33152,
+  "min": 78,
+  "minAt": "2026-10-15"
+ },
  "champigny-sur-marne||94": {
   "dept": "94",
   "km": 10.0,
@@ -696,7 +705,9 @@
   "km": 14.2,
   "label": "Le Kremlin-Bicêtre",
   "lat": 48.80818,
-  "lon": 2.35582
+  "lon": 2.35582,
+  "min": 75,
+  "minAt": "2026-10-15"
  },
  "le perreux-sur-marne||94": {
   "dept": "94",
