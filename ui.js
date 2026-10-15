@@ -202,7 +202,8 @@ function uiRenderQueue() {
   if (!rows || typeof pilotList !== 'function') return;
   const list = pilotList('queue');
   const summary = document.getElementById('queueSummary');
-  if (summary) summary.textContent = list.length ? list.length + ' offre(s) à postuler, les mieux placées en premier.' : '';
+  const order = typeof queueSort === 'function' && queueSort() === 'date' ? 'les plus récentes en premier' : 'les mieux placées en premier';
+  if (summary) summary.textContent = list.length ? list.length + ' offre(s) à postuler, ' + order + '.' : '';
   const start = document.getElementById('queueStart');
   if (start) start.disabled = !list.length;
   rows.innerHTML = list.length ? list.map(o => `<tr><td data-label="Poste"><div class="cell-job">${uiLogo(o.company)}<div><b>${uiEsc(o.title)}</b><span class="muted small">${uiEsc(o.company)}${o.location ? ' · ' + uiEsc(o.location) : ''}</span></div></div></td><td data-label="Publiée">${uiEsc(uiAge(o))}</td><td data-label="Statut">${uiStatusSelect(o, 'compact')}</td><td><div class="row-actions"><button class="secondary small-btn" onclick="prep('${o.id}')">Préparer</button>${o.url ? `<a class="icon-link" href="${uiEsc(o.url)}" target="_blank" rel="noopener" title="Ouvrir l'annonce" aria-label="Ouvrir l'annonce">${ic('external')}</a>` : ''}</div></td></tr>`).join('')
@@ -278,6 +279,12 @@ function uiInit() {
     try { localStorage.setItem('zcrt_apps_view', b.dataset.appsView); } catch (e) {}
     uiRenderApps();
   });
+  const queueSortSelect = document.getElementById('queueSort');
+  if (queueSortSelect && typeof queueSort === 'function') {
+    queueSortSelect.value = queueSort();
+    queueSortSelect.addEventListener('change', () => { store('zcrt_queue_sort', queueSortSelect.value); uiRenderQueue(); });
+  }
+
   document.getElementById('mailFilters')?.addEventListener('click', e => {
     const b = e.target.closest('[data-mail-filter]');
     if (b) { uiMailFilter = b.dataset.mailFilter; uiRenderMails(); }

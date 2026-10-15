@@ -148,7 +148,7 @@
 <section id="queue" class="section">
   <div class="apps-toolbar">
     <p class="muted" id="queueSummary"></p>
-    <div class="apps-actions"><button class="ok" id="queueStart"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg><span>Lancer la file</span></button></div>
+    <div class="apps-actions"><label class="sort"><svg class="ic" aria-hidden="true"><use href="#i-sort"/></svg><select id="queueSort" aria-label="Tri des offres à postuler"><option value="score">Tri : priorité</option><option value="date">Tri : date</option></select></label><button class="ok" id="queueStart"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg><span>Lancer la file</span></button></div>
   </div>
   <div class="table-wrap"><table><thead><tr><th>Poste</th><th>Publiée</th><th>Statut</th><th><span class="sr-only">Actions</span></th></tr></thead><tbody id="queueRows"></tbody></table></div>
 </section>

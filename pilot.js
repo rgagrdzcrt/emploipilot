@@ -361,8 +361,14 @@ function pilotList(mode) {
   // Seulement les métiers du profil actif (l'autre profil a ses propres offres dans offres.json).
   return (document.getElementById('hideDuplicates')?.checked ? dedupe(offers) : offers)
     .filter(o => (o.status || 'À examiner') === wanted && CATS.includes(categoryOf(o)) && !(hideExcluded && isExcluded(o)))
-    .sort((a, b) => score(b) - score(a));
+    .sort(mode === 'queue' && queueSort() === 'date'
+      ? (a, b) => offerTime(b) - offerTime(a) || score(b) - score(a)
+      : (a, b) => score(b) - score(a));
 }
+
+/** Ordre de l'onglet « À postuler » (et de « Lancer la file ») : priorité ou date, plus récentes d'abord. */
+function queueSort() { return stored('zcrt_queue_sort') === 'date' ? 'date' : 'score'; }
+function offerTime(o) { return parseDate(offerDate(o))?.getTime() || 0; }
 
 function updatePilotBar() {
   const t = document.getElementById('triageCount'), q = document.getElementById('queueCount');
