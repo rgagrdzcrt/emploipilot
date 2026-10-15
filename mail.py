@@ -39,6 +39,8 @@ MAIL_FILE = "zcrt-mail.json"
 PLACEHOLDER_COMPANY = "Entreprise à vérifier"
 PROCESSED_KEEP = 3000
 MAX_MESSAGES = 500
+# Attentes (secondes) quand Gmail refuse pour quota par minute : la dernière couvre une minute pleine.
+RATE_WAITS = (20, 40, 65, 65, 65)
 
 # Candidatures auxquelles un e-mail peut se rapporter.
 APPLIED_STATUSES = {"Candidature envoyée", "À relancer", "Entretien", "Refus"}
@@ -328,7 +330,7 @@ class Gmail:
     def call(self, path, body=None, method=None):
         method = method or ("POST" if body is not None else "GET")
         step = "Gmail " + method + " " + re.sub(r"/[0-9a-f]{10,}", "/…", path.split("?")[0])
-        for attempt in range(4):
+        for attempt in range(len(RATE_WAITS) + 1):
             request = Request(
                 GMAIL + path,
                 data=json.dumps(body).encode("utf-8") if body is not None else None,
@@ -341,10 +343,13 @@ class Gmail:
             try:
                 return api_json(request, step)
             except ApiError as exc:
-                # Gmail signale ses limites de débit par un 429 ou un 403 « rateLimitExceeded » : on patiente.
-                if attempt == 3 or not (exc.code == 429 or "ateLimit" in str(exc)):
+                # Gmail signale ses limites de débit (quota par minute) par un 429
+                # ou un 403 « rateLimitExceeded » : on attend que la minute passe.
+                if attempt == len(RATE_WAITS) or not (exc.code == 429 or "ateLimit" in str(exc)):
                     raise
-                time.sleep(2 ** attempt * 2)
+                if attempt == 0:
+                    print("Limite Gmail par minute atteinte : pause avant de continuer…")
+                time.sleep(RATE_WAITS[attempt])
 
     def message_ids(self, query):
         ids, page = [], None
