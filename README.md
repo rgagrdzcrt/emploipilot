@@ -4,7 +4,7 @@ Site statique hébergé sur GitHub Pages, avec collecte planifiée toutes les 6 
 
 ## Profils (Ryan / Zia)
 
-Le bouton à droite du logo bascule entre deux profils, définis dans `profiles.js` :
+Toucher le logo bascule entre deux profils, définis dans `profiles.js`. Le logo indique le profil actif : **RGRD** pour Ryan, **ZCRT** pour Zia.
 
 | | Ryan | Zia |
 |---|---|---|

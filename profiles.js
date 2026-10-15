@@ -2,7 +2,8 @@
  *
  * Chaque profil a ses propres données sur l'appareil (offres suivies, critères,
  * modèles, synchro) grâce à un suffixe sur les clés du navigateur, ses métiers
- * et ses modèles de lettre. Le bouton à côté du logo bascule de l'un à l'autre.
+ * et ses modèles de lettre. Toucher le logo (RGRD pour Ryan, ZCRT pour Zia)
+ * bascule de l'un à l'autre.
  *
  * Chargé dans <head>, avant tous les autres scripts.
  */
@@ -21,6 +22,7 @@ const ZCRT_PROFILES = {
   ryan: {
     id: 'ryan',
     name: 'Ryan',
+    brand: 'RGRD',               // logo affiché sur ce profil
     ns: '',                      // clés historiques, sans suffixe
     syncFile: 'zcrt-suivi.json', // lu aussi par mail.py (tri Gmail)
     cats: ['stock', 'rayon', 'vente'],
@@ -30,6 +32,7 @@ const ZCRT_PROFILES = {
   zia: {
     id: 'zia',
     name: 'Zia',
+    brand: 'ZCRT',
     ns: '__zia',
     syncFile: 'zcrt-suivi-zia.json',
     cats: ['rayon', 'vente', 'restauration'],
@@ -105,6 +108,7 @@ const ACTIVE_PROFILE = (() => {
   try { id = localStorage.getItem(ZCRT_PROFILE_KEY) || ''; } catch (e) { /* stockage indisponible */ }
   return ZCRT_PROFILES[id] || ZCRT_PROFILES.ryan;
 })();
+document.title = ACTIVE_PROFILE.brand + ' — Recherche d’emploi';
 
 /** Clé du navigateur propre au profil actif. */
 function nsKey(key) { return key + ACTIVE_PROFILE.ns; }
@@ -121,11 +125,11 @@ function switchProfile() {
   location.reload();
 }
 
-/** Bouton de bascule, placé à droite du logo (barre latérale et en-tête mobile). */
-function profileSwitchHtml() {
-  const other = otherProfile();
-  return `<button class="profile-switch" type="button" onclick="switchProfile()" title="Passer au profil de ${other.name}" aria-label="Passer au profil de ${other.name}">`
-    + `<span class="ps-current">${ACTIVE_PROFILE.name}</span><span class="ps-arrow" aria-hidden="true">⇄</span><span class="ps-other">${other.name}</span></button>`;
+/** Logo du profil actif ; le toucher bascule vers l'autre profil (barre latérale et en-tête mobile). */
+function brandHtml() {
+  const other = otherProfile(), b = ACTIVE_PROFILE.brand;
+  return `<button class="brand-btn" type="button" onclick="switchProfile()" title="Passer au profil de ${other.name}" aria-label="${b} — passer au profil de ${other.name}">`
+    + `<span class="brand-mark" aria-hidden="true">${b.charAt(0)}</span><span class="brand-name" aria-hidden="true">${b}<i>.</i></span></button>`;
 }
 
 /* ---------- Premier lancement, installation, stockage durable ---------- */
@@ -144,7 +148,7 @@ function askProfileIfNew() {
   const box = document.createElement('div');
   box.className = 'welcome';
   box.innerHTML = `<div class="welcome-card" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
-    <h2 id="welcomeTitle">Qui utilise ZCRT ?</h2><p>Sur cet appareil. Tu pourras changer à tout moment avec le bouton à côté du logo.</p>
+    <h2 id="welcomeTitle">Qui utilise ZCRT ?</h2><p>Sur cet appareil. Tu pourras changer à tout moment en touchant le logo.</p>
     <div class="welcome-choices">${Object.values(ZCRT_PROFILES).map(p => `<button type="button" data-profile="${p.id}">${p.name}</button>`).join('')}</div></div>`;
   box.addEventListener('click', e => {
     const b = e.target.closest('[data-profile]');
