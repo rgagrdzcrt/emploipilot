@@ -208,6 +208,39 @@
       "location": "Paris",
       "radius": "26",
       "maxPages": 3
+    },
+    {
+      "name": "serveur · Paris",
+      "enabled": true,
+      "category": "restauration",
+      "keywords": "serveur serveuse",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 3
+    },
+    {
+      "name": "chef de rang · Paris",
+      "enabled": true,
+      "category": "restauration",
+      "keywords": "chef de rang",
+      "location": "Paris",
+      "radius": "26"
+    },
+    {
+      "name": "barista · Paris",
+      "enabled": true,
+      "category": "restauration",
+      "keywords": "barista",
+      "location": "Paris",
+      "radius": "26"
+    },
+    {
+      "name": "serveur · Bondy",
+      "enabled": true,
+      "category": "restauration",
+      "keywords": "serveur serveuse",
+      "location": "Bondy",
+      "radius": "26"
     }
   ],
   "franceTravail": {
@@ -234,6 +267,12 @@
         "enabled": true,
         "category": "vente",
         "keywords": "vendeur en boutique, conseiller de vente en magasin, vendeur multimédia, vendeur téléphonie, vendeur prêt-à-porter"
+      },
+      {
+        "name": "restauration",
+        "enabled": true,
+        "category": "restauration",
+        "keywords": "serveur, serveuse, chef de rang, runner, barista"
       }
     ]
   },
@@ -244,7 +283,7 @@
     "distance": 25,
     "resultsPerPage": 50,
     "maxPages": 1,
-    "maxRequestsPerRun": 18,
+    "maxRequestsPerRun": 22,
     "queries": [
       {
         "name": "magasinier · Bondy",
@@ -389,6 +428,38 @@
         "keywords": "conseiller vente",
         "titleOnly": true,
         "location": "Paris"
+      },
+      {
+        "name": "serveur · Paris",
+        "enabled": true,
+        "category": "restauration",
+        "keywords": "serveur",
+        "titleOnly": true,
+        "location": "Paris"
+      },
+      {
+        "name": "chef de rang · Paris",
+        "enabled": true,
+        "category": "restauration",
+        "keywords": "chef de rang",
+        "titleOnly": true,
+        "location": "Paris"
+      },
+      {
+        "name": "barista · Paris",
+        "enabled": true,
+        "category": "restauration",
+        "keywords": "barista",
+        "titleOnly": true,
+        "location": "Paris"
+      },
+      {
+        "name": "serveur · Bondy",
+        "enabled": true,
+        "category": "restauration",
+        "keywords": "serveur",
+        "titleOnly": true,
+        "location": "Bondy"
       }
     ],
     "maxDaysOld": 15
@@ -415,6 +486,13 @@
         "enabled": true,
         "category": "vente",
         "keywords": "vendeur en boutique conseiller de vente",
+        "location": "Paris, France"
+      },
+      {
+        "name": "restauration",
+        "enabled": true,
+        "category": "restauration",
+        "keywords": "serveur chef de rang barista",
         "location": "Paris, France"
       }
     ]

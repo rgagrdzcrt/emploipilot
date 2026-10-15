@@ -11,11 +11,12 @@
  * déclarer des fonctions ; pilotInit() est appelé à la fin du script principal.
  */
 
-const CATS = ['stock', 'rayon', 'vente'];
-const CAT_LABELS = { stock: 'Stock & logistique', rayon: 'Magasins & grande distribution', vente: 'Vente' };
+// Métiers du profil actif (profiles.js).
+const CATS = ACTIVE_PROFILE.cats;
+const CAT_LABELS = Object.fromEntries(CATS.map(c => [c, CAT_INFO[c].label]));
 const RELANCE_DAYS = 7;
 
-const DEFAULT_TEMPLATES = {
+const RYAN_TEMPLATES = {
   stock: `Objet : candidature au poste de {poste}
 
 Madame, Monsieur,
@@ -69,6 +70,7 @@ Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distin
 {prenom} {nom}
 {telephone} — {email}`,
 };
+const DEFAULT_TEMPLATES = ACTIVE_PROFILE.templates || RYAN_TEMPLATES;
 
 const INFO_FIELDS = [
   ['prenom', 'Prénom'], ['nom', 'Nom'], ['telephone', 'Téléphone'], ['email', 'E-mail'],
@@ -79,12 +81,12 @@ const DEFAULT_INFOS = { disponibilite: 'immédiatement' };
 
 function templatesOf() { return { ...DEFAULT_TEMPLATES, ...(profile.templates || {}) }; }
 function infosOf() { return { ...DEFAULT_INFOS, ...(profile.infos || {}) }; }
-function cvOf(cat) { return (profile.cv || {})[cat] || ''; }
+function cvOf(cat) { return (profile.cv || {})[cat] || (ACTIVE_PROFILE.cv || {})[cat] || ''; }
 
 function jobCategory(o) {
   if (CATS.includes(o.category)) return o.category;
   const c = categoryOf(o);
-  return CATS.includes(c) ? c : 'stock';
+  return CATS.includes(c) ? c : CATS[0];
 }
 
 function cleanTitle(t) {
@@ -204,7 +206,8 @@ function tooOld(o) {
   const d = parseDate(offerDate(o));
   return !!d && Date.now() - d.getTime() > MAX_OFFER_AGE_DAYS * 864e5;
 }
-const DEFAULT_HIDDEN_TYPES = ['luxe', 'bouche', 'cosmetique', 'animalerie', 'auto', 'cariste', 'weekend', 'caisse', 'direction'];
+const DEFAULT_HIDDEN_TYPES = ACTIVE_PROFILE.hiddenTypes
+  || ['luxe', 'bouche', 'cosmetique', 'animalerie', 'auto', 'cariste', 'weekend', 'caisse', 'direction'];
 
 function hiddenTypes() { return Array.isArray(profile.hiddenTypes) ? profile.hiddenTypes : DEFAULT_HIDDEN_TYPES; }
 
@@ -354,8 +357,9 @@ function pilotList(mode) {
   const wanted = mode === 'triage' ? 'À examiner' : 'À postuler';
   const hideExcluded = document.getElementById('hideExcluded')?.checked;
   // Mêmes doublons retirés que dans la liste des offres.
+  // Seulement les métiers du profil actif (l'autre profil a ses propres offres dans offres.json).
   return (document.getElementById('hideDuplicates')?.checked ? dedupe(offers) : offers)
-    .filter(o => (o.status || 'À examiner') === wanted && !(hideExcluded && isExcluded(o)))
+    .filter(o => (o.status || 'À examiner') === wanted && CATS.includes(categoryOf(o)) && !(hideExcluded && isExcluded(o)))
     .sort((a, b) => score(b) - score(a));
 }
 
@@ -610,10 +614,12 @@ function saveProfileState() {
 
 /* ---------- Synchronisation téléphone / PC (gist GitHub secret) ---------- */
 
-const SYNC_TOKEN = 'zcrt_sync_token', SYNC_GIST = 'zcrt_sync_gist', SYNC_CACHE = 'zcrt_sync_cache';
-const SYNC_FILE = 'zcrt-suivi.json';
+// Chaque profil a son jeton, son gist et son fichier : même avec un seul compte GitHub,
+// les suivis de Ryan et de Zia ne se mélangent pas.
+const SYNC_TOKEN = nsKey('zcrt_sync_token'), SYNC_GIST = nsKey('zcrt_sync_gist'), SYNC_CACHE = nsKey('zcrt_sync_cache');
+const SYNC_FILE = ACTIVE_PROFILE.syncFile;
 // Écrit par mail.py (tri Gmail) dans le même gist : liste des e-mails triés.
-const MAIL_FILE = 'zcrt-mail.json', MAIL_CACHE = 'zcrt_mail_cache';
+const MAIL_FILE = 'zcrt-mail.json', MAIL_CACHE = nsKey('zcrt_mail_cache');
 const IGNORED_KEEP_DAYS = 90;
 const SYNC_MIN_INTERVAL = 15000;           // au plus une synchro automatique toutes les 15 s
 const SYNC_BREAKER = { max: 40, windowMs: 10 * 60000, pauseMs: 15 * 60000 };
@@ -685,7 +691,7 @@ async function findGist() {
   const created = await gh('/gists', {
     method: 'POST',
     body: JSON.stringify({
-      description: 'ZCRT — suivi des candidatures (synchronisation)',
+      description: 'ZCRT — suivi des candidatures de ' + ACTIVE_PROFILE.name + ' (synchronisation)',
       public: false,
       files: { [SYNC_FILE]: { content: JSON.stringify(syncState()) } },
     }),
@@ -866,7 +872,7 @@ function mottos() {
   const g = goalOf();
   return [
     'Personne ne viendra te chercher. Postule.',
-    'Tu n’es pas fatigué. Tu es à 40 % de ce que tu peux donner.',
+    `Tu n’es pas ${fem('fatigué', 'fatiguée')}. Tu es à 40 % de ce que tu peux donner.`,
     'Le refus d’hier, c’est l’entraînement d’aujourd’hui.',
     'Fais ce que tu n’as pas envie de faire. C’est là que tout change.',
     'Une candidature de plus. Puis encore une.',
@@ -876,12 +882,12 @@ function mottos() {
     'Personne ne se souviendra de tes excuses.',
     'Tu as survécu à toutes tes pires journées. Celle-ci aussi.',
     'Le CV ne s’envoie pas tout seul.',
-    'Sois plus dur que la situation.',
+    `Sois plus ${fem('dur', 'dure')} que la situation.`,
     'Tes objectifs se fichent de ton humeur.',
     'Aujourd’hui, tu fais ce que les autres repoussent à demain.',
     'Gagne la matinée, et tu gagnes la journée.',
     'Le silence d’un recruteur n’est pas une réponse. Relance.',
-    'Dur aujourd’hui, fier demain.',
+    `${fem('Dur', 'Dure')} aujourd’hui, ${fem('fier', 'fière')} demain.`,
     'Le bon moment ne vient pas. Il se crée.',
     'Ton futur employeur est quelque part dans cette liste. Trouve-le.',
     'La douleur passe. Le regret reste. Postule.',

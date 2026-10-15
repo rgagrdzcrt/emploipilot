@@ -224,7 +224,7 @@ const UI_MAIL_LABELS = {
 let uiMailFilter = 'all';
 
 function uiMailData() {
-  try { return JSON.parse(localStorage.getItem('zcrt_mail_cache') || '{}') || {}; } catch (e) { return {}; }
+  try { return JSON.parse(localStorage.getItem(MAIL_CACHE) || '{}') || {}; } catch (e) { return {}; }
 }
 
 function uiRenderMails() {

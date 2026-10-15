@@ -71,10 +71,23 @@ CATEGORY_RE = {
         r"|[eé]quipier\w*\s+(?:de\s+)?vente|employ[eé]\w*.{0,20}points?\s+de\s+ventes?",
         re.I,
     ),
+    # Profil de Zia : service en salle et café (pas la cuisine ni la restauration rapide).
+    "restauration": re.compile(
+        r"serveu(?:r|se)|\brunner\b|commis de salle|chef(?:fe)? de rang|ma[iî]tre d['’]h[oô]tel"
+        r"|barista|barman|barmaid|limonadi"
+        r"|h[oô]te(?:sse)?\s+d['’]accueil.{0,25}(?:restau|brasserie|caf[eé])"
+        r"|[eé]quipier\w*\s+(?:de\s+)?salle|employ[eé]\w*\s+(?:polyvalent\w*\s+)?(?:de\s+)?(?:salle|caf[eé])",
+        re.I,
+    ),
 }
 CATEGORIES = set(CATEGORY_RE)
-# Métiers de l'informatique dont le titre contient « stockage » ou « stock ».
-NOT_TARGET_RE = re.compile(r"\bcloud\b|\bsre\b|devops|backup|sauvegarde|data ?cent(?:er|re)|stockage de donn[eé]es", re.I)
+# Métiers de l'informatique dont le titre contient « stockage », « stock » ou « serveur ».
+NOT_TARGET_RE = re.compile(
+    r"\bcloud\b|\bsre\b|devops|backup|sauvegarde|data ?cent(?:er|re)|stockage de donn[eé]es"
+    r"|serveurs?\s+(?:informatique|linux|windows|web|d['’]applications?)|administrat\w+\s+(?:syst|r[eé]seau|serveur)"
+    r"|(?:technicien|ing[eé]nieur)\w*\s+(?:syst|r[eé]seau|serveur|informatique)",
+    re.I,
+)
 
 PLACEHOLDER_COMPANY = "Entreprise à vérifier"
 PLACEHOLDER_LOCATION = "Lieu à vérifier dans l’annonce"
@@ -2038,7 +2051,12 @@ ALERT_MAX_TRAJET = 60
 ALERT_ZONES_TOUJOURS = {"75", "93"}
 
 
+ALERT_CATEGORIES = {"stock", "rayon", "vente"}  # l'alerte ntfy est celle du profil de Ryan
+
+
 def alert_visible(offer):
+    if offer.get("category") not in ALERT_CATEGORIES:
+        return False
     if ALERT_HIDDEN_TITLE_RE.search(offer.get("title") or ""):
         return False
     if offer.get("dept") in ALERT_ZONES_TOUJOURS:
