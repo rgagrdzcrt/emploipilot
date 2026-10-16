@@ -446,6 +446,13 @@
   "min": 88,
   "minAt": "2026-10-13"
  },
+ "enghien-les-bains||95": {
+  "dept": "95",
+  "km": 15.1,
+  "label": "Enghien-les-Bains",
+  "lat": 48.97097,
+  "lon": 2.30536
+ },
  "ermont||95": {
   "dept": "95",
   "km": 19.2,
@@ -922,6 +929,13 @@
   "lon": 2.19375,
   "min": 93,
   "minAt": "2026-10-15"
+ },
+ "montmagny||95": {
+  "dept": "95",
+  "km": 12.4,
+  "label": "Montmagny",
+  "lat": 48.96767,
+  "lon": 2.34704
  },
  "montmagny||IDF": {
   "dept": "95",
