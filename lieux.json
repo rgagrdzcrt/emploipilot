@@ -462,6 +462,13 @@
   "lat": 48.79381,
   "lon": 2.99964
  },
+ "ferrières-en-brie||": {
+  "dept": "77",
+  "km": 18.5,
+  "label": "Ferrières-en-Brie",
+  "lat": 48.82469,
+  "lon": 2.70772
+ },
  "ferrières-en-brie||77": {
   "dept": "77",
   "km": 18.5,
@@ -584,13 +591,6 @@
   "minAt": "2026-10-15"
  },
  "herblay-sur-seine||95": {
-  "dept": "95",
-  "km": 26.7,
-  "label": "Herblay-sur-Seine",
-  "lat": 49.00406,
-  "lon": 2.15245
- },
- "herblay||95": {
   "dept": "95",
   "km": 26.7,
   "label": "Herblay-sur-Seine",
@@ -1710,15 +1710,6 @@
   "lon": 2.57029,
   "min": 88,
   "minAt": "2026-10-12"
- },
- "vémars||95": {
-  "dept": "95",
-  "km": 19.4,
-  "label": "Vémars",
-  "lat": 49.06907,
-  "lon": 2.57029,
-  "min": 88,
-  "minAt": "2026-10-15"
  },
  "égly||IDF": {
   "dept": "91",
