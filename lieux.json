@@ -462,13 +462,6 @@
   "min": 80,
   "minAt": "2026-10-12"
  },
- "faremoutiers||IDF": {
-  "dept": "77",
-  "km": 39.6,
-  "label": "Faremoutiers",
-  "lat": 48.79381,
-  "lon": 2.99964
- },
  "ferrières-en-brie||": {
   "dept": "77",
   "km": 18.5,
@@ -930,13 +923,6 @@
   "min": 93,
   "minAt": "2026-10-15"
  },
- "montmagny||95": {
-  "dept": "95",
-  "km": 12.4,
-  "label": "Montmagny",
-  "lat": 48.96767,
-  "lon": 2.34704
- },
  "montmagny||IDF": {
   "dept": "95",
   "km": 12.4,
@@ -1322,6 +1308,15 @@
   "min": 56,
   "minAt": "2026-10-12"
  },
+ "romainville||93": {
+  "dept": "93",
+  "km": 4.1,
+  "label": "Romainville",
+  "lat": 48.88408,
+  "lon": 2.43806,
+  "min": 48,
+  "minAt": "2026-10-16"
+ },
  "rosny-sous-bois|93110|93": {
   "km": 3.3,
   "label": "Rosny-sous-Bois",
@@ -1388,6 +1383,13 @@
   "label": "Saint-Gratien",
   "lat": 48.96841,
   "lon": 2.28496
+ },
+ "saint-mandé||94": {
+  "dept": "94",
+  "km": 8.4,
+  "label": "Saint-Mandé",
+  "lat": 48.84153,
+  "lon": 2.41944
  },
  "saint-mard||IDF": {
   "dept": "77",
@@ -1630,7 +1632,9 @@
   "km": 20.7,
   "label": "Villecresnes",
   "lat": 48.72004,
-  "lon": 2.5296
+  "lon": 2.5296,
+  "min": 104,
+  "minAt": "2026-10-16"
  },
  "villejuif||94": {
   "dept": "94",
