@@ -467,7 +467,9 @@
   "km": 18.5,
   "label": "Ferrières-en-Brie",
   "lat": 48.82469,
-  "lon": 2.70772
+  "lon": 2.70772,
+  "min": 93,
+  "minAt": "2026-10-16"
  },
  "ferrières-en-brie||77": {
   "dept": "77",
@@ -1181,7 +1183,9 @@
   "km": 7.8,
   "label": "Paris 20e Arrondissement",
   "lat": 48.86337,
-  "lon": 2.39715
+  "lon": 2.39715,
+  "min": 39,
+  "minAt": "2026-10-16"
  },
  "paris 2e arrondissement|75002|75": {
   "dept": "75",
@@ -1262,13 +1266,6 @@
   "lon": 2.347,
   "min": 50,
   "minAt": "2026-10-12"
- },
- "pierrelaye|95220|95": {
-  "dept": "95",
-  "km": 26.7,
-  "label": "Pierrelaye",
-  "lat": 49.01667,
-  "lon": 2.16232
  },
  "pontault-combault||77": {
   "dept": "77",
@@ -1393,6 +1390,15 @@
   "lon": 2.4918,
   "min": 70,
   "minAt": "2026-10-12"
+ },
+ "saint-ouen-sur-seine||93": {
+  "dept": "93",
+  "km": 11.1,
+  "label": "Saint-Ouen-sur-Seine",
+  "lat": 48.9117,
+  "lon": 2.3334,
+  "min": 56,
+  "minAt": "2026-10-16"
  },
  "saint-ouen||93": {
   "dept": "93",
@@ -1605,6 +1611,13 @@
   "lat": 48.69789,
   "lon": 2.23543
  },
+ "villecresnes||94": {
+  "dept": "94",
+  "km": 20.7,
+  "label": "Villecresnes",
+  "lat": 48.72004,
+  "lon": 2.5296
+ },
  "villejuif||94": {
   "dept": "94",
   "km": 15.3,
@@ -1710,6 +1723,15 @@
   "lon": 2.57029,
   "min": 88,
   "minAt": "2026-10-12"
+ },
+ "vémars||95": {
+  "dept": "95",
+  "km": 19.4,
+  "label": "Vémars",
+  "lat": 49.06907,
+  "lon": 2.57029,
+  "min": 88,
+  "minAt": "2026-10-16"
  },
  "égly||IDF": {
   "dept": "91",
