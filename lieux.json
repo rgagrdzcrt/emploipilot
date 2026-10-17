@@ -35,6 +35,15 @@
   "min": 75,
   "minAt": "2026-10-12"
  },
+ "arcueil||94": {
+  "dept": "94",
+  "km": 15.6,
+  "label": "Arcueil",
+  "lat": 48.80518,
+  "lon": 2.33347,
+  "min": 67,
+  "minAt": "2026-10-17"
+ },
  "argenteuil||95": {
   "km": 18.0,
   "label": "Argenteuil",
@@ -161,14 +170,14 @@
   "min": 79,
   "minAt": "2026-10-12"
  },
- "bry-sur-marne||94": {
-  "dept": "94",
-  "km": 7.7,
-  "label": "Bry-sur-Marne",
-  "lat": 48.83925,
-  "lon": 2.52319,
-  "min": 59,
-  "minAt": "2026-10-13"
+ "bourg-la-reine||92": {
+  "dept": "92",
+  "km": 18.5,
+  "label": "Bourg-la-Reine",
+  "lat": 48.77989,
+  "lon": 2.31641,
+  "min": 70,
+  "minAt": "2026-10-17"
  },
  "bussy-saint-georges||77": {
   "dept": "77",
@@ -453,6 +462,15 @@
   "lat": 48.97097,
   "lon": 2.30536
  },
+ "epinay-sur-seine||93": {
+  "dept": "93",
+  "km": 13.6,
+  "label": "Épinay-sur-Seine",
+  "lat": 48.95522,
+  "lon": 2.31712,
+  "min": 67,
+  "minAt": "2026-10-17"
+ },
  "ermont||95": {
   "dept": "95",
   "km": 19.2,
@@ -538,6 +556,13 @@
   "lon": 2.54565,
   "min": 43,
   "minAt": "2026-10-12"
+ },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829
  },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
@@ -929,6 +954,13 @@
   "lon": 2.19375,
   "min": 93,
   "minAt": "2026-10-15"
+ },
+ "montmagny||95": {
+  "dept": "95",
+  "km": 12.4,
+  "label": "Montmagny",
+  "lat": 48.96767,
+  "lon": 2.34704
  },
  "montmagny||IDF": {
   "dept": "95",
@@ -1493,6 +1525,22 @@
   "min": 84,
   "minAt": "2026-10-13"
  },
+ "sevran||93": {
+  "dept": "93",
+  "km": 5.1,
+  "label": "Sevran",
+  "lat": 48.93797,
+  "lon": 2.53129
+ },
+ "soisy-sous-montmorency||95": {
+  "dept": "95",
+  "km": 16.4,
+  "label": "Soisy-sous-Montmorency",
+  "lat": 48.98854,
+  "lon": 2.3017,
+  "min": 85,
+  "minAt": "2026-10-17"
+ },
  "stains||93": {
   "dept": "93",
   "km": 9.7,
@@ -1618,14 +1666,6 @@
   "lon": 2.36163,
   "min": 130,
   "minAt": "2026-10-12"
- },
- "villaines-sous-bois|79160|95": {
-  "km": 21.4,
-  "label": "Villaines-sous-Bois",
-  "lat": 49.07596,
-  "lon": 2.3561,
-  "min": 105,
-  "minAt": "2026-10-13"
  },
  "villebon-sur-yvette||IDF": {
   "dept": "91",
