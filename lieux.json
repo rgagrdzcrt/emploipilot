@@ -557,13 +557,6 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
- },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -954,13 +947,6 @@
   "lon": 2.19375,
   "min": 93,
   "minAt": "2026-10-15"
- },
- "montmagny||95": {
-  "dept": "95",
-  "km": 12.4,
-  "label": "Montmagny",
-  "lat": 48.96767,
-  "lon": 2.34704
  },
  "montmagny||IDF": {
   "dept": "95",
@@ -1524,13 +1510,6 @@
   "lon": 2.78475,
   "min": 84,
   "minAt": "2026-10-13"
- },
- "sevran||93": {
-  "dept": "93",
-  "km": 5.1,
-  "label": "Sevran",
-  "lat": 48.93797,
-  "lon": 2.53129
  },
  "soisy-sous-montmorency||95": {
   "dept": "95",
