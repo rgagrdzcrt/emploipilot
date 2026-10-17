@@ -462,6 +462,13 @@
   "min": 80,
   "minAt": "2026-10-12"
  },
+ "faremoutiers||IDF": {
+  "dept": "77",
+  "km": 39.6,
+  "label": "Faremoutiers",
+  "lat": 48.79381,
+  "lon": 2.99964
+ },
  "ferrières-en-brie||": {
   "dept": "77",
   "km": 18.5,
