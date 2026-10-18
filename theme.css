@@ -633,6 +633,9 @@ button.secondary kbd, button.ghost kbd { background: var(--surface-3); color: va
 .touch .chip { min-height: 36px; padding: 6px 12px; }
 .touch .status-select, .touch .filters select, .touch .sort select { min-height: 40px; }
 
+/* Fenêtre « Préparer » / tri : pourquoi ce score d'adéquation avec le CV. */
+.fit-why { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+
 /* Onglet « À postuler » : filtres par métier au-dessus de la liste. */
 .queue-filters { margin-bottom: 14px; }
 

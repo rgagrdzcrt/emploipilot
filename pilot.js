@@ -148,35 +148,90 @@ Bien cordialement,
 ${signature}`.trim();
 }
 
-/* ---------- Score de priorité ---------- */
+/* ---------- Score : adéquation entre l'offre et le CV du métier ----------
+ * Seuls comptent l'intitulé, les compétences et les exigences de l'annonce, comparés
+ * au CV du profil (profiles.js, « fit »). Zone, distance, contrat et fraîcheur n'y
+ * entrent pas. Sur 100 :
+ *   intitulé déjà occupé (jusqu'à 40) + compétences retrouvées (jusqu'à 35)
+ *   + atouts (enseigne connue, langue) (jusqu'à 25) − exigences non remplies. */
 
-const ZONE_ORDERS = {
-  'Paris 10e et alentours → Paris → Bondy/93 → Île-de-France': ['p10', '75', '93', 'idf'],
-  'Paris → Bondy/93 → Île-de-France': ['75', '93', 'idf'],
-  'Bondy/93 → Paris → Île-de-France': ['93', '75', 'idf'],
-};
-const NEAR_10E = /(^|[\s,(])(pantin|aubervilliers|saint-denis)\b/i;
+function fitText(s) {
+  return ' ' + String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9+]+/g, ' ').trim() + ' ';
+}
+function fitHas(text, phrase) { return text.includes(' ' + phrase + ' ') || text.includes(' ' + phrase + 's '); }
 
-function zoneKey(o) {
-  const d = deptOf(o), l = o.location || '';
-  if ((d === '75' && /(^|\D)(2|9|10|11|19)\s*(e|er|ème|eme)\b/i.test(l)) || NEAR_10E.test(l)) return 'p10';
-  if (d === '75') return '75';
-  if (d === '93') return '93';
-  return d ? 'idf' : '';
+const FIT_LANGS = ['anglais', 'espagnol', 'allemand', 'italien', 'portugais', 'arabe', 'chinois', // pas « mandarin » : souvent l'hôtel Mandarin Oriental
+  'japonais', 'russe', 'coreen', 'neerlandais'];
+const FIT_OPTIONAL = /atout|apprecie|un plus|souhaite|serait un|bonus/;
+const FIT_LINK_WORDS = ['de', 'des', 'du', 'd', 'en', 'la', 'le', 'les', 'a'];
+const fitCache = new Map();
+
+function cvFit(o) {
+  const cat = jobCategory(o);
+  const key = o.id + '|' + cat + '|' + (o.title || '').length + '|' + (o.notes || '').length;
+  if (fitCache.has(key)) return fitCache.get(key);
+  const cv = ACTIVE_PROFILE.fit, c = cv && cv.cats[cat];
+  if (!c) return { score: 0, plus: [], minus: [] };
+  const title = fitText(o.title), body = fitText((o.title || '') + ' ' + (o.notes || ''));
+  const plus = [], minus = [];
+  let s = 0;
+
+  // 1. Intitulé : poste déjà occupé (40), sinon mots du métier présents (jusqu'à 25).
+  // « Conseiller.ère de vente », « Préparateur - Préparatrice de commandes » : tous les mots du poste suffisent.
+  const sameTitle = c.titles.find(t => fitHas(title, t)
+    || t.split(' ').filter(w => !FIT_LINK_WORDS.includes(w)).every(w => fitHas(title, w)));
+  if (sameTitle) { s += 40; plus.push('poste déjà occupé (' + sameTitle + ')'); }
+  else {
+    const words = new Set(c.titles.flatMap(t => t.split(' ')).filter(w => w.length >= 5));
+    const found = [...words].filter(w => fitHas(title, w));
+    if (found.length) { s += Math.min(25, 12 * found.length); plus.push('intitulé proche (' + found.slice(0, 2).join(', ') + ')'); }
+  }
+
+  // 2. Compétences du CV retrouvées dans l'annonce (35 points à partir de 5).
+  const skills = c.skills.filter(k => fitHas(body, k));
+  s += Math.round(35 * Math.min(1, skills.length / 5));
+  if (skills.length) plus.push(skills.length + ' compétence(s) du CV : ' + skills.slice(0, 4).join(', '));
+
+  // 3. Atouts : enseigne où le profil a travaillé, langue demandée et parlée.
+  const brand = c.brands.find(b => fitHas(fitText(o.company), b) || fitHas(body, b));
+  if (brand) { s += 10; plus.push('enseigne connue (' + brand + ')'); }
+  const langs = FIT_LANGS.filter(l => fitHas(body, l) || (l === 'anglais' && /\b(english|bilingue)\b/.test(body)));
+  const spoken = langs.filter(l => cv.languages.includes(l));
+  if (spoken.length) { s += 15; plus.push('langue demandée : ' + spoken.join(', ')); }
+
+  // 4. Exigences non remplies (sauf si l'annonce les présente comme un simple atout).
+  const required = (re) => {
+    const m = body.match(re);
+    if (!m) return false;
+    const around = body.slice(Math.max(0, m.index - 60), m.index + m[0].length + 60);
+    return !FIT_OPTIONAL.test(around);
+  };
+  const exp = body.match(/ (\d{1,2}) (?:a \d{1,2} )?ans? (?:minimum )?(?:d )?experience| experience (?:de |d au moins |minimum (?:de )?)?(\d{1,2}) ans? /);
+  const years = exp ? Number(exp[1] || exp[2]) : 0;
+  if (years > c.years) { s -= 15; minus.push(years + ' ans d’expérience demandés'); }
+  const missing = langs.filter(l => !cv.languages.includes(l) && required(new RegExp(' ' + l + ' ')));
+  if (missing.length) { s -= 15; minus.push('langue non parlée : ' + missing.join(', ')); }
+  if (!cv.caces && required(/ caces /)) { s -= 15; minus.push('CACES demandé'); }
+  if (cv.permis === false && required(/ permis b | vehicule /)) { s -= 10; minus.push('permis demandé'); }
+  if (!cv.management && / (responsable|manager|directeur|directrice|chef d equipe|adjoint) /.test(title)) {
+    s -= 15; minus.push('poste d’encadrement');
+  }
+  if (cv.degree < 5 && required(/ (bac ?\+ ?5|master) /)) { s -= 10; minus.push('bac + 5 demandé'); }
+
+  const result = { score: Math.max(0, Math.min(100, s)), plus, minus };
+  fitCache.set(key, result);
+  return result;
 }
 
-function score(o) {
-  const order = ZONE_ORDERS[profile.priority] || Object.values(ZONE_ORDERS)[0];
-  let z = zoneKey(o);
-  if (z === 'p10' && !order.includes('p10')) z = NEAR_10E.test(o.location || '') ? '93' : '75';
-  const zi = order.indexOf(z);
-  let s = zi >= 0 ? [40, 30, 20, 10][zi] : 5;
-  if (typeof o.km === 'number') s += o.km <= 8 ? 8 : o.km <= 15 ? 4 : o.km > 40 ? -6 : 0;
-  s += { CDI: 15, CDD: 10, 'Intérim': 8 }[o.contract] || 4;
-  const d = parseDate(offerDate(o) || o.created);
-  const days = d ? (Date.now() - d.getTime()) / 864e5 : 99;
-  s += days <= 2 ? 20 : days <= 7 ? 12 : days <= 14 ? 6 : 0;
-  return s;
+/** Score utilisé pour trier (« Tri : adéquation ») et affiché dans « Préparer ». */
+function score(o) { return cvFit(o).score; }
+
+/** Ligne d'explication du score (points forts et points à vérifier). */
+function fitWhy(o) {
+  const f = cvFit(o);
+  const parts = [...f.plus.map(p => '✓ ' + p), ...f.minus.map(m => '⚠ ' + m)];
+  return parts.length ? parts.join(' · ') : 'Peu de points communs avec le CV.';
 }
 
 /* ---------- Types de postes à masquer (réglables dans Critères & modèles) ---------- */
@@ -459,9 +514,10 @@ function drawPilot() {
   }
   const cat = jobCategory(o);
   const head = `<div class="pilot-head"><span class="pill blue">${title} · ${pilot.i + 1} / ${total}</span>
-    <span class="pill">${esc(CAT_LABELS[cat])}</span><span class="pill">Score ${score(o)}</span>
+    <span class="pill">${esc(CAT_LABELS[cat])}</span><span class="pill fit-pill" title="${esc(fitWhy(o))}">Adéquation CV ${score(o)} %</span>
     <button class="ghost" data-act="close">Fermer<span class="key-hint"> (Échap)</span></button></div>
-    <h2>${esc(o.title)}</h2><div class="job-meta">${metaLine(o)}</div>`;
+    <h2>${esc(o.title)}</h2><div class="job-meta">${metaLine(o)}</div>
+    <p class="fit-why">${esc(fitWhy(o))}</p>`;
 
   if (pilot.mode === 'triage') {
     card.innerHTML = `${head}

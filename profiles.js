@@ -28,6 +28,44 @@ const ZCRT_PROFILES = {
     cats: ['stock', 'rayon', 'vente'],
     mails: true,
     feminine: false,
+    // Adéquation offre / CV (pilot.js, cvFit) : d'après cv/cv_stock.html, cv_rayon.html, cv_vente.html.
+    fit: {
+      languages: ['anglais', 'espagnol'],
+      degree: 3,          // Bachelor (bac + 3)
+      permis: true,
+      caces: false,
+      management: true,   // chef de rayon, responsable logistique (équipe de 6)
+      cats: {
+        stock: {
+          years: 4,
+          titles: ['magasinier', 'gestionnaire de stock', 'gestionnaire des stocks', 'stockiste', 'preparateur de commandes',
+            'agent logistique', 'agent de logistique', 'coordinateur logistique', 'responsable logistique', 'receptionnaire',
+            'approvisionneur', 'logisticien', 'employe logistique', 'assistant logistique'],
+          skills: ['reception', 'controle', 'inventaire', 'gestion des stocks', 'stock', 'preparation', 'expedition', 'commande',
+            'fournisseur', 'approvisionnement', 'wms', 'gold', 'excel', 'reserve', 'encadrement', 'hygiene', 'securite',
+            'logistique', 'reassort', 'ecart', 'livraison', 'quai', 'emballage', 'colis'],
+          brands: ['darty'],
+        },
+        rayon: {
+          years: 3,
+          titles: ['employe libre service', 'employe de rayon', 'employe commercial', 'mise en rayon', 'chef de rayon',
+            'referent rayon', 'rayonniste', 'rayoniste', 'employe polyvalent', 'reassortisseur', 'employe de magasin'],
+          skills: ['mise en rayon', 'reassort', 'rotation', 'fraicheur', 'fruits et legumes', 'epicerie', 'stock', 'commande',
+            'reception', 'plv', 'etiquetage', 'accueil', 'conseil', 'hygiene', 'frais', 'casse', 'facing', 'balisage',
+            'merchandising', 'grande distribution', 'supermarche', 'hypermarche'],
+          brands: ['monoprix', 'leclerc'],
+        },
+        vente: {
+          years: 3,
+          titles: ['conseiller de vente', 'conseillere de vente', 'vendeur', 'vendeuse', 'conseiller client', 'sales advisor',
+            'sales associate', 'conseiller commercial', 'conseiller vendeur'],
+          skills: ['accueil', 'conseil', 'besoin', 'vente additionnelle', 'service', 'objectif', 'merchandising', 'encaissement',
+            'caisse', 'reassort', 'multimedia', 'telephonie', 'informatique', 'electromenager', 'mode', 'pret a porter',
+            'cabine', 'clientele internationale', 'fidelisation', 'vitrine', 'collection'],
+          brands: ['darty', 'cos'],
+        },
+      },
+    },
   },
   zia: {
     id: 'zia',
@@ -44,6 +82,44 @@ const ZCRT_PROFILES = {
       + 'Serveuse, chef de rang, runner, barista, café',
     priority: 'Paris → Bondy/93 → Île-de-France',
     hiddenTypes: ['auto', 'cariste', 'direction', 'animalerie'],
+    // Adéquation offre / CV : d'après ses CV vente (COS, H&M) et restauration (chef de rang).
+    fit: {
+      languages: ['anglais'],   // espagnol scolaire : pas compté
+      degree: 3,                // licence
+      permis: null,             // non précisé sur ses CV : jamais pénalisé
+      caces: false,
+      management: false,
+      cats: {
+        rayon: {
+          years: 3,
+          titles: ['employee libre service', 'employe libre service', 'hotesse de caisse', 'hote de caisse', 'caissiere',
+            'employee de rayon', 'employe de rayon', 'mise en rayon', 'equipiere', 'employee polyvalente', 'employe polyvalent',
+            'employee commerciale', 'employe commercial'],
+          skills: ['reassort', 'mise en rayon', 'reception', 'livraison', 'inventaire', 'encaissement', 'caisse', 'merchandising',
+            'accueil', 'presentation', 'stock', 'client', 'etiquetage', 'facing', 'reapprovisionnement'],
+          brands: ['h m', 'cos'],
+        },
+        vente: {
+          years: 3,
+          titles: ['conseillere de vente', 'conseiller de vente', 'vendeuse', 'vendeur', 'sales advisor', 'sales associate',
+            'conseillere clientele', 'conseiller client', 'styliste conseil', 'conseillere mode', 'caissiere', 'caissier',
+            'hotesse de caisse', 'vendeuse caissiere'],
+          skills: ['accueil', 'accompagnement', 'conseil', 'retour', 'echange', 'commande', 'reclamation', 'visual merchandising',
+            'merchandising', 'reception', 'livraison', 'inventaire', 'encaissement', 'caisse', 'reassort', 'fidelisation',
+            'vente additionnelle', 'objectif', 'pret a porter', 'mode', 'textile', 'collection', 'clientele internationale'],
+          brands: ['cos', 'h m'],
+        },
+        restauration: {
+          years: 4,
+          titles: ['chef de rang', 'cheffe de rang', 'serveuse', 'serveur', 'runner', 'commis de salle', 'barista', 'barmaid',
+            'barman', 'maitre d hotel', 'hotesse d accueil', 'equipiere de salle', 'employee de salle'],
+          skills: ['service en salle', 'salle', 'accueil', 'prise de commande', 'commande', 'vin', 'oenologie', 'sommellerie',
+            'cocktail', 'bar', 'cave', 'encaissement', 'fort debit', 'gastronomique', 'bistronomie', 'brasserie', 'bistrot',
+            'restaurant', 'carte', 'dressage', 'mise en place', 'cafe'],
+          brands: ['lagano', 'clown bar', 'pouliche', 'del arte'],
+        },
+      },
+    },
     cv: { rayon: 'CV_ZIA_CARTIER_vente.pdf', vente: 'CV_ZIA_CARTIER_vente.pdf', restauration: 'CV_ZIA_CARTIER_restauration.pdf' },
     templates: {
       rayon: `Objet : candidature au poste de {poste}

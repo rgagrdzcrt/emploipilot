@@ -211,7 +211,7 @@ function uiRenderQueue() {
       + CATS.map(c => `<button class="seg${current === c ? ' active' : ''}" data-queue-cat="${c}">${ic(CAT_INFO[c].icon)}${uiEsc(CAT_INFO[c].label)} <b>${all.filter(o => categoryOf(o) === c).length}</b></button>`).join('');
   }
   const summary = document.getElementById('queueSummary');
-  const order = typeof queueSort === 'function' && queueSort() === 'date' ? 'les plus récentes en premier' : 'les mieux placées en premier';
+  const order = typeof queueSort === 'function' && queueSort() === 'date' ? 'les plus récentes en premier' : 'les plus adaptées à ton CV en premier';
   if (summary) summary.textContent = list.length ? list.length + ' offre(s) à postuler, ' + order + '.' : '';
   const start = document.getElementById('queueStart');
   if (start) start.disabled = !list.length;
