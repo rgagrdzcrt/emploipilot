@@ -624,6 +624,13 @@
   "lat": 49.00406,
   "lon": 2.15245
  },
+ "herblay||95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Herblay-sur-Seine",
+  "lat": 49.00406,
+  "lon": 2.15245
+ },
  "issy-les-moulineaux||92": {
   "km": 18.5,
   "label": "Issy-les-Moulineaux",
@@ -829,14 +836,6 @@
   "lat": 48.8334,
   "lon": 2.63607,
   "min": 75,
-  "minAt": "2026-10-13"
- },
- "louvres||95": {
-  "km": 16.0,
-  "label": "Louvres",
-  "lat": 49.04735,
-  "lon": 2.50393,
-  "min": 85,
   "minAt": "2026-10-13"
  },
  "magny-le-hongre|77700|77": {
