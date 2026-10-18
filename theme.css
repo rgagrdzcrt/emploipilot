@@ -636,6 +636,8 @@ button.secondary kbd, button.ghost kbd { background: var(--surface-3); color: va
 /* Fenêtre de la file / du tri : pastille métier cliquable (menu). */
 .pill-select { position: relative; padding: 0; cursor: pointer; }
 .pill-select select { min-height: 0; padding: 4px 26px 4px 10px; border: 0; border-radius: 999px; background: transparent; color: inherit; font: inherit; font-weight: 600; cursor: pointer; appearance: none; -webkit-appearance: none; }
+/* Liste déroulante des menus : couleurs du thème (sinon fond blanc et texte pâle en mode nuit). */
+select option, select optgroup { background-color: var(--surface); color: var(--ink); }
 .pill-select::after { content: "▾"; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 11px; opacity: .7; }
 .touch .pill-select select { font-size: 16px !important; padding: 6px 28px 6px 12px; }
 
