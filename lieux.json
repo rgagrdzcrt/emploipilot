@@ -522,15 +522,6 @@
   "min": 56,
   "minAt": "2026-10-12"
  },
- "fosses||95": {
-  "dept": "95",
-  "km": 21.8,
-  "label": "Fosses",
-  "lat": 49.09881,
-  "lon": 2.50543,
-  "min": 109,
-  "minAt": "2026-10-13"
- },
  "franconville||95": {
   "km": 21.3,
   "label": "Franconville",
@@ -556,6 +547,13 @@
   "lon": 2.54565,
   "min": 43,
   "minAt": "2026-10-12"
+ },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829
  },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
@@ -618,13 +616,6 @@
   "minAt": "2026-10-15"
  },
  "herblay-sur-seine||95": {
-  "dept": "95",
-  "km": 26.7,
-  "label": "Herblay-sur-Seine",
-  "lat": 49.00406,
-  "lon": 2.15245
- },
- "herblay||95": {
   "dept": "95",
   "km": 26.7,
   "label": "Herblay-sur-Seine",
@@ -838,6 +829,13 @@
   "min": 75,
   "minAt": "2026-10-13"
  },
+ "louvres||95": {
+  "dept": "95",
+  "km": 16.0,
+  "label": "Louvres",
+  "lat": 49.04735,
+  "lon": 2.50393
+ },
  "magny-le-hongre|77700|77": {
   "dept": "77",
   "km": 24.6,
@@ -1043,14 +1041,6 @@
   "lon": 2.48091,
   "min": 54,
   "minAt": "2026-10-15"
- },
- "nogent-sur-seine||": {
-  "km": 7.4,
-  "label": "Nogent-sur-Marne",
-  "lat": 48.83747,
-  "lon": 2.48091,
-  "min": 54,
-  "minAt": "2026-10-13"
  },
  "noisy-le-grand||93": {
   "km": 8.6,
@@ -1544,14 +1534,6 @@
   "lon": 2.21809,
   "min": 65,
   "minAt": "2026-10-12"
- },
- "survilliers|95470|95": {
-  "km": 22.0,
-  "label": "Survilliers",
-  "lat": 49.09802,
-  "lon": 2.53953,
-  "min": 100,
-  "minAt": "2026-10-15"
  },
  "taverny||95": {
   "dept": "95",
