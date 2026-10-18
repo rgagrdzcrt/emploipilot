@@ -114,7 +114,9 @@ function letterPoste(o) {
     .replace(/\(?\b[hfx]\s*\/\s*[hfx](\s*\/\s*[hfx])?\b\)?/gi, ' ')
     // Formes féminines accolées : « Conseiller(e) », « Vendeur.euse », « Conseiller·ère ».
     .replace(/\((e|[eè]re|se|euse|trice|ne)\)/gi, '')
-    .replace(/(\w)[.·](e|[eè]re|euse|se|trice|ne)\b/gi, '$1');
+    .replace(/(\w)[.·](e|[eè]re|euse|se|trice|ne)\b/gi, '$1')
+    // « Employée, Employé de rayon » → « Employé de rayon ».
+    .replace(/(\p{L}+),\s*(\p{L}+)/gu, (m, f, g) => (f.slice(0, 5).toLowerCase() === g.slice(0, 5).toLowerCase() ? g : m));
   const parts = raw.split(/\s+[-–—|]\s+|\s*[|()]\s*/).map(p => p.trim()).filter(Boolean);
   const i = Math.max(0, parts.findIndex(p => JOB_WORD_RE.test(p)));
   let poste = parts[i] || '';
@@ -485,8 +487,28 @@ function afterRemoteLoad() {
   openPilot(mode);
 }
 
+/** Métier de l'offre ; dans une file ou un tri, menu pour ne parcourir qu'un métier. */
+function pilotCatPill(cat) {
+  if (pilot.single) return `<span class="pill">${esc(CAT_LABELS[cat])}</span>`;
+  const current = pilot.cat || 'all';
+  const options = [['all', 'Tous les métiers'], ...CATS.map(c => [c, CAT_LABELS[c]])]
+    .map(([v, label]) => `<option value="${v}"${v === current ? ' selected' : ''}>${esc(label)}</option>`).join('');
+  return `<label class="pill pill-select" title="Ne parcourir qu'un métier"><select data-pilot-cat aria-label="Métier parcouru">${options}</select></label>`;
+}
+
+/** Recommence la file (ou le tri) avec un seul métier, ou tous. */
+function pilotSetCat(cat) {
+  if (pilot.mode === 'queue') store(nsKey('zcrt_queue_cat'), cat);
+  const list = pilotList(pilot.mode).filter(o => cat === 'all' || categoryOf(o) === cat);
+  pilot = { ...pilot, cat, ids: list.map(o => o.id), i: 0, undo: [] };
+  drawPilot();
+  if (typeof uiRenderQueue === 'function') uiRenderQueue();
+}
+
 function openPilot(mode, list) {
-  pilot = { mode, ids: (list || pilotList(mode)).map(o => o.id), i: 0, undo: [] };
+  // cat : métier parcouru (« all » = tous). La file de l'onglet « À postuler » suit son filtre.
+  const cat = list && mode === 'queue' ? queueCat() : 'all';
+  pilot = { mode, cat, ids: (list || pilotList(mode)).map(o => o.id), i: 0, undo: [] };
   document.getElementById('pilot').classList.add('open');
   document.body.style.overflow = 'hidden';
   drawPilot();
@@ -495,7 +517,7 @@ function openPilot(mode, list) {
 /** « Préparer » sur une offre : même fenêtre que la file, pour cette offre seule. */
 function openPilotFor(id) {
   if (!offers.some(o => o.id === id)) return;
-  pilot = { mode: 'queue', ids: [id], i: 0, undo: [] };
+  pilot = { mode: 'queue', single: true, ids: [id], i: 0, undo: [] };
   document.getElementById('pilot').classList.add('open');
   document.body.style.overflow = 'hidden';
   drawPilot();
@@ -539,7 +561,7 @@ function drawPilot() {
   }
   const cat = jobCategory(o);
   const head = `<div class="pilot-head"><span class="pill blue">${title} · ${pilot.i + 1} / ${total}</span>
-    <span class="pill">${esc(CAT_LABELS[cat])}</span><span class="pill fit-pill" title="${esc(fitWhy(o))}">Adéquation CV ${score(o)} %</span>
+    ${pilotCatPill(cat)}<span class="pill fit-pill" title="${esc(fitWhy(o))}">Adéquation CV ${score(o)} %</span>
     <button class="ghost" data-act="close">Fermer<span class="key-hint"> (Échap)</span></button></div>
     <h2>${esc(o.title)}</h2><div class="job-meta">${metaLine(o)}</div>
     <p class="fit-why">${esc(fitWhy(o))}</p>`;
@@ -1132,6 +1154,9 @@ function pilotInit() {
   overlay.className = 'pilot';
   overlay.innerHTML = '<div class="pilot-card" id="pilotCard" role="dialog" aria-modal="true"></div>';
   document.body.appendChild(overlay);
+  overlay.addEventListener('change', e => {
+    if (e.target.matches('[data-pilot-cat]')) pilotSetCat(e.target.value);
+  });
   overlay.addEventListener('click', e => {
     const btn = e.target.closest('button');
     if (!btn) return;

@@ -633,6 +633,12 @@ button.secondary kbd, button.ghost kbd { background: var(--surface-3); color: va
 .touch .chip { min-height: 36px; padding: 6px 12px; }
 .touch .status-select, .touch .filters select, .touch .sort select { min-height: 40px; }
 
+/* Fenêtre de la file / du tri : pastille métier cliquable (menu). */
+.pill-select { position: relative; padding: 0; cursor: pointer; }
+.pill-select select { min-height: 0; padding: 4px 26px 4px 10px; border: 0; border-radius: 999px; background: transparent; color: inherit; font: inherit; font-weight: 600; cursor: pointer; appearance: none; -webkit-appearance: none; }
+.pill-select::after { content: "▾"; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 11px; opacity: .7; }
+.touch .pill-select select { font-size: 16px !important; padding: 6px 28px 6px 12px; }
+
 /* Fenêtre « Préparer » / tri : pourquoi ce score d'adéquation avec le CV. */
 .fit-why { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
 
