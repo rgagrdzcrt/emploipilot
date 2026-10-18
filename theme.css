@@ -678,6 +678,40 @@ select option, select optgroup { background-color: var(--surface); color: var(--
 .install-hint button { flex: none; min-height: 36px; padding: 6px 12px; }
 @media (min-width: 901px) { .install-hint { bottom: 20px; } }
 
+/* ---------- Animations (motion.js) : transform et opacity seulement ---------- */
+.pilot-card { position: relative; }
+/* Listes en cascade : les 12 premiers éléments arrivent l'un après l'autre. */
+.stagger > :nth-child(-n+12) { animation: item-in .32s var(--ease) both; }
+.stagger > :nth-child(1) { animation-delay: 0ms; }
+.stagger > :nth-child(2) { animation-delay: 28ms; }
+.stagger > :nth-child(3) { animation-delay: 56ms; }
+.stagger > :nth-child(4) { animation-delay: 84ms; }
+.stagger > :nth-child(5) { animation-delay: 112ms; }
+.stagger > :nth-child(6) { animation-delay: 140ms; }
+.stagger > :nth-child(7) { animation-delay: 168ms; }
+.stagger > :nth-child(8) { animation-delay: 196ms; }
+.stagger > :nth-child(9) { animation-delay: 224ms; }
+.stagger > :nth-child(10) { animation-delay: 252ms; }
+.stagger > :nth-child(11) { animation-delay: 280ms; }
+.stagger > :nth-child(12) { animation-delay: 308ms; }
+@keyframes item-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+/* Offre qui quitte une liste : glisse et s'efface, puis la place se referme. */
+.leaving { overflow: hidden; opacity: 0; transform: translateX(28px); height: 0 !important; margin-top: 0 !important; margin-bottom: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; border-width: 0 !important;
+  transition: opacity .18s ease-out, transform .18s ease-out, height .22s var(--ease) .08s, margin .22s var(--ease) .08s, padding .22s var(--ease) .08s; }
+tr.leaving { height: auto !important; }
+/* Ligne mise à jour (Candidatures, Kanban) : bref surlignage. */
+.flash { animation: flash .9s var(--ease); }
+@keyframes flash { 0%, 30% { background-color: color-mix(in srgb, var(--st-envoyee) 16%, transparent); } 100% { background-color: transparent; } }
+/* Appui : léger enfoncement des éléments touchables. */
+.chip, .seg, .kcard, .category-tabs button, .filter-chip { transition: background-color .15s var(--ease), border-color .15s var(--ease), color .15s var(--ease), transform .12s var(--ease); }
+.chip:active, .seg:active, .kcard:active, .category-tabs button:active, .filter-chip:active, .stat.clickable:active, .action-btn:active { transform: scale(.97); }
+/* Sur écran tactile, pas d'effet de survol qui reste « collé » après un appui. */
+.touch .job:hover, .touch .stat.clickable:hover { transform: none; box-shadow: var(--shadow-xs); }
+.touch .job:active { transform: scale(.985); }
+/* « Candidature envoyée » dans la file : tampon vert avant l'envol de la carte. */
+.pilot-card[data-swipe="sent"]::after { content: "ENVOYÉE ✓"; left: 50%; color: var(--st-envoyee); transform: translateX(-50%) rotate(-8deg); animation: stamp .18s var(--ease); }
+@keyframes stamp { from { opacity: 0; transform: translateX(-50%) rotate(-8deg) scale(1.6); } to { opacity: 1; transform: translateX(-50%) rotate(-8deg) scale(1); } }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

@@ -638,9 +638,33 @@ function letterText() {
   return area ? area.value : '';
 }
 
+/* ---------- Candidature envoyée : la carte s'envole avec un tampon ---------- */
+
+function sentOut(done) {
+  if (typeof MOTION_OK !== 'undefined' && !MOTION_OK) return done();
+  const card = document.getElementById('pilotCard');
+  card.dataset.swipe = 'sent';
+  setTimeout(() => {
+    card.style.transition = 'transform .38s cubic-bezier(.5, 0, .75, 0), opacity .38s ease-in';
+    card.style.transform = 'translateY(-110vh) rotate(5deg)';
+    card.style.opacity = '0';
+  }, 160);
+  setTimeout(() => {
+    card.style.transition = 'none';
+    card.style.transform = '';
+    card.style.opacity = '';
+    delete card.dataset.swipe;
+    done();
+    card.classList.remove('swipe-in');
+    void card.offsetWidth;
+    card.classList.add('swipe-in');
+  }, 540);
+}
+
 /* ---------- Supprimer : la carte part à la corbeille ---------- */
 
 function trashOut(done) {
+  if (typeof MOTION_OK !== 'undefined' && !MOTION_OK) return done();
   const card = document.getElementById('pilotCard');
   const bin = document.createElement('div');
   bin.className = 'trash-bin';
@@ -728,6 +752,11 @@ function initSwipe() {
 }
 
 function pilotAct(action) {
+  // File de candidature : « Candidature envoyée » fait s'envoler la carte avec un tampon ENVOYÉE.
+  if ((action === 'sent' || action === 'relanced') && pilot.mode === 'queue' && !pilot.flying && currentOffer()) {
+    pilot.flying = true;
+    return sentOut(() => { pilotAct(action); pilot.flying = false; });
+  }
   // File de candidature : « Supprimer » envoie la carte à la corbeille, puis l'offre passe en « Ignorée ».
   if (action === 'ignore' && pilot.mode === 'queue' && !pilot.trashing && currentOffer()) {
     pilot.trashing = true;
