@@ -522,6 +522,13 @@
   "min": 56,
   "minAt": "2026-10-12"
  },
+ "fosses||95": {
+  "dept": "95",
+  "km": 21.8,
+  "label": "Fosses",
+  "lat": 49.09881,
+  "lon": 2.50543
+ },
  "franconville||95": {
   "km": 21.3,
   "label": "Franconville",
