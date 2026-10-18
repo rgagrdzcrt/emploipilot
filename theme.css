@@ -657,6 +657,13 @@ select option, select optgroup { background-color: var(--surface); color: var(--
 .pilot-card.swipe-in { animation: swipe-in .22s var(--ease); }
 @keyframes swipe-in { from { opacity: 0; transform: scale(.94) translateY(12px); } to { opacity: 1; transform: none; } }
 
+/* « Supprimer » dans la file : corbeille où part la carte. */
+.trash-bin { position: fixed; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom)); z-index: 60; display: grid; place-items: center; width: 58px; height: 58px; margin-left: -29px; border-radius: 50%; background: var(--st-refus); color: #fff; box-shadow: var(--shadow-lg); animation: bin-in .2s var(--ease); pointer-events: none; }
+.trash-bin .ic { width: 26px; height: 26px; }
+.trash-bin.gulp { animation: bin-gulp .45s var(--ease) forwards; }
+@keyframes bin-in { from { opacity: 0; transform: translateY(16px) scale(.8); } to { opacity: 1; transform: none; } }
+@keyframes bin-gulp { 0% { transform: scale(1); } 30% { transform: scale(1.18) rotate(-8deg); } 60% { transform: scale(.95) rotate(4deg); opacity: 1; } 100% { transform: translateY(10px) scale(.8); opacity: 0; } }
+
 /* Premier lancement sur un appareil : choix du profil. */
 .welcome { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 16px; background: rgba(14, 15, 18, .55); }
 .welcome-card { width: min(420px, 100%); padding: 24px 20px 20px; border-radius: 18px; background: var(--surface); color: var(--ink); box-shadow: var(--shadow-lg); text-align: center; }

@@ -605,7 +605,7 @@ function drawPilot() {
       <button class="secondary" data-act="open" ${o.url ? '' : 'disabled title="Pas de lien pour cette offre"'}><kbd>O</kbd> Ouvrir l’annonce</button>
       <button class="ok" data-act="sent"><kbd>Espace</kbd> Candidature envoyée</button>
       <button class="ghost" data-act="skip"><kbd>→</kbd> Plus tard</button>
-      <button class="ghost" data-act="ignore"><kbd>X</kbd> Retirer</button>
+      <button class="ghost" data-act="ignore"><kbd>X</kbd> <svg class="ic" aria-hidden="true"><use href="#i-trash"/></svg>Supprimer</button>
       <button class="ghost" data-act="undo" ${pilot.undo.length ? '' : 'disabled'}><kbd>←</kbd> Annuler</button>
     </div>`;
 }
@@ -636,6 +636,34 @@ function legacyCopy(text) {
 function letterText() {
   const area = document.getElementById('pilotLetter');
   return area ? area.value : '';
+}
+
+/* ---------- Supprimer : la carte part à la corbeille ---------- */
+
+function trashOut(done) {
+  const card = document.getElementById('pilotCard');
+  const bin = document.createElement('div');
+  bin.className = 'trash-bin';
+  bin.innerHTML = '<svg class="ic" aria-hidden="true"><use href="#i-trash"/></svg>';
+  document.getElementById('pilot').appendChild(bin);
+  // La carte rétrécit en direction de la corbeille.
+  const c = card.getBoundingClientRect(), b = bin.getBoundingClientRect();
+  const dx = (b.left + b.width / 2) - (c.left + c.width / 2), dy = (b.top + b.height / 2) - (c.top + c.height / 2);
+  card.style.transition = 'transform .38s cubic-bezier(.5, 0, .75, 0), opacity .38s ease-in';
+  card.style.transformOrigin = 'center';
+  card.style.transform = `translate(${dx}px, ${dy}px) scale(.06) rotate(-14deg)`;
+  card.style.opacity = '.15';
+  setTimeout(() => {
+    bin.classList.add('gulp');
+    card.style.transition = 'none';
+    card.style.transform = '';
+    card.style.opacity = '';
+    done();
+    card.classList.remove('swipe-in');
+    void card.offsetWidth; // relance l'animation d'arrivée de la carte suivante
+    card.classList.add('swipe-in');
+    setTimeout(() => bin.remove(), 450);
+  }, 380);
 }
 
 /* ---------- Tri au doigt : glisser à droite = À postuler, à gauche = Ignorer ---------- */
@@ -700,6 +728,11 @@ function initSwipe() {
 }
 
 function pilotAct(action) {
+  // File de candidature : « Supprimer » envoie la carte à la corbeille, puis l'offre passe en « Ignorée ».
+  if (action === 'ignore' && pilot.mode === 'queue' && !pilot.trashing && currentOffer()) {
+    pilot.trashing = true;
+    return trashOut(() => { pilotAct('ignore'); pilot.trashing = false; });
+  }
   if (action === 'close') return closePilot();
   if (action === 'toqueue') return openPilot('queue');
   if (action === 'undo') {
