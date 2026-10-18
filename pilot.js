@@ -17,11 +17,9 @@ const CAT_LABELS = Object.fromEntries(CATS.map(c => [c, CAT_INFO[c].label]));
 const RELANCE_DAYS = 7;
 
 const RYAN_TEMPLATES = {
-  stock: `Objet : candidature au poste de {poste}
+  stock: `Madame, Monsieur,
 
-Madame, Monsieur,
-
-Votre offre de {poste} chez {entreprise} a retenu toute mon attention. Avec près de 4 ans d'expérience en stock et en logistique, je souhaite mettre ma rigueur et mon savoir-faire au service de votre équipe.
+Votre offre de {poste} a retenu toute mon attention. Avec près de 4 ans d'expérience en stock et en logistique, je souhaite mettre ma rigueur et mon savoir-faire au service de votre équipe.
 
 Magasinier chez Darty à Paris, je réceptionnais et contrôlais chaque jour une livraison importante et j'organisais une très grande réserve, pour que chaque produit soit retrouvé rapidement. Responsable logistique au Carré Médical, j'ai ensuite piloté les stocks et les commandes fournisseurs de matériel médical et encadré une équipe de six livreurs. Plus récemment, j'ai assuré le suivi des stocks et l'expédition des commandes d'un catalogue en ligne de plus de 400 références. J'utilise au quotidien G.O.L.D, un WMS et Excel.
 
@@ -33,11 +31,9 @@ Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distin
 
 {prenom} {nom}
 {telephone} — {email}`,
-  rayon: `Objet : candidature au poste de {poste}
+  rayon: `Madame, Monsieur,
 
-Madame, Monsieur,
-
-Votre offre de {poste} chez {entreprise} a retenu toute mon attention. Avec plus de 3 ans d'expérience en grande distribution, je connais les exigences d'un rayon bien tenu : réassort, fraîcheur, présentation et service au client.
+Votre offre de {poste} a retenu toute mon attention. Avec plus de 3 ans d'expérience en grande distribution, je connais les exigences d'un rayon bien tenu : réassort, fraîcheur, présentation et service au client.
 
 J'ai commencé comme employé de rayon Fruits & Légumes chez Monoprix, avant d'en devenir chef de rayon : approvisionnements, suivi des stocks et des ventes, travail avec l'équipe au quotidien. Chez E.Leclerc, comme référent du rayon épicerie, j'ai suivi les stocks et les commandes, coordonné l'équipe pour assurer le réassort et la propreté des rayons, et mis en place les PLV et les événements commerciaux.
 
@@ -51,11 +47,9 @@ Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distin
 
 {prenom} {nom}
 {telephone} — {email}`,
-  vente: `Objet : candidature au poste de {poste}
+  vente: `Madame, Monsieur,
 
-Madame, Monsieur,
-
-Votre offre de {poste} chez {entreprise} a retenu toute mon attention. Diplômé d'un BTS Commerce international, j'ai plus de 3 ans d'expérience en vente, dans le multimédia comme dans la mode.
+Votre offre de {poste} a retenu toute mon attention. Diplômé d'un BTS Commerce international, j'ai plus de 3 ans d'expérience en vente, dans le multimédia comme dans la mode.
 
 Chez Darty à Paris 19e, j'ai été conseiller de vente puis référent du pôle multimédia : découverte des besoins des clients, conseil sur les produits techniques, vente de services associés et suivi des objectifs de l'équipe. Plus récemment, chez COS à Paris 11e, j'ai accueilli et conseillé une clientèle française et internationale, mis en valeur les collections et assuré l'encaissement et la tenue de la boutique. Mon anglais bilingue est un vrai atout face à une clientèle étrangère.
 
@@ -110,14 +104,45 @@ function cityOf(o) {
   return /vérifier/i.test(c) ? '' : c;
 }
 
+// Mots qui désignent un métier : sert à garder, dans le titre de l'annonce, le segment qui nomme le poste.
+const JOB_WORD_RE = /vend|conseill|employ|magasin|stock|logisti|pr[eé]parat|caiss|h[oô]te|rayon|serveu|chef|barista|runner|barman|barmaid|r[eé]ceptionn|agent|gestionnaire|[eé]quipi|commis|cariste|approvision|assistant|coordinat|responsable|r[eé]f[eé]rent|sales|styliste/i;
+
+/** Intitulé du poste pour la lettre : « Conseiller de Vente - Aéroport CDG » → « conseiller de vente »
+ * (sans lieu, contrat, horaires ni « H/F » ; en minuscules, sauf les sigles). */
+function letterPoste(o) {
+  const raw = String(o.title || '')
+    .replace(/\(?\b[hfx]\s*\/\s*[hfx](\s*\/\s*[hfx])?\b\)?/gi, ' ')
+    // Formes féminines accolées : « Conseiller(e) », « Vendeur.euse », « Conseiller·ère ».
+    .replace(/\((e|[eè]re|se|euse|trice|ne)\)/gi, '')
+    .replace(/(\w)[.·](e|[eè]re|euse|se|trice|ne)\b/gi, '$1');
+  const parts = raw.split(/\s+[-–—|]\s+|\s*[|()]\s*/).map(p => p.trim()).filter(Boolean);
+  const i = Math.max(0, parts.findIndex(p => JOB_WORD_RE.test(p)));
+  let poste = parts[i] || '';
+  // « Préparateur - Préparatrice de commandes » → « préparateur de commandes ».
+  const next = parts[i + 1] || '';
+  if (!poste.includes(' ') && next.includes(' ') && poste.slice(0, 5).toLowerCase() === next.slice(0, 5).toLowerCase()) {
+    poste += next.slice(next.indexOf(' '));
+  }
+  // Sans le nom de l'entreprise (« Conseiller de vente IKKS »).
+  const company = norm(o.company || '');
+  poste = poste.split(' ').filter(w => !(company && norm(w).length >= 3 && company.includes(norm(w)))).join(' ');
+  poste = poste
+    .replace(/\b(CDI|CDD|int[eé]rim\w*|alternance|saisonnier|temps (plein|partiel)|\d+\s?h(eures)?(\s?\/\s?sem\w*)?)\b/gi, ' ')
+    .replace(/[\s,;:.–-]+$/, '').replace(/^[\s,;:.–-]+/, '').replace(/\s{2,}/g, ' ').trim();
+  // Minuscules, sauf les sigles d'un titre écrit en casse normale (« ELS », « PAP »…).
+  const allCaps = poste === poste.toUpperCase();
+  return poste.split(' ').map(w => !allCaps && /^[A-Z]{2,4}$/.test(w) ? w : w.toLowerCase()).join(' ') || 'ce poste';
+}
+
 function fillTemplate(o) {
   const company = (!o.company || /à vérifier/i.test(o.company)) ? 'votre entreprise' : o.company;
-  let poste = cleanTitle(o.title);
-  // Minuscule en milieu de phrase, sauf sigle (« CDI », « ELS »…).
-  if (poste && !/^[A-ZÀ-Ý]{2}/.test(poste)) poste = poste.charAt(0).toLowerCase() + poste.slice(1);
+  const poste = letterPoste(o);
   const empty = Object.fromEntries(INFO_FIELDS.map(([k]) => [k, '']));
   const vars = { ...empty, ...infosOf(), poste, entreprise: company, ville: cityOf(o) };
   return templatesOf()[jobCategory(o)]
+    // Pas de ligne « Objet » ni d'entreprise après le poste, même dans un modèle personnalisé.
+    .replace(/^\s*Objet\s*:[^\n]*\n+/i, '')
+    .replace(/\{poste\} chez \{entreprise\}/g, '{poste}')
     // « poste de employé » → « poste d'employé »
     .replace(/\bde \{poste\}/g, /^[aeiouyhàâéèêëîïôûü]/i.test(poste) ? "d'{poste}" : 'de {poste}')
     .replace(/\{(\w+)\}/g, (m, k) => (k in vars ? (vars[k] || '') : m))

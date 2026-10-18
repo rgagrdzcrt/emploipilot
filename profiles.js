@@ -122,11 +122,9 @@ const ZCRT_PROFILES = {
     },
     cv: { rayon: 'CV_ZIA_CARTIER_vente.pdf', vente: 'CV_ZIA_CARTIER_vente.pdf', restauration: 'CV_ZIA_CARTIER_restauration.pdf' },
     templates: {
-      rayon: `Objet : candidature au poste de {poste}
+      rayon: `Madame, Monsieur,
 
-Madame, Monsieur,
-
-Votre offre de {poste} chez {entreprise} a retenu toute mon attention. Forte de plusieurs années d'expérience en magasin et en restauration, je connais le rythme d'un point de vente à forte affluence et l'importance d'un service soigné.
+Votre offre de {poste} a retenu toute mon attention. Forte de plusieurs années d'expérience en magasin et en restauration, je connais le rythme d'un point de vente à forte affluence et l'importance d'un service soigné.
 
 Conseillère de vente chez COS à Paris 8e, je réceptionnais et traitais les livraisons, participais aux inventaires tournants et annuels et mettais en place le merchandising selon les consignes du siège. Chez H&M, j'ai assuré la présentation des articles, le réapprovisionnement de la boutique et l'encaissement. Mes expériences en restaurant m'ont appris à rester efficace et souriante dans les moments de rush.
 
@@ -140,11 +138,9 @@ Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distin
 
 {prenom} {nom}
 {telephone} — {email}`,
-      vente: `Objet : candidature au poste de {poste}
+      vente: `Madame, Monsieur,
 
-Madame, Monsieur,
-
-Votre offre de {poste} chez {entreprise} a retenu toute mon attention. Diplômée d'un BTS Commerce international, j'ai près de trois ans d'expérience comme conseillère de vente en prêt-à-porter.
+Votre offre de {poste} a retenu toute mon attention. Diplômée d'un BTS Commerce international, j'ai près de trois ans d'expérience comme conseillère de vente en prêt-à-porter.
 
 Chez COS à Paris 8e, en CDI, j'ai accueilli et accompagné une clientèle française et internationale, géré les retours, échanges et commandes, fidélisé les clients réguliers et été référente d'un univers produit. J'ai également mis en place le visual merchandising et participé aux briefs d'équipe sur les objectifs. Auparavant, chez H&M, j'assurais la présentation des articles, l'encaissement et le réassort.
 
@@ -158,11 +154,9 @@ Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distin
 
 {prenom} {nom}
 {telephone} — {email}`,
-      restauration: `Objet : candidature au poste de {poste}
+      restauration: `Madame, Monsieur,
 
-Madame, Monsieur,
-
-Votre offre de {poste} chez {entreprise} a retenu toute mon attention. Cheffe de rang depuis plusieurs années dans des restaurants parisiens, j'aime le service en salle et le lien avec les clients.
+Votre offre de {poste} a retenu toute mon attention. Cheffe de rang depuis plusieurs années dans des restaurants parisiens, j'aime le service en salle et le lien avec les clients.
 
 Au Lagano, à Paris 7e, j'ai participé à l'ouverture et à la croissance du restaurant, autour d'une cuisine de saison et d'une cave de vins de niche. Au Clown Bar puis chez Pouliche, adresse semi-gastronomique d'Amandine Chaignot, j'ai approfondi mes connaissances en œnologie, notamment en vins naturels, et pris part au bar avec une carte de cocktails signature. J'ai débuté chez Del Arte, en plein été et à fort débit, où j'ai acquis les bases du service et de l'organisation.
 
