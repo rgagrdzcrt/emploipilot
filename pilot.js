@@ -561,10 +561,9 @@ function drawPilot() {
   }
   const cat = jobCategory(o);
   const head = `<div class="pilot-head"><span class="pill blue">${title} · ${pilot.i + 1} / ${total}</span>
-    ${pilotCatPill(cat)}<span class="pill fit-pill" title="${esc(fitWhy(o))}">Adéquation CV ${score(o)} %</span>
+    ${pilotCatPill(cat)}
     <button class="ghost" data-act="close">Fermer<span class="key-hint"> (Échap)</span></button></div>
-    <h2>${esc(o.title)}</h2><div class="job-meta">${metaLine(o)}</div>
-    <p class="fit-why">${esc(fitWhy(o))}</p>`;
+    <h2>${esc(o.title)}</h2><div class="job-meta">${metaLine(o)}</div>`;
 
   if (pilot.mode === 'triage') {
     card.innerHTML = `${head}
