@@ -87,7 +87,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!MOTION_OK) return;
   const selector = '#statOffers, #statNew, #statSent, #statExcluded, #triageCount, #queueCount, .nav-count, .ct-count';
   const last = new WeakMap();
-  let busy = false;
+  // Valeur réellement affichée par le site (la cible), à distinguer des nombres intermédiaires
+  // écrits par l'animation : le MutationObserver voit aussi ces derniers, après coup.
+  function write(el, value) {
+    el.textContent = String(value);
+    el._ownNode = el.firstChild; // nœud texte créé par l'animation
+  }
 
   function animate(el, from, to) {
     const start = performance.now(), dur = Math.min(600, 250 + Math.abs(to - from) * 8);
@@ -95,24 +100,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const step = now => {
       if (el._countTo !== to) return; // une valeur plus récente a pris le relais
       const t = Math.min(1, (now - start) / dur), eased = 1 - Math.pow(1 - t, 3);
-      busy = true;
-      el.textContent = String(Math.round(from + (to - from) * eased));
-      busy = false;
+      write(el, t < 1 ? Math.round(from + (to - from) * eased) : to);
       if (t < 1) requestAnimationFrame(step);
     };
+    write(el, from);
     requestAnimationFrame(step);
   }
 
   const observer = new MutationObserver(records => {
-    if (busy) return;
+    const changed = new Set();
     for (const r of records) {
       const el = r.target.nodeType === 1 ? r.target : r.target.parentElement;
-      if (!el || !el.matches(selector)) continue;
-      const to = Number(el.textContent);
+      if (el && el.matches(selector)) changed.add(el);
+    }
+    changed.forEach(el => {
+      if (el.firstChild && el.firstChild === el._ownNode) return; // notre propre écriture
+      const to = Number(el.textContent.trim());
       const from = last.get(el);
       last.set(el, to);
-      if (Number.isFinite(from) && Number.isFinite(to) && from !== to && el.offsetParent !== null) animate(el, from, to);
-    }
+      el._countTo = undefined; // toute animation en cours s'arrête : le site vient d'écrire la vraie valeur
+      if (Number.isFinite(from) && Number.isFinite(to) && from !== to && el.textContent.trim() !== '' && el.offsetParent !== null) {
+        animate(el, from, to);
+      }
+    });
   });
 
   function watch() {
