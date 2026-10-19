@@ -126,6 +126,13 @@
   "min": 31,
   "minAt": "2026-10-13"
  },
+ "bois-colombes||92": {
+  "dept": "92",
+  "km": 15.9,
+  "label": "Bois-Colombes",
+  "lat": 48.91533,
+  "lon": 2.26884
+ },
  "boissy-saint-léger||94": {
   "dept": "94",
   "km": 17.1,
@@ -248,6 +255,13 @@
   "lon": 2.5415,
   "min": 81,
   "minAt": "2026-10-12"
+ },
+ "chessy|77700|77": {
+  "dept": "77",
+  "km": 20.7,
+  "label": "Chessy",
+  "lat": 48.87144,
+  "lon": 2.76478
  },
  "chessy||77": {
   "km": 20.7,
@@ -546,6 +560,13 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829
+ },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -607,6 +628,13 @@
   "minAt": "2026-10-15"
  },
  "herblay-sur-seine||95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Herblay-sur-Seine",
+  "lat": 49.00406,
+  "lon": 2.15245
+ },
+ "herblay||95": {
   "dept": "95",
   "km": 26.7,
   "label": "Herblay-sur-Seine",
@@ -927,13 +955,6 @@
   "lon": 2.19375,
   "min": 93,
   "minAt": "2026-10-15"
- },
- "montmagny||95": {
-  "dept": "95",
-  "km": 12.4,
-  "label": "Montmagny",
-  "lat": 48.96767,
-  "lon": 2.34704
  },
  "montmagny||IDF": {
   "dept": "95",
@@ -1599,7 +1620,16 @@
   "km": 17.2,
   "label": "Vanves",
   "lat": 48.82097,
-  "lon": 2.28637
+  "lon": 2.28637,
+  "min": 83,
+  "minAt": "2026-10-19"
+ },
+ "vaucresson||92": {
+  "dept": "92",
+  "km": 24.6,
+  "label": "Vaucresson",
+  "lat": 48.84057,
+  "lon": 2.16348
  },
  "vauréal||IDF": {
   "dept": "95",
@@ -1631,7 +1661,9 @@
   "km": 29.3,
   "label": "Villebon-sur-Yvette",
   "lat": 48.69789,
-  "lon": 2.23543
+  "lon": 2.23543,
+  "min": 104,
+  "minAt": "2026-10-19"
  },
  "villecresnes||94": {
   "dept": "94",
