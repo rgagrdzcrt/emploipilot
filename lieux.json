@@ -613,13 +613,6 @@
   "lat": 49.00406,
   "lon": 2.15245
  },
- "herblay||95": {
-  "dept": "95",
-  "km": 26.7,
-  "label": "Herblay-sur-Seine",
-  "lat": 49.00406,
-  "lon": 2.15245
- },
  "issy-les-moulineaux||92": {
   "km": 18.5,
   "label": "Issy-les-Moulineaux",
@@ -676,14 +669,6 @@
   "lat": 48.90716,
   "lon": 2.24441,
   "min": 65,
-  "minAt": "2026-10-13"
- },
- "la queue-en-brie||94": {
-  "km": 14.8,
-  "label": "La Queue-en-Brie",
-  "lat": 48.78623,
-  "lon": 2.57913,
-  "min": 72,
   "minAt": "2026-10-13"
  },
  "lagny-sur-marne|77400|77": {
@@ -943,6 +928,13 @@
   "min": 93,
   "minAt": "2026-10-15"
  },
+ "montmagny||95": {
+  "dept": "95",
+  "km": 12.4,
+  "label": "Montmagny",
+  "lat": 48.96767,
+  "lon": 2.34704
+ },
  "montmagny||IDF": {
   "dept": "95",
   "km": 12.4,
@@ -1039,6 +1031,15 @@
   "lon": 2.48091,
   "min": 54,
   "minAt": "2026-10-15"
+ },
+ "noisiel||77": {
+  "dept": "77",
+  "km": 11.9,
+  "label": "Noisiel",
+  "lat": 48.84729,
+  "lon": 2.6234,
+  "min": 64,
+  "minAt": "2026-10-19"
  },
  "noisy-le-grand||93": {
   "km": 8.6,
