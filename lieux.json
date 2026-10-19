@@ -425,6 +425,13 @@
   "min": 98,
   "minAt": "2026-10-12"
  },
+ "deuil-la-barre||95": {
+  "dept": "95",
+  "km": 13.6,
+  "label": "Deuil-la-Barre",
+  "lat": 48.97008,
+  "lon": 2.32848
+ },
  "domont||95": {
   "dept": "95",
   "km": 18.0,
@@ -560,13 +567,6 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
- },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -628,13 +628,6 @@
   "minAt": "2026-10-15"
  },
  "herblay-sur-seine||95": {
-  "dept": "95",
-  "km": 26.7,
-  "label": "Herblay-sur-Seine",
-  "lat": 49.00406,
-  "lon": 2.15245
- },
- "herblay||95": {
   "dept": "95",
   "km": 26.7,
   "label": "Herblay-sur-Seine",
@@ -839,13 +832,6 @@
   "lon": 2.63607,
   "min": 75,
   "minAt": "2026-10-13"
- },
- "louvres||95": {
-  "dept": "95",
-  "km": 16.0,
-  "label": "Louvres",
-  "lat": 49.04735,
-  "lon": 2.50393
  },
  "magny-le-hongre|77700|77": {
   "dept": "77",
@@ -1078,6 +1064,13 @@
   "lon": 2.45675,
   "min": 35,
   "minAt": "2026-10-15"
+ },
+ "oncy-sur-école||IDF": {
+  "dept": "91",
+  "km": 57.4,
+  "label": "Oncy-sur-École",
+  "lat": 48.38791,
+  "lon": 2.46674
  },
  "orly||94": {
   "km": 19.1,
@@ -1630,6 +1623,13 @@
   "label": "Vaucresson",
   "lat": 48.84057,
   "lon": 2.16348
+ },
+ "vaujours||93": {
+  "dept": "93",
+  "km": 7.6,
+  "label": "Vaujours",
+  "lat": 48.93408,
+  "lon": 2.57833
  },
  "vauréal||IDF": {
   "dept": "95",
