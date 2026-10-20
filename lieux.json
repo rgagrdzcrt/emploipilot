@@ -267,6 +267,13 @@
   "min": 81,
   "minAt": "2026-10-12"
  },
+ "chessy|77700|77": {
+  "dept": "77",
+  "km": 20.7,
+  "label": "Chessy",
+  "lat": 48.87144,
+  "lon": 2.76478
+ },
  "chessy||77": {
   "km": 20.7,
   "label": "Chessy",
@@ -563,13 +570,6 @@
   "lon": 2.54565,
   "min": 43,
   "minAt": "2026-10-12"
- },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
  },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
@@ -952,6 +952,13 @@
   "lon": 2.19375,
   "min": 93,
   "minAt": "2026-10-15"
+ },
+ "montmagny||95": {
+  "dept": "95",
+  "km": 12.4,
+  "label": "Montmagny",
+  "lat": 48.96767,
+  "lon": 2.34704
  },
  "montmagny||IDF": {
   "dept": "95",
