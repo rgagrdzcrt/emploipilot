@@ -153,7 +153,6 @@
   "min": null,
   "minAt": "2026-10-12"
  },
- "bonneuil-en-france|95500|94": {},
  "bonneuil-sur-marne||94": {
   "km": 14.5,
   "label": "Bonneuil-sur-Marne",
@@ -571,6 +570,13 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829
+ },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -952,13 +958,6 @@
   "lon": 2.19375,
   "min": 93,
   "minAt": "2026-10-15"
- },
- "montmagny||95": {
-  "dept": "95",
-  "km": 12.4,
-  "label": "Montmagny",
-  "lat": 48.96767,
-  "lon": 2.34704
  },
  "montmagny||IDF": {
   "dept": "95",
@@ -1420,7 +1419,6 @@
   "min": 76,
   "minAt": "2026-10-13"
  },
- "saint-denis-sud||93": {},
  "saint-denis||93": {
   "km": 9.8,
   "label": "Saint-Denis",
