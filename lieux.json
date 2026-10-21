@@ -153,6 +153,7 @@
   "min": null,
   "minAt": "2026-10-12"
  },
+ "bonneuil-en-france|95500|94": {},
  "bonneuil-sur-marne||94": {
   "km": 14.5,
   "label": "Bonneuil-sur-Marne",
@@ -265,13 +266,6 @@
   "lon": 2.5415,
   "min": 81,
   "minAt": "2026-10-12"
- },
- "chessy|77700|77": {
-  "dept": "77",
-  "km": 20.7,
-  "label": "Chessy",
-  "lat": 48.87144,
-  "lon": 2.76478
  },
  "chessy||77": {
   "km": 20.7,
@@ -461,15 +455,6 @@
   "min": 74,
   "minAt": "2026-10-13"
  },
- "ecouen||95": {
-  "dept": "95",
-  "km": 15.7,
-  "label": "Écouen",
-  "lat": 49.02445,
-  "lon": 2.37457,
-  "min": 88,
-  "minAt": "2026-10-13"
- },
  "enghien-les-bains||95": {
   "dept": "95",
   "km": 15.1,
@@ -569,13 +554,6 @@
   "lon": 2.54565,
   "min": 43,
   "minAt": "2026-10-12"
- },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
  },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
@@ -1639,13 +1617,6 @@
   "lon": 2.28637,
   "min": 83,
   "minAt": "2026-10-19"
- },
- "vaucresson||92": {
-  "dept": "92",
-  "km": 24.6,
-  "label": "Vaucresson",
-  "lat": 48.84057,
-  "lon": 2.16348
  },
  "vaujours||93": {
   "dept": "93",
