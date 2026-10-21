@@ -695,15 +695,6 @@
   "min": 76,
   "minAt": "2026-10-12"
  },
- "lagny-sur-marne||77": {
-  "dept": "77",
-  "km": 16.5,
-  "label": "Lagny-sur-Marne",
-  "lat": 48.87388,
-  "lon": 2.70579,
-  "min": 76,
-  "minAt": "2026-10-13"
- },
  "le blanc-mesnil||93": {
   "dept": "93",
   "km": 4.2,
@@ -943,6 +934,15 @@
   "lon": 2.19375,
   "min": 93,
   "minAt": "2026-10-15"
+ },
+ "montmagny||95": {
+  "dept": "95",
+  "km": 12.4,
+  "label": "Montmagny",
+  "lat": 48.96767,
+  "lon": 2.34704,
+  "min": 80,
+  "minAt": "2026-10-21"
  },
  "montmagny||IDF": {
   "dept": "95",
