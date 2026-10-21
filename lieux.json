@@ -555,6 +555,13 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829
+ },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -966,7 +973,9 @@
   "km": 22.3,
   "label": "Montsoult",
   "lat": 49.06858,
-  "lon": 2.31183
+  "lon": 2.31183,
+  "min": 91,
+  "minAt": "2026-10-21"
  },
  "montévrain||77": {
   "km": 19.8,
