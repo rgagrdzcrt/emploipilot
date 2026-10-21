@@ -267,6 +267,13 @@
   "min": 81,
   "minAt": "2026-10-12"
  },
+ "chessy|77700|77": {
+  "dept": "77",
+  "km": 20.7,
+  "label": "Chessy",
+  "lat": 48.87144,
+  "lon": 2.76478
+ },
  "chessy||77": {
   "km": 20.7,
   "label": "Chessy",
@@ -623,6 +630,13 @@
   "minAt": "2026-10-15"
  },
  "herblay-sur-seine||95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Herblay-sur-Seine",
+  "lat": 49.00406,
+  "lon": 2.15245
+ },
+ "herblay||95": {
   "dept": "95",
   "km": 26.7,
   "label": "Herblay-sur-Seine",
