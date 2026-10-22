@@ -267,13 +267,6 @@
   "min": 81,
   "minAt": "2026-10-12"
  },
- "chessy|77700|77": {
-  "dept": "77",
-  "km": 20.7,
-  "label": "Chessy",
-  "lat": 48.87144,
-  "lon": 2.76478
- },
  "chessy||77": {
   "km": 20.7,
   "label": "Chessy",
@@ -323,15 +316,6 @@
   "min": 67,
   "minAt": "2026-10-12"
  },
- "clichy-sous-bois||93": {
-  "dept": "93",
-  "km": 4.0,
-  "label": "Clichy-sous-Bois",
-  "lat": 48.90645,
-  "lon": 2.53953,
-  "min": 46,
-  "minAt": "2026-10-13"
- },
  "clichy||92": {
   "dept": "92",
   "km": 13.2,
@@ -374,15 +358,6 @@
   "lon": 2.19574,
   "min": 73,
   "minAt": "2026-10-14"
- },
- "coubron||93": {
-  "dept": "93",
-  "km": 6.9,
-  "label": "Coubron",
-  "lat": 48.9135,
-  "lon": 2.57804,
-  "min": 44,
-  "minAt": "2026-10-12"
  },
  "courbevoie|92400|92": {
   "dept": "92",
@@ -562,13 +537,6 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
- },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -708,6 +676,15 @@
   "lon": 2.70579,
   "min": 76,
   "minAt": "2026-10-12"
+ },
+ "lagny-sur-marne||77": {
+  "dept": "77",
+  "km": 16.5,
+  "label": "Lagny-sur-Marne",
+  "lat": 48.87388,
+  "lon": 2.70579,
+  "min": 76,
+  "minAt": "2026-10-22"
  },
  "le blanc-mesnil||93": {
   "dept": "93",
