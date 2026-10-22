@@ -153,7 +153,6 @@
   "min": null,
   "minAt": "2026-10-12"
  },
- "bonneuil-en-france|95500|94": {},
  "bonneuil-sur-marne||94": {
   "km": 14.5,
   "label": "Bonneuil-sur-Marne",
@@ -537,6 +536,13 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829
+ },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -598,13 +604,6 @@
   "minAt": "2026-10-15"
  },
  "herblay-sur-seine||95": {
-  "dept": "95",
-  "km": 26.7,
-  "label": "Herblay-sur-Seine",
-  "lat": 49.00406,
-  "lon": 2.15245
- },
- "herblay||95": {
   "dept": "95",
   "km": 26.7,
   "label": "Herblay-sur-Seine",
@@ -728,15 +727,6 @@
   "lat": 48.78133,
   "lon": 2.26106,
   "min": 92,
-  "minAt": "2026-10-13"
- },
- "le plessis-trévise||94": {
-  "dept": "94",
-  "km": 12.3,
-  "label": "Le Plessis-Trévise",
-  "lat": 48.81014,
-  "lon": 2.57623,
-  "min": 68,
   "minAt": "2026-10-13"
  },
  "le pré-saint-gervais||93": {
