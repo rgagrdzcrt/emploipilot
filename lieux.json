@@ -230,6 +230,13 @@
   "min": 91,
   "minAt": "2026-10-13"
  },
+ "charenton-le-pont||94": {
+  "dept": "94",
+  "km": 10.5,
+  "label": "Charenton-le-Pont",
+  "lat": 48.82395,
+  "lon": 2.40713
+ },
  "charles-de-gaulles aéroport||95": {
   "km": 10.8,
   "label": "Roissy-en-France",
@@ -265,6 +272,13 @@
   "lon": 2.5415,
   "min": 81,
   "minAt": "2026-10-12"
+ },
+ "chessy|77700|77": {
+  "dept": "77",
+  "km": 20.7,
+  "label": "Chessy",
+  "lat": 48.87144,
+  "lon": 2.76478
  },
  "chessy||77": {
   "km": 20.7,
@@ -1401,6 +1415,15 @@
   "label": "Saint-Gratien",
   "lat": 48.96841,
   "lon": 2.28496
+ },
+ "saint-leu-la-forêt||95": {
+  "dept": "95",
+  "km": 21.5,
+  "label": "Saint-Leu-la-Forêt",
+  "lat": 49.0133,
+  "lon": 2.24294,
+  "min": 79,
+  "minAt": "2026-10-22"
  },
  "saint-mandé||94": {
   "dept": "94",
