@@ -230,13 +230,6 @@
   "min": 91,
   "minAt": "2026-10-13"
  },
- "charenton-le-pont||94": {
-  "dept": "94",
-  "km": 10.5,
-  "label": "Charenton-le-Pont",
-  "lat": 48.82395,
-  "lon": 2.40713
- },
  "charles-de-gaulles aéroport||95": {
   "km": 10.8,
   "label": "Roissy-en-France",
@@ -980,6 +973,7 @@
   "min": 99,
   "minAt": "2026-10-12"
  },
+ "morigny-champigny||94": {},
  "nanterre|92000|92": {
   "km": 20.7,
   "label": "Nanterre",
