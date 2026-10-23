@@ -26,15 +26,6 @@
   "min": 78,
   "minAt": "2026-10-14"
  },
- "antony||92": {
-  "dept": "92",
-  "km": 21.8,
-  "label": "Antony",
-  "lat": 48.75102,
-  "lon": 2.29783,
-  "min": 75,
-  "minAt": "2026-10-12"
- },
  "arcueil||94": {
   "dept": "94",
   "km": 15.6,
@@ -125,6 +116,15 @@
   "lon": 2.44334,
   "min": 31,
   "minAt": "2026-10-13"
+ },
+ "bois-colombes|92270|92": {
+  "dept": "92",
+  "km": 15.9,
+  "label": "Bois-Colombes",
+  "lat": 48.91533,
+  "lon": 2.26884,
+  "min": 59,
+  "minAt": "2026-10-23"
  },
  "bois-colombes||92": {
   "dept": "92",
@@ -265,6 +265,13 @@
   "lon": 2.5415,
   "min": 81,
   "minAt": "2026-10-12"
+ },
+ "chessy|77700|77": {
+  "dept": "77",
+  "km": 20.7,
+  "label": "Chessy",
+  "lat": 48.87144,
+  "lon": 2.76478
  },
  "chessy||77": {
   "km": 20.7,
@@ -410,6 +417,7 @@
   "min": 98,
   "minAt": "2026-10-12"
  },
+ "delle||IDF": {},
  "domont||95": {
   "dept": "95",
   "km": 18.0,
@@ -435,6 +443,15 @@
   "lon": 2.42187,
   "min": 74,
   "minAt": "2026-10-13"
+ },
+ "ecouen||95": {
+  "dept": "95",
+  "km": 15.7,
+  "label": "Écouen",
+  "lat": 49.02445,
+  "lon": 2.37457,
+  "min": 88,
+  "minAt": "2026-10-23"
  },
  "enghien-les-bains||95": {
   "dept": "95",
@@ -610,6 +627,13 @@
   "lat": 49.00406,
   "lon": 2.15245
  },
+ "herblay||95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Herblay-sur-Seine",
+  "lat": 49.00406,
+  "lon": 2.15245
+ },
  "issy-les-moulineaux||92": {
   "km": 18.5,
   "label": "Issy-les-Moulineaux",
@@ -737,6 +761,13 @@
   "lon": 2.26106,
   "min": 92,
   "minAt": "2026-10-13"
+ },
+ "le plessis-trévise||94": {
+  "dept": "94",
+  "km": 12.3,
+  "label": "Le Plessis-Trévise",
+  "lat": 48.81014,
+  "lon": 2.57623
  },
  "le pré-saint-gervais||93": {
   "dept": "93",
@@ -997,15 +1028,6 @@
   "lat": 48.26671,
   "lon": 2.70305,
   "min": 151,
-  "minAt": "2026-10-12"
- },
- "neuilly-plaisance||93": {
-  "dept": "93",
-  "km": 4.7,
-  "label": "Neuilly-Plaisance",
-  "lat": 48.86467,
-  "lon": 2.50964,
-  "min": 52,
   "minAt": "2026-10-12"
  },
  "neuilly-sur-marne||93": {
@@ -1418,7 +1440,9 @@
   "km": 8.4,
   "label": "Saint-Mandé",
   "lat": 48.84153,
-  "lon": 2.41944
+  "lon": 2.41944,
+  "min": 55,
+  "minAt": "2026-10-23"
  },
  "saint-mard||IDF": {
   "dept": "77",
@@ -1574,15 +1598,6 @@
   "lat": 48.76047,
   "lon": 2.38699,
   "min": 90,
-  "minAt": "2026-10-12"
- },
- "thorigny-sur-marne||77": {
-  "dept": "77",
-  "km": 16.7,
-  "label": "Thorigny-sur-Marne",
-  "lat": 48.89225,
-  "lon": 2.71317,
-  "min": 81,
   "minAt": "2026-10-12"
  },
  "torcy||77": {

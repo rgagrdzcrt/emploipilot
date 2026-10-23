@@ -1,69 +1,69 @@
 {
- "collecte": "2026-10-23T06:41:15.055176+00:00",
- "offres_finales": 1797,
- "nouvelles": 519,
+ "collecte": "2026-10-23T12:39:30.611473+00:00",
+ "offres_finales": 1820,
+ "nouvelles": 470,
  "offres_finales_par_source": {
-  "Adzuna": 964,
-  "Jooble": 805,
+  "Adzuna": 983,
+  "Jooble": 809,
   "SmartRecruiters": 28
  },
  "retirees": {
-  "à plus de 30 km": 20,
-  "publiées il y a plus de 10 jours": 468
+  "à plus de 30 km": 19,
+  "publiées il y a plus de 10 jours": 428
  },
  "recherches": [
   {
    "source": "Jooble",
    "recherche": "magasinier · Bondy",
-   "annoncees": 8025,
+   "annoncees": 8002,
    "recues": 100,
-   "retenues": 35,
+   "retenues": 37,
    "pages": 2
   },
   {
    "source": "Jooble",
    "recherche": "préparateur de commandes · Bondy",
-   "annoncees": 4332,
+   "annoncees": 4254,
    "recues": 150,
-   "retenues": 79,
+   "retenues": 78,
    "pages": 3
   },
   {
    "source": "Jooble",
    "recherche": "gestionnaire de stock · Bondy",
-   "annoncees": 8428,
+   "annoncees": 8395,
    "recues": 100,
-   "retenues": 41,
+   "retenues": 39,
    "pages": 2
   },
   {
    "source": "Jooble",
    "recherche": "agent logistique · Bondy",
-   "annoncees": 2148,
+   "annoncees": 2163,
    "recues": 150,
-   "retenues": 71,
+   "retenues": 76,
    "pages": 3
   },
   {
    "source": "Jooble",
    "recherche": "réceptionnaire · Bondy",
-   "annoncees": 372,
+   "annoncees": 358,
    "recues": 150,
-   "retenues": 86,
+   "retenues": 87,
    "pages": 3
   },
   {
    "source": "Jooble",
    "recherche": "employé libre service · Bondy",
-   "annoncees": 4211,
+   "annoncees": 4140,
    "recues": 100,
-   "retenues": 36,
+   "retenues": 34,
    "pages": 2
   },
   {
    "source": "Jooble",
    "recherche": "employé commercial · Bondy",
-   "annoncees": 8115,
+   "annoncees": 8027,
    "recues": 50,
    "retenues": 7,
    "pages": 1
@@ -71,79 +71,79 @@
   {
    "source": "Jooble",
    "recherche": "mise en rayon · Bondy",
-   "annoncees": 4833,
+   "annoncees": 4771,
    "recues": 150,
-   "retenues": 89,
+   "retenues": 87,
    "pages": 3
   },
   {
    "source": "Jooble",
    "recherche": "employé de rayon · Bondy",
-   "annoncees": 4208,
+   "annoncees": 4138,
    "recues": 100,
-   "retenues": 37,
+   "retenues": 35,
    "pages": 2
   },
   {
    "source": "Jooble",
    "recherche": "vendeur · Bondy",
-   "annoncees": 6904,
+   "annoncees": 6823,
    "recues": 150,
-   "retenues": 85,
+   "retenues": 86,
    "pages": 3
   },
   {
    "source": "Jooble",
    "recherche": "conseiller de vente · Bondy",
-   "annoncees": 6945,
+   "annoncees": 6874,
    "recues": 150,
-   "retenues": 95,
+   "retenues": 93,
    "pages": 3
   },
   {
    "source": "Jooble",
    "recherche": "vendeuse · Bondy",
-   "annoncees": 6904,
+   "annoncees": 6826,
    "recues": 150,
-   "retenues": 84,
+   "retenues": 86,
    "pages": 3
   },
   {
    "source": "Jooble",
    "recherche": "magasinier · Paris",
-   "annoncees": 9083,
+   "annoncees": 9000,
    "recues": 100,
-   "retenues": 49,
+   "retenues": 47,
    "pages": 2
   },
   {
    "source": "Jooble",
    "recherche": "préparateur de commandes · Paris",
-   "annoncees": 4688,
+   "annoncees": 4587,
    "recues": 150,
-   "retenues": 48,
+   "retenues": 47,
    "pages": 3
   },
   {
    "source": "Jooble",
    "recherche": "gestionnaire de stock · Paris",
-   "annoncees": 9707,
+   "annoncees": 9694,
    "recues": 100,
-   "retenues": 39,
+   "retenues": 44,
    "pages": 2
   },
   {
    "source": "Jooble",
    "recherche": "agent logistique · Paris",
-   "annoncees": 2504,
+   "annoncees": 2491,
    "recues": 150,
-   "retenues": 62,
+   "retenues": 60,
    "pages": 3
   },
   {
    "source": "Jooble",
    "recherche": "réceptionnaire · Paris",
-   "annoncees": 354,
+   "annoncees": 338,
    "recues": 150,
    "retenues": 70,
    "pages": 3
@@ -151,15 +151,15 @@
   {
    "source": "Jooble",
    "recherche": "employé libre service · Paris",
-   "annoncees": 4529,
+   "annoncees": 4486,
    "recues": 100,
-   "retenues": 37,
+   "retenues": 34,
    "pages": 2
   },
   {
    "source": "Jooble",
    "recherche": "employé commercial · Paris",
-   "annoncees": 9080,
+   "annoncees": 8751,
    "recues": 50,
    "retenues": 14,
    "pages": 1
@@ -167,55 +167,55 @@
   {
    "source": "Jooble",
    "recherche": "mise en rayon · Paris",
-   "annoncees": 5308,
+   "annoncees": 5198,
    "recues": 150,
-   "retenues": 81,
+   "retenues": 78,
    "pages": 3
   },
   {
    "source": "Jooble",
    "recherche": "employé de rayon · Paris",
-   "annoncees": 4532,
+   "annoncees": 4486,
    "recues": 100,
-   "retenues": 37,
+   "retenues": 35,
    "pages": 2
   },
   {
    "source": "Jooble",
    "recherche": "vendeur · Paris",
-   "annoncees": 7806,
+   "annoncees": 7583,
    "recues": 150,
-   "retenues": 103,
+   "retenues": 104,
    "pages": 3
   },
   {
    "source": "Jooble",
    "recherche": "conseiller de vente · Paris",
-   "annoncees": 7842,
+   "annoncees": 7663,
    "recues": 150,
-   "retenues": 110,
+   "retenues": 104,
    "pages": 3
   },
   {
    "source": "Jooble",
    "recherche": "vendeuse · Paris",
-   "annoncees": 7806,
+   "annoncees": 7586,
    "recues": 150,
-   "retenues": 105,
+   "retenues": 104,
    "pages": 3
   },
   {
    "source": "Jooble",
    "recherche": "serveur · Paris",
-   "annoncees": 6762,
+   "annoncees": 6745,
    "recues": 150,
-   "retenues": 40,
+   "retenues": 39,
    "pages": 3
   },
   {
    "source": "Jooble",
    "recherche": "chef de rang · Paris",
-   "annoncees": 4408,
+   "annoncees": 4418,
    "recues": 100,
    "retenues": 90,
    "pages": 2
@@ -223,33 +223,33 @@
   {
    "source": "Jooble",
    "recherche": "barista · Paris",
-   "annoncees": 877,
+   "annoncees": 867,
    "recues": 100,
-   "retenues": 34,
+   "retenues": 33,
    "pages": 2
   },
   {
    "source": "Jooble",
    "recherche": "serveur · Bondy",
-   "annoncees": 5950,
+   "annoncees": 5952,
    "recues": 100,
-   "retenues": 34,
+   "retenues": 37,
    "pages": 2
   },
   {
    "source": "Adzuna",
    "recherche": "magasinier · Bondy",
-   "annoncees": 74,
+   "annoncees": 79,
    "recues": 50,
-   "retenues": 48,
+   "retenues": 47,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "stockiste · Bondy",
-   "annoncees": 15,
-   "recues": 15,
-   "retenues": 15,
+   "annoncees": 14,
+   "recues": 14,
+   "retenues": 14,
    "pages": 1
   },
   {
@@ -257,7 +257,7 @@
    "recherche": "préparateur commandes · Bondy",
    "annoncees": 130,
    "recues": 50,
-   "retenues": 31,
+   "retenues": 30,
    "pages": 1
   },
   {
@@ -287,41 +287,41 @@
   {
    "source": "Adzuna",
    "recherche": "rayon · Bondy",
-   "annoncees": 160,
+   "annoncees": 163,
    "recues": 50,
-   "retenues": 24,
+   "retenues": 25,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "vendeur · Bondy",
-   "annoncees": 2058,
+   "annoncees": 2324,
    "recues": 50,
-   "retenues": 27,
+   "retenues": 13,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "conseiller vente · Bondy",
-   "annoncees": 271,
+   "annoncees": 277,
    "recues": 50,
-   "retenues": 43,
+   "retenues": 44,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "magasinier · Paris",
-   "annoncees": 72,
+   "annoncees": 77,
    "recues": 50,
-   "retenues": 45,
+   "retenues": 46,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "stockiste · Paris",
-   "annoncees": 15,
-   "recues": 15,
-   "retenues": 15,
+   "annoncees": 14,
+   "recues": 14,
+   "retenues": 14,
    "pages": 1
   },
   {
@@ -359,39 +359,39 @@
   {
    "source": "Adzuna",
    "recherche": "rayon · Paris",
-   "annoncees": 171,
+   "annoncees": 175,
    "recues": 50,
-   "retenues": 20,
+   "retenues": 21,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "vendeur · Paris",
-   "annoncees": 2208,
+   "annoncees": 2478,
    "recues": 50,
-   "retenues": 22,
+   "retenues": 13,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "conseiller vente · Paris",
-   "annoncees": 284,
+   "annoncees": 292,
    "recues": 50,
-   "retenues": 40,
+   "retenues": 42,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "serveur · Paris",
-   "annoncees": 64,
+   "annoncees": 66,
    "recues": 50,
-   "retenues": 34,
+   "retenues": 33,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "chef de rang · Paris",
-   "annoncees": 80,
+   "annoncees": 82,
    "recues": 50,
    "retenues": 44,
    "pages": 1
@@ -407,9 +407,9 @@
   {
    "source": "Adzuna",
    "recherche": "serveur · Bondy",
-   "annoncees": 64,
+   "annoncees": 66,
    "recues": 50,
-   "retenues": 33,
+   "retenues": 31,
    "pages": 1
   },
   {
@@ -423,7 +423,7 @@
   {
    "source": "SmartRecruiters",
    "recherche": "Groupement Mousquetaires (activités centrales et logistiques)",
-   "annoncees": 81,
+   "annoncees": 82,
    "recues": 4,
    "retenues": 4,
    "pages": 0
@@ -439,7 +439,7 @@
   {
    "source": "SmartRecruiters",
    "recherche": "SMCP (Sandro, Maje, Claudie Pierlot)",
-   "annoncees": 138,
+   "annoncees": 137,
    "recues": 62,
    "retenues": 53,
    "pages": 0
@@ -447,8 +447,8 @@
   {
    "source": "SmartRecruiters",
    "recherche": "Kiabi",
-   "annoncees": 6,
-   "recues": 6,
+   "annoncees": 7,
+   "recues": 7,
    "retenues": 4,
    "pages": 0
   },
@@ -471,7 +471,7 @@
   {
    "source": "SmartRecruiters",
    "recherche": "Conforama",
-   "annoncees": 17,
+   "annoncees": 16,
    "recues": 4,
    "retenues": 3,
    "pages": 0
@@ -479,9 +479,9 @@
   {
    "source": "SmartRecruiters",
    "recherche": "H&M",
-   "annoncees": 10,
-   "recues": 3,
-   "retenues": 3,
+   "annoncees": 11,
+   "recues": 4,
+   "retenues": 4,
    "pages": 0
   }
  ]
