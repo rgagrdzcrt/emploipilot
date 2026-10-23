@@ -266,13 +266,6 @@
   "min": 81,
   "minAt": "2026-10-12"
  },
- "chessy|77700|77": {
-  "dept": "77",
-  "km": 20.7,
-  "label": "Chessy",
-  "lat": 48.87144,
-  "lon": 2.76478
- },
  "chessy||77": {
   "km": 20.7,
   "label": "Chessy",
@@ -762,13 +755,6 @@
   "min": 92,
   "minAt": "2026-10-13"
  },
- "le plessis-trévise||94": {
-  "dept": "94",
-  "km": 12.3,
-  "label": "Le Plessis-Trévise",
-  "lat": 48.81014,
-  "lon": 2.57623
- },
  "le pré-saint-gervais||93": {
   "dept": "93",
   "km": 6.2,
@@ -988,6 +974,15 @@
   "lon": 2.31183,
   "min": 91,
   "minAt": "2026-10-21"
+ },
+ "montsoult||IDF": {
+  "dept": "95",
+  "km": 22.3,
+  "label": "Montsoult",
+  "lat": 49.06858,
+  "lon": 2.31183,
+  "min": 91,
+  "minAt": "2026-10-23"
  },
  "montévrain||77": {
   "km": 19.8,
@@ -1634,13 +1629,6 @@
   "lon": 2.28637,
   "min": 83,
   "minAt": "2026-10-19"
- },
- "vaucresson||92": {
-  "dept": "92",
-  "km": 24.6,
-  "label": "Vaucresson",
-  "lat": 48.84057,
-  "lon": 2.16348
  },
  "vaujours||93": {
   "dept": "93",
