@@ -536,6 +536,13 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829
+ },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -619,6 +626,15 @@
   "lon": 2.38643,
   "min": 79,
   "minAt": "2026-10-12"
+ },
+ "l'haÿ-les-roses||94": {
+  "dept": "94",
+  "km": 17.6,
+  "label": "L'Haÿ-les-Roses",
+  "lat": 48.77685,
+  "lon": 2.34199,
+  "min": 85,
+  "minAt": "2026-10-23"
  },
  "l'isle-adam||95": {
   "dept": "95",
@@ -1372,6 +1388,7 @@
   "min": 76,
   "minAt": "2026-10-13"
  },
+ "saint-denis-sud||93": {},
  "saint-denis||93": {
   "km": 9.8,
   "label": "Saint-Denis",
@@ -1533,6 +1550,15 @@
   "min": 65,
   "minAt": "2026-10-12"
  },
+ "sèvres||92": {
+  "dept": "92",
+  "km": 22.1,
+  "label": "Sèvres",
+  "lat": 48.81959,
+  "lon": 2.212,
+  "min": 83,
+  "minAt": "2026-10-23"
+ },
  "taverny||95": {
   "dept": "95",
   "km": 24.0,
@@ -1593,6 +1619,13 @@
   "lon": 2.28637,
   "min": 83,
   "minAt": "2026-10-19"
+ },
+ "vaucresson||92": {
+  "dept": "92",
+  "km": 24.6,
+  "label": "Vaucresson",
+  "lat": 48.84057,
+  "lon": 2.16348
  },
  "vaujours||93": {
   "dept": "93",
