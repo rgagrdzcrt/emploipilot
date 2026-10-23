@@ -266,13 +266,6 @@
   "min": 81,
   "minAt": "2026-10-12"
  },
- "chessy|77700|77": {
-  "dept": "77",
-  "km": 20.7,
-  "label": "Chessy",
-  "lat": 48.87144,
-  "lon": 2.76478
- },
  "chessy||77": {
   "km": 20.7,
   "label": "Chessy",
@@ -543,13 +536,6 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
- },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -813,15 +799,6 @@
   "label": "Louvres",
   "lat": 49.04735,
   "lon": 2.50393
- },
- "magny-le-hongre|77700|77": {
-  "dept": "77",
-  "km": 24.6,
-  "label": "Magny-le-Hongre",
-  "lat": 48.86939,
-  "lon": 2.81828,
-  "min": 93,
-  "minAt": "2026-10-14"
  },
  "maisons-alfort||94": {
   "dept": "94",
@@ -1589,14 +1566,6 @@
   "lon": 2.64446,
   "min": 77,
   "minAt": "2026-10-14"
- },
- "tournan-en-brie||77": {
-  "km": 27.8,
-  "label": "Tournan-en-Brie",
-  "lat": 48.74071,
-  "lon": 2.77287,
-  "min": 84,
-  "minAt": "2026-10-12"
  },
  "tremblay-en-france||93": {
   "dept": "93",
