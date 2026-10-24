@@ -954,13 +954,6 @@
   "min": 80,
   "minAt": "2026-10-21"
  },
- "montmagny||IDF": {
-  "dept": "95",
-  "km": 12.4,
-  "label": "Montmagny",
-  "lat": 48.96767,
-  "lon": 2.34704
- },
  "montreuil||93": {
   "km": 5.2,
   "label": "Montreuil",
@@ -1449,7 +1442,9 @@
   "km": 21.2,
   "label": "Saint-Mard",
   "lat": 49.0372,
-  "lon": 2.69192
+  "lon": 2.69192,
+  "min": 84,
+  "minAt": "2026-10-24"
  },
  "saint-maur-des-fossés||94": {
   "dept": "94",
