@@ -153,6 +153,7 @@
   "min": null,
   "minAt": "2026-10-12"
  },
+ "bonneuil-en-france|95500|94": {},
  "bonneuil-sur-marne||94": {
   "km": 14.5,
   "label": "Bonneuil-sur-Marne",
@@ -256,7 +257,6 @@
   "min": 55,
   "minAt": "2026-10-12"
  },
- "chennevières-lès-louvres|95380|94": {},
  "chennevières-sur-marne||94": {
   "dept": "94",
   "km": 12.8,
@@ -545,13 +545,6 @@
   "lon": 2.54565,
   "min": 43,
   "minAt": "2026-10-12"
- },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
  },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
