@@ -153,7 +153,6 @@
   "min": null,
   "minAt": "2026-10-12"
  },
- "bonneuil-en-france|95500|94": {},
  "bonneuil-sur-marne||94": {
   "km": 14.5,
   "label": "Bonneuil-sur-Marne",
@@ -231,6 +230,15 @@
   "min": 91,
   "minAt": "2026-10-13"
  },
+ "charenton-le-pont||94": {
+  "dept": "94",
+  "km": 10.5,
+  "label": "Charenton-le-Pont",
+  "lat": 48.82395,
+  "lon": 2.40713,
+  "min": 61,
+  "minAt": "2026-10-24"
+ },
  "charles-de-gaulles aéroport||95": {
   "km": 10.8,
   "label": "Roissy-en-France",
@@ -265,6 +273,13 @@
   "lon": 2.5415,
   "min": 81,
   "minAt": "2026-10-12"
+ },
+ "chessy|77700|77": {
+  "dept": "77",
+  "km": 20.7,
+  "label": "Chessy",
+  "lat": 48.87144,
+  "lon": 2.76478
  },
  "chessy||77": {
   "km": 20.7,
@@ -451,7 +466,9 @@
   "km": 15.1,
   "label": "Enghien-les-Bains",
   "lat": 48.97097,
-  "lon": 2.30536
+  "lon": 2.30536,
+  "min": 65,
+  "minAt": "2026-10-24"
  },
  "epinay-sur-seine||93": {
   "dept": "93",
@@ -613,13 +630,6 @@
   "lat": 49.00406,
   "lon": 2.15245
  },
- "herblay||95": {
-  "dept": "95",
-  "km": 26.7,
-  "label": "Herblay-sur-Seine",
-  "lat": 49.00406,
-  "lon": 2.15245
- },
  "issy-les-moulineaux||92": {
   "km": 18.5,
   "label": "Issy-les-Moulineaux",
@@ -636,6 +646,15 @@
   "lon": 2.38643,
   "min": 79,
   "minAt": "2026-10-12"
+ },
+ "joinville-le-pont||94": {
+  "dept": "94",
+  "km": 9.3,
+  "label": "Joinville-le-Pont",
+  "lat": 48.82033,
+  "lon": 2.47193,
+  "min": 65,
+  "minAt": "2026-10-24"
  },
  "l'haÿ-les-roses||94": {
   "dept": "94",
@@ -1398,7 +1417,6 @@
   "min": 76,
   "minAt": "2026-10-13"
  },
- "saint-denis-sud||93": {},
  "saint-denis||93": {
   "km": 9.8,
   "label": "Saint-Denis",
@@ -1406,13 +1424,6 @@
   "lon": 2.3615,
   "min": 54,
   "minAt": "2026-10-12"
- },
- "saint-gratien||95": {
-  "dept": "95",
-  "km": 16.3,
-  "label": "Saint-Gratien",
-  "lat": 48.96841,
-  "lon": 2.28496
  },
  "saint-leu-la-forêt||95": {
   "dept": "95",
