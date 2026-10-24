@@ -274,13 +274,6 @@
   "min": 81,
   "minAt": "2026-10-12"
  },
- "chessy|77700|77": {
-  "dept": "77",
-  "km": 20.7,
-  "label": "Chessy",
-  "lat": 48.87144,
-  "lon": 2.76478
- },
  "chessy||77": {
   "km": 20.7,
   "label": "Chessy",
@@ -562,6 +555,13 @@
   "lon": 2.54565,
   "min": 43,
   "minAt": "2026-10-12"
+ },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829
  },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
@@ -1316,6 +1316,7 @@
   "min": 50,
   "minAt": "2026-10-12"
  },
+ "pierrefitte-sur-seine||93": {},
  "pontault-combault||77": {
   "dept": "77",
   "km": 15.2,
