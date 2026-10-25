@@ -630,6 +630,13 @@
   "lat": 49.00406,
   "lon": 2.15245
  },
+ "herblay||95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Herblay-sur-Seine",
+  "lat": 49.00406,
+  "lon": 2.15245
+ },
  "issy-les-moulineaux||92": {
   "km": 18.5,
   "label": "Issy-les-Moulineaux",
@@ -749,15 +756,6 @@
   "lon": 2.35582,
   "min": 75,
   "minAt": "2026-10-15"
- },
- "le perreux-sur-marne||94": {
-  "dept": "94",
-  "km": 6.8,
-  "label": "Le Perreux-sur-Marne",
-  "lat": 48.8435,
-  "lon": 2.50442,
-  "min": 54,
-  "minAt": "2026-10-14"
  },
  "le plessis-robinson||92": {
   "km": 21.3,
@@ -1029,13 +1027,6 @@
   "lon": 2.70305,
   "min": 151,
   "minAt": "2026-10-12"
- },
- "neuilly-plaisance||93": {
-  "dept": "93",
-  "km": 4.7,
-  "label": "Neuilly-Plaisance",
-  "lat": 48.86467,
-  "lon": 2.50964
  },
  "neuilly-sur-marne||93": {
   "km": 5.8,
@@ -1636,6 +1627,13 @@
   "lon": 2.28637,
   "min": 83,
   "minAt": "2026-10-19"
+ },
+ "vaucresson||92": {
+  "dept": "92",
+  "km": 24.6,
+  "label": "Vaucresson",
+  "lat": 48.84057,
+  "lon": 2.16348
  },
  "vaujours||93": {
   "dept": "93",
