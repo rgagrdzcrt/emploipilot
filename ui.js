@@ -46,7 +46,10 @@ function uiInitials(company) {
 
 function uiLogo(company) {
   const { text, hue } = uiInitials(company);
-  return `<div class="job-logo" style="--h:${hue}" aria-hidden="true">${uiEsc(text)}</div>`;
+  // Logo réel de l'enseigne ou de l'agence quand on la connaît (logos.js) ; sinon les initiales.
+  const domain = typeof companyDomain === 'function' ? companyDomain(company) : '';
+  const img = domain ? `<img src="${uiEsc(companyLogoUrl(company))}" data-domain="${uiEsc(domain)}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="logoLoaded(this)" onerror="logoFailed(this)">` : '';
+  return `<div class="job-logo" style="--h:${hue}" aria-hidden="true"><span>${uiEsc(text)}</span>${img}</div>`;
 }
 
 function uiDays(o) {

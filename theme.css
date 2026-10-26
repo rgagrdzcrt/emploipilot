@@ -746,7 +746,7 @@ tr.leaving { height: auto !important; }
    Style « HelloWork » : fond blanc, bandeau jaune illustré, boutons pilule,
    cartes d'offres avec un bloc logo pastel à gauche.
    ========================================================================== */
-:root:not([data-theme="dark"]) { --bg: #ffffff; --hw-sun: #ffe58f; --hw-sun-strong: #ffd53d; --hw-ink: #111; }
+:root:not([data-theme="dark"]) { --bg: #f4efe4; --hw-sun: #ffe58f; --hw-sun-strong: #ffd53d; --hw-ink: #111; }
 :root[data-theme="dark"] { --hw-sun: #2b2513; --hw-sun-strong: #ffd53d; --hw-ink: #111; }
 
 /* Bandeau d'accueil */
@@ -774,20 +774,37 @@ button, .seg, .chip, .filter-chip, .status-select, select { border-radius: 999px
 :root:not([data-theme="dark"]) .category-tabs button.active { background: var(--hw-ink); color: #fff; border-color: var(--hw-ink); }
 :root:not([data-theme="dark"]) .category-tabs button.active .ct-count { background: rgba(255, 255, 255, .18); color: #fff; }
 
-/* Menu latéral clair */
-:root:not([data-theme="dark"]) .side { background: #fff; color: var(--hw-ink); border-right: 1px solid #ececec; }
-:root:not([data-theme="dark"]) .nav button { color: #444; }
-:root:not([data-theme="dark"]) .nav button:hover { background: #f4f4f4; color: var(--hw-ink); }
-:root:not([data-theme="dark"]) .nav button.active { background: var(--hw-sun); color: var(--hw-ink); border-radius: 999px; }
-:root:not([data-theme="dark"]) .nav button.active .ic { color: var(--hw-ink); }
-:root:not([data-theme="dark"]) .nav-count { background: #f0f0f0; color: var(--hw-ink); }
-:root:not([data-theme="dark"]) .side-note { color: #777; }
+/* Ordinateur : le menu passe en barre du haut (logo à gauche, onglets en pilules). */
+@media (min-width: 901px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+  .side {
+    position: sticky; top: 0; height: auto; flex-direction: row; align-items: center; gap: 24px;
+    padding: 12px clamp(18px, 3.4vw, 44px); background: color-mix(in srgb, var(--bg) 88%, transparent);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); color: var(--ink); border-bottom: 1px solid var(--line);
+  }
+  :root[data-theme="dark"] .side { background: color-mix(in srgb, var(--bg) 88%, transparent); border-right: 0; }
+  .side .brand { margin: 0; }
+  .side-note { display: none; }
+  .nav { grid-auto-flow: column; gap: 4px; margin-left: auto; }
+  .nav button { width: auto; min-height: 38px; padding: 8px 16px; color: var(--ink-2); }
+  .nav button:hover { background: var(--surface-3); color: var(--ink); }
+  .nav button.active { background: var(--ink); color: var(--bg); }
+  .nav button.active .ic { color: var(--hw-sun-strong); }
+  .nav-count { background: var(--surface-3); color: var(--ink); }
+  .nav button.active .nav-count { background: rgba(255, 255, 255, .18); color: inherit; }
+  .main { padding-top: 22px; }
+}
+:root:not([data-theme="dark"]) .side { color: var(--hw-ink); }
 
 /* Cartes d'offres */
 .job { padding: 0; overflow: hidden; gap: 0; align-items: stretch; }
 .job::before { display: none; }
 .job .job-logo { width: 120px; height: auto; min-height: 100%; border-radius: 0; font-size: 26px; background: hsl(var(--h, 220) 85% 92%); color: hsl(var(--h, 220) 45% 30%); }
 :root[data-theme="dark"] .job .job-logo { background: hsl(var(--h, 220) 30% 20%); color: hsl(var(--h, 220) 60% 80%); }
+.job-logo { position: relative; overflow: hidden; }
+.job-logo img { position: absolute; inset: 0; width: 100%; height: 100%; padding: 5px; border-radius: inherit; background: #fff; object-fit: contain; }
+.job .job-logo img { inset: auto; top: 50%; left: 50%; width: 76px; height: 76px; padding: 12px; border-radius: 18px; transform: translate(-50%, -50%); box-shadow: 0 2px 8px rgba(0, 0, 0, .08); }
+.job-logo.has-logo > span { visibility: hidden; }
 .job-main { padding: 18px 20px; }
 .job h3 { font-size: 20px; font-weight: 600; }
 .job-side { padding: 18px 18px 18px 0; justify-content: space-between; }
@@ -799,8 +816,8 @@ button, .seg, .chip, .filter-chip, .status-select, select { border-radius: 999px
 :root[data-theme="dark"] .badge-new { background: #2d2552; color: #c9bcff; }
 
 @media (max-width: 900px) {
-  :root:not([data-theme="dark"]) .side { border-right: 0; border-top: 1px solid #ececec; }
-  :root:not([data-theme="dark"]) .nav button.active { background: transparent; }
+  :root:not([data-theme="dark"]) .side { background: #fffdf8; border-top: 1px solid var(--line); }
+  :root:not([data-theme="dark"]) .nav button { color: #5a5a5a; }
   :root:not([data-theme="dark"]) .nav button.active span { color: var(--hw-ink); }
   :root:not([data-theme="dark"]) .nav button.active .ic { color: #b38a00; }
   .top { align-items: flex-start; padding: 20px 20px 22px; min-height: 130px; }
@@ -814,6 +831,7 @@ button, .seg, .chip, .filter-chip, .status-select, select { border-radius: 999px
   .top { padding-bottom: 46px; }
   .job { grid-template-columns: 56px minmax(0, 1fr); gap: 0; padding: 0; }
   .job .job-logo { grid-row: 1 / 3; width: 56px; font-size: 15px; }
+  .job .job-logo img { width: 42px; height: 42px; padding: 6px; border-radius: 12px; }
   .job-main { padding: 14px 14px 6px; }
   .job h3 { font-size: 16px; }
   .job-side { grid-column: 2; padding: 6px 14px 14px; }
