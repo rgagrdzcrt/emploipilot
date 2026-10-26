@@ -52,7 +52,7 @@ CDD_RE = re.compile(r"\b(CDD|contrat [àa] dur[eé]e d[eé]termin[eé]e)\b", re.
 CATEGORY_RE = {
     "stock": re.compile(
         r"stock|logisti|magasinier|pr[eé]parat(?:eur|rice|ion) de commandes|approvision|cariste"
-        r"|r[eé]ceptionnaire",
+        r"|r[eé]ceptionnaire|entrep[oô]t|manutention|agent de quai",
         re.I,
     ),
     "rayon": re.compile(

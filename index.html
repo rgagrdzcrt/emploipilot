@@ -207,7 +207,7 @@ function backupReminder(){let t=Number(localStorage.getItem(nsKey('emploipilot_l
 function categoryOf(o){
  if(o.category in CAT_INFO)return o.category;
  const t=o.title||'';
- if(/stock|logisti|magasinier|pr[eé]parat(eur|rice|ion) de commandes|approvision|cariste|r[eé]ceptionnaire/i.test(t))return 'stock';
+ if(/stock|logisti|magasinier|pr[eé]parat(eur|rice|ion) de commandes|approvision|cariste|r[eé]ceptionnaire|entrep[oô]t|manutention|agent de quai/i.test(t))return 'stock';
  if(/mise en rayon|employ[eé].{0,12}rayon|employ[eé]e? commercia|rayonn?iste|libre.?service|r[eé]assort|r[eé]serviste|grande distribution/i.test(t))return 'rayon';
  if(/vendeu(r|se)|conseill[\w.·()]*(\s+\w+)?\s+(de |en |des )?ventes?|conseill[\w.·()]*\s+(de )?mode|caissi|h[oô]te(sse)?\s*de\s*caisse|[eé]quipier\w*\s+(de\s+)?vente/i.test(t))return 'vente';
  if(/serveu(r|se)|runner|commis de salle|chef(fe)? de rang|barista|barman|barmaid|h[oô]te(sse)?\s+d['’]accueil.{0,25}(restau|brasserie|caf[eé])/i.test(t))return 'restauration';

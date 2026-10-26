@@ -7,7 +7,8 @@
       "category": "stock",
       "keywords": "magasinier",
       "location": "Bondy",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 4
     },
     {
       "name": "préparateur de commandes · Bondy",
@@ -24,7 +25,8 @@
       "category": "stock",
       "keywords": "gestionnaire de stock",
       "location": "Bondy",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "agent logistique · Bondy",
@@ -85,7 +87,7 @@
       "keywords": "vendeur",
       "location": "Bondy",
       "radius": "26",
-      "maxPages": 3
+      "maxPages": 1
     },
     {
       "name": "conseiller de vente · Bondy",
@@ -94,11 +96,11 @@
       "keywords": "conseiller de vente",
       "location": "Bondy",
       "radius": "26",
-      "maxPages": 3
+      "maxPages": 2
     },
     {
       "name": "vendeuse · Bondy",
-      "enabled": true,
+      "enabled": false,
       "category": "vente",
       "keywords": "vendeuse",
       "location": "Bondy",
@@ -111,7 +113,8 @@
       "category": "stock",
       "keywords": "magasinier",
       "location": "Paris",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 4
     },
     {
       "name": "préparateur de commandes · Paris",
@@ -128,7 +131,8 @@
       "category": "stock",
       "keywords": "gestionnaire de stock",
       "location": "Paris",
-      "radius": "26"
+      "radius": "26",
+      "maxPages": 3
     },
     {
       "name": "agent logistique · Paris",
@@ -147,6 +151,114 @@
       "location": "Paris",
       "radius": "26",
       "maxPages": 3
+    },
+    {
+      "name": "agent d'entrepôt · Bondy",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "agent d'entrepôt",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 3
+    },
+    {
+      "name": "agent d'entrepôt · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "agent d'entrepôt",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 3
+    },
+    {
+      "name": "employé logistique · Bondy",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "employé logistique",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "employé logistique · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "employé logistique",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "manutentionnaire · Bondy",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "manutentionnaire",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "manutentionnaire · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "manutentionnaire",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "opérateur logistique · Bondy",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "opérateur logistique",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "opérateur logistique · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "opérateur logistique",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "stockiste · Bondy",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockiste",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "stockiste · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockiste",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "agent de quai · Bondy",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "agent de quai",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "approvisionneur · Bondy",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "approvisionneur",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 1
     },
     {
       "name": "employé libre service · Paris",
@@ -189,7 +301,7 @@
       "keywords": "vendeur",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 3
+      "maxPages": 1
     },
     {
       "name": "conseiller de vente · Paris",
@@ -198,11 +310,11 @@
       "keywords": "conseiller de vente",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 3
+      "maxPages": 2
     },
     {
       "name": "vendeuse · Paris",
-      "enabled": true,
+      "enabled": false,
       "category": "vente",
       "keywords": "vendeuse",
       "location": "Paris",
@@ -211,7 +323,7 @@
     },
     {
       "name": "serveur · Paris",
-      "enabled": true,
+      "enabled": false,
       "category": "restauration",
       "keywords": "serveur serveuse",
       "location": "Paris",
@@ -220,7 +332,7 @@
     },
     {
       "name": "chef de rang · Paris",
-      "enabled": true,
+      "enabled": false,
       "category": "restauration",
       "keywords": "chef de rang",
       "location": "Paris",
@@ -228,7 +340,7 @@
     },
     {
       "name": "barista · Paris",
-      "enabled": true,
+      "enabled": false,
       "category": "restauration",
       "keywords": "barista",
       "location": "Paris",
@@ -236,7 +348,7 @@
     },
     {
       "name": "serveur · Bondy",
-      "enabled": true,
+      "enabled": false,
       "category": "restauration",
       "keywords": "serveur serveuse",
       "location": "Bondy",
@@ -254,7 +366,7 @@
         "name": "stock-logistique",
         "enabled": true,
         "category": "stock",
-        "keywords": "magasinier, gestionnaire de stock, logistique, préparateur de commandes"
+        "keywords": "magasinier, gestionnaire de stock, logistique, préparateur de commandes, agent d'entrepôt, manutentionnaire, réceptionnaire, stockiste"
       },
       {
         "name": "rayon",
@@ -266,11 +378,11 @@
         "name": "vente",
         "enabled": true,
         "category": "vente",
-        "keywords": "vendeur en boutique, conseiller de vente en magasin, vendeur multimédia, vendeur téléphonie, vendeur prêt-à-porter"
+        "keywords": "vendeur en boutique, conseiller de vente en magasin"
       },
       {
         "name": "restauration",
-        "enabled": true,
+        "enabled": false,
         "category": "restauration",
         "keywords": "serveur, serveuse, chef de rang, runner, barista"
       }
@@ -343,7 +455,7 @@
       },
       {
         "name": "vendeur · Bondy",
-        "enabled": true,
+        "enabled": false,
         "category": "vente",
         "keywords": "vendeur",
         "titleOnly": true,
@@ -415,7 +527,7 @@
       },
       {
         "name": "vendeur · Paris",
-        "enabled": true,
+        "enabled": false,
         "category": "vente",
         "keywords": "vendeur",
         "titleOnly": true,
@@ -431,7 +543,7 @@
       },
       {
         "name": "serveur · Paris",
-        "enabled": true,
+        "enabled": false,
         "category": "restauration",
         "keywords": "serveur",
         "titleOnly": true,
@@ -439,7 +551,7 @@
       },
       {
         "name": "chef de rang · Paris",
-        "enabled": true,
+        "enabled": false,
         "category": "restauration",
         "keywords": "chef de rang",
         "titleOnly": true,
@@ -447,7 +559,7 @@
       },
       {
         "name": "barista · Paris",
-        "enabled": true,
+        "enabled": false,
         "category": "restauration",
         "keywords": "barista",
         "titleOnly": true,
@@ -455,11 +567,59 @@
       },
       {
         "name": "serveur · Bondy",
-        "enabled": true,
+        "enabled": false,
         "category": "restauration",
         "keywords": "serveur",
         "titleOnly": true,
         "location": "Bondy"
+      },
+      {
+        "name": "agent logistique · Bondy",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "agent logistique",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "agent logistique · Paris",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "agent logistique",
+        "titleOnly": true,
+        "location": "Paris"
+      },
+      {
+        "name": "gestionnaire stock · Bondy",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "gestionnaire stock",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "gestionnaire stock · Paris",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "gestionnaire stock",
+        "titleOnly": true,
+        "location": "Paris"
+      },
+      {
+        "name": "agent entrepot · Bondy",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "agent entrepot",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "agent entrepot · Paris",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "agent entrepot",
+        "titleOnly": true,
+        "location": "Paris"
       }
     ],
     "maxDaysOld": 15
@@ -490,7 +650,7 @@
       },
       {
         "name": "restauration",
-        "enabled": true,
+        "enabled": false,
         "category": "restauration",
         "keywords": "serveur chef de rang barista",
         "location": "Paris, France"
