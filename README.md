@@ -4,6 +4,8 @@ Site statique hébergé sur GitHub Pages, avec collecte planifiée toutes les 6 
 
 ## Profils (Ryan / Zia)
 
+**Profil de Zia en pause** (`disabled: true` dans `profiles.js`) : le site reste sur le profil de Ryan, sans bascule ; ses données sont conservées. Repasser `disabled` à `false` le réactive.
+
 Toucher le logo bascule entre deux profils, définis dans `profiles.js`. Le logo indique le profil actif : **RGRD** pour Ryan, **ZCRT** pour Zia.
 
 | | Ryan | Zia |

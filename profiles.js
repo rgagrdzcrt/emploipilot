@@ -71,6 +71,9 @@ const ZCRT_PROFILES = {
   zia: {
     id: 'zia',
     name: 'Zia',
+    // Profil mis en pause (Zia a trouvé un travail) : masqué, ses données restent intactes.
+    // Pour le réactiver : disabled: false.
+    disabled: true,
     brand: 'ZCRT',
     ns: '__zia',
     syncFile: 'zcrt-suivi-zia.json',
@@ -178,7 +181,8 @@ Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distin
 const ACTIVE_PROFILE = (() => {
   let id = '';
   try { id = localStorage.getItem(ZCRT_PROFILE_KEY) || ''; } catch (e) { /* stockage indisponible */ }
-  return ZCRT_PROFILES[id] || ZCRT_PROFILES.ryan;
+  const p = ZCRT_PROFILES[id];
+  return p && !p.disabled ? p : ZCRT_PROFILES.ryan;
 })();
 document.title = ACTIVE_PROFILE.brand + ' — Recherche d’emploi';
 
@@ -189,7 +193,7 @@ function nsKey(key) { return key + ACTIVE_PROFILE.ns; }
 function fem(masc, femi) { return ACTIVE_PROFILE.feminine ? femi : masc; }
 
 function otherProfile() {
-  return Object.values(ZCRT_PROFILES).find(p => p.id !== ACTIVE_PROFILE.id);
+  return Object.values(ZCRT_PROFILES).find(p => p.id !== ACTIVE_PROFILE.id && !p.disabled);
 }
 
 function switchProfile() {
@@ -200,6 +204,11 @@ function switchProfile() {
 /** Logo du profil actif ; le toucher bascule vers l'autre profil (barre latérale et en-tête mobile). */
 function brandHtml() {
   const other = otherProfile(), b = ACTIVE_PROFILE.brand;
+  // Un seul profil actif : simple logo, sans bascule.
+  if (!other) {
+    return `<span class="brand-btn" role="img" aria-label="${b}"><span class="brand-mark" aria-hidden="true">${b.charAt(0)}</span>`
+      + `<span class="brand-name" aria-hidden="true">${b}<i>.</i></span></span>`;
+  }
   return `<button class="brand-btn" type="button" onclick="switchProfile()" title="Passer au profil de ${other.name}" aria-label="${b} — passer au profil de ${other.name}">`
     + `<span class="brand-mark" aria-hidden="true">${b.charAt(0)}</span><span class="brand-name" aria-hidden="true">${b}<i>.</i></span></button>`;
 }
@@ -216,7 +225,7 @@ const ZCRT_NEW_DEVICE = !storedSafe(ZCRT_PROFILE_KEY)
 
 /** Nouvel appareil (ou appli tout juste installée) : on demande qui l'utilise. */
 function askProfileIfNew() {
-  if (!ZCRT_NEW_DEVICE || storedSafe(ZCRT_PROFILE_KEY)) return;
+  if (!ZCRT_NEW_DEVICE || storedSafe(ZCRT_PROFILE_KEY) || !otherProfile()) return;
   const box = document.createElement('div');
   box.className = 'welcome';
   box.innerHTML = `<div class="welcome-card" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
