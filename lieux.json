@@ -92,6 +92,13 @@
   "min": 48,
   "minAt": "2026-10-12"
  },
+ "baillet-en-france||95": {
+  "dept": "95",
+  "km": 21.8,
+  "label": "Baillet-en-France",
+  "lat": 49.06397,
+  "lon": 2.31434
+ },
  "bailly-romainvilliers|77700|77": {
   "km": 24.9,
   "label": "Bailly-Romainvilliers",
@@ -188,6 +195,20 @@
   "min": 70,
   "minAt": "2026-10-17"
  },
+ "brie-comte-robert||77": {
+  "dept": "77",
+  "km": 25.7,
+  "label": "Brie-Comte-Robert",
+  "lat": 48.68978,
+  "lon": 2.61659
+ },
+ "bruyères-sur-oise||95": {
+  "dept": "95",
+  "km": 30.2,
+  "label": "Bruyères-sur-Oise",
+  "lat": 49.15586,
+  "lon": 2.33054
+ },
  "bry-sur-marne||94": {
   "dept": "94",
   "km": 7.7,
@@ -214,6 +235,15 @@
   "lon": 2.33152,
   "min": 78,
   "minAt": "2026-10-15"
+ },
+ "cergy||95": {
+  "dept": "95",
+  "km": 35.6,
+  "label": "Cergy",
+  "lat": 49.04227,
+  "lon": 2.04555,
+  "min": 105,
+  "minAt": "2026-10-26"
  },
  "champigny-sur-marne||94": {
   "dept": "94",
@@ -256,6 +286,13 @@
   "lon": 2.51116,
   "min": 56,
   "minAt": "2026-10-12"
+ },
+ "charny|77410|77": {
+  "dept": "77",
+  "km": 21.4,
+  "label": "Charny",
+  "lat": 48.97165,
+  "lon": 2.76005
  },
  "chaville||92": {
   "dept": "92",
@@ -326,6 +363,13 @@
   "min": 84,
   "minAt": "2026-10-13"
  },
+ "châtres||77": {
+  "dept": "77",
+  "km": 32.1,
+  "label": "Châtres",
+  "lat": 48.71006,
+  "lon": 2.81022
+ },
  "clamart||92": {
   "km": 20.7,
   "label": "Clamart",
@@ -375,6 +419,15 @@
   "lon": 2.66346,
   "min": 82,
   "minAt": "2026-10-12"
+ },
+ "compans||77": {
+  "dept": "77",
+  "km": 16.2,
+  "label": "Compans",
+  "lat": 48.99007,
+  "lon": 2.66346,
+  "min": 82,
+  "minAt": "2026-10-26"
  },
  "cormeilles-en-parisis||95": {
   "dept": "95",
@@ -542,6 +595,13 @@
   "min": 56,
   "minAt": "2026-10-12"
  },
+ "fontenay-trésigny||77": {
+  "dept": "77",
+  "km": 36.3,
+  "label": "Fontenay-Trésigny",
+  "lat": 48.70235,
+  "lon": 2.87571
+ },
  "fosses||95": {
   "dept": "95",
   "km": 21.8,
@@ -565,6 +625,13 @@
   "lon": 2.32454,
   "min": 91,
   "minAt": "2026-10-12"
+ },
+ "frépillon||95": {
+  "dept": "95",
+  "km": 26.4,
+  "label": "Frépillon",
+  "lat": 49.05127,
+  "lon": 2.20139
  },
  "gagny||93": {
   "dept": "93",
@@ -633,6 +700,13 @@
   "min": 85,
   "minAt": "2026-10-12"
  },
+ "gretz-armainvilliers||77": {
+  "dept": "77",
+  "km": 25.6,
+  "label": "Gretz-Armainvilliers",
+  "lat": 48.73832,
+  "lon": 2.72849
+ },
  "hardricourt||IDF": {
   "dept": "78",
   "km": 44.6,
@@ -643,6 +717,15 @@
   "minAt": "2026-10-15"
  },
  "herblay-sur-seine||95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Herblay-sur-Seine",
+  "lat": 49.00406,
+  "lon": 2.15245,
+  "min": 100,
+  "minAt": "2026-10-26"
+ },
+ "herblay||95": {
   "dept": "95",
   "km": 26.7,
   "label": "Herblay-sur-Seine",
@@ -760,13 +843,6 @@
   "lon": 2.42885,
   "min": 54,
   "minAt": "2026-10-12"
- },
- "le kremlin-bicêtre||94": {
-  "dept": "94",
-  "km": 14.2,
-  "label": "Le Kremlin-Bicêtre",
-  "lat": 48.80818,
-  "lon": 2.35582
  },
  "le mesnil-amelot||77": {
   "dept": "77",
@@ -903,6 +979,13 @@
   "min": 131,
   "minAt": "2026-10-15"
  },
+ "mareuil-lès-meaux||77": {
+  "dept": "77",
+  "km": 28.1,
+  "label": "Mareuil-lès-Meaux",
+  "lat": 48.92726,
+  "lon": 2.86788
+ },
  "marly-la-ville||95": {
   "km": 19.7,
   "label": "Marly-la-Ville",
@@ -927,6 +1010,13 @@
   "min": 145,
   "minAt": "2026-10-12"
  },
+ "meaux||77": {
+  "dept": "77",
+  "km": 30.9,
+  "label": "Meaux",
+  "lat": 48.95942,
+  "lon": 2.90023
+ },
  "meudon||92": {
   "dept": "92",
   "km": 21.5,
@@ -945,6 +1035,13 @@
   "minAt": "2026-10-13"
  },
  "moisselles|95570|95": {
+  "km": 19.1,
+  "label": "Moisselles",
+  "lat": 49.04677,
+  "lon": 2.34056
+ },
+ "moisselles||95": {
+  "dept": "95",
   "km": 19.1,
   "label": "Moisselles",
   "lat": 49.04677,
@@ -1028,6 +1125,13 @@
   "minAt": "2026-10-12"
  },
  "morigny-champigny||94": {},
+ "moussy-le-neuf||77": {
+  "dept": "77",
+  "km": 19.9,
+  "label": "Moussy-le-Neuf",
+  "lat": 49.06532,
+  "lon": 2.60222
+ },
  "nanterre|92000|92": {
   "km": 20.7,
   "label": "Nanterre",
@@ -1481,6 +1585,13 @@
   "min": 55,
   "minAt": "2026-10-23"
  },
+ "saint-mard||77": {
+  "dept": "77",
+  "km": 21.2,
+  "label": "Saint-Mard",
+  "lat": 49.0372,
+  "lon": 2.69192
+ },
  "saint-mard||IDF": {
   "dept": "77",
   "km": 21.2,
@@ -1498,6 +1609,22 @@
   "lon": 2.4918,
   "min": 70,
   "minAt": "2026-10-12"
+ },
+ "saint-mesmes||77": {
+  "dept": "77",
+  "km": 18.3,
+  "label": "Saint-Mesmes",
+  "lat": 48.98574,
+  "lon": 2.70169
+ },
+ "saint-ouen-l'aumône||95": {
+  "dept": "95",
+  "km": 30.9,
+  "label": "Saint-Ouen-l'Aumône",
+  "lat": 49.04798,
+  "lon": 2.12406,
+  "min": 99,
+  "minAt": "2026-10-26"
  },
  "saint-ouen-sur-seine||93": {
   "dept": "93",
@@ -1534,6 +1661,13 @@
   "lon": 2.55433,
   "min": 100,
   "minAt": "2026-10-12"
+ },
+ "saint-witz||95": {
+  "dept": "95",
+  "km": 21.3,
+  "label": "Saint-Witz",
+  "lat": 49.08985,
+  "lon": 2.55433
  },
  "sannois||95": {
   "dept": "95",
@@ -1627,6 +1761,13 @@
   "min": 65,
   "minAt": "2026-10-12"
  },
+ "survilliers||95": {
+  "dept": "95",
+  "km": 22.0,
+  "label": "Survilliers",
+  "lat": 49.09802,
+  "lon": 2.53953
+ },
  "sèvres||92": {
   "dept": "92",
   "km": 22.1,
@@ -1674,6 +1815,13 @@
   "lon": 2.64446,
   "min": 77,
   "minAt": "2026-10-14"
+ },
+ "tournan-en-brie||77": {
+  "dept": "77",
+  "km": 27.8,
+  "label": "Tournan-en-Brie",
+  "lat": 48.74071,
+  "lon": 2.77287
  },
  "tremblay-en-france||93": {
   "dept": "93",
@@ -1795,6 +1943,13 @@
   "lon": 2.4497,
   "min": 87,
   "minAt": "2026-10-12"
+ },
+ "villeparisis||77": {
+  "dept": "77",
+  "km": 10.4,
+  "label": "Villeparisis",
+  "lat": 48.94354,
+  "lon": 2.61475
  },
  "villepinte||93": {
   "dept": "93",
