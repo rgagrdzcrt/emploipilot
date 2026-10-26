@@ -137,6 +137,11 @@ function letterPoste(o) {
 }
 
 function fillTemplate(o) {
+  // Lettre composée selon l'offre (compose.js), sauf si le modèle du métier a été personnalisé.
+  if (!(profile.templates || {})[jobCategory(o)] && typeof composeLetter === 'function') {
+    const composed = composeLetter(o);
+    if (composed) return composed;
+  }
   const company = (!o.company || /à vérifier/i.test(o.company)) ? 'votre entreprise' : o.company;
   const poste = letterPoste(o);
   const empty = Object.fromEntries(INFO_FIELDS.map(([k]) => [k, '']));
