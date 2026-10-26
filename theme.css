@@ -712,6 +712,40 @@ tr.leaving { height: auto !important; }
 .pilot-card[data-swipe="sent"]::after { content: "ENVOYÉE ✓"; left: 50%; color: var(--st-envoyee); transform: translateX(-50%) rotate(-8deg); animation: stamp .18s var(--ease); }
 @keyframes stamp { from { opacity: 0; transform: translateX(-50%) rotate(-8deg) scale(1.6); } to { opacity: 1; transform: translateX(-50%) rotate(-8deg) scale(1); } }
 
+/* ---------- Ambiance vivante (fun.js) ---------- */
+.confetti-canvas { position: fixed; inset: 0; z-index: 200; width: 100vw; height: 100vh; pointer-events: none; }
+
+/* En-tête : deux halos colorés qui dérivent lentement derrière le titre. */
+.top { isolation: isolate; overflow: hidden; }
+.top::before, .top::after { content: ""; position: absolute; z-index: -1; width: 340px; height: 340px; border-radius: 50%; pointer-events: none; opacity: .5; }
+.top::before { left: 8%; top: -190px; background: radial-gradient(circle, color-mix(in srgb, var(--signal) 55%, transparent), transparent 68%); animation: drift-a 16s ease-in-out infinite alternate; }
+.top::after { right: 6%; top: -170px; background: radial-gradient(circle, color-mix(in srgb, #7c6cff 30%, transparent), transparent 68%); animation: drift-b 19s ease-in-out infinite alternate; }
+@keyframes drift-a { to { transform: translate(90px, 40px) scale(1.15); } }
+@keyframes drift-b { to { transform: translate(-80px, 50px) scale(.9); } }
+
+/* Objectif du jour : barre dégradée avec un reflet qui passe, fête quand c'est atteint. */
+.goal-bar i { position: relative; overflow: hidden; background: linear-gradient(90deg, var(--signal), var(--st-envoyee)); }
+.goal-bar i::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, .55) 50%, transparent 80%); transform: translateX(-100%); animation: sheen 2.6s ease-in-out infinite; }
+@keyframes sheen { 60%, 100% { transform: translateX(100%); } }
+.goal-streak { margin-left: auto; margin-right: 6px; padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, #ff9f43 18%, transparent); color: #e07a14; font-size: 12px; font-weight: 700; }
+:root[data-theme="dark"] .goal-streak { color: #ffb366; }
+.goal.celebrate { animation: celebrate 1.4s var(--ease); }
+@keyframes celebrate { 0% { transform: scale(1); } 15% { transform: scale(1.04) rotate(-1deg); } 30% { transform: scale(1.02) rotate(1deg); } 45%, 100% { transform: none; } }
+
+/* « Postuler » : bouton mis en avant, avec un reflet de temps en temps. */
+#queueBtn { position: relative; overflow: hidden; background: linear-gradient(135deg, var(--st-envoyee), color-mix(in srgb, var(--st-envoyee) 70%, #3fc1ff)); border-color: transparent; }
+#queueBtn::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .35) 50%, transparent 70%); transform: translateX(-120%); animation: sheen-slow 5s ease-in-out infinite; pointer-events: none; }
+@keyframes sheen-slow { 70%, 100% { transform: translateX(120%); } }
+
+/* Icônes qui réagissent. */
+.category-tabs button:hover .ct-ic, .category-tabs button.active .ct-ic { animation: hop .45s var(--ease); }
+@keyframes hop { 40% { transform: translateY(-4px) rotate(-6deg); } 70% { transform: translateY(1px); } }
+.stat:hover .stat-ic, .stat:hover > .ic, .stat:hover svg:first-child { animation: wiggle .5s var(--ease); }
+@keyframes wiggle { 25% { transform: rotate(-10deg); } 50% { transform: rotate(8deg); } 75% { transform: rotate(-4deg); } }
+.nav button.active .ic { animation: pop .3s var(--ease); }
+@keyframes pop-ic { 50% { transform: scale(1.25); } }
+.nav button.active .ic { animation-name: pop-ic; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
