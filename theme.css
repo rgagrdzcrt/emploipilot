@@ -715,14 +715,6 @@ tr.leaving { height: auto !important; }
 /* ---------- Ambiance vivante (fun.js) ---------- */
 .confetti-canvas { position: fixed; inset: 0; z-index: 200; width: 100vw; height: 100vh; pointer-events: none; }
 
-/* En-tête : deux halos colorés qui dérivent lentement derrière le titre. */
-.top { isolation: isolate; overflow: hidden; }
-.top::before, .top::after { content: ""; position: absolute; z-index: -1; width: 340px; height: 340px; border-radius: 50%; pointer-events: none; opacity: .5; }
-.top::before { left: 8%; top: -190px; background: radial-gradient(circle, color-mix(in srgb, var(--signal) 55%, transparent), transparent 68%); animation: drift-a 16s ease-in-out infinite alternate; }
-.top::after { right: 6%; top: -170px; background: radial-gradient(circle, color-mix(in srgb, #7c6cff 30%, transparent), transparent 68%); animation: drift-b 19s ease-in-out infinite alternate; }
-@keyframes drift-a { to { transform: translate(90px, 40px) scale(1.15); } }
-@keyframes drift-b { to { transform: translate(-80px, 50px) scale(.9); } }
-
 /* Objectif du jour : barre dégradée avec un reflet qui passe, fête quand c'est atteint. */
 .goal-bar i { position: relative; overflow: hidden; background: linear-gradient(90deg, var(--signal), var(--st-envoyee)); }
 .goal-bar i::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, .55) 50%, transparent 80%); transform: translateX(-100%); animation: sheen 2.6s ease-in-out infinite; }
@@ -748,4 +740,81 @@ tr.leaving { height: auto !important; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* ==========================================================================
+   Style « HelloWork » : fond blanc, bandeau jaune illustré, boutons pilule,
+   cartes d'offres avec un bloc logo pastel à gauche.
+   ========================================================================== */
+:root:not([data-theme="dark"]) { --bg: #ffffff; --hw-sun: #ffe58f; --hw-sun-strong: #ffd53d; --hw-ink: #111; }
+:root[data-theme="dark"] { --hw-sun: #2b2513; --hw-sun-strong: #ffd53d; --hw-ink: #111; }
+
+/* Bandeau d'accueil */
+.top { align-items: flex-end; justify-content: flex-start; text-align: left; min-height: 150px; padding: 26px 30px; margin-bottom: 26px; border: 0; border-radius: 24px; background: var(--hw-sun); overflow: hidden; }
+.top .top-text { position: relative; z-index: 1; max-width: 60%; }
+.top h1 { font-size: 34px; }
+:root:not([data-theme="dark"]) .top h1 { color: #1a1a1a; }
+:root:not([data-theme="dark"]) .top .eyebrow, :root:not([data-theme="dark"]) .top .motto { color: #4a4220; }
+.hero-art { position: absolute; right: 26px; bottom: -8px; font-size: 88px; line-height: 1; letter-spacing: -14px; pointer-events: none; user-select: none; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .12)); }
+.top .top-actions { top: 18px; right: 18px; }
+.top .theme-toggle { background: rgba(255, 255, 255, .7); }
+:root[data-theme="dark"] .top .theme-toggle { background: rgba(255, 255, 255, .08); }
+
+/* Cartes et pilules */
+.stat, .goal, .job, .panel, .search-panel, .category-tabs button { border-radius: 16px; box-shadow: none; }
+:root:not([data-theme="dark"]) .stat, :root:not([data-theme="dark"]) .goal, :root:not([data-theme="dark"]) .job,
+:root:not([data-theme="dark"]) .panel, :root:not([data-theme="dark"]) .search-panel, :root:not([data-theme="dark"]) .category-tabs button { border-color: #e6e6e6; }
+button, .seg, .chip, .filter-chip, .status-select, select { border-radius: 999px !important; }
+.action-btn { border-radius: 999px !important; min-height: 56px; }
+.category-tabs button { border-radius: 20px !important; }
+:root:not([data-theme="dark"]) #triageBtn { background: var(--hw-ink); color: #fff; }
+#queueBtn { background: var(--hw-sun-strong) !important; color: var(--hw-ink) !important; }
+#queueBtn::after { display: none; }
+#queueBtn .count { background: rgba(0, 0, 0, .12); color: var(--hw-ink); }
+:root:not([data-theme="dark"]) .category-tabs button.active { background: var(--hw-ink); color: #fff; border-color: var(--hw-ink); }
+:root:not([data-theme="dark"]) .category-tabs button.active .ct-count { background: rgba(255, 255, 255, .18); color: #fff; }
+
+/* Menu latéral clair */
+:root:not([data-theme="dark"]) .side { background: #fff; color: var(--hw-ink); border-right: 1px solid #ececec; }
+:root:not([data-theme="dark"]) .nav button { color: #444; }
+:root:not([data-theme="dark"]) .nav button:hover { background: #f4f4f4; color: var(--hw-ink); }
+:root:not([data-theme="dark"]) .nav button.active { background: var(--hw-sun); color: var(--hw-ink); border-radius: 999px; }
+:root:not([data-theme="dark"]) .nav button.active .ic { color: var(--hw-ink); }
+:root:not([data-theme="dark"]) .nav-count { background: #f0f0f0; color: var(--hw-ink); }
+:root:not([data-theme="dark"]) .side-note { color: #777; }
+
+/* Cartes d'offres */
+.job { padding: 0; overflow: hidden; gap: 0; align-items: stretch; }
+.job::before { display: none; }
+.job .job-logo { width: 120px; height: auto; min-height: 100%; border-radius: 0; font-size: 26px; background: hsl(var(--h, 220) 85% 92%); color: hsl(var(--h, 220) 45% 30%); }
+:root[data-theme="dark"] .job .job-logo { background: hsl(var(--h, 220) 30% 20%); color: hsl(var(--h, 220) 60% 80%); }
+.job-main { padding: 18px 20px; }
+.job h3 { font-size: 20px; font-weight: 600; }
+.job-side { padding: 18px 18px 18px 0; justify-content: space-between; }
+.job-meta > span:first-child { padding: 5px 10px; border-radius: 8px; background: var(--surface-3); color: var(--ink); font-weight: 500; }
+:root:not([data-theme="dark"]) .job-meta > span:first-child { background: #f2f2f2; color: #222; }
+.job .prep-main { background: transparent !important; color: var(--ink) !important; border: 1.5px solid var(--ink) !important; box-shadow: none; }
+.job .prep-main:hover { background: var(--ink) !important; color: var(--bg) !important; }
+.badge-new { background: #ece6ff; color: #5b3cc4; }
+:root[data-theme="dark"] .badge-new { background: #2d2552; color: #c9bcff; }
+
+@media (max-width: 900px) {
+  :root:not([data-theme="dark"]) .side { border-right: 0; border-top: 1px solid #ececec; }
+  :root:not([data-theme="dark"]) .nav button.active { background: transparent; }
+  :root:not([data-theme="dark"]) .nav button.active span { color: var(--hw-ink); }
+  :root:not([data-theme="dark"]) .nav button.active .ic { color: #b38a00; }
+  .top { align-items: flex-start; padding: 20px 20px 22px; min-height: 130px; }
+  .top .top-text { max-width: 72%; }
+  .hero-art { right: 14px; font-size: 56px; letter-spacing: -10px; }
+}
+@media (max-width: 640px) {
+  .top h1 { font-size: 24px; }
+  .top .top-text { max-width: 100%; padding-right: 36px; }
+  .hero-art { font-size: 40px; bottom: -4px; opacity: .9; }
+  .top { padding-bottom: 46px; }
+  .job { grid-template-columns: 56px minmax(0, 1fr); gap: 0; padding: 0; }
+  .job .job-logo { grid-row: 1 / 3; width: 56px; font-size: 15px; }
+  .job-main { padding: 14px 14px 6px; }
+  .job h3 { font-size: 16px; }
+  .job-side { grid-column: 2; padding: 6px 14px 14px; }
 }
