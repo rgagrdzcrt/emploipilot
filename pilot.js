@@ -140,7 +140,11 @@ function fillTemplate(o) {
   const company = (!o.company || /à vérifier/i.test(o.company)) ? 'votre entreprise' : o.company;
   const poste = letterPoste(o);
   const empty = Object.fromEntries(INFO_FIELDS.map(([k]) => [k, '']));
-  const vars = { ...empty, ...infosOf(), poste, entreprise: company, ville: cityOf(o) };
+  const infos = infosOf();
+  // Paragraphes propres à l'offre (letters.js), placés avec la phrase d'accroche facultative.
+  const tailored = typeof offerTailoring === 'function' ? offerTailoring(o) : '';
+  const accroche = [tailored, infos.accroche].filter(Boolean).join('\n\n');
+  const vars = { ...empty, ...infos, accroche, poste, entreprise: company, ville: cityOf(o) };
   return templatesOf()[jobCategory(o)]
     // Pas de ligne « Objet » ni d'entreprise après le poste, même dans un modèle personnalisé.
     .replace(/^\s*Objet\s*:[^\n]*\n+/i, '')
