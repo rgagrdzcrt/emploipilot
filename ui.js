@@ -338,3 +338,21 @@ document.addEventListener('click', e => {
   p.title = open ? 'Cliquer pour replier' : 'Cliquer pour lire la suite';
   if (open) p.scrollTop = 0;
 });
+
+/* Recherche complémentaire sur d'autres sites, pré-remplie selon le métier affiché. */
+const ELSEWHERE_QUERIES = {
+  stock: 'magasinier cariste préparateur de commandes',
+  rayon: 'employé libre service mise en rayon',
+  vente: 'vendeur conseiller de vente',
+};
+const ELSEWHERE_SITES = {
+  hellowork: q => 'https://www.hellowork.com/fr-fr/emploi/recherche.html?k=' + encodeURIComponent(q) + '&l=' + encodeURIComponent('Île-de-France'),
+  indeed: q => 'https://fr.indeed.com/jobs?q=' + encodeURIComponent(q) + '&l=' + encodeURIComponent('Île-de-France') + '&sort=date',
+};
+
+function searchElsewhere(site) {
+  const cat = typeof activeCategory !== 'undefined' ? activeCategory : 'stock';
+  const q = (document.getElementById('q')?.value || '').trim() || ELSEWHERE_QUERIES[cat] || ELSEWHERE_QUERIES.stock;
+  window.open(ELSEWHERE_SITES[site](q), '_blank', 'noopener');
+  return false;
+}

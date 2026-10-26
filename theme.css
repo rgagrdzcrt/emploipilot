@@ -862,6 +862,11 @@ button, select, .search-box, .search-row > button, .sort select { border-radius:
 /* ---------- Résultats ---------- */
 .results-head { margin: 0 2px 14px; }
 .results-head h2 { font-size: 19px; letter-spacing: -.01em; }
+.results-tools { flex-wrap: wrap; justify-content: flex-end; }
+.more-search { color: var(--faint); font-size: 13px; }
+.more-search a { color: var(--ink-2); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--accent); }
+.more-search a:hover { color: var(--ink); }
+@media (max-width: 640px) { .more-search { order: 3; width: 100%; text-align: right; } }
 .jobs { gap: 12px; }
 
 /* ---------- Cartes d'offres : aérées, hiérarchie nette ---------- */

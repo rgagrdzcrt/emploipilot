@@ -1697,6 +1697,25 @@ def main():
     except Exception as exc:
         errors.append({"source": "Adzuna", "error": type(exc).__name__})
 
+    # Alertes e-mail HelloWork et Meteojob (pas d'API publique) lues dans Gmail.
+    if (config.get("alertesMail") or {}).get("enabled", True):
+        try:
+            from alertes import fetch_alert_offers
+            for raw in fetch_alert_offers(int((config.get("alertesMail") or {}).get("days", 4))):
+                # Le département est donné par l'alerte : « Lagny-le-Sec (60) » est dans l'Oise,
+                # même si le nom ressemble à une ville d'Île-de-France.
+                given = re.search(r"\((\d{2}|2[AB])\)", raw["location"])
+                if given and given.group(1) not in IDF_DEPTS:
+                    continue
+                text = " · ".join(x for x in (raw["contract"], raw["salary"]) if x)
+                offer = make_offer(raw["title"], raw["company"], raw["location"],
+                                   f"{text} — offre reçue par alerte {raw['source']}.",
+                                   raw["url"], raw["date"], raw["source"])
+                if offer:
+                    fresh.append(offer)
+        except Exception as exc:
+            errors.append({"source": "Alertes e-mail", "error": type(exc).__name__})
+
     # Joblet est un connecteur MCP public en lecture seule, sans clé API.
     try:
         fresh.extend(fetch_joblet(config.get("joblet") or {}))
