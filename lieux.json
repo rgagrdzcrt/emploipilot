@@ -162,6 +162,7 @@
   "min": null,
   "minAt": "2026-10-12"
  },
+ "bonneuil-en-france|95500|94": {},
  "bonneuil-sur-marne||94": {
   "km": 14.5,
   "label": "Bonneuil-sur-Marne",
@@ -298,6 +299,15 @@
   "lon": 2.35088,
   "min": 91,
   "minAt": "2026-10-12"
+ },
+ "choisy-le-roi||94": {
+  "dept": "94",
+  "km": 16.4,
+  "label": "Choisy-le-Roi",
+  "lat": 48.76411,
+  "lon": 2.41281,
+  "min": 74,
+  "minAt": "2026-10-26"
  },
  "châtenay-malabry||92": {
   "dept": "92",
@@ -715,6 +725,7 @@
   "min": 65,
   "minAt": "2026-10-13"
  },
+ "la plaine saint-denis||93": {},
  "lagny-sur-marne|77400|77": {
   "km": 16.5,
   "label": "Lagny-sur-Marne",
@@ -749,6 +760,20 @@
   "lon": 2.42885,
   "min": 54,
   "minAt": "2026-10-12"
+ },
+ "le kremlin-bicêtre||94": {
+  "dept": "94",
+  "km": 14.2,
+  "label": "Le Kremlin-Bicêtre",
+  "lat": 48.80818,
+  "lon": 2.35582
+ },
+ "le mesnil-amelot||77": {
+  "dept": "77",
+  "km": 15.1,
+  "label": "Le Mesnil-Amelot",
+  "lat": 49.0196,
+  "lon": 2.59354
  },
  "le plessis-robinson||92": {
   "km": 21.3,
@@ -810,6 +835,13 @@
   "lon": 2.54793,
   "min": 122,
   "minAt": "2026-10-15"
+ },
+ "limeil-brévannes||94": {
+  "dept": "94",
+  "km": 17.3,
+  "label": "Limeil-Brévannes",
+  "lat": 48.74791,
+  "lon": 2.49242
  },
  "livry-gargan||93": {
   "dept": "93",
@@ -1027,6 +1059,13 @@
   "lon": 2.70305,
   "min": 151,
   "minAt": "2026-10-12"
+ },
+ "neuilly-plaisance||93": {
+  "dept": "93",
+  "km": 4.7,
+  "label": "Neuilly-Plaisance",
+  "lat": 48.86467,
+  "lon": 2.50964
  },
  "neuilly-sur-marne||93": {
   "km": 5.8,
@@ -1539,6 +1578,13 @@
   "min": 84,
   "minAt": "2026-10-13"
  },
+ "sevran||93": {
+  "dept": "93",
+  "km": 5.1,
+  "label": "Sevran",
+  "lat": 48.93797,
+  "lon": 2.53129
+ },
  "soisy-sous-montmorency||95": {
   "dept": "95",
   "km": 16.4,
@@ -1556,6 +1602,13 @@
   "lon": 2.38247,
   "min": 70,
   "minAt": "2026-10-12"
+ },
+ "sucy-en-brie|94370|94": {
+  "dept": "94",
+  "km": 15.1,
+  "label": "Sucy-en-Brie",
+  "lat": 48.77067,
+  "lon": 2.5284
  },
  "sucy-en-brie||94": {
   "dept": "94",
@@ -1599,6 +1652,20 @@
   "lon": 2.38699,
   "min": 90,
   "minAt": "2026-10-12"
+ },
+ "thorigny-sur-marne||77": {
+  "dept": "77",
+  "km": 16.7,
+  "label": "Thorigny-sur-Marne",
+  "lat": 48.89225,
+  "lon": 2.71317
+ },
+ "torcy|71210|77": {
+  "dept": "77",
+  "km": 13.3,
+  "label": "Torcy",
+  "lat": 48.84628,
+  "lon": 2.64446
  },
  "torcy||77": {
   "km": 13.3,
