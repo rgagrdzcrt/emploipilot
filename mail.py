@@ -7,6 +7,8 @@ ZCRT — tri des e-mails de candidature (Gmail).
 - Dans Gmail : libellés « ZCRT/… » et archivage du seul bruit évident.
   Aucune suppression : le droit demandé est gmail.modify et aucun appel de suppression n'existe ici.
 - Met à jour le statut de la candidature dans le gist et envoie une alerte ntfy.
+- Candidature faite directement sur HelloWork ou Meteojob : l'accusé de réception l'ajoute au suivi
+  (reliée à l'offre si elle est déjà sur le site).
 
 Le dépôt est public : rien n'est écrit dans le dépôt et les journaux GitHub Actions
 n'affichent que des compteurs (jamais d'expéditeur ni d'objet).
@@ -328,6 +330,87 @@ def classify(mail, applications):
         return {"kind": kind, "label": "verifier", "app": None}
 
     return {"kind": None, "label": None, "app": None}
+
+
+# ---------------------------------------------------------------- Candidatures faites ailleurs
+
+# Accusés des sites d'emploi pour une candidature faite directement chez eux (HelloWork,
+# Meteojob) : le poste et l'entreprise sont lisibles, la candidature entre dans le suivi.
+OFFERS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "offres.json")
+NOT_SENT = re.compile(r"^\s*finalisez|^\s*compl[eé]tez|^\s*terminez", re.I)
+
+
+def application_from_mail(mail):
+    """(poste, entreprise, site) d'un accusé de site d'emploi, ou None."""
+    domain = domain_of(mail["from_addr"])
+    subject = " ".join(mail["subject"].split())
+    body = " ".join(mail["body"][:6000].split())
+    if NOT_SENT.search(subject):
+        return None
+    if domain_in(domain, ("meteojob.com",)):
+        m = re.search(r"envoy[ée]e [àa] (.+?) pour le poste de [\"«]\s*(.+?)\s*[\"»]", subject)
+        return (m.group(2), m.group(1), "Meteojob") if m else None
+    if not domain_in(domain, ("hellowork.com",)):
+        return None
+    m = re.search(r"[\"«]\s*([^\"»]{3,140}?)\s*[\"»] pour l.entreprise (.{2,80}?)\.(?:\s|$)", body)
+    if m:
+        return m.group(1), m.group(2), "HelloWork"
+    # Réponse d'un recruteur relayée par HelloWork (adresse « reply. »).
+    title = re.search(r"candidature pour (?:être|etre) (.{3,140}?(?:H/F|F/H|\(H/F\)|\(F/H\)))", subject + " " + body, re.I)
+    title = title or re.search(r"poste de (.{3,140}?(?:H/F|F/H)), chez", body, re.I)
+    company = re.search(r",? chez ([A-Z0-9][^,.;!]{1,60}?)(?:[,.;!]| et )", body) or re.search(r"\s-\s([^-]{2,60})$", subject)
+    if title and company:
+        return title.group(1).strip(), company.group(1).strip(), "HelloWork"
+    return None
+
+
+def load_offers():
+    try:
+        with open(OFFERS_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+        return data["offers"] if isinstance(data, dict) else data
+    except (OSError, ValueError, KeyError):
+        return []
+
+
+def title_words(title):
+    return {w for w in norm(title).split() if len(w) >= 4 and w not in TITLE_STOP}
+
+
+def same_job(company_a, title_a, company_b, title_b):
+    ka, kb = company_key(company_a), company_key(company_b)
+    if not ka or not kb or not (contains_phrase(ka, kb) or contains_phrase(kb, ka)):
+        return False
+    wa, wb = title_words(title_a), title_words(title_b)
+    return bool(wa and wb) and len(wa & wb) >= max(1, min(len(wa), len(wb)) // 2)
+
+
+def add_outside_application(entries, offers, mail, title, company, site, now_ms):
+    """Inscrit la candidature dans le suivi. Renvoie l'entrée créée, ou None si elle y était déjà."""
+    for entry in entries.values():
+        if same_job(entry.get("company"), entry.get("title"), company, title):
+            return None
+    applied = time.strftime("%Y-%m-%d", time.localtime(mail["at"] / 1000))
+    offer = next((o for o in offers if same_job(o.get("company"), o.get("title"), company, title)), None)
+    if offer:
+        # L'offre est déjà sur le site (collecte ou alerte) : elle passe simplement en « envoyée ».
+        entry = {**offer}
+    else:
+        key = norm(company + " " + title)
+        entry = {
+            "id": "mail_" + re.sub(r"[^a-z0-9]+", "-", key)[:60],
+            "title": title, "company": company, "location": "", "contract": "À vérifier",
+            "date": "", "url": "", "created": applied,
+            "notes": f"Candidature faite sur {site}, ajoutée au suivi depuis l'accusé de réception.",
+        }
+    entry.update({
+        "status": "Candidature envoyée", "appliedDate": applied, "via": site,
+        "mailKind": "accuse", "mailAt": mail["at"], "mailDate": applied,
+        "mailSubject": mail["subject"][:140], "mailFrom": mail["from_name"][:80],
+        "trackedAt": max(now_ms, (entry.get("trackedAt") or 0) + 1),
+    })
+    entries[entry["id"]] = entry
+    return entry
 
 
 # ---------------------------------------------------------------- HTTP
@@ -698,6 +781,18 @@ def reclassify(gmail, gist_id, applications, essai):
     if confirmed:
         print(f"{confirmed} offre(s) « À postuler » passée(s) en « Candidature envoyée ».")
 
+    # Candidatures faites directement sur HelloWork ou Meteojob, avant que le suivi sache les lire.
+    added, offers = 0, None
+    for mail, d in sorted(checked, key=lambda c: c[0]["at"]):
+        found = application_from_mail(mail) if not d["app"] and d["kind"] == "accuse" else None
+        if found:
+            offers = load_offers() if offers is None else offers
+            if add_outside_application(entries, offers, mail, *found, now_ms):
+                added += 1
+                changed = True
+    if added:
+        print(f"{added} candidature(s) faite(s) sur un site d'emploi ajoutée(s) au suivi.")
+
     # Onglet « Mails » du site : tous les e-mails relus, avec le même libellé que dans Gmail
     # (corrigé, ou posé à la main). Remplit aussi la liste des e-mails triés avant l'onglet.
     mails = {m["id"]: m for m in mail_state.get("mails") or []}
@@ -786,7 +881,18 @@ def main():
     entries = state.get("entries") or {}
     now_ms = int(time.time() * 1000)
     alerts, urgent, changed = [], False, False
+    offers = None
     for mail, d in decisions:
+        if not d["app"] and d["kind"] == "accuse":
+            found = application_from_mail(mail)
+            if found:
+                offers = load_offers() if offers is None else offers
+                entry = add_outside_application(entries, offers, mail, *found, now_ms)
+                if entry:
+                    changed = True
+                    alerts.append(f"• Candidature ajoutée au suivi — {entry.get('company')} ({entry.get('title')}, via {found[2]})")
+                    print(f"Candidature faite sur {found[2]} ajoutée au suivi.")
+                continue
         if not d["app"]:
             # Entretien ou démarche demandée sans candidature suivie : signalé quand même.
             if d["label"] in ("entretien", "action"):
