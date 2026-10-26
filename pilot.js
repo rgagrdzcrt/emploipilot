@@ -393,10 +393,13 @@ function today() { return new Date().toLocaleDateString('sv-SE'); }
 
 /* ---------- Objectif du jour ---------- */
 
-const DEFAULT_DAILY_GOAL = 50;
+const DEFAULT_DAILY_GOAL = 50;   // par session
+const GOAL_SESSIONS = 2;         // la journée est coupée en deux sessions de travail
 let lastGoalCount = null;
 
+/** Objectif d'une session (le réglage « Objectif » des critères). */
 function goalOf() { return Math.max(1, Number(profile.dailyGoal) || DEFAULT_DAILY_GOAL); }
+function dayGoalOf() { return goalOf() * GOAL_SESSIONS; }
 
 function weekStart() {
   const d = new Date();
@@ -405,18 +408,31 @@ function weekStart() {
 }
 
 function updateGoal() {
-  const t = today(), from = weekStart(), goal = goalOf();
+  const t = today(), from = weekStart(), goal = goalOf(), dayGoal = dayGoalOf();
   const sent = offers.filter(o => o.appliedDate === t).length;
   const week = offers.filter(o => o.appliedDate && o.appliedDate >= from && o.appliedDate <= t).length;
+  // Les sessions se remplissent l'une après l'autre : 0-50 la première, 50-100 la seconde.
+  const session = Math.min(GOAL_SESSIONS, Math.floor(sent / goal) + 1);
+  const inSession = sent >= dayGoal ? goal : sent - (session - 1) * goal;
   const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-  set('goalToday', sent);
+  set('goalSession', sent >= dayGoal ? 'Journée bouclée' : 'Session ' + session + '/' + GOAL_SESSIONS);
+  set('goalToday', inSession);
   set('goalTarget', goal);
+  set('goalDay', sent + ' / ' + dayGoal);
   set('goalWeek', week);
-  const fill = document.getElementById('goalFill');
-  if (fill) fill.style.width = Math.min(100, Math.round(sent / goal * 100)) + '%';
-  document.getElementById('goalBox')?.classList.toggle('done', sent >= goal);
-  if (lastGoalCount !== null && lastGoalCount < goal && sent >= goal) {
-    setTimeout(() => toast('🎉 Objectif du jour atteint : ' + sent + ' candidatures !'), 800);
+  for (let k = 1; k <= GOAL_SESSIONS; k++) {
+    const fill = document.getElementById(k === 1 ? 'goalFill' : 'goalFill' + k);
+    const part = Math.max(0, Math.min(goal, sent - (k - 1) * goal));
+    if (fill) fill.style.width = Math.round(part / goal * 100) + '%';
+    fill?.parentElement.classList.toggle('full', part >= goal);
+  }
+  document.getElementById('goalBox')?.classList.toggle('done', sent >= dayGoal);
+  if (lastGoalCount !== null && sent > lastGoalCount) {
+    if (lastGoalCount < dayGoal && sent >= dayGoal) {
+      setTimeout(() => toast('🎉 Journée bouclée : ' + sent + ' candidatures !'), 800);
+    } else if (lastGoalCount < goal && sent >= goal) {
+      setTimeout(() => toast('☕ Session 1 terminée : ' + goal + ' candidatures. Pause méritée, puis on repart !'), 800);
+    }
   }
   lastGoalCount = sent;
 }

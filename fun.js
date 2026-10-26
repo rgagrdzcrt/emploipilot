@@ -118,17 +118,24 @@ function onSentCountChange(sent, goal) {
   combo = now - lastSendAt < 4 * 60000 ? combo + (sent - before) : sent - before;
   lastSendAt = now;
 
-  const crossed = p => before < Math.ceil(goal * p / 100) && sent >= Math.ceil(goal * p / 100);
-  if (before < goal && sent >= goal) {
-    confetti({ rain: true, count: 160 });              // objectif atteint : grande pluie (le toast existe déjà)
+  // Paliers comptés dans la session en cours ; la fin de session et la fin de journée ont leur fête.
+  const dayGoal = goal * (typeof GOAL_SESSIONS === 'number' ? GOAL_SESSIONS : 1);
+  if (before < dayGoal && sent >= dayGoal) {
+    confetti({ rain: true, count: 160 });              // journée bouclée : grande pluie (le toast existe déjà)
     document.getElementById('goalBox')?.classList.add('celebrate');
     setTimeout(() => document.getElementById('goalBox')?.classList.remove('celebrate'), 1600);
     return;
   }
+  if (Math.floor(before / goal) < Math.floor(sent / goal)) {
+    confetti({ ...confettiOrigin(), count: 90, spread: 90, power: 12 }); // fin de session
+    return;
+  }
   confetti({ ...confettiOrigin(), count: 28, spread: 55, power: 8 });
-  const milestone = [75, 50, 25].find(crossed);
+  const base = Math.floor(sent / goal) * goal;
+  const crossed = p => before - base < Math.ceil(goal * p / 100) && sent - base >= Math.ceil(goal * p / 100);
+  const milestone = before >= base ? [75, 50, 25].find(crossed) : undefined;
   if (milestone) {
-    setTimeout(() => toast(pick(CHEERS[milestone]) + ' ' + sent + ' / ' + goal), 350);
+    setTimeout(() => toast(pick(CHEERS[milestone]) + ' ' + (sent - base) + ' / ' + goal), 350);
     confetti({ ...confettiOrigin(), count: 60, spread: 80, power: 11 });
   } else if (COMBO_STEPS.includes(combo)) {
     setTimeout(() => toast('🔥 Combo x' + combo + ' ! Continue comme ça'), 350);

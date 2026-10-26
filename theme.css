@@ -833,7 +833,10 @@ button, select, .search-box, .search-row > button, .sort select { border-radius:
 #triageBtn:hover { background: var(--surface-2); border-color: var(--ink); }
 #triageBtn .count { background: var(--surface-3); color: var(--ink-2); }
 .goal { padding: 12px 16px; }
+.goal-bars { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .goal-bar { height: 5px; }
+.goal-bar.full i { background: var(--st-envoyee); }
+.goal-session { margin-right: 4px; padding: 1px 7px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-ink); font-size: 11px; font-weight: 700; }
 .goal-bar i { background: var(--accent); }
 .goal-bar i::after { display: none; }
 .sync-state { color: var(--faint); }
