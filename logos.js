@@ -2,7 +2,7 @@
  *
  * Les offres ne donnent que le nom de l'entreprise : on le relie à son site
  * grâce à une table des enseignes et agences connues, puis on affiche l'icône
- * du site (service d'icônes de Google). Sans correspondance, ou si l'icône
+ * la plus nette trouvée pour ce site. Sans correspondance, ou si l'icône
  * trouvée est trop petite, les initiales colorées restent affichées.
  */
 
@@ -135,23 +135,100 @@ function companyDomain(company) {
   return hit ? hit[1] : '';
 }
 
-function companyLogoUrl(company) {
-  const domain = companyDomain(company);
-  return domain ? 'https://www.google.com/s2/favicons?sz=128&domain=' + encodeURIComponent(domain) : '';
+/* Plusieurs services d'icônes, de qualité très variable selon le site : on les
+ * interroge tous et on garde l'image la plus grande. Le résultat est mémorisé
+ * sur l'appareil pour ne pas refaire la recherche à chaque ouverture. */
+const LOGO_SOURCES = [
+  d => 'https://icon.horse/icon/' + d,
+  d => 'https://unavatar.io/' + d + '?fallback=false',
+  d => 'https://www.google.com/s2/favicons?sz=128&domain=' + d,
+  d => 'https://icons.duckduckgo.com/ip3/' + d + '.ico',
+];
+const LOGO_CACHE_KEY = 'zcrt_logos_v1';
+const LOGO_TTL = { found: 14 * 864e5, missing: 3 * 864e5 };
+const LOGO_MIN_WIDTH = 30;   // en dessous : icône par défaut ou trop floue
+const LOGO_HD_WIDTH = 96;    // au-dessus : assez nette pour remplir la vignette
+
+let logoCache = {};
+try { logoCache = JSON.parse(localStorage.getItem(LOGO_CACHE_KEY) || '{}'); } catch { logoCache = {}; }
+const logoPending = {};
+
+function logoCached(domain) {
+  const hit = logoCache[domain];
+  if (!hit || Date.now() - hit.t > (hit.src ? LOGO_TTL.found : LOGO_TTL.missing)) return undefined;
+  return hit;
 }
 
-/** Icône chargée : gardée si elle est assez nette ; sinon on essaie DuckDuckGo, puis on laisse les initiales. */
-function logoLoaded(img) {
-  if (img.naturalWidth >= 30) { img.parentElement?.classList.add('has-logo'); return; }
-  logoFailed(img);
+function probeLogo(url) {
+  return new Promise(resolve => {
+    const img = new Image();
+    const timer = setTimeout(() => resolve({ src: url, w: 0 }), 8000);
+    img.referrerPolicy = 'no-referrer';
+    img.onload = () => { clearTimeout(timer); resolve({ src: url, w: img.naturalWidth }); };
+    img.onerror = () => { clearTimeout(timer); resolve({ src: url, w: 0 }); };
+    img.src = url;
+  });
 }
 
-function logoFailed(img) {
-  const domain = img.dataset.domain;
-  if (domain && !img.dataset.retried) {
-    img.dataset.retried = '1';
-    img.src = 'https://icons.duckduckgo.com/ip3/' + encodeURIComponent(domain) + '.ico';
-  } else {
-    img.remove();
+function resolveLogo(domain) {
+  const cached = logoCached(domain);
+  if (cached) return Promise.resolve(cached);
+  if (!logoPending[domain]) {
+    const d = encodeURIComponent(domain);
+    logoPending[domain] = Promise.all(LOGO_SOURCES.map(src => probeLogo(src(d)))).then(results => {
+      const best = results.reduce((a, b) => (b.w > a.w ? b : a));
+      const entry = best.w >= LOGO_MIN_WIDTH ? { src: best.src, w: best.w, t: Date.now() } : { src: '', w: 0, t: Date.now() };
+      logoCache[domain] = entry;
+      try { localStorage.setItem(LOGO_CACHE_KEY, JSON.stringify(logoCache)); } catch {}
+      delete logoPending[domain];
+      return entry;
+    });
+  }
+  return logoPending[domain];
+}
+
+function logoImgHtml(entry) {
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+  return `<img src="${esc(entry.src)}" alt="" referrerpolicy="no-referrer" onerror="this.parentElement.classList.remove('has-logo','logo-sd');this.remove()">`;
+}
+
+function logoClasses(entry) {
+  return entry && entry.src ? ' has-logo' + (entry.w < LOGO_HD_WIDTH ? ' logo-sd' : '') : '';
+}
+
+function applyLogo(el, entry) {
+  if (!entry.src || !el.isConnected || el.querySelector('img')) return;
+  el.insertAdjacentHTML('beforeend', logoImgHtml(entry));
+  el.className += logoClasses(entry);
+}
+
+/* Recherche des logos manquants, quatre entreprises à la fois (une seule fois par
+ * entreprise grâce au cache) ; chaque carte reçoit son logo dès qu'il est trouvé. */
+const logoQueue = [];
+let logoActive = 0;
+
+function pumpLogos() {
+  while (logoActive < 4 && logoQueue.length) {
+    const domain = logoQueue.shift();
+    logoActive++;
+    resolveLogo(domain).then(entry => {
+      document.querySelectorAll('.job-logo[data-domain="' + domain + '"]').forEach(el => applyLogo(el, entry));
+    }).finally(() => { logoActive--; pumpLogos(); });
   }
 }
+
+function watchLogos() {
+  document.querySelectorAll('.job-logo[data-domain]:not([data-watched])').forEach(el => {
+    el.dataset.watched = '1';
+    if (el.querySelector('img')) return;
+    const domain = el.dataset.domain;
+    const cached = logoCached(domain);
+    if (cached) applyLogo(el, cached);
+    else if (!logoQueue.includes(domain) && !logoPending[domain]) logoQueue.push(domain);
+  });
+  pumpLogos();
+}
+
+let logoScan = 0;
+new MutationObserver(() => { clearTimeout(logoScan); logoScan = setTimeout(watchLogos, 30); })
+  .observe(document.documentElement, { childList: true, subtree: true });
