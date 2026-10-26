@@ -1200,6 +1200,20 @@ function pilotInit() {
     store(PROFILE, JSON.stringify(profile));
   }
 
+  // Nom de famille : Cartier → Gazard (profil de Ryan) dans « Mes infos » et les CV à joindre.
+  // updatedAt avancé pour que la synchro l'envoie aussi aux autres appareils.
+  if (ACTIVE_PROFILE.id === 'ryan' && !profile.gazardMigrated) {
+    const gazard = s => String(s || '').replace(/cartier/gi, m => (m === m.toUpperCase() ? 'GAZARD' : 'Gazard'));
+    if (profile.infos && /cartier/i.test(profile.infos.nom || '')) profile.infos.nom = gazard(profile.infos.nom);
+    // Les CV « Cartier » pointent désormais vers les fichiers réels du Bureau (CV_Ryan_Gazard_*.pdf).
+    if (profile.cv) Object.keys(profile.cv).forEach(c => {
+      if (/cartier/i.test(profile.cv[c] || '')) profile.cv[c] = (ACTIVE_PROFILE.cv || {})[c] || gazard(profile.cv[c]);
+    });
+    profile.gazardMigrated = true;
+    profile.updatedAt = Date.now();
+    store(PROFILE, JSON.stringify(profile));
+  }
+
   // Nouveau type « direction » : masqué aussi si les types ont déjà été enregistrés.
   if (Array.isArray(profile.hiddenTypes) && !profile.directionAdded) {
     if (!profile.hiddenTypes.includes('direction')) profile.hiddenTypes.push('direction');

@@ -23,6 +23,7 @@ const ZCRT_PROFILES = {
     id: 'ryan',
     name: 'Ryan',
     brand: 'RGRD',               // logo affiché sur ce profil
+    cv: { stock: 'CV_Ryan_Gazard_stock.pdf', rayon: 'CV_Ryan_Gazard_rayon.pdf', vente: 'CV_Ryan_Gazard_vente.pdf' },
     ns: '',                      // clés historiques, sans suffixe
     syncFile: 'zcrt-suivi.json', // lu aussi par mail.py (tri Gmail)
     cats: ['stock', 'rayon', 'vente'],
