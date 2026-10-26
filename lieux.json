@@ -236,6 +236,15 @@
   "min": 78,
   "minAt": "2026-10-15"
  },
+ "cergy-sud||95": {
+  "dept": "95",
+  "km": 35.6,
+  "label": "Cergy",
+  "lat": 49.04227,
+  "lon": 2.04555,
+  "min": 105,
+  "minAt": "2026-10-26"
+ },
  "cergy||95": {
   "dept": "95",
   "km": 35.6,
@@ -730,7 +739,9 @@
   "km": 26.7,
   "label": "Herblay-sur-Seine",
   "lat": 49.00406,
-  "lon": 2.15245
+  "lon": 2.15245,
+  "min": 100,
+  "minAt": "2026-10-26"
  },
  "issy-les-moulineaux||92": {
   "km": 18.5,
@@ -1742,7 +1753,9 @@
   "km": 15.1,
   "label": "Sucy-en-Brie",
   "lat": 48.77067,
-  "lon": 2.5284
+  "lon": 2.5284,
+  "min": 77,
+  "minAt": "2026-10-26"
  },
  "sucy-en-brie||94": {
   "dept": "94",
