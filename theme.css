@@ -946,3 +946,29 @@ button, select, .search-box, .search-row > button, .sort select { border-radius:
   .job p { font-size: 13.5px; }
   .job-side { grid-column: 1 / -1; padding: 0; }
 }
+
+/* ---------- Générateur de lettre ---------- */
+.lm-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 16px; align-items: start; }
+.lm-input { display: grid; gap: 14px; }
+.lm-input > #lmClear { justify-self: start; color: var(--muted); }
+.lm-input textarea { min-height: 220px; line-height: 1.55; }
+.lm-cvs { display: flex; flex-wrap: wrap; gap: 8px; }
+.lm-cv input { position: absolute; opacity: 0; pointer-events: none; }
+.lm-cv span { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--surface); color: var(--ink-2); font-size: 14px; font-weight: 500; cursor: pointer; transition: background-color .15s var(--ease), border-color .15s var(--ease); }
+.lm-cv span .ic { width: 16px; height: 16px; }
+.lm-cv input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.lm-cv input:checked + span .ic { color: var(--accent); }
+.lm-cv input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+.lm-file { margin-top: 6px; color: var(--muted); font-size: 12.5px; }
+.lm-fields { display: grid; grid-template-columns: 1.4fr 1fr .8fr; gap: 10px; }
+.lm-result { position: sticky; top: 76px; }
+.lm-result textarea { width: 100%; min-height: 460px; padding: 18px 20px; border: 1px solid var(--line); border-radius: var(--r-ctrl); background: var(--surface-2); font: 14.5px/1.65 var(--sans); color: var(--ink); resize: vertical; }
+.lm-result.empty .lm-actions { opacity: .45; pointer-events: none; }
+.lm-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+@media (max-width: 900px) {
+  .lm-grid { grid-template-columns: minmax(0, 1fr); }
+  .lm-result { position: static; }
+  .lm-result textarea { min-height: 380px; }
+  .lm-fields { grid-template-columns: 1fr 1fr; }
+  .lm-fields .field:first-child { grid-column: 1 / -1; }
+}
