@@ -205,13 +205,18 @@ function switchProfile() {
 /** Logo du profil actif ; le toucher bascule vers l'autre profil (barre latérale et en-tête mobile). */
 function brandHtml() {
   const other = otherProfile(), b = ACTIVE_PROFILE.brand;
-  // Un seul profil actif : simple logo, sans bascule.
+  // Un seul profil actif : le logo ramène à l'accueil (onglet Offres).
   if (!other) {
-    return `<span class="brand-btn" role="img" aria-label="${b}"><span class="brand-mark" aria-hidden="true">${b.charAt(0)}</span>`
-      + `<span class="brand-name" aria-hidden="true">${b}<i>.</i></span></span>`;
+    return `<button class="brand-btn" type="button" onclick="goHome()" title="Revenir à l’accueil" aria-label="${b} — revenir à l’accueil"><span class="brand-mark" aria-hidden="true">${b.charAt(0)}</span>`
+      + `<span class="brand-name" aria-hidden="true">${b}<i>.</i></span></button>`;
   }
   return `<button class="brand-btn" type="button" onclick="switchProfile()" title="Passer au profil de ${other.name}" aria-label="${b} — passer au profil de ${other.name}">`
     + `<span class="brand-mark" aria-hidden="true">${b.charAt(0)}</span><span class="brand-name" aria-hidden="true">${b}<i>.</i></span></button>`;
+}
+
+function goHome() {
+  document.querySelector('.nav [data-tab="dashboard"]')?.click();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 /* ---------- Premier lancement, installation, stockage durable ---------- */

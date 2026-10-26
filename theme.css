@@ -485,7 +485,7 @@ tbody tr:last-child td { border-bottom: 0; }
 .pilot-card h2 { margin: 2px 0 8px; font-size: 24px; font-weight: 700; line-height: 1.2; letter-spacing: -.02em; }
 .pilot-card .job-meta { margin-top: 0; }
 .pilot-card .m-company { color: var(--ink); font-weight: 600; }
-.pilot-notes { max-height: 34vh; overflow: auto; margin: 14px 0 0; padding: 14px; border-radius: var(--radius); background: var(--surface-2); color: var(--ink-2); font-size: 14px; line-height: 1.65; }
+.pilot-notes { max-height: 34vh; overflow: auto; overscroll-behavior: contain; white-space: pre-line; margin: 14px 0 0; padding: 14px; border-radius: var(--radius); background: var(--surface-2); color: var(--ink-2); font-size: 14px; line-height: 1.65; }
 .pilot-hint { display: flex; align-items: center; gap: 6px; margin: 16px 0 8px; padding: 9px 12px; border-radius: 10px; background: color-mix(in srgb, var(--signal) 22%, var(--surface)); color: var(--ink-2); font-size: 13px; }
 :root[data-theme="dark"] .pilot-hint { background: color-mix(in srgb, var(--signal) 10%, var(--surface)); }
 .pilot-card textarea { width: 100%; min-height: 260px; padding: 14px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--surface-2); color: var(--ink); font: 13.5px/1.65 var(--sans); resize: vertical; }
@@ -822,13 +822,13 @@ button, select, .search-box, .search-row > button, .sort select { border-radius:
 .stat strong { margin-top: 3px; font-size: 26px; }
 .stat.clickable:hover { border-color: var(--line-strong); box-shadow: none; transform: none; }
 
-/* ---------- Actions : noir pour l'action principale, jaune en accent ---------- */
+/* ---------- Actions : Postuler en jaune, Trier en blanc ---------- */
 .pilot-bar { margin-bottom: 30px; }
 .action-btn { min-height: 54px; font-size: 15px; box-shadow: none; }
-#queueBtn { background: var(--ink); color: var(--bg); border: 1px solid var(--ink); }
-#queueBtn:hover { background: color-mix(in srgb, var(--ink) 88%, var(--accent)); }
+#queueBtn { background: var(--accent); color: #17181c; border: 1px solid color-mix(in srgb, var(--accent) 80%, #000); }
+#queueBtn:hover { background: color-mix(in srgb, var(--accent) 90%, #000); }
 #queueBtn::after { display: none; }
-#queueBtn .count { background: var(--accent); color: var(--accent-ink); }
+#queueBtn .count { background: rgba(0, 0, 0, .12); color: #17181c; }
 #triageBtn, :root[data-theme="dark"] #triageBtn { background: var(--surface); color: var(--ink); border: 1px solid var(--line-strong); }
 #triageBtn:hover { background: var(--surface-2); border-color: var(--ink); }
 #triageBtn .count { background: var(--surface-3); color: var(--ink-2); }
@@ -884,6 +884,12 @@ button, select, .search-box, .search-row > button, .sort select { border-radius:
 .job-meta .ic { color: var(--faint); }
 .job-meta .travel { color: var(--muted); font-weight: 400; }
 .job p { margin-top: 14px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.job-main > p { cursor: pointer; border-radius: 8px; transition: background-color .15s var(--ease), color .15s var(--ease); }
+.job-main > p:hover { color: var(--ink-2); }
+.job-main > p.open {
+  display: block; -webkit-line-clamp: unset; max-height: 220px; overflow-y: auto; overscroll-behavior: contain;
+  margin-left: -10px; margin-right: -10px; padding: 10px; background: var(--surface-2); color: var(--ink-2); box-shadow: inset 0 0 0 1px var(--line);
+}
 .job-tags { gap: 8px; margin-top: 14px; }
 .contract, .c-cdi, .c-cdd, .c-interim { padding: 3px 9px; border: 0; border-radius: 6px; background: var(--surface-3); color: var(--ink-2); font-size: 12px; font-weight: 600; }
 .c-verifier { padding: 3px 9px; border-radius: 6px; background: transparent; color: var(--muted); border: 1px dashed var(--line-strong); font-size: 12px; }

@@ -576,7 +576,7 @@ function drawPilot() {
 
   if (pilot.mode === 'triage') {
     card.innerHTML = `${head}
-      <p class="pilot-notes">${esc((o.notes || 'Pas de description.').slice(0, 600))}</p>
+      <p class="pilot-notes">${esc(o.notes || 'Pas de description.')}</p>
       <p class="swipe-hint">Glisse la carte : <b>→ À postuler</b> · <b>Ignorer ←</b></p>
       <div class="pilot-actions">
         <button data-act="apply"><kbd>A</kbd> À postuler</button>

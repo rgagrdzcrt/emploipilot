@@ -329,3 +329,12 @@ function uiInit() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', uiInit);
 else uiInit();
+
+/* Description d'une offre : un clic la déplie (texte complet, défilable), un second la replie. */
+document.addEventListener('click', e => {
+  const p = e.target.closest('.job-main > p');
+  if (!p || String(getSelection && getSelection()).trim()) return;
+  const open = p.classList.toggle('open');
+  p.title = open ? 'Cliquer pour replier' : 'Cliquer pour lire la suite';
+  if (open) p.scrollTop = 0;
+});
