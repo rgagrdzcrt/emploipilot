@@ -7,8 +7,8 @@ ZCRT — tri des e-mails de candidature (Gmail).
 - Dans Gmail : libellés « ZCRT/… » et archivage du seul bruit évident.
   Aucune suppression : le droit demandé est gmail.modify et aucun appel de suppression n'existe ici.
 - Met à jour le statut de la candidature dans le gist et envoie une alerte ntfy.
-- Candidature faite directement sur HelloWork ou Meteojob : l'accusé de réception l'ajoute au suivi
-  (reliée à l'offre si elle est déjà sur le site).
+- Candidature faite hors du site (HelloWork, Meteojob, site d'une enseigne…) : l'accusé de réception
+  l'ajoute au suivi (reliée à l'offre si elle est déjà sur le site, sinon poste et entreprise lus au mieux).
 
 Le dépôt est public : rien n'est écrit dans le dépôt et les journaux GitHub Actions
 n'affichent que des compteurs (jamais d'expéditeur ni d'objet).
@@ -334,8 +334,8 @@ def classify(mail, applications):
 
 # ---------------------------------------------------------------- Candidatures faites ailleurs
 
-# Accusés des sites d'emploi pour une candidature faite directement chez eux (HelloWork,
-# Meteojob) : le poste et l'entreprise sont lisibles, la candidature entre dans le suivi.
+# Accusé de réception d'une candidature que le site ne suit pas : elle entre dans le suivi.
+# HelloWork et Meteojob ont un format fixe ; pour les autres, poste et entreprise sont lus au mieux.
 OFFERS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "offres.json")
 NOT_SENT = re.compile(r"^\s*finalisez|^\s*compl[eé]tez|^\s*terminez", re.I)
 
@@ -351,7 +351,7 @@ def application_from_mail(mail):
         m = re.search(r"envoy[ée]e [àa] (.+?) pour le poste de [\"«]\s*(.+?)\s*[\"»]", subject)
         return (m.group(2), m.group(1), "Meteojob") if m else None
     if not domain_in(domain, ("hellowork.com",)):
-        return None
+        return generic_application(mail, subject, body)
     m = re.search(r"[\"«]\s*([^\"»]{3,140}?)\s*[\"»] pour l.entreprise (.{2,80}?)\.(?:\s|$)", body)
     if m:
         return m.group(1), m.group(2), "HelloWork"
@@ -361,7 +361,122 @@ def application_from_mail(mail):
     company = re.search(r",? chez ([A-Z0-9][^,.;!]{1,60}?)(?:[,.;!]| et )", body) or re.search(r"\s-\s([^-]{2,60})$", subject)
     if title and company:
         return title.group(1).strip(), company.group(1).strip(), "HelloWork"
-    return None
+    return generic_application(mail, subject, body)
+
+
+# Tout autre accusé : poste et entreprise lus au mieux dans l'objet, le texte, puis
+# l'expéditeur. Le but est de savoir où l'on a postulé ; la fiche est marquée « à vérifier ».
+GENERIC_SITE = "e-mail"
+UNKNOWN_TITLE = "Poste à préciser"
+_Q = "[\"«“]"  # guillemets autour d'un intitulé
+_NAME = r"([A-Z0-9][\w&'’.\- ]{1,50}?)"  # nom propre : commence par une majuscule ou un chiffre
+_ET = r"(?-i:\set\s)"  # « et » en minuscules : « TECHNIQUE ET LOGISTIQUE » reste entier
+_END = r"(?=\s*(?:[,.;:!?—–(]|\s-\s|$|" + _ET + r"|\sait\s|\sa\s|\sest\s|\spour\s|\ssur\s))"
+_TITLE_END = r"(?=\s*(?:[.,;!(]|\schez\s|\sau sein\s|" + _ET + r"|\s-\s\d|\sà\s|\sa été\s|\sde la société\s|$))"
+
+TITLE_PATTERNS = [
+    r"candidature bien re[çc]ue pour (?P<t>.+)$",
+    r"Your application:\s*(?P<t>.+?)(?:\s-\s[A-Z]{2,4}\d{3,})?$",
+    r"R[ée]f\.?\s*:\s*(?P<t>.+?)\s*/\s*\d{4,}",
+    r"offre [A-Z0-9/\-]{4,}\s*[–-]\s*(?P<t>.+)$",
+    r"offre n°\s*\S+\s*-\s*(?P<t>.+)$",
+    r"^(?P<t>[^:]{3,100}?)\s+-\s+Votre candidature",
+    r"^Candidature\s*:\s*(?P<t>.+)$",
+    r"^Votre candidature [A-Z0-9][A-Z0-9&' ]{1,40}\s*:\s*(?P<t>.+)$",
+    r"(?:poste|offre|annonce)(?: d['’]emploi)?\s*(?::|de\b|d['’]|pour\b)?\s*" + _Q + r"\s*(?P<t>[^\"»”]{3,120}?)\s*[\"»”]",
+    r"(?:au |pour le |du )poste\s*(?:de\b|d['’]|:)?\s*(?::\s*)?(?P<t>.{3,120}?)" + _TITLE_END,
+    r"(?:à |pour |de )l['’](?:offre|annonce)(?: d['’]emploi)?\s*(?:de\s|d['’])?(?P<t>.{3,120}?)" + _TITLE_END,
+    r"notre (?:offre|annonce)\s*(?:de\s|d['’])?(?P<t>.{3,120}?)" + _TITLE_END,
+    r"candidature pour (?:être|etre)\s*(?P<t>.{3,120}?)" + _TITLE_END,
+]
+COMPANY_PATTERNS = [
+    r"de la société " + _NAME + r"(?=\s+sur\s|[,.]|$)",
+    r"envoyée à (?:l['’]entreprise )?" + _NAME + r"(?=\s+pour\s|[,.]|$)",
+    r"réponse à " + _NAME + r"(?=\s+pour\s)",
+    r"chez " + _NAME + _END,
+    r"au sein (?:de la |du |de l['’]|des |de )" + _NAME + _END,
+    r"(?:intérêt|interet) (?:que (?:vous|tu) port\w+|port[ée]e?) (?:à|a|au|pour|envers) (?:la |l['’]|le |notre |nos )?"
+    r"(?:Maison |société |entreprise |établissement |marque |équipe )?" + _NAME + _END,
+    r"(?:rejoindre|partie de) (?:l['’]équipe |nos équipes |l['’]aventure |la famille )?" + _NAME + _END,
+    r"^Votre candidature ([A-Z0-9][A-Z0-9&' ]{1,40})\s*:",
+    r"^" + _NAME + r"\s+-\s",
+    r"^" + _NAME + r"\s+Merci pour votre candidature",
+]
+# Expéditeur générique (plateforme, robot) : son nom ne dit rien de l'entreprise.
+GENERIC_SENDER = re.compile(
+    r"no.?reply|ne.?pas.?repondre|notification|recrut|career|carriere|\btalent\b|jobs?\b|webmaster|candidat|"
+    r"service|team|equipe|\brh\b|\bhr\b|contact|message|info|mail|support|admin", re.I)
+# Mots qui trahissent un faux nom d'entreprise lu dans le texte.
+GENERIC_TEXT = re.compile(r"no.?reply|notification|webmaster|\bcandidat|\brecrutement\b|\bnotre\b|\bvotre\b", re.I)
+PERSON = re.compile(r"^(?!Groupe |Mairie |Maison |Ville )[A-ZÉ][a-zéèëï\-]+ [A-ZÉ][a-zéèëï\-]+$")  # « Prénom Nom » : un recruteur, pas l'entreprise
+ATS_SUBDOMAIN = ("teamtailor-mail.com", "teamtailor-email.com", "werecruit.io")  # entreprise.<plateforme>
+ATS_HOSTS = ATS_SUBDOMAIN + (
+    "recruitmail.com", "welcomekit.co", "talent-soft.com", "smartrecruiters.com", "taleez.com",
+    "beetween-software.com", "digitalrecruiters.com", "brevosend.com", "talentview.io", "flatchr.io",
+    "gestmax.fr", "workday.com", "myworkday.com", "successfactors.com", "icims.com", "lever.co",
+    "greenhouse.io", "jobteaser.com", "sendgrid.net")
+MAIL_HOSTS = ("gmail.com", "outlook.com", "outlook.fr", "hotmail.com", "hotmail.fr", "yahoo.fr", "yahoo.com",
+              "orange.fr", "free.fr", "wanadoo.fr", "laposte.net", "icloud.com", "live.fr")
+TITLE_BAD = re.compile(r"^(votre|ta|notre|la|une|cette)\b|candidature|^\W*$", re.I)
+
+
+def _clean(text, limit=110):
+    text = re.sub(r"^[\s\"«“'’:\-–]+|[\s\"»”'’:\-–.,]+$", "", text or "")
+    text = re.sub(r"^[^\w(]+", "", text)  # emoji ou puce en tête
+    text = re.sub(r"(?:\s+(?:et|de|du|des|pour|au|à|chez))+$", "", text)
+    text = re.sub(r"\.(?:fr|com|eu|io)$", "", text)
+    return text[:limit].strip()
+
+
+def _company_from_sender(mail):
+    name = (mail.get("from_name") or "").strip()
+    local, _, domain = mail["from_addr"].partition("@")
+    if name and "@" not in name and len(name) <= 50 and not GENERIC_SENDER.search(norm(name)) \
+            and not PERSON.match(name) and not domain_in(domain, ATS_SUBDOMAIN):
+        return _clean(name, 60)
+    if domain_in(domain, MAIL_HOSTS):
+        return ""
+    if domain_in(domain, ATS_SUBDOMAIN):
+        label = domain.split(".")[-3] if domain.count(".") >= 2 else ""
+    elif domain_in(domain, ("recruitmail.com",)):
+        label = local
+    elif domain_in(domain, ("welcomekit.co",)):
+        label = local.split("-")[0]
+    elif domain_in(domain, ("talent-soft.com",)):
+        label = local.split(".")[-1]
+    elif domain_in(domain, ATS_HOSTS):
+        return ""
+    else:
+        label = domain.split(".")[-2] if "." in domain else domain
+    label = re.sub(r"[-_]+", " ", label).strip()
+    return label.title() if len(label) >= 3 and not GENERIC_SENDER.search(label) else ""
+
+
+def generic_application(mail, subject, body):
+    """(poste, entreprise, « e-mail ») lus au mieux dans n'importe quel accusé de réception."""
+    title = ""
+    for text in (subject, body[:1500]):
+        for pattern in TITLE_PATTERNS:
+            m = re.search(pattern, text, re.I)
+            if m and not TITLE_BAD.search(_clean(m.group("t"))):
+                title = _clean(m.group("t"))
+                break
+        if title:
+            break
+    company = ""
+    for text in (subject, body[:1500]):
+        for pattern in COMPANY_PATTERNS:
+            m = re.search(pattern, text)
+            if m:
+                candidate = _clean(m.group(1), 60)
+                if len(candidate) >= 2 and not GENERIC_TEXT.search(candidate) \
+                        and norm(candidate) not in ("ryan", "nous", "vous"):
+                    company = candidate
+                    break
+        if company:
+            break
+    company = company or _company_from_sender(mail) or PLACEHOLDER_COMPANY
+    return title or UNKNOWN_TITLE, company, GENERIC_SITE
 
 
 def load_offers():
@@ -377,21 +492,28 @@ def title_words(title):
     return {w for w in norm(title).split() if len(w) >= 4 and w not in TITLE_STOP}
 
 
-def same_job(company_a, title_a, company_b, title_b):
+def same_offer(company_a, title_a, company_b, title_b):
+    """Même entreprise et même poste : les mots du poste le plus court se retrouvent tous dans
+    l'autre, à un mot près (« Magasinier » ≠ « Magasinier livreur »)."""
     ka, kb = company_key(company_a), company_key(company_b)
     if not ka or not kb or not (contains_phrase(ka, kb) or contains_phrase(kb, ka)):
         return False
-    wa, wb = title_words(title_a), title_words(title_b)
-    return bool(wa and wb) and len(wa & wb) >= max(1, min(len(wa), len(wb)) // 2)
+    short, long_ = sorted((title_words(title_a), title_words(title_b)), key=len)
+    if not short or not short <= long_:
+        return False
+    return len(long_) - len(short) <= (0 if len(short) == 1 else 1)
 
 
 def add_outside_application(entries, offers, mail, title, company, site, now_ms):
     """Inscrit la candidature dans le suivi. Renvoie l'entrée créée, ou None si elle y était déjà."""
     for entry in entries.values():
-        if same_job(entry.get("company"), entry.get("title"), company, title):
+        if same_offer(entry.get("company"), entry.get("title"), company, title):
+            return None
+        # Même e-mail relu, ou rappel du même expéditeur avec le même objet.
+        if entry.get("mailSubject") == mail["subject"][:140] and entry.get("mailFrom") == mail["from_name"][:80]:
             return None
     applied = time.strftime("%Y-%m-%d", time.localtime(mail["at"] / 1000))
-    offer = next((o for o in offers if same_job(o.get("company"), o.get("title"), company, title)), None)
+    offer = next((o for o in offers if same_offer(o.get("company"), o.get("title"), company, title)), None)
     if offer:
         # L'offre est déjà sur le site (collecte ou alerte) : elle passe simplement en « envoyée ».
         entry = {**offer}
@@ -401,7 +523,10 @@ def add_outside_application(entries, offers, mail, title, company, site, now_ms)
             "id": "mail_" + re.sub(r"[^a-z0-9]+", "-", key)[:60],
             "title": title, "company": company, "location": "", "contract": "À vérifier",
             "date": "", "url": "", "created": applied,
-            "notes": f"Candidature faite sur {site}, ajoutée au suivi depuis l'accusé de réception.",
+            "notes": (f"Candidature faite sur {site}, ajoutée au suivi depuis l'accusé de réception."
+                      if site != GENERIC_SITE else
+                      f"Ajoutée automatiquement depuis l'accusé de réception « {mail['subject'][:100]} » "
+                      f"({mail['from_name'][:60]}). Poste et entreprise lus dans l'e-mail : à vérifier."),
         }
     entry.update({
         "status": "Candidature envoyée", "appliedDate": applied, "via": site,
@@ -890,8 +1015,8 @@ def main():
                 entry = add_outside_application(entries, offers, mail, *found, now_ms)
                 if entry:
                     changed = True
-                    alerts.append(f"• Candidature ajoutée au suivi — {entry.get('company')} ({entry.get('title')}, via {found[2]})")
-                    print(f"Candidature faite sur {found[2]} ajoutée au suivi.")
+                    alerts.append(f"• Candidature ajoutée au suivi — {entry.get('company')} ({entry.get('title')})")
+                    print("Candidature faite hors du site ajoutée au suivi.")
                 continue
         if not d["app"]:
             # Entretien ou démarche demandée sans candidature suivie : signalé quand même.
