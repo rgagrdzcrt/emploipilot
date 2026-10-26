@@ -26,6 +26,15 @@
   "min": 78,
   "minAt": "2026-10-14"
  },
+ "antony||92": {
+  "dept": "92",
+  "km": 21.8,
+  "label": "Antony",
+  "lat": 48.75102,
+  "lon": 2.29783,
+  "min": 71,
+  "minAt": "2026-10-26"
+ },
  "arcueil||94": {
   "dept": "94",
   "km": 15.6,
@@ -153,7 +162,6 @@
   "min": null,
   "minAt": "2026-10-12"
  },
- "bonneuil-en-france|95500|94": {},
  "bonneuil-sur-marne||94": {
   "km": 14.5,
   "label": "Bonneuil-sur-Marne",
@@ -557,6 +565,13 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829
+ },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -618,13 +633,6 @@
   "minAt": "2026-10-15"
  },
  "herblay-sur-seine||95": {
-  "dept": "95",
-  "km": 26.7,
-  "label": "Herblay-sur-Seine",
-  "lat": 49.00406,
-  "lon": 2.15245
- },
- "herblay||95": {
   "dept": "95",
   "km": 26.7,
   "label": "Herblay-sur-Seine",
@@ -741,15 +749,6 @@
   "lon": 2.42885,
   "min": 54,
   "minAt": "2026-10-12"
- },
- "le kremlin-bicêtre||94": {
-  "dept": "94",
-  "km": 14.2,
-  "label": "Le Kremlin-Bicêtre",
-  "lat": 48.80818,
-  "lon": 2.35582,
-  "min": 75,
-  "minAt": "2026-10-15"
  },
  "le plessis-robinson||92": {
   "km": 21.3,
@@ -945,6 +944,13 @@
   "lon": 2.34704,
   "min": 80,
   "minAt": "2026-10-21"
+ },
+ "montmagny||IDF": {
+  "dept": "95",
+  "km": 12.4,
+  "label": "Montmagny",
+  "lat": 48.96767,
+  "lon": 2.34704
  },
  "montreuil||93": {
   "km": 5.2,
@@ -1410,6 +1416,13 @@
   "lon": 2.3615,
   "min": 54,
   "minAt": "2026-10-12"
+ },
+ "saint-gratien||95": {
+  "dept": "95",
+  "km": 16.3,
+  "label": "Saint-Gratien",
+  "lat": 48.96841,
+  "lon": 2.28496
  },
  "saint-leu-la-forêt||95": {
   "dept": "95",
