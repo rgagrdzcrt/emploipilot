@@ -500,15 +500,6 @@
   "minAt": "2026-10-12"
  },
  "delle||IDF": {},
- "domont||95": {
-  "dept": "95",
-  "km": 18.0,
-  "label": "Domont",
-  "lat": 49.02871,
-  "lon": 2.32791,
-  "min": 87,
-  "minAt": "2026-10-15"
- },
  "drancy||93": {
   "km": 3.8,
   "label": "Drancy",
@@ -650,13 +641,6 @@
   "lon": 2.54565,
   "min": 43,
   "minAt": "2026-10-12"
- },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
  },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
@@ -1066,15 +1050,6 @@
   "lon": 2.56873,
   "min": 46,
   "minAt": "2026-10-12"
- },
- "montigny-lès-cormeilles||95": {
-  "dept": "95",
-  "km": 23.5,
-  "label": "Montigny-lès-Cormeilles",
-  "lat": 48.99333,
-  "lon": 2.19375,
-  "min": 93,
-  "minAt": "2026-10-15"
  },
  "montmagny||95": {
   "dept": "95",
