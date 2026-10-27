@@ -816,6 +816,13 @@
   "minAt": "2026-10-13"
  },
  "la plaine saint-denis||93": {},
+ "la queue-en-brie||94": {
+  "dept": "94",
+  "km": 14.8,
+  "label": "La Queue-en-Brie",
+  "lat": 48.78623,
+  "lon": 2.57913
+ },
  "lagny-sur-marne|77400|77": {
   "km": 16.5,
   "label": "Lagny-sur-Marne",
@@ -1017,6 +1024,15 @@
   "lat": 48.95942,
   "lon": 2.90023
  },
+ "melun||77": {
+  "dept": "77",
+  "km": 42.2,
+  "label": "Melun",
+  "lat": 48.54133,
+  "lon": 2.65574,
+  "min": 113,
+  "minAt": "2026-10-27"
+ },
  "meudon||92": {
   "dept": "92",
   "km": 21.5,
@@ -1055,13 +1071,6 @@
   "lon": 2.56873,
   "min": 46,
   "minAt": "2026-10-12"
- },
- "montigny-lès-cormeilles||95": {
-  "dept": "95",
-  "km": 23.5,
-  "label": "Montigny-lès-Cormeilles",
-  "lat": 48.99333,
-  "lon": 2.19375
  },
  "montmagny||95": {
   "dept": "95",
@@ -1846,6 +1855,13 @@
   "lon": 2.28637,
   "min": 83,
   "minAt": "2026-10-19"
+ },
+ "vaucresson||92": {
+  "dept": "92",
+  "km": 24.6,
+  "label": "Vaucresson",
+  "lat": 48.84057,
+  "lon": 2.16348
  },
  "vaujours||93": {
   "dept": "93",
