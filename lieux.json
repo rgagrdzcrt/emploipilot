@@ -170,6 +170,7 @@
   "minAt": "2026-10-12"
  },
  "bonneuil-en-france|95500|94": {},
+ "bonneuil-en-france||94": {},
  "bonneuil-sur-marne||94": {
   "km": 14.5,
   "label": "Bonneuil-sur-Marne",
@@ -607,7 +608,9 @@
   "km": 21.8,
   "label": "Fosses",
   "lat": 49.09881,
-  "lon": 2.50543
+  "lon": 2.50543,
+  "min": 102,
+  "minAt": "2026-10-27"
  },
  "franconville||95": {
   "km": 21.3,
@@ -641,6 +644,15 @@
   "lon": 2.54565,
   "min": 43,
   "minAt": "2026-10-12"
+ },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829,
+  "min": 80,
+  "minAt": "2026-10-27"
  },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
@@ -838,13 +850,6 @@
   "lon": 2.42885,
   "min": 54,
   "minAt": "2026-10-12"
- },
- "le mesnil-amelot||77": {
-  "dept": "77",
-  "km": 15.1,
-  "label": "Le Mesnil-Amelot",
-  "lat": 49.0196,
-  "lon": 2.59354
  },
  "le plessis-robinson||92": {
   "km": 21.3,
@@ -1050,6 +1055,13 @@
   "lon": 2.56873,
   "min": 46,
   "minAt": "2026-10-12"
+ },
+ "montigny-lès-cormeilles||95": {
+  "dept": "95",
+  "km": 23.5,
+  "label": "Montigny-lès-Cormeilles",
+  "lat": 48.99333,
+  "lon": 2.19375
  },
  "montmagny||95": {
   "dept": "95",
@@ -1576,7 +1588,9 @@
   "km": 21.2,
   "label": "Saint-Mard",
   "lat": 49.0372,
-  "lon": 2.69192
+  "lon": 2.69192,
+  "min": 84,
+  "minAt": "2026-10-27"
  },
  "saint-mard||IDF": {
   "dept": "77",
@@ -1782,19 +1796,14 @@
   "min": 90,
   "minAt": "2026-10-12"
  },
- "thorigny-sur-marne||77": {
-  "dept": "77",
-  "km": 16.7,
-  "label": "Thorigny-sur-Marne",
-  "lat": 48.89225,
-  "lon": 2.71317
- },
  "torcy|71210|77": {
   "dept": "77",
   "km": 13.3,
   "label": "Torcy",
   "lat": 48.84628,
-  "lon": 2.64446
+  "lon": 2.64446,
+  "min": 77,
+  "minAt": "2026-10-27"
  },
  "torcy||77": {
   "km": 13.3,
@@ -1937,7 +1946,9 @@
   "km": 10.4,
   "label": "Villeparisis",
   "lat": 48.94354,
-  "lon": 2.61475
+  "lon": 2.61475,
+  "min": 51,
+  "minAt": "2026-10-27"
  },
  "villepinte||93": {
   "dept": "93",
