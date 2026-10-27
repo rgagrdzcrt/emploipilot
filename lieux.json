@@ -654,15 +654,6 @@
   "min": 80,
   "minAt": "2026-10-27"
  },
- "garges-lès-gonesse-est||95": {
-  "dept": "95",
-  "km": 9.6,
-  "label": "Garges-lès-Gonesse",
-  "lat": 48.96975,
-  "lon": 2.40086,
-  "min": 75,
-  "minAt": "2026-10-13"
- },
  "gennevilliers||92": {
   "km": 14.3,
   "label": "Gennevilliers",
@@ -1080,13 +1071,6 @@
   "lon": 2.34704,
   "min": 80,
   "minAt": "2026-10-21"
- },
- "montmagny||IDF": {
-  "dept": "95",
-  "km": 12.4,
-  "label": "Montmagny",
-  "lat": 48.96767,
-  "lon": 2.34704
  },
  "montreuil||93": {
   "km": 5.2,
