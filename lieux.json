@@ -107,6 +107,15 @@
   "min": 86,
   "minAt": "2026-10-13"
  },
+ "beauchamp||95": {
+  "dept": "95",
+  "km": 24.7,
+  "label": "Beauchamp",
+  "lat": 49.01369,
+  "lon": 2.19149,
+  "min": 100,
+  "minAt": "2026-10-28"
+ },
  "bezons||95": {
   "km": 19.9,
   "label": "Bezons",
@@ -204,13 +213,6 @@
   "lon": 2.61659,
   "min": 118,
   "minAt": "2026-10-28"
- },
- "bruyères-sur-oise||95": {
-  "dept": "95",
-  "km": 30.2,
-  "label": "Bruyères-sur-Oise",
-  "lat": 49.15586,
-  "lon": 2.33054
  },
  "bry-sur-marne||94": {
   "dept": "94",
@@ -647,6 +649,15 @@
   "min": 80,
   "minAt": "2026-10-27"
  },
+ "garges-lès-gonesse-est||95": {
+  "dept": "95",
+  "km": 9.6,
+  "label": "Garges-lès-Gonesse",
+  "lat": 48.96975,
+  "lon": 2.40086,
+  "min": 74,
+  "minAt": "2026-10-28"
+ },
  "gennevilliers||92": {
   "km": 14.3,
   "label": "Gennevilliers",
@@ -847,7 +858,9 @@
   "km": 14.2,
   "label": "Le Kremlin-Bicêtre",
   "lat": 48.80818,
-  "lon": 2.35582
+  "lon": 2.35582,
+  "min": 72,
+  "minAt": "2026-10-28"
  },
  "le plessis-robinson||92": {
   "km": 21.3,
@@ -874,6 +887,15 @@
   "lon": 2.51972,
   "min": 31,
   "minAt": "2026-10-13"
+ },
+ "les clayes-sous-bois||IDF": {
+  "dept": "78",
+  "km": 37.9,
+  "label": "Les Clayes-sous-Bois",
+  "lat": 48.81651,
+  "lon": 1.98385,
+  "min": 118,
+  "minAt": "2026-10-28"
  },
  "les lilas||93": {
   "dept": "93",
@@ -1154,6 +1176,13 @@
   "lon": 2.70305,
   "min": 151,
   "minAt": "2026-10-12"
+ },
+ "neuilly-plaisance||93": {
+  "dept": "93",
+  "km": 4.7,
+  "label": "Neuilly-Plaisance",
+  "lat": 48.86467,
+  "lon": 2.50964
  },
  "neuilly-sur-marne||93": {
   "km": 5.8,
@@ -1466,6 +1495,7 @@
   "min": 60,
   "minAt": "2026-10-12"
  },
+ "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
