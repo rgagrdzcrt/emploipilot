@@ -1466,7 +1466,6 @@
   "min": 60,
   "minAt": "2026-10-12"
  },
- "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
@@ -1839,13 +1838,6 @@
   "lon": 2.28637,
   "min": 83,
   "minAt": "2026-10-19"
- },
- "vaucresson||92": {
-  "dept": "92",
-  "km": 24.6,
-  "label": "Vaucresson",
-  "lat": 48.84057,
-  "lon": 2.16348
  },
  "vaujours||93": {
   "dept": "93",
