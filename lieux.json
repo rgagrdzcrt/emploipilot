@@ -1138,6 +1138,15 @@
   "minAt": "2026-10-12"
  },
  "morigny-champigny||94": {},
+ "mormant||77": {
+  "dept": "77",
+  "km": 44.3,
+  "label": "Mormant",
+  "lat": 48.60347,
+  "lon": 2.88186,
+  "min": 113,
+  "minAt": "2026-10-28"
+ },
  "moussy-le-neuf||77": {
   "dept": "77",
   "km": 19.9,
@@ -1176,13 +1185,6 @@
   "lon": 2.70305,
   "min": 151,
   "minAt": "2026-10-12"
- },
- "neuilly-plaisance||93": {
-  "dept": "93",
-  "km": 4.7,
-  "label": "Neuilly-Plaisance",
-  "lat": 48.86467,
-  "lon": 2.50964
  },
  "neuilly-sur-marne||93": {
   "km": 5.8,
@@ -1495,6 +1497,15 @@
   "min": 60,
   "minAt": "2026-10-12"
  },
+ "quincy-sous-sénart||IDF": {
+  "dept": "91",
+  "km": 25.5,
+  "label": "Quincy-sous-Sénart",
+  "lat": 48.67642,
+  "lon": 2.53432,
+  "min": 99,
+  "minAt": "2026-10-28"
+ },
  "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
@@ -1559,7 +1570,9 @@
   "km": 34.5,
   "label": "Réau",
   "lat": 48.60726,
-  "lon": 2.62431
+  "lon": 2.62431,
+  "min": 131,
+  "minAt": "2026-10-28"
  },
  "république||": {},
  "saint-brice-sous-forêt||95": {
