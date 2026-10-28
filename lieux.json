@@ -201,7 +201,9 @@
   "km": 25.7,
   "label": "Brie-Comte-Robert",
   "lat": 48.68978,
-  "lon": 2.61659
+  "lon": 2.61659,
+  "min": 118,
+  "minAt": "2026-10-28"
  },
  "bruyères-sur-oise||95": {
   "dept": "95",
@@ -236,15 +238,6 @@
   "lon": 2.33152,
   "min": 78,
   "minAt": "2026-10-15"
- },
- "cergy-sud||95": {
-  "dept": "95",
-  "km": 35.6,
-  "label": "Cergy",
-  "lat": 49.04227,
-  "lon": 2.04555,
-  "min": 105,
-  "minAt": "2026-10-26"
  },
  "cergy||95": {
   "dept": "95",
@@ -849,6 +842,13 @@
   "min": 54,
   "minAt": "2026-10-12"
  },
+ "le kremlin-bicêtre||94": {
+  "dept": "94",
+  "km": 14.2,
+  "label": "Le Kremlin-Bicêtre",
+  "lat": 48.80818,
+  "lon": 2.35582
+ },
  "le plessis-robinson||92": {
   "km": 21.3,
   "label": "Le Plessis-Robinson",
@@ -1155,13 +1155,6 @@
   "min": 151,
   "minAt": "2026-10-12"
  },
- "neuilly-plaisance||93": {
-  "dept": "93",
-  "km": 4.7,
-  "label": "Neuilly-Plaisance",
-  "lat": 48.86467,
-  "lon": 2.50964
- },
  "neuilly-sur-marne||93": {
   "km": 5.8,
   "label": "Neuilly-sur-Marne",
@@ -1451,6 +1444,13 @@
   "min": 64,
   "minAt": "2026-10-12"
  },
+ "presles-en-brie||77": {
+  "dept": "77",
+  "km": 28.9,
+  "label": "Presles-en-Brie",
+  "lat": 48.71274,
+  "lon": 2.75287
+ },
  "provins||77": {
   "dept": "77",
   "km": 70.9,
@@ -1524,6 +1524,13 @@
   "min": 86,
   "minAt": "2026-10-12"
  },
+ "réau||77": {
+  "dept": "77",
+  "km": 34.5,
+  "label": "Réau",
+  "lat": 48.60726,
+  "lon": 2.62431
+ },
  "république||": {},
  "saint-brice-sous-forêt||95": {
   "dept": "95",
@@ -1549,13 +1556,6 @@
   "lon": 2.3615,
   "min": 54,
   "minAt": "2026-10-12"
- },
- "saint-gratien||95": {
-  "dept": "95",
-  "km": 16.3,
-  "label": "Saint-Gratien",
-  "lat": 48.96841,
-  "lon": 2.28496
  },
  "saint-leu-la-forêt||95": {
   "dept": "95",
