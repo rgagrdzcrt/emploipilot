@@ -416,6 +416,15 @@
   "min": 71,
   "minAt": "2026-10-12"
  },
+ "combs-la-ville||77": {
+  "dept": "77",
+  "km": 27.6,
+  "label": "Combs-la-Ville",
+  "lat": 48.66087,
+  "lon": 2.56202,
+  "min": 113,
+  "minAt": "2026-10-29"
+ },
  "compans|77290|77": {
   "dept": "77",
   "km": 16.2,
@@ -816,7 +825,9 @@
   "km": 14.8,
   "label": "La Queue-en-Brie",
   "lat": 48.78623,
-  "lon": 2.57913
+  "lon": 2.57913,
+  "min": 71,
+  "minAt": "2026-10-29"
  },
  "lagny-sur-marne|77400|77": {
   "km": 16.5,
@@ -1188,6 +1199,13 @@
   "min": 151,
   "minAt": "2026-10-12"
  },
+ "neuilly-plaisance||93": {
+  "dept": "93",
+  "km": 4.7,
+  "label": "Neuilly-Plaisance",
+  "lat": 48.86467,
+  "lon": 2.50964
+ },
  "neuilly-sur-marne||93": {
   "km": 5.8,
   "label": "Neuilly-sur-Marne",
@@ -1508,6 +1526,7 @@
   "min": 99,
   "minAt": "2026-10-28"
  },
+ "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
@@ -1731,6 +1750,13 @@
   "min": 81,
   "minAt": "2026-10-12"
  },
+ "savigny-le-temple||77": {
+  "dept": "77",
+  "km": 35.8,
+  "label": "Savigny-le-Temple",
+  "lat": 48.58773,
+  "lon": 2.57666
+ },
  "sceaux||92": {
   "dept": "92",
   "km": 19.7,
@@ -1883,6 +1909,13 @@
   "min": 83,
   "minAt": "2026-10-19"
  },
+ "vaucresson||92": {
+  "dept": "92",
+  "km": 24.6,
+  "label": "Vaucresson",
+  "lat": 48.84057,
+  "lon": 2.16348
+ },
  "vaujours||93": {
   "dept": "93",
   "km": 7.6,
@@ -1915,6 +1948,7 @@
   "min": 130,
   "minAt": "2026-10-12"
  },
+ "vert-saint-denis||93": {},
  "villebon-sur-yvette||IDF": {
   "dept": "91",
   "km": 29.3,
