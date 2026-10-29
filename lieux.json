@@ -591,6 +591,13 @@
   "min": 56,
   "minAt": "2026-10-12"
  },
+ "fontenay-trésigny||77": {
+  "dept": "77",
+  "km": 36.3,
+  "label": "Fontenay-Trésigny",
+  "lat": 48.70235,
+  "lon": 2.87571
+ },
  "fosses||95": {
   "dept": "95",
   "km": 21.8,
@@ -1028,7 +1035,9 @@
   "km": 30.9,
   "label": "Meaux",
   "lat": 48.95942,
-  "lon": 2.90023
+  "lon": 2.90023,
+  "min": 93,
+  "minAt": "2026-10-29"
  },
  "melun||77": {
   "dept": "77",
@@ -1499,7 +1508,6 @@
   "min": 99,
   "minAt": "2026-10-28"
  },
- "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
