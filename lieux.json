@@ -505,6 +505,15 @@
   "minAt": "2026-10-12"
  },
  "delle||IDF": {},
+ "domont||95": {
+  "dept": "95",
+  "km": 18.0,
+  "label": "Domont",
+  "lat": 49.02871,
+  "lon": 2.32791,
+  "min": 83,
+  "minAt": "2026-10-30"
+ },
  "drancy||93": {
   "km": 3.8,
   "label": "Drancy",
@@ -942,13 +951,6 @@
   "lon": 2.54793,
   "min": 122,
   "minAt": "2026-10-15"
- },
- "limeil-brévannes||94": {
-  "dept": "94",
-  "km": 17.3,
-  "label": "Limeil-Brévannes",
-  "lat": 48.74791,
-  "lon": 2.49242
  },
  "livry-gargan||93": {
   "dept": "93",
@@ -1519,7 +1521,6 @@
   "min": 99,
   "minAt": "2026-10-28"
  },
- "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
@@ -1577,6 +1578,15 @@
   "lon": 2.35147,
   "min": 86,
   "minAt": "2026-10-12"
+ },
+ "réau - savigny-le-temple||77": {
+  "dept": "77",
+  "km": 35.8,
+  "label": "Savigny-le-Temple",
+  "lat": 48.58773,
+  "lon": 2.57666,
+  "min": 117,
+  "minAt": "2026-10-30"
  },
  "réau||77": {
   "dept": "77",
