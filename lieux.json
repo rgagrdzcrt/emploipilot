@@ -241,15 +241,6 @@
   "min": 78,
   "minAt": "2026-10-15"
  },
- "cergy||95": {
-  "dept": "95",
-  "km": 35.6,
-  "label": "Cergy",
-  "lat": 49.04227,
-  "lon": 2.04555,
-  "min": 105,
-  "minAt": "2026-10-26"
- },
  "champigny-sur-marne||94": {
   "dept": "94",
   "km": 10.0,
@@ -1823,7 +1814,9 @@
   "km": 5.1,
   "label": "Sevran",
   "lat": 48.93797,
-  "lon": 2.53129
+  "lon": 2.53129,
+  "min": 42,
+  "minAt": "2026-10-30"
  },
  "soisy-sous-montmorency||95": {
   "dept": "95",
