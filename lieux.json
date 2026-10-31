@@ -605,7 +605,9 @@
   "km": 36.3,
   "label": "Fontenay-Trésigny",
   "lat": 48.70235,
-  "lon": 2.87571
+  "lon": 2.87571,
+  "min": 150,
+  "minAt": "2026-10-31"
  },
  "fosses||95": {
   "dept": "95",
