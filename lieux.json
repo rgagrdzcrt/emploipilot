@@ -214,15 +214,6 @@
   "min": 118,
   "minAt": "2026-10-28"
  },
- "bry-sur-marne||94": {
-  "dept": "94",
-  "km": 7.7,
-  "label": "Bry-sur-Marne",
-  "lat": 48.83925,
-  "lon": 2.52319,
-  "min": 59,
-  "minAt": "2026-10-20"
- },
  "bussy-saint-georges||77": {
   "dept": "77",
   "km": 18.3,
@@ -581,15 +572,6 @@
   "lat": 48.82469,
   "lon": 2.70772,
   "min": 89,
-  "minAt": "2026-10-12"
- },
- "fontenay-aux-roses||92": {
-  "dept": "92",
-  "km": 19.2,
-  "label": "Fontenay-aux-Roses",
-  "lat": 48.78953,
-  "lon": 2.28826,
-  "min": 79,
   "minAt": "2026-10-12"
  },
  "fontenay-sous-bois||94": {
@@ -1546,6 +1528,7 @@
   "min": 99,
   "minAt": "2026-10-28"
  },
+ "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
