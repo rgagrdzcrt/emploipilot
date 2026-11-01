@@ -574,6 +574,13 @@
   "min": 89,
   "minAt": "2026-10-12"
  },
+ "fontenay-aux-roses||92": {
+  "dept": "92",
+  "km": 19.2,
+  "label": "Fontenay-aux-Roses",
+  "lat": 48.78953,
+  "lon": 2.28826
+ },
  "fontenay-sous-bois||94": {
   "km": 6.0,
   "label": "Fontenay-sous-Bois",
@@ -1191,6 +1198,13 @@
   "min": 151,
   "minAt": "2026-10-12"
  },
+ "neuilly-plaisance||93": {
+  "dept": "93",
+  "km": 4.7,
+  "label": "Neuilly-Plaisance",
+  "lat": 48.86467,
+  "lon": 2.50964
+ },
  "neuilly-sur-marne||93": {
   "km": 5.8,
   "label": "Neuilly-sur-Marne",
@@ -1674,15 +1688,6 @@
   "label": "Saint-Mesmes",
   "lat": 48.98574,
   "lon": 2.70169
- },
- "saint-ouen-l'aumône||95": {
-  "dept": "95",
-  "km": 30.9,
-  "label": "Saint-Ouen-l'Aumône",
-  "lat": 49.04798,
-  "lon": 2.12406,
-  "min": 99,
-  "minAt": "2026-10-26"
  },
  "saint-ouen-sur-seine||93": {
   "dept": "93",
