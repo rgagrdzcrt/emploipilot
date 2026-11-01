@@ -771,14 +771,6 @@
   "min": 122,
   "minAt": "2026-10-14"
  },
- "l'île-saint-denis||93": {
-  "km": 11.3,
-  "label": "L'Île-Saint-Denis",
-  "lat": 48.93308,
-  "lon": 2.33764,
-  "min": 63,
-  "minAt": "2026-10-13"
- },
  "la courneuve||93": {
   "km": 6.9,
   "label": "La Courneuve",
@@ -933,6 +925,13 @@
   "lon": 2.54793,
   "min": 122,
   "minAt": "2026-10-15"
+ },
+ "limeil-brévannes||94": {
+  "dept": "94",
+  "km": 17.3,
+  "label": "Limeil-Brévannes",
+  "lat": 48.74791,
+  "lon": 2.49242
  },
  "livry-gargan||93": {
   "dept": "93",
@@ -2029,15 +2028,6 @@
   "lon": 2.53243,
   "min": 64,
   "minAt": "2026-10-13"
- },
- "villiers-le-bel||95": {
-  "dept": "95",
-  "km": 12.7,
-  "label": "Villiers-le-Bel",
-  "lat": 49.00324,
-  "lon": 2.39965,
-  "min": 91,
-  "minAt": "2026-10-15"
  },
  "villiers-sur-marne||94": {
   "dept": "94",
