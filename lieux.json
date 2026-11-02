@@ -566,6 +566,13 @@
   "min": 89,
   "minAt": "2026-10-12"
  },
+ "fontenay-aux-roses||92": {
+  "dept": "92",
+  "km": 19.2,
+  "label": "Fontenay-aux-Roses",
+  "lat": 48.78953,
+  "lon": 2.28826
+ },
  "fontenay-sous-bois||94": {
   "km": 6.0,
   "label": "Fontenay-sous-Bois",
@@ -762,13 +769,6 @@
   "lon": 2.22878,
   "min": 122,
   "minAt": "2026-10-14"
- },
- "l'île-saint-denis||93": {
-  "dept": "93",
-  "km": 11.3,
-  "label": "L'Île-Saint-Denis",
-  "lat": 48.93308,
-  "lon": 2.33764
  },
  "la courneuve||93": {
   "km": 6.9,
@@ -1183,6 +1183,13 @@
   "min": 151,
   "minAt": "2026-10-12"
  },
+ "neuilly-plaisance||93": {
+  "dept": "93",
+  "km": 4.7,
+  "label": "Neuilly-Plaisance",
+  "lat": 48.86467,
+  "lon": 2.50964
+ },
  "neuilly-sur-marne||93": {
   "km": 5.8,
   "label": "Neuilly-sur-Marne",
@@ -1512,7 +1519,6 @@
   "min": 99,
   "minAt": "2026-10-28"
  },
- "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
@@ -1614,6 +1620,13 @@
   "lon": 2.3615,
   "min": 54,
   "minAt": "2026-10-12"
+ },
+ "saint-gratien||95": {
+  "dept": "95",
+  "km": 16.3,
+  "label": "Saint-Gratien",
+  "lat": 48.96841,
+  "lon": 2.28496
  },
  "saint-leu-la-forêt||95": {
   "dept": "95",
