@@ -566,13 +566,6 @@
   "min": 89,
   "minAt": "2026-10-12"
  },
- "fontenay-aux-roses||92": {
-  "dept": "92",
-  "km": 19.2,
-  "label": "Fontenay-aux-Roses",
-  "lat": 48.78953,
-  "lon": 2.28826
- },
  "fontenay-sous-bois||94": {
   "km": 6.0,
   "label": "Fontenay-sous-Bois",
@@ -770,6 +763,13 @@
   "min": 122,
   "minAt": "2026-10-14"
  },
+ "l'île-saint-denis||93": {
+  "dept": "93",
+  "km": 11.3,
+  "label": "L'Île-Saint-Denis",
+  "lat": 48.93308,
+  "lon": 2.33764
+ },
  "la courneuve||93": {
   "km": 6.9,
   "label": "La Courneuve",
@@ -925,6 +925,13 @@
   "min": 122,
   "minAt": "2026-10-15"
  },
+ "limeil-brévannes||94": {
+  "dept": "94",
+  "km": 17.3,
+  "label": "Limeil-Brévannes",
+  "lat": 48.74791,
+  "lon": 2.49242
+ },
  "livry-gargan||93": {
   "dept": "93",
   "km": 3.9,
@@ -1015,15 +1022,6 @@
   "lon": 1.61647,
   "min": 145,
   "minAt": "2026-10-12"
- },
- "meaux||77": {
-  "dept": "77",
-  "km": 30.9,
-  "label": "Meaux",
-  "lat": 48.95942,
-  "lon": 2.90023,
-  "min": 93,
-  "minAt": "2026-10-29"
  },
  "melun||77": {
   "dept": "77",
