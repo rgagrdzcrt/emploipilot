@@ -99,14 +99,6 @@
   "lat": 49.06397,
   "lon": 2.31434
  },
- "bailly-romainvilliers|77700|77": {
-  "km": 24.9,
-  "label": "Bailly-Romainvilliers",
-  "lat": 48.84898,
-  "lon": 2.81517,
-  "min": 86,
-  "minAt": "2026-10-13"
- },
  "beauchamp||95": {
   "dept": "95",
   "km": 24.7,
@@ -574,13 +566,6 @@
   "min": 89,
   "minAt": "2026-10-12"
  },
- "fontenay-aux-roses||92": {
-  "dept": "92",
-  "km": 19.2,
-  "label": "Fontenay-aux-Roses",
-  "lat": 48.78953,
-  "lon": 2.28826
- },
  "fontenay-sous-bois||94": {
   "km": 6.0,
   "label": "Fontenay-sous-Bois",
@@ -778,6 +763,13 @@
   "min": 122,
   "minAt": "2026-10-14"
  },
+ "l'île-saint-denis||93": {
+  "dept": "93",
+  "km": 11.3,
+  "label": "L'Île-Saint-Denis",
+  "lat": 48.93308,
+  "lon": 2.33764
+ },
  "la courneuve||93": {
   "km": 6.9,
   "label": "La Courneuve",
@@ -932,13 +924,6 @@
   "lon": 2.54793,
   "min": 122,
   "minAt": "2026-10-15"
- },
- "limeil-brévannes||94": {
-  "dept": "94",
-  "km": 17.3,
-  "label": "Limeil-Brévannes",
-  "lat": 48.74791,
-  "lon": 2.49242
  },
  "livry-gargan||93": {
   "dept": "93",
@@ -1197,13 +1182,6 @@
   "lon": 2.70305,
   "min": 151,
   "minAt": "2026-10-12"
- },
- "neuilly-plaisance||93": {
-  "dept": "93",
-  "km": 4.7,
-  "label": "Neuilly-Plaisance",
-  "lat": 48.86467,
-  "lon": 2.50964
  },
  "neuilly-sur-marne||93": {
   "km": 5.8,
