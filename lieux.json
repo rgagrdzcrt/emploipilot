@@ -134,15 +134,6 @@
   "min": 31,
   "minAt": "2026-10-13"
  },
- "bois-colombes|92270|92": {
-  "dept": "92",
-  "km": 15.9,
-  "label": "Bois-Colombes",
-  "lat": 48.91533,
-  "lon": 2.26884,
-  "min": 59,
-  "minAt": "2026-10-23"
- },
  "bois-colombes||92": {
   "dept": "92",
   "km": 15.9,
@@ -238,14 +229,6 @@
   "lat": 48.81721,
   "lon": 2.52127,
   "min": 65,
-  "minAt": "2026-10-12"
- },
- "champs-sur-marne||77": {
-  "km": 9.8,
-  "label": "Champs-sur-Marne",
-  "lat": 48.85139,
-  "lon": 2.59397,
-  "min": 67,
   "minAt": "2026-10-12"
  },
  "chanteloup-en-brie|77600|77": {
@@ -573,13 +556,6 @@
   "min": 89,
   "minAt": "2026-10-12"
  },
- "fontenay-aux-roses||92": {
-  "dept": "92",
-  "km": 19.2,
-  "label": "Fontenay-aux-Roses",
-  "lat": 48.78953,
-  "lon": 2.28826
- },
  "fontenay-sous-bois||94": {
   "km": 6.0,
   "label": "Fontenay-sous-Bois",
@@ -750,24 +726,6 @@
   "min": 79,
   "minAt": "2026-10-12"
  },
- "joinville-le-pont||94": {
-  "dept": "94",
-  "km": 9.3,
-  "label": "Joinville-le-Pont",
-  "lat": 48.82033,
-  "lon": 2.47193,
-  "min": 65,
-  "minAt": "2026-10-24"
- },
- "l'haÿ-les-roses||94": {
-  "dept": "94",
-  "km": 17.6,
-  "label": "L'Haÿ-les-Roses",
-  "lat": 48.77685,
-  "lon": 2.34199,
-  "min": 85,
-  "minAt": "2026-10-23"
- },
  "l'isle-adam||95": {
   "dept": "95",
   "km": 29.7,
@@ -776,6 +734,13 @@
   "lon": 2.22878,
   "min": 122,
   "minAt": "2026-10-14"
+ },
+ "l'île-saint-denis||93": {
+  "dept": "93",
+  "km": 11.3,
+  "label": "L'Île-Saint-Denis",
+  "lat": 48.93308,
+  "lon": 2.33764
  },
  "la courneuve||93": {
   "km": 6.9,
@@ -1077,15 +1042,6 @@
   "label": "Moisselles",
   "lat": 49.04677,
   "lon": 2.34056
- },
- "moissy-cramayel||77": {
-  "dept": "77",
-  "km": 31.9,
-  "label": "Moissy-Cramayel",
-  "lat": 48.62572,
-  "lon": 2.59148,
-  "min": 122,
-  "minAt": "2026-10-30"
  },
  "montfermeil||93": {
   "dept": "93",
@@ -1483,7 +1439,6 @@
   "min": 50,
   "minAt": "2026-10-12"
  },
- "pierrefitte-sur-seine||93": {},
  "poincy||77": {
   "dept": "77",
   "km": 32.8,
@@ -1533,6 +1488,7 @@
   "min": 99,
   "minAt": "2026-10-28"
  },
+ "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
