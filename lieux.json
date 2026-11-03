@@ -206,6 +206,13 @@
   "min": 118,
   "minAt": "2026-10-28"
  },
+ "bry-sur-marne||94": {
+  "dept": "94",
+  "km": 7.7,
+  "label": "Bry-sur-Marne",
+  "lat": 48.83925,
+  "lon": 2.52319
+ },
  "bussy-saint-georges||77": {
   "dept": "77",
   "km": 18.3,
@@ -566,6 +573,13 @@
   "min": 89,
   "minAt": "2026-10-12"
  },
+ "fontenay-aux-roses||92": {
+  "dept": "92",
+  "km": 19.2,
+  "label": "Fontenay-aux-Roses",
+  "lat": 48.78953,
+  "lon": 2.28826
+ },
  "fontenay-sous-bois||94": {
   "km": 6.0,
   "label": "Fontenay-sous-Bois",
@@ -762,13 +776,6 @@
   "lon": 2.22878,
   "min": 122,
   "minAt": "2026-10-14"
- },
- "l'île-saint-denis||93": {
-  "dept": "93",
-  "km": 11.3,
-  "label": "L'Île-Saint-Denis",
-  "lat": 48.93308,
-  "lon": 2.33764
  },
  "la courneuve||93": {
   "km": 6.9,
@@ -1583,15 +1590,6 @@
   "lon": 2.35147,
   "min": 86,
   "minAt": "2026-10-12"
- },
- "réau - savigny-le-temple||77": {
-  "dept": "77",
-  "km": 35.8,
-  "label": "Savigny-le-Temple",
-  "lat": 48.58773,
-  "lon": 2.57666,
-  "min": 117,
-  "minAt": "2026-10-30"
  },
  "réau||77": {
   "dept": "77",
