@@ -581,6 +581,15 @@
   "min": 56,
   "minAt": "2026-10-12"
  },
+ "fontenay-trésigny||77": {
+  "dept": "77",
+  "km": 36.3,
+  "label": "Fontenay-Trésigny",
+  "lat": 48.70235,
+  "lon": 2.87571,
+  "min": 150,
+  "minAt": "2026-11-04"
+ },
  "fosses||95": {
   "dept": "95",
   "km": 21.8,
@@ -688,7 +697,9 @@
   "km": 25.6,
   "label": "Gretz-Armainvilliers",
   "lat": 48.73832,
-  "lon": 2.72849
+  "lon": 2.72849,
+  "min": 77,
+  "minAt": "2026-11-04"
  },
  "hardricourt||IDF": {
   "dept": "78",
@@ -742,6 +753,13 @@
   "lon": 2.22878,
   "min": 122,
   "minAt": "2026-10-14"
+ },
+ "l'île-saint-denis||93": {
+  "dept": "93",
+  "km": 11.3,
+  "label": "L'Île-Saint-Denis",
+  "lat": 48.93308,
+  "lon": 2.33764
  },
  "la courneuve||93": {
   "km": 6.9,
@@ -897,6 +915,13 @@
   "lon": 2.54793,
   "min": 122,
   "minAt": "2026-10-15"
+ },
+ "limeil-brévannes||94": {
+  "dept": "94",
+  "km": 17.3,
+  "label": "Limeil-Brévannes",
+  "lat": 48.74791,
+  "lon": 2.49242
  },
  "livry-gargan||93": {
   "dept": "93",
@@ -1099,15 +1124,6 @@
   "minAt": "2026-10-12"
  },
  "morigny-champigny||94": {},
- "mormant||77": {
-  "dept": "77",
-  "km": 44.3,
-  "label": "Mormant",
-  "lat": 48.60347,
-  "lon": 2.88186,
-  "min": 113,
-  "minAt": "2026-10-28"
- },
  "moussy-le-neuf||77": {
   "dept": "77",
   "km": 19.9,
@@ -1648,6 +1664,15 @@
   "min": 56,
   "minAt": "2026-10-12"
  },
+ "saint-soupplets||77": {
+  "dept": "77",
+  "km": 27.7,
+  "label": "Saint-Soupplets",
+  "lat": 49.03657,
+  "lon": 2.80622,
+  "min": 107,
+  "minAt": "2026-11-04"
+ },
  "saint-thibault-des-vignes|77400|77": {
   "dept": "77",
   "km": 14.8,
@@ -1656,6 +1681,15 @@
   "lon": 2.67667,
   "min": 76,
   "minAt": "2026-10-13"
+ },
+ "saint-thibault-des-vignes||77": {
+  "dept": "77",
+  "km": 14.8,
+  "label": "Saint-Thibault-des-Vignes",
+  "lat": 48.86172,
+  "lon": 2.67667,
+  "min": 105,
+  "minAt": "2026-11-04"
  },
  "saint-witz||95": {
   "dept": "95",
