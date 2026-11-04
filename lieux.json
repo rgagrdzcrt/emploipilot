@@ -477,6 +477,15 @@
   "min": 98,
   "minAt": "2026-10-12"
  },
+ "deuil-la-barre||95": {
+  "dept": "95",
+  "km": 13.6,
+  "label": "Deuil-la-Barre",
+  "lat": 48.97008,
+  "lon": 2.32848,
+  "min": 72,
+  "minAt": "2026-11-04"
+ },
  "domont||95": {
   "dept": "95",
   "km": 18.0,
@@ -571,15 +580,6 @@
   "lon": 2.47351,
   "min": 56,
   "minAt": "2026-10-12"
- },
- "fontenay-trésigny||77": {
-  "dept": "77",
-  "km": 36.3,
-  "label": "Fontenay-Trésigny",
-  "lat": 48.70235,
-  "lon": 2.87571,
-  "min": 150,
-  "minAt": "2026-10-31"
  },
  "fosses||95": {
   "dept": "95",
@@ -742,13 +742,6 @@
   "lon": 2.22878,
   "min": 122,
   "minAt": "2026-10-14"
- },
- "l'île-saint-denis||93": {
-  "dept": "93",
-  "km": 11.3,
-  "label": "L'Île-Saint-Denis",
-  "lat": 48.93308,
-  "lon": 2.33764
  },
  "la courneuve||93": {
   "km": 6.9,
@@ -1154,6 +1147,15 @@
   "min": 151,
   "minAt": "2026-10-12"
  },
+ "neuilly-plaisance||93": {
+  "dept": "93",
+  "km": 4.7,
+  "label": "Neuilly-Plaisance",
+  "lat": 48.86467,
+  "lon": 2.50964,
+  "min": 52,
+  "minAt": "2026-11-04"
+ },
  "neuilly-sur-marne||93": {
   "km": 5.8,
   "label": "Neuilly-sur-Marne",
@@ -1426,6 +1428,15 @@
   "min": 50,
   "minAt": "2026-10-12"
  },
+ "pierrelaye|95220|95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Pierrelaye",
+  "lat": 49.01667,
+  "lon": 2.16232,
+  "min": 90,
+  "minAt": "2026-11-04"
+ },
  "poincy||77": {
   "dept": "77",
   "km": 32.8,
@@ -1645,15 +1656,6 @@
   "lon": 2.67667,
   "min": 76,
   "minAt": "2026-10-13"
- },
- "saint-witz|95470|95": {
-  "dept": "95",
-  "km": 21.3,
-  "label": "Saint-Witz",
-  "lat": 49.08985,
-  "lon": 2.55433,
-  "min": 100,
-  "minAt": "2026-10-12"
  },
  "saint-witz||95": {
   "dept": "95",
