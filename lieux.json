@@ -616,13 +616,6 @@
   "min": 91,
   "minAt": "2026-10-12"
  },
- "frépillon||95": {
-  "dept": "95",
-  "km": 26.4,
-  "label": "Frépillon",
-  "lat": 49.05127,
-  "lon": 2.20139
- },
  "gagny||93": {
   "dept": "93",
   "km": 5.0,
@@ -1014,15 +1007,6 @@
   "lat": 48.53004,
   "lon": 2.195
  },
- "maulette||IDF": {
-  "dept": "78",
-  "km": 64.9,
-  "label": "Maulette",
-  "lat": 48.78635,
-  "lon": 1.61647,
-  "min": 145,
-  "minAt": "2026-10-12"
- },
  "melun||77": {
   "dept": "77",
   "km": 42.2,
@@ -1053,7 +1037,9 @@
   "km": 19.1,
   "label": "Moisselles",
   "lat": 49.04677,
-  "lon": 2.34056
+  "lon": 2.34056,
+  "min": 93,
+  "minAt": "2026-11-04"
  },
  "moisselles||95": {
   "dept": "95",
@@ -1079,6 +1065,13 @@
   "lon": 2.34704,
   "min": 80,
   "minAt": "2026-10-21"
+ },
+ "montmagny||IDF": {
+  "dept": "95",
+  "km": 12.4,
+  "label": "Montmagny",
+  "lat": 48.96767,
+  "lon": 2.34704
  },
  "montreuil||93": {
   "km": 5.2,
@@ -1124,13 +1117,6 @@
   "minAt": "2026-10-12"
  },
  "morigny-champigny||94": {},
- "moussy-le-neuf||77": {
-  "dept": "77",
-  "km": 19.9,
-  "label": "Moussy-le-Neuf",
-  "lat": 49.06532,
-  "lon": 2.60222
- },
  "nanterre|92000|92": {
   "km": 20.7,
   "label": "Nanterre",
@@ -1690,13 +1676,6 @@
   "lon": 2.67667,
   "min": 105,
   "minAt": "2026-11-04"
- },
- "saint-witz||95": {
-  "dept": "95",
-  "km": 21.3,
-  "label": "Saint-Witz",
-  "lat": 49.08985,
-  "lon": 2.55433
  },
  "sannois||95": {
   "dept": "95",
