@@ -134,6 +134,13 @@
   "min": 31,
   "minAt": "2026-10-13"
  },
+ "bois-colombes|92270|92": {
+  "dept": "92",
+  "km": 15.9,
+  "label": "Bois-Colombes",
+  "lat": 48.91533,
+  "lon": 2.26884
+ },
  "bois-colombes||92": {
   "dept": "92",
   "km": 15.9,
@@ -1631,13 +1638,6 @@
   "lon": 2.4918,
   "min": 70,
   "minAt": "2026-10-12"
- },
- "saint-mesmes||77": {
-  "dept": "77",
-  "km": 18.3,
-  "label": "Saint-Mesmes",
-  "lat": 48.98574,
-  "lon": 2.70169
  },
  "saint-ouen-sur-seine||93": {
   "dept": "93",
