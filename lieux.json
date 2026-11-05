@@ -134,13 +134,6 @@
   "min": 31,
   "minAt": "2026-10-13"
  },
- "bois-colombes|92270|92": {
-  "dept": "92",
-  "km": 15.9,
-  "label": "Bois-Colombes",
-  "lat": 48.91533,
-  "lon": 2.26884
- },
  "bois-colombes||92": {
   "dept": "92",
   "km": 15.9,
@@ -745,13 +738,6 @@
   "min": 122,
   "minAt": "2026-10-14"
  },
- "l'île-saint-denis||93": {
-  "dept": "93",
-  "km": 11.3,
-  "label": "L'Île-Saint-Denis",
-  "lat": 48.93308,
-  "lon": 2.33764
- },
  "la courneuve||93": {
   "km": 6.9,
   "label": "La Courneuve",
@@ -837,6 +823,15 @@
   "lon": 2.26106,
   "min": 92,
   "minAt": "2026-10-13"
+ },
+ "le plessis-trévise||94": {
+  "dept": "94",
+  "km": 12.3,
+  "label": "Le Plessis-Trévise",
+  "lat": 48.81014,
+  "lon": 2.57623,
+  "min": 68,
+  "minAt": "2026-11-05"
  },
  "le pré-saint-gervais||93": {
   "dept": "93",
@@ -1044,7 +1039,9 @@
   "km": 19.1,
   "label": "Moisselles",
   "lat": 49.04677,
-  "lon": 2.34056
+  "lon": 2.34056,
+  "min": 93,
+  "minAt": "2026-11-05"
  },
  "montfermeil||93": {
   "dept": "93",
@@ -1477,7 +1474,6 @@
   "min": 99,
   "minAt": "2026-10-28"
  },
- "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
@@ -1570,13 +1566,6 @@
   "lon": 2.3615,
   "min": 54,
   "minAt": "2026-10-12"
- },
- "saint-gratien||95": {
-  "dept": "95",
-  "km": 16.3,
-  "label": "Saint-Gratien",
-  "lat": 48.96841,
-  "lon": 2.28496
  },
  "saint-leu-la-forêt||95": {
   "dept": "95",
