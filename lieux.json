@@ -816,6 +816,15 @@
   "min": 72,
   "minAt": "2026-10-28"
  },
+ "le mesnil-amelot||77": {
+  "dept": "77",
+  "km": 15.1,
+  "label": "Le Mesnil-Amelot",
+  "lat": 49.0196,
+  "lon": 2.59354,
+  "min": 77,
+  "minAt": "2026-11-05"
+ },
  "le plessis-robinson||92": {
   "km": 21.3,
   "label": "Le Plessis-Robinson",
@@ -969,13 +978,6 @@
   "min": 131,
   "minAt": "2026-10-15"
  },
- "mareuil-lès-meaux||77": {
-  "dept": "77",
-  "km": 28.1,
-  "label": "Mareuil-lès-Meaux",
-  "lat": 48.92726,
-  "lon": 2.86788
- },
  "marly-la-ville||95": {
   "km": 19.7,
   "label": "Marly-la-Ville",
@@ -999,6 +1001,15 @@
   "label": "Mauchamps",
   "lat": 48.53004,
   "lon": 2.195
+ },
+ "meaux||77": {
+  "dept": "77",
+  "km": 30.9,
+  "label": "Meaux",
+  "lat": 48.95942,
+  "lon": 2.90023,
+  "min": 93,
+  "minAt": "2026-11-05"
  },
  "melun||77": {
   "dept": "77",
@@ -1041,6 +1052,15 @@
   "lat": 49.04677,
   "lon": 2.34056,
   "min": 93,
+  "minAt": "2026-11-05"
+ },
+ "moissy-cramayel||77": {
+  "dept": "77",
+  "km": 31.9,
+  "label": "Moissy-Cramayel",
+  "lat": 48.62572,
+  "lon": 2.59148,
+  "min": 122,
   "minAt": "2026-11-05"
  },
  "montfermeil||93": {
