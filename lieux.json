@@ -134,6 +134,13 @@
   "min": 31,
   "minAt": "2026-10-13"
  },
+ "bois-colombes|92270|92": {
+  "dept": "92",
+  "km": 15.9,
+  "label": "Bois-Colombes",
+  "lat": 48.91533,
+  "lon": 2.26884
+ },
  "bois-colombes||92": {
   "dept": "92",
   "km": 15.9,
@@ -323,15 +330,6 @@
   "lon": 2.41281,
   "min": 74,
   "minAt": "2026-10-26"
- },
- "châtenay-malabry||92": {
-  "dept": "92",
-  "km": 22.3,
-  "label": "Châtenay-Malabry",
-  "lat": 48.76987,
-  "lon": 2.25865,
-  "min": 103,
-  "minAt": "2026-10-12"
  },
  "châtillon||92": {
   "km": 18.3,
@@ -1057,15 +1055,6 @@
   "min": 46,
   "minAt": "2026-10-12"
  },
- "montmagny||95": {
-  "dept": "95",
-  "km": 12.4,
-  "label": "Montmagny",
-  "lat": 48.96767,
-  "lon": 2.34704,
-  "min": 80,
-  "minAt": "2026-10-21"
- },
  "montmagny||IDF": {
   "dept": "95",
   "km": 12.4,
@@ -1557,6 +1546,15 @@
   "minAt": "2026-10-28"
  },
  "république||": {},
+ "saint-brice-sous-forêt||95": {
+  "dept": "95",
+  "km": 14.7,
+  "label": "Saint-Brice-sous-Forêt",
+  "lat": 49.00169,
+  "lon": 2.35117,
+  "min": 87,
+  "minAt": "2026-11-05"
+ },
  "saint-cloud||92": {
   "km": 20.9,
   "label": "Saint-Cloud",
