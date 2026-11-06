@@ -238,6 +238,15 @@
   "min": 65,
   "minAt": "2026-10-12"
  },
+ "champs-sur-marne||77": {
+  "dept": "77",
+  "km": 9.8,
+  "label": "Champs-sur-Marne",
+  "lat": 48.85139,
+  "lon": 2.59397,
+  "min": 67,
+  "minAt": "2026-11-06"
+ },
  "chanteloup-en-brie|77600|77": {
   "km": 19.3,
   "label": "Chanteloup-en-Brie",
@@ -934,6 +943,13 @@
   "min": 122,
   "minAt": "2026-10-15"
  },
+ "limeil-brévannes||94": {
+  "dept": "94",
+  "km": 17.3,
+  "label": "Limeil-Brévannes",
+  "lat": 48.74791,
+  "lon": 2.49242
+ },
  "livry-gargan||93": {
   "dept": "93",
   "km": 3.9,
@@ -1146,6 +1162,15 @@
   "minAt": "2026-10-12"
  },
  "morigny-champigny||94": {},
+ "moussy-le-neuf||77": {
+  "dept": "77",
+  "km": 19.9,
+  "label": "Moussy-le-Neuf",
+  "lat": 49.06532,
+  "lon": 2.60222,
+  "min": 99,
+  "minAt": "2026-11-06"
+ },
  "nanterre|92000|92": {
   "km": 20.7,
   "label": "Nanterre",
@@ -1532,15 +1557,6 @@
   "lon": 2.51116,
   "min": 56,
   "minAt": "2026-10-12"
- },
- "romainville||93": {
-  "dept": "93",
-  "km": 4.1,
-  "label": "Romainville",
-  "lat": 48.88408,
-  "lon": 2.43806,
-  "min": 48,
-  "minAt": "2026-10-16"
  },
  "rosny-sous-bois|93110|93": {
   "km": 3.3,
