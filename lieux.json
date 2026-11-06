@@ -134,6 +134,13 @@
   "min": 31,
   "minAt": "2026-10-13"
  },
+ "bois-colombes|92270|92": {
+  "dept": "92",
+  "km": 15.9,
+  "label": "Bois-Colombes",
+  "lat": 48.91533,
+  "lon": 2.26884
+ },
  "bois-colombes||92": {
   "dept": "92",
   "km": 15.9,
@@ -415,6 +422,13 @@
   "lon": 2.19574,
   "min": 73,
   "minAt": "2026-10-14"
+ },
+ "coupvray|77700|77": {
+  "dept": "77",
+  "km": 22.7,
+  "label": "Coupvray",
+  "lat": 48.8942,
+  "lon": 2.79504
  },
  "courbevoie|92400|92": {
   "dept": "92",
@@ -728,6 +742,15 @@
   "lon": 2.38643,
   "min": 79,
   "minAt": "2026-10-12"
+ },
+ "l'haÿ-les-roses||94": {
+  "dept": "94",
+  "km": 17.6,
+  "label": "L'Haÿ-les-Roses",
+  "lat": 48.77685,
+  "lon": 2.34199,
+  "min": 83,
+  "minAt": "2026-11-06"
  },
  "l'isle-adam||95": {
   "dept": "95",
@@ -1064,6 +1087,13 @@
   "lon": 2.56873,
   "min": 46,
   "minAt": "2026-10-12"
+ },
+ "montigny-lès-cormeilles||95": {
+  "dept": "95",
+  "km": 23.5,
+  "label": "Montigny-lès-Cormeilles",
+  "lat": 48.99333,
+  "lon": 2.19375
  },
  "montmagny||IDF": {
   "dept": "95",
@@ -1487,7 +1517,6 @@
   "min": 99,
   "minAt": "2026-10-28"
  },
- "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
