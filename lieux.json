@@ -92,13 +92,6 @@
   "min": 48,
   "minAt": "2026-10-12"
  },
- "baillet-en-france||95": {
-  "dept": "95",
-  "km": 21.8,
-  "label": "Baillet-en-France",
-  "lat": 49.06397,
-  "lon": 2.31434
- },
  "beauchamp||95": {
   "dept": "95",
   "km": 24.7,
@@ -133,13 +126,6 @@
   "lon": 2.44334,
   "min": 31,
   "minAt": "2026-10-13"
- },
- "bois-colombes|92270|92": {
-  "dept": "92",
-  "km": 15.9,
-  "label": "Bois-Colombes",
-  "lat": 48.91533,
-  "lon": 2.26884
  },
  "bois-colombes||92": {
   "dept": "92",
@@ -1449,15 +1435,6 @@
   "min": 62,
   "minAt": "2026-10-13"
  },
- "paris 7e arrondissement|75007|75": {
-  "dept": "75",
-  "km": 13.8,
-  "label": "Paris 7e Arrondissement",
-  "lat": 48.85395,
-  "lon": 2.31286,
-  "min": 60,
-  "minAt": "2026-10-12"
- },
  "paris 8e arrondissement|75008|75": {
   "dept": "75",
   "km": 13.1,
@@ -1618,6 +1595,7 @@
   "min": 76,
   "minAt": "2026-10-13"
  },
+ "saint-denis-sud||93": {},
  "saint-denis||93": {
   "km": 9.8,
   "label": "Saint-Denis",
@@ -1904,6 +1882,13 @@
   "lon": 2.28637,
   "min": 83,
   "minAt": "2026-10-19"
+ },
+ "vaucresson||92": {
+  "dept": "92",
+  "km": 24.6,
+  "label": "Vaucresson",
+  "lat": 48.84057,
+  "lon": 2.16348
  },
  "vaujours||93": {
   "dept": "93",
