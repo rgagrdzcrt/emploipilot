@@ -874,6 +874,13 @@
   "min": 118,
   "minAt": "2026-10-28"
  },
+ "les lilas||93": {
+  "dept": "93",
+  "km": 5.4,
+  "label": "Les Lilas",
+  "lat": 48.88054,
+  "lon": 2.42074
+ },
  "les pavillons-sous-bois||93": {
   "dept": "93",
   "km": 1.5,
