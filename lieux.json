@@ -155,7 +155,6 @@
   "minAt": "2026-10-12"
  },
  "bonneuil-en-france|95500|94": {},
- "bonneuil-en-france||94": {},
  "bonneuil-sur-marne||94": {
   "km": 14.5,
   "label": "Bonneuil-sur-Marne",
@@ -1076,13 +1075,6 @@
   "lat": 48.99333,
   "lon": 2.19375
  },
- "montmagny||IDF": {
-  "dept": "95",
-  "km": 12.4,
-  "label": "Montmagny",
-  "lat": 48.96767,
-  "lon": 2.34704
- },
  "montreuil||93": {
   "km": 5.2,
   "label": "Montreuil",
@@ -1498,6 +1490,7 @@
   "min": 99,
   "minAt": "2026-10-28"
  },
+ "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
@@ -1628,6 +1621,13 @@
   "min": 70,
   "minAt": "2026-10-12"
  },
+ "saint-mesmes||77": {
+  "dept": "77",
+  "km": 18.3,
+  "label": "Saint-Mesmes",
+  "lat": 48.98574,
+  "lon": 2.70169
+ },
  "saint-ouen-sur-seine||93": {
   "dept": "93",
   "km": 11.1,
@@ -1699,15 +1699,6 @@
   "min": 81,
   "minAt": "2026-10-12"
  },
- "savigny-le-temple||77": {
-  "dept": "77",
-  "km": 35.8,
-  "label": "Savigny-le-Temple",
-  "lat": 48.58773,
-  "lon": 2.57666,
-  "min": 117,
-  "minAt": "2026-10-30"
- },
  "sceaux||92": {
   "dept": "92",
   "km": 19.7,
@@ -1760,15 +1751,6 @@
   "lon": 2.5284,
   "min": 77,
   "minAt": "2026-10-26"
- },
- "sucy-en-brie||94": {
-  "dept": "94",
-  "km": 15.1,
-  "label": "Sucy-en-Brie",
-  "lat": 48.77067,
-  "lon": 2.5284,
-  "min": 77,
-  "minAt": "2026-10-12"
  },
  "suresnes||92": {
   "km": 19.9,
@@ -1833,7 +1815,9 @@
   "km": 27.8,
   "label": "Tournan-en-Brie",
   "lat": 48.74071,
-  "lon": 2.77287
+  "lon": 2.77287,
+  "min": 84,
+  "minAt": "2026-11-07"
  },
  "tremblay-en-france||93": {
   "dept": "93",
