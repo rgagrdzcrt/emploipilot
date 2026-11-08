@@ -615,6 +615,13 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829
+ },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -881,13 +888,6 @@
   "min": 118,
   "minAt": "2026-10-28"
  },
- "les lilas||93": {
-  "dept": "93",
-  "km": 5.4,
-  "label": "Les Lilas",
-  "lat": 48.88054,
-  "lon": 2.42074
- },
  "les pavillons-sous-bois||93": {
   "dept": "93",
   "km": 1.5,
@@ -913,6 +913,13 @@
   "lon": 2.54793,
   "min": 122,
   "minAt": "2026-10-15"
+ },
+ "limeil-brévannes||94": {
+  "dept": "94",
+  "km": 17.3,
+  "label": "Limeil-Brévannes",
+  "lat": 48.74791,
+  "lon": 2.49242
  },
  "livry-gargan||93": {
   "dept": "93",
@@ -1276,15 +1283,6 @@
   "lat": 48.86016,
   "lon": 2.38184,
   "min": 57,
-  "minAt": "2026-10-12"
- },
- "paris 12e arrondissement|75012|75": {
-  "dept": "75",
-  "km": 9.3,
-  "label": "Paris 12e Arrondissement",
-  "lat": 48.83349,
-  "lon": 2.41541,
-  "min": 69,
   "minAt": "2026-10-12"
  },
  "paris 13e arrondissement|75013|75": {
