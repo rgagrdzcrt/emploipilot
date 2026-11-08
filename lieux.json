@@ -127,6 +127,13 @@
   "min": 31,
   "minAt": "2026-10-13"
  },
+ "bois-colombes|92270|92": {
+  "dept": "92",
+  "km": 15.9,
+  "label": "Bois-Colombes",
+  "lat": 48.91533,
+  "lon": 2.26884
+ },
  "bois-colombes||92": {
   "dept": "92",
   "km": 15.9,
@@ -758,6 +765,13 @@
   "lon": 2.39911,
   "min": 54,
   "minAt": "2026-10-12"
+ },
+ "la défense||92": {
+  "dept": "92",
+  "km": 18.3,
+  "label": "Puteaux",
+  "lat": 48.88416,
+  "lon": 2.2372
  },
  "la garenne-colombes||92": {
   "km": 17.6,
@@ -1495,7 +1509,6 @@
   "min": 99,
   "minAt": "2026-10-28"
  },
- "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
