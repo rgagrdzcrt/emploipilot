@@ -615,15 +615,6 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829,
-  "min": 80,
-  "minAt": "2026-10-27"
- },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -874,13 +865,6 @@
   "min": 118,
   "minAt": "2026-10-28"
  },
- "les lilas||93": {
-  "dept": "93",
-  "km": 5.4,
-  "label": "Les Lilas",
-  "lat": 48.88054,
-  "lon": 2.42074
- },
  "les pavillons-sous-bois||93": {
   "dept": "93",
   "km": 1.5,
@@ -906,13 +890,6 @@
   "lon": 2.54793,
   "min": 122,
   "minAt": "2026-10-15"
- },
- "limeil-brévannes||94": {
-  "dept": "94",
-  "km": 17.3,
-  "label": "Limeil-Brévannes",
-  "lat": 48.74791,
-  "lon": 2.49242
  },
  "livry-gargan||93": {
   "dept": "93",
