@@ -823,6 +823,15 @@
   "min": 77,
   "minAt": "2026-11-05"
  },
+ "le pin||77": {
+  "dept": "77",
+  "km": 10.3,
+  "label": "Le Pin",
+  "lat": 48.91261,
+  "lon": 2.62618,
+  "min": 65,
+  "minAt": "2026-11-08"
+ },
  "le plessis-robinson||92": {
   "km": 21.3,
   "label": "Le Plessis-Robinson",
@@ -849,6 +858,13 @@
   "min": 54,
   "minAt": "2026-10-14"
  },
+ "le raincy||93": {
+  "dept": "93",
+  "km": 2.7,
+  "label": "Le Raincy",
+  "lat": 48.89595,
+  "lon": 2.51972
+ },
  "le thillay|95500|95": {
   "dept": "95",
   "km": 11.1,
@@ -864,6 +880,13 @@
   "lon": 1.98385,
   "min": 118,
   "minAt": "2026-10-28"
+ },
+ "les lilas||93": {
+  "dept": "93",
+  "km": 5.4,
+  "label": "Les Lilas",
+  "lat": 48.88054,
+  "lon": 2.42074
  },
  "les pavillons-sous-bois||93": {
   "dept": "93",
