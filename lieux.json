@@ -622,13 +622,6 @@
   "min": 43,
   "minAt": "2026-10-12"
  },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
- },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -766,13 +759,6 @@
   "min": 54,
   "minAt": "2026-10-12"
  },
- "la défense||92": {
-  "dept": "92",
-  "km": 18.3,
-  "label": "Puteaux",
-  "lat": 48.88416,
-  "lon": 2.2372
- },
  "la garenne-colombes||92": {
   "km": 17.6,
   "label": "La Garenne-Colombes",
@@ -901,6 +887,13 @@
   "lon": 1.98385,
   "min": 118,
   "minAt": "2026-10-28"
+ },
+ "les lilas||93": {
+  "dept": "93",
+  "km": 5.4,
+  "label": "Les Lilas",
+  "lat": 48.88054,
+  "lon": 2.42074
  },
  "les pavillons-sous-bois||93": {
   "dept": "93",
