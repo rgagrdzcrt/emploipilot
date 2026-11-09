@@ -127,13 +127,6 @@
   "min": 31,
   "minAt": "2026-10-13"
  },
- "bois-colombes|92270|92": {
-  "dept": "92",
-  "km": 15.9,
-  "label": "Bois-Colombes",
-  "lat": 48.91533,
-  "lon": 2.26884
- },
  "bois-colombes||92": {
   "dept": "92",
   "km": 15.9,
@@ -509,15 +502,6 @@
   "min": 38,
   "minAt": "2026-10-13"
  },
- "dugny||93": {
-  "dept": "93",
-  "km": 6.9,
-  "label": "Dugny",
-  "lat": 48.95015,
-  "lon": 2.42187,
-  "min": 74,
-  "minAt": "2026-10-13"
- },
  "ecouen||95": {
   "dept": "95",
   "km": 15.7,
@@ -611,15 +595,6 @@
   "lat": 48.75754,
   "lon": 2.32454,
   "min": 91,
-  "minAt": "2026-10-12"
- },
- "gagny||93": {
-  "dept": "93",
-  "km": 5.0,
-  "label": "Gagny",
-  "lat": 48.88191,
-  "lon": 2.54565,
-  "min": 43,
   "minAt": "2026-10-12"
  },
  "garges-lès-gonesse-est||95": {
@@ -865,13 +840,6 @@
   "min": 54,
   "minAt": "2026-10-14"
  },
- "le raincy||93": {
-  "dept": "93",
-  "km": 2.7,
-  "label": "Le Raincy",
-  "lat": 48.89595,
-  "lon": 2.51972
- },
  "le thillay|95500|95": {
   "dept": "95",
   "km": 11.1,
@@ -887,13 +855,6 @@
   "lon": 1.98385,
   "min": 118,
   "minAt": "2026-10-28"
- },
- "les lilas||93": {
-  "dept": "93",
-  "km": 5.4,
-  "label": "Les Lilas",
-  "lat": 48.88054,
-  "lon": 2.42074
  },
  "les pavillons-sous-bois||93": {
   "dept": "93",
@@ -1502,6 +1463,7 @@
   "min": 99,
   "minAt": "2026-10-28"
  },
+ "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
