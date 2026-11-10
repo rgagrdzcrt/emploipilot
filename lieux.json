@@ -110,6 +110,15 @@
   "min": 100,
   "minAt": "2026-10-28"
  },
+ "bessancourt||95": {
+  "dept": "95",
+  "km": 25.1,
+  "label": "Bessancourt",
+  "lat": 49.03776,
+  "lon": 2.20789,
+  "min": 89,
+  "minAt": "2026-11-10"
+ },
  "bezons||95": {
   "km": 19.9,
   "label": "Bezons",
@@ -135,13 +144,6 @@
   "lon": 2.44334,
   "min": 31,
   "minAt": "2026-10-13"
- },
- "bois-colombes|92270|92": {
-  "dept": "92",
-  "km": 15.9,
-  "label": "Bois-Colombes",
-  "lat": 48.91533,
-  "lon": 2.26884
  },
  "bois-colombes||92": {
   "dept": "92",
@@ -388,6 +390,15 @@
   "min": 67,
   "minAt": "2026-10-12"
  },
+ "clichy-sous-bois||93": {
+  "dept": "93",
+  "km": 4.0,
+  "label": "Clichy-sous-Bois",
+  "lat": 48.90645,
+  "lon": 2.53953,
+  "min": 42,
+  "minAt": "2026-11-10"
+ },
  "clichy||92": {
   "dept": "92",
   "km": 13.2,
@@ -499,6 +510,15 @@
   "min": 78,
   "minAt": "2026-10-12"
  },
+ "dammarie-les-lys||77": {
+  "dept": "77",
+  "km": 44.3,
+  "label": "Dammarie-les-Lys",
+  "lat": 48.51514,
+  "lon": 2.62042,
+  "min": 141,
+  "minAt": "2026-11-10"
+ },
  "dammartin-en-goële||77": {
   "dept": "77",
   "km": 22.5,
@@ -507,6 +527,15 @@
   "lon": 2.68373,
   "min": 98,
   "minAt": "2026-10-12"
+ },
+ "dampmart|77400|77": {
+  "dept": "77",
+  "km": 19.0,
+  "label": "Dampmart",
+  "lat": 48.88708,
+  "lon": 2.74339,
+  "min": 67,
+  "minAt": "2026-11-10"
  },
  "deuil-la-barre||95": {
   "dept": "95",
@@ -629,14 +658,12 @@
   "min": 91,
   "minAt": "2026-10-12"
  },
- "garges-lès-gonesse-est||95": {
-  "dept": "95",
-  "km": 9.6,
-  "label": "Garges-lès-Gonesse",
-  "lat": 48.96975,
-  "lon": 2.40086,
-  "min": 74,
-  "minAt": "2026-10-28"
+ "gagny||93": {
+  "dept": "93",
+  "km": 5.0,
+  "label": "Gagny",
+  "lat": 48.88191,
+  "lon": 2.54565
  },
  "gennevilliers||92": {
   "km": 14.3,
@@ -765,6 +792,13 @@
   "lon": 2.39911,
   "min": 54,
   "minAt": "2026-10-12"
+ },
+ "la défense||92": {
+  "dept": "92",
+  "km": 18.3,
+  "label": "Puteaux",
+  "lat": 48.88416,
+  "lon": 2.2372
  },
  "la garenne-colombes||92": {
   "km": 17.6,
@@ -913,6 +947,13 @@
   "lon": 2.54793,
   "min": 122,
   "minAt": "2026-10-15"
+ },
+ "limeil-brévannes||94": {
+  "dept": "94",
+  "km": 17.3,
+  "label": "Limeil-Brévannes",
+  "lat": 48.74791,
+  "lon": 2.49242
  },
  "livry-gargan||93": {
   "dept": "93",
@@ -1279,6 +1320,15 @@
   "lon": 2.38184,
   "min": 57,
   "minAt": "2026-10-12"
+ },
+ "paris 12e arrondissement|75012|75": {
+  "dept": "75",
+  "km": 9.3,
+  "label": "Paris 12e Arrondissement",
+  "lat": 48.83349,
+  "lon": 2.41541,
+  "min": 69,
+  "minAt": "2026-11-10"
  },
  "paris 13e arrondissement|75013|75": {
   "dept": "75",
@@ -1663,6 +1713,15 @@
   "lon": 2.67667,
   "min": 105,
   "minAt": "2026-11-04"
+ },
+ "saint-witz||95": {
+  "dept": "95",
+  "km": 21.3,
+  "label": "Saint-Witz",
+  "lat": 49.08985,
+  "lon": 2.55433,
+  "min": 100,
+  "minAt": "2026-11-10"
  },
  "sannois||95": {
   "dept": "95",
