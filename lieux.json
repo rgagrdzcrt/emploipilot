@@ -136,6 +136,13 @@
   "min": 31,
   "minAt": "2026-10-13"
  },
+ "bois-colombes|92270|92": {
+  "dept": "92",
+  "km": 15.9,
+  "label": "Bois-Colombes",
+  "lat": 48.91533,
+  "lon": 2.26884
+ },
  "bois-colombes||92": {
   "dept": "92",
   "km": 15.9,
@@ -222,6 +229,22 @@
   "lon": 2.33152,
   "min": 78,
   "minAt": "2026-10-15"
+ },
+ "canton de goussainville||95": {
+  "dept": "95",
+  "km": 13.9,
+  "label": "Goussainville",
+  "lat": 49.02773,
+  "lon": 2.46692
+ },
+ "cergy||95": {
+  "dept": "95",
+  "km": 35.6,
+  "label": "Cergy",
+  "lat": 49.04227,
+  "lon": 2.04555,
+  "min": 105,
+  "minAt": "2026-11-10"
  },
  "champigny-sur-marne||94": {
   "dept": "94",
@@ -606,13 +629,6 @@
   "min": 91,
   "minAt": "2026-10-12"
  },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
- },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -898,13 +914,6 @@
   "min": 122,
   "minAt": "2026-10-15"
  },
- "limeil-brévannes||94": {
-  "dept": "94",
-  "km": 17.3,
-  "label": "Limeil-Brévannes",
-  "lat": 48.74791,
-  "lon": 2.49242
- },
  "livry-gargan||93": {
   "dept": "93",
   "km": 3.9,
@@ -1062,7 +1071,9 @@
   "km": 23.5,
   "label": "Montigny-lès-Cormeilles",
   "lat": 48.99333,
-  "lon": 2.19375
+  "lon": 2.19375,
+  "min": 93,
+  "minAt": "2026-11-10"
  },
  "montmagny||IDF": {
   "dept": "95",
@@ -1679,6 +1690,15 @@
   "min": 81,
   "minAt": "2026-10-12"
  },
+ "savigny-le-temple||77": {
+  "dept": "77",
+  "km": 35.8,
+  "label": "Savigny-le-Temple",
+  "lat": 48.58773,
+  "lon": 2.57666,
+  "min": 117,
+  "minAt": "2026-11-10"
+ },
  "sceaux||92": {
   "dept": "92",
   "km": 19.7,
@@ -1731,6 +1751,15 @@
   "lon": 2.5284,
   "min": 77,
   "minAt": "2026-10-26"
+ },
+ "sucy-en-brie||94": {
+  "dept": "94",
+  "km": 15.1,
+  "label": "Sucy-en-Brie",
+  "lat": 48.77067,
+  "lon": 2.5284,
+  "min": 77,
+  "minAt": "2026-11-10"
  },
  "suresnes||92": {
   "km": 19.9,
