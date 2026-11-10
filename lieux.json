@@ -145,6 +145,13 @@
   "min": 31,
   "minAt": "2026-10-13"
  },
+ "bois-colombes|92270|92": {
+  "dept": "92",
+  "km": 15.9,
+  "label": "Bois-Colombes",
+  "lat": 48.91533,
+  "lon": 2.26884
+ },
  "bois-colombes||92": {
   "dept": "92",
   "km": 15.9,
@@ -476,15 +483,6 @@
   "min": 65,
   "minAt": "2026-10-13"
  },
- "courbevoie||92": {
-  "dept": "92",
-  "km": 16.7,
-  "label": "Courbevoie",
-  "lat": 48.89797,
-  "lon": 2.25706,
-  "min": 65,
-  "minAt": "2026-10-12"
- },
  "croissy-beaubourg||": {
   "dept": "77",
   "km": 15.3,
@@ -545,15 +543,6 @@
   "lon": 2.32848,
   "min": 72,
   "minAt": "2026-11-04"
- },
- "domont||95": {
-  "dept": "95",
-  "km": 18.0,
-  "label": "Domont",
-  "lat": 49.02871,
-  "lon": 2.32791,
-  "min": 83,
-  "minAt": "2026-10-30"
  },
  "drancy||93": {
   "km": 3.8,
@@ -664,6 +653,13 @@
   "label": "Gagny",
   "lat": 48.88191,
   "lon": 2.54565
+ },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829
  },
  "gennevilliers||92": {
   "km": 14.3,
@@ -1521,15 +1517,6 @@
   "lon": 2.2372,
   "min": 60,
   "minAt": "2026-10-12"
- },
- "quincy-sous-sénart||IDF": {
-  "dept": "91",
-  "km": 25.5,
-  "label": "Quincy-sous-Sénart",
-  "lat": 48.67642,
-  "lon": 2.53432,
-  "min": 99,
-  "minAt": "2026-10-28"
  },
  "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
