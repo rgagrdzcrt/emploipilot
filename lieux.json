@@ -145,13 +145,6 @@
   "min": 31,
   "minAt": "2026-10-13"
  },
- "bois-colombes|92270|92": {
-  "dept": "92",
-  "km": 15.9,
-  "label": "Bois-Colombes",
-  "lat": 48.91533,
-  "lon": 2.26884
- },
  "bois-colombes||92": {
   "dept": "92",
   "km": 15.9,
@@ -214,13 +207,6 @@
   "min": 118,
   "minAt": "2026-10-28"
  },
- "bry-sur-marne||94": {
-  "dept": "94",
-  "km": 7.7,
-  "label": "Bry-sur-Marne",
-  "lat": 48.83925,
-  "lon": 2.52319
- },
  "bussy-saint-georges||77": {
   "dept": "77",
   "km": 18.3,
@@ -245,6 +231,15 @@
   "label": "Goussainville",
   "lat": 49.02773,
   "lon": 2.46692
+ },
+ "canton de noisiel||": {
+  "dept": "77",
+  "km": 11.9,
+  "label": "Noisiel",
+  "lat": 48.84729,
+  "lon": 2.6234,
+  "min": 64,
+  "minAt": "2026-11-11"
  },
  "cergy||95": {
   "dept": "95",
@@ -654,13 +649,6 @@
   "lat": 48.88191,
   "lon": 2.54565
  },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
- },
  "gennevilliers||92": {
   "km": 14.3,
   "label": "Gennevilliers",
@@ -789,13 +777,6 @@
   "min": 54,
   "minAt": "2026-10-12"
  },
- "la défense||92": {
-  "dept": "92",
-  "km": 18.3,
-  "label": "Puteaux",
-  "lat": 48.88416,
-  "lon": 2.2372
- },
  "la garenne-colombes||92": {
   "km": 17.6,
   "label": "La Garenne-Colombes",
@@ -918,6 +899,13 @@
   "min": 118,
   "minAt": "2026-10-28"
  },
+ "les lilas||93": {
+  "dept": "93",
+  "km": 5.4,
+  "label": "Les Lilas",
+  "lat": 48.88054,
+  "lon": 2.42074
+ },
  "les pavillons-sous-bois||93": {
   "dept": "93",
   "km": 1.5,
@@ -974,7 +962,9 @@
   "km": 16.0,
   "label": "Louvres",
   "lat": 49.04735,
-  "lon": 2.50393
+  "lon": 2.50393,
+  "min": 83,
+  "minAt": "2026-11-11"
  },
  "magny-le-hongre|77700|77": {
   "dept": "77",
@@ -1451,6 +1441,15 @@
   "lon": 2.33088,
   "min": 62,
   "minAt": "2026-10-13"
+ },
+ "paris 7e arrondissement|75007|75": {
+  "dept": "75",
+  "km": 13.8,
+  "label": "Paris 7e Arrondissement",
+  "lat": 48.85395,
+  "lon": 2.31286,
+  "min": 60,
+  "minAt": "2026-11-11"
  },
  "paris 8e arrondissement|75008|75": {
   "dept": "75",
