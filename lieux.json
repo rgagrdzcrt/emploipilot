@@ -556,15 +556,6 @@
   "min": 88,
   "minAt": "2026-10-23"
  },
- "enghien-les-bains||95": {
-  "dept": "95",
-  "km": 15.1,
-  "label": "Enghien-les-Bains",
-  "lat": 48.97097,
-  "lon": 2.30536,
-  "min": 65,
-  "minAt": "2026-10-24"
- },
  "ermont||95": {
   "dept": "95",
   "km": 19.2,
@@ -648,6 +639,13 @@
   "label": "Gagny",
   "lat": 48.88191,
   "lon": 2.54565
+ },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829
  },
  "gennevilliers||92": {
   "km": 14.3,
@@ -1007,6 +1005,15 @@
   "lon": 1.87329,
   "min": 131,
   "minAt": "2026-10-15"
+ },
+ "mareuil-lès-meaux||77": {
+  "dept": "77",
+  "km": 28.1,
+  "label": "Mareuil-lès-Meaux",
+  "lat": 48.92726,
+  "lon": 2.86788,
+  "min": 108,
+  "minAt": "2026-11-11"
  },
  "marly-la-ville||95": {
   "km": 19.7,
