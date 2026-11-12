@@ -2086,9 +2086,22 @@ def alert_visible(offer):
     return not (isinstance(minutes, (int, float)) and minutes > ALERT_MAX_TRAJET)
 
 
+def alert_enabled():
+    """Alerte des nouvelles offres en pause si "alerteNouvellesOffres": {"enabled": false}
+    dans sources.json. Les alertes de réponses d'entreprise (mail.py) ne changent pas."""
+    try:
+        config = json.loads(CONFIG.read_text(encoding="utf-8")) if CONFIG.exists() else {}
+    except (json.JSONDecodeError, OSError):
+        config = {}
+    return (config.get("alerteNouvellesOffres") or {}).get("enabled", True)
+
+
 def save_pending_alert(new_items):
     """Prépare l'alerte des meilleures nouvelles offres ; elle est envoyée par
     `python collect.py --alerte` une fois le site mis à jour."""
+    if not alert_enabled():
+        ALERT_FILE.unlink(missing_ok=True)
+        return
     new_items = [o for o in new_items if alert_visible(o)]
     if not new_items:
         ALERT_FILE.unlink(missing_ok=True)
@@ -2106,6 +2119,10 @@ def save_pending_alert(new_items):
 def send_alert():
     """Notification ntfy (appli gratuite) : sujet lu dans le secret NTFY_TOPIC.
     Une alerte qui échoue ne fait jamais échouer la collecte."""
+    if not alert_enabled():
+        ALERT_FILE.unlink(missing_ok=True)
+        print("Alerte des nouvelles offres en pause (sources.json).")
+        return
     topic = os.environ.get("NTFY_TOPIC", "").strip()
     if not topic or not ALERT_FILE.exists():
         print("Alerte : rien à envoyer." if topic else "Alerte ignorée : secret NTFY_TOPIC absent.")

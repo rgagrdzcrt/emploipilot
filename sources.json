@@ -758,5 +758,8 @@
     "enabled": true,
     "boards": []
   },
-  "joobleMaxPages": 2
+  "joobleMaxPages": 2,
+  "alerteNouvellesOffres": {
+    "enabled": false
+  }
 }
