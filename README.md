@@ -6,6 +6,8 @@ Site statique hébergé sur GitHub Pages, avec collecte planifiée toutes les 6 
 
 **Profil de Zia en pause** (`disabled: true` dans `profiles.js`) : le site reste sur le profil de Ryan, sans bascule ; ses données sont conservées. Repasser `disabled` à `false` le réactive.
 
+**Alerte des nouvelles offres en pause** (`"alerteNouvellesOffres": {"enabled": false}` dans `sources.json`) : la collecte continue et le site reste à jour, mais aucune notification ntfy n'est envoyée pour les nouvelles offres. Les alertes de réponses d'entreprise (tri Gmail) ne changent pas. Repasser `enabled` à `true` la réactive.
+
 Toucher le logo bascule entre deux profils, définis dans `profiles.js`. Le logo indique le profil actif : **RGRD** pour Ryan, **ZCRT** pour Zia.
 
 | | Ryan | Zia |
