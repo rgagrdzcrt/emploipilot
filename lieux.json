@@ -1,13 +1,4 @@
 {
- "ablon-sur-seine||94": {
-  "dept": "94",
-  "km": 20.4,
-  "label": "Ablon-sur-Seine",
-  "lat": 48.7247,
-  "lon": 2.42285,
-  "min": 91,
-  "minAt": "2026-10-13"
- },
  "alfortville||94": {
   "dept": "94",
   "km": 12.7,
@@ -15,7 +6,7 @@
   "lat": 48.79718,
   "lon": 2.42152,
   "min": 70,
-  "minAt": "2026-10-13"
+  "minAt": "2026-11-13"
  },
  "andilly||95": {
   "dept": "95",
@@ -99,7 +90,7 @@
   "lat": 48.8676,
   "lon": 2.42502,
   "min": 48,
-  "minAt": "2026-10-12"
+  "minAt": "2026-11-13"
  },
  "beauchamp||95": {
   "dept": "95",
@@ -458,7 +449,7 @@
   "lat": 48.89797,
   "lon": 2.25706,
   "min": 65,
-  "minAt": "2026-10-13"
+  "minAt": "2026-11-13"
  },
  "croissy-beaubourg||": {
   "dept": "77",
@@ -512,22 +503,13 @@
   "min": 67,
   "minAt": "2026-11-10"
  },
- "deuil-la-barre||95": {
-  "dept": "95",
-  "km": 13.6,
-  "label": "Deuil-la-Barre",
-  "lat": 48.97008,
-  "lon": 2.32848,
-  "min": 72,
-  "minAt": "2026-11-04"
- },
  "drancy||93": {
   "km": 3.8,
   "label": "Drancy",
   "lat": 48.92416,
   "lon": 2.4442,
-  "min": 38,
-  "minAt": "2026-10-13"
+  "min": 36,
+  "minAt": "2026-11-13"
  },
  "ecouen||95": {
   "dept": "95",
@@ -569,8 +551,8 @@
   "label": "Ferrières-en-Brie",
   "lat": 48.82469,
   "lon": 2.70772,
-  "min": 89,
-  "minAt": "2026-10-12"
+  "min": 90,
+  "minAt": "2026-11-13"
  },
  "fontenay-sous-bois||94": {
   "km": 6.0,
@@ -621,13 +603,6 @@
   "label": "Gagny",
   "lat": 48.88191,
   "lon": 2.54565
- },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
  },
  "gennevilliers||92": {
   "km": 14.3,
@@ -755,13 +730,20 @@
   "min": 56,
   "minAt": "2026-11-12"
  },
+ "la défense||92": {
+  "dept": "92",
+  "km": 18.3,
+  "label": "Puteaux",
+  "lat": 48.88416,
+  "lon": 2.2372
+ },
  "la garenne-colombes||92": {
   "km": 17.6,
   "label": "La Garenne-Colombes",
   "lat": 48.90716,
   "lon": 2.24441,
-  "min": 65,
-  "minAt": "2026-10-13"
+  "min": 64,
+  "minAt": "2026-11-13"
  },
  "la plaine saint-denis||93": {},
  "la queue-en-brie||94": {
@@ -876,6 +858,13 @@
   "lon": 1.98385,
   "min": 118,
   "minAt": "2026-10-28"
+ },
+ "les lilas||93": {
+  "dept": "93",
+  "km": 5.4,
+  "label": "Les Lilas",
+  "lat": 48.88054,
+  "lon": 2.42074
  },
  "les pavillons-sous-bois||93": {
   "dept": "93",
@@ -1031,8 +1020,8 @@
   "label": "Mitry-Mory",
   "lat": 48.96321,
   "lon": 2.6044,
-  "min": 70,
-  "minAt": "2026-10-13"
+  "min": 68,
+  "minAt": "2026-11-13"
  },
  "moisselles|95570|95": {
   "km": 19.1,
@@ -1253,7 +1242,7 @@
   "lat": 48.76728,
   "lon": 2.67328,
   "min": 76,
-  "minAt": "2026-10-13"
+  "minAt": "2026-11-13"
  },
  "pantin||93": {
   "dept": "93",
@@ -1262,7 +1251,7 @@
   "lat": 48.90027,
   "lon": 2.40946,
   "min": 43,
-  "minAt": "2026-10-13"
+  "minAt": "2026-11-13"
  },
  "paris 11e arrondissement|75011|75": {
   "dept": "75",
@@ -1558,7 +1547,7 @@
   "lat": 48.85059,
   "lon": 2.21125,
   "min": 76,
-  "minAt": "2026-10-13"
+  "minAt": "2026-11-13"
  },
  "saint-denis-sud||93": {},
  "saint-denis||93": {
@@ -1689,8 +1678,8 @@
   "label": "Santeny",
   "lat": 48.72565,
   "lon": 2.57267,
-  "min": 117,
-  "minAt": "2026-10-13"
+  "min": 115,
+  "minAt": "2026-11-13"
  },
  "sarcelles||95": {
   "dept": "95",
@@ -1725,7 +1714,16 @@
   "lat": 48.84696,
   "lon": 2.78475,
   "min": 84,
-  "minAt": "2026-10-13"
+  "minAt": "2026-11-13"
+ },
+ "servon||77": {
+  "dept": "77",
+  "km": 22.6,
+  "label": "Servon",
+  "lat": 48.71355,
+  "lon": 2.59294,
+  "min": 122,
+  "minAt": "2026-11-13"
  },
  "sevran||93": {
   "dept": "93",
@@ -1943,8 +1941,8 @@
   "label": "Villeneuve-le-Roi",
   "lat": 48.7348,
   "lon": 2.42011,
-  "min": 95,
-  "minAt": "2026-10-13"
+  "min": 87,
+  "minAt": "2026-11-13"
  },
  "villeneuve-saint-georges||94": {
   "km": 18.5,
@@ -1994,7 +1992,7 @@
   "lat": 48.84728,
   "lon": 2.43778,
   "min": 49,
-  "minAt": "2026-10-13"
+  "minAt": "2026-11-13"
  },
  "vitry-sur-seine||94": {
   "dept": "94",
