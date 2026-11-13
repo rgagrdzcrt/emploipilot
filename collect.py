@@ -142,6 +142,7 @@ def stock_off_topic(title):
 # Métiers de l'informatique dont le titre contient « stockage », « stock » ou « serveur ».
 NOT_TARGET_RE = re.compile(
     r"\bcloud\b|\bsre\b|devops|backup|sauvegarde|data ?cent(?:er|re)|stockage de donn[eé]es|\bstorage\b"
+    r"|rayonnement|combustibles?"  # études nucléaires (« combustibles au stockage »)
     r"|serveurs?\s+(?:informatique|linux|windows|web|d['’]applications?)|administrat\w+\s+(?:syst|r[eé]seau|serveur)"
     r"|(?:technicien|ing[eé]nieur)\w*\s+(?:syst|r[eé]seau|serveur|informatique)",
     re.I,
