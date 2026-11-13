@@ -23,13 +23,21 @@ const ZCRT_PROFILES = {
     id: 'ryan',
     name: 'Ryan',
     brand: 'RGRD',               // logo affiché sur ce profil
-    cv: { stock: 'CV_Ryan_Gazard_stock.pdf', rayon: 'CV_Ryan_Gazard_rayon.pdf', vente: 'CV_Ryan_Gazard_vente.pdf' },
+    cv: { stock: 'CV_Ryan_Gazard_stock.pdf' },
     ns: '',                      // clés historiques, sans suffixe
     syncFile: 'zcrt-suivi.json', // lu aussi par mail.py (tri Gmail)
-    cats: ['stock', 'rayon', 'vente'],
+    // Profil recentré sur la logistique (13/11/2026) : rayon et vente ne sont plus collectés
+    // ("categories" dans sources.json) ni affichés.
+    cats: ['stock'],
+    // Les suivis rayon / vente posés avant cette date sont supprimés, sur chaque appareil et dans
+    // le gist (pilot.js, isPurged). Une candidature hors logistique faite ensuite reste suivie.
+    purgeOtherCatsBefore: Date.UTC(2026, 10, 14),
+    keywords: 'Stockiste, gestionnaire de stock, chargé de stock, coordinateur stock, approvisionneur\n'
+      + 'Magasinier, réceptionnaire, agent logistique, préparateur de commandes, agent d’entrepôt\n'
+      + 'Coordinateur logistique, responsable logistique, chef d’équipe logistique',
     mails: true,
     feminine: false,
-    // Adéquation offre / CV (pilot.js, cvFit) : d'après cv/cv_stock.html, cv_rayon.html, cv_vente.html.
+    // Adéquation offre / CV (pilot.js, cvFit) : d'après cv/cv_stock.html.
     fit: {
       languages: ['anglais', 'espagnol'],
       degree: 3,          // Bachelor (bac + 3)
@@ -39,32 +47,16 @@ const ZCRT_PROFILES = {
       cats: {
         stock: {
           years: 4,
-          titles: ['magasinier', 'gestionnaire de stock', 'gestionnaire des stocks', 'stockiste', 'preparateur de commandes',
-            'agent logistique', 'agent de logistique', 'coordinateur logistique', 'responsable logistique', 'receptionnaire',
-            'approvisionneur', 'logisticien', 'employe logistique', 'assistant logistique', 'agent d entrepot',
-            'agent entrepot', 'manutentionnaire', 'operateur logistique', 'agent de quai'],
+          titles: ['magasinier', 'gestionnaire de stock', 'gestionnaire des stocks', 'stockiste', 'charge de stock',
+            'charge des stocks', 'coordinateur stock', 'coordinateur de stock', 'agent de stock', 'responsable de stock',
+            'responsable des stocks', 'preparateur de commandes', 'agent logistique', 'agent de logistique',
+            'coordinateur logistique', 'responsable logistique', 'chef d equipe logistique', 'technicien logistique',
+            'receptionnaire', 'approvisionneur', 'logisticien', 'employe logistique', 'assistant logistique',
+            'agent d entrepot', 'agent entrepot', 'responsable d entrepot', 'operateur logistique', 'agent de quai'],
           skills: ['reception', 'controle', 'inventaire', 'gestion des stocks', 'stock', 'preparation', 'expedition', 'commande',
             'fournisseur', 'approvisionnement', 'wms', 'gold', 'excel', 'reserve', 'encadrement', 'hygiene', 'securite',
             'logistique', 'reassort', 'ecart', 'livraison', 'quai', 'emballage', 'colis'],
           brands: ['darty'],
-        },
-        rayon: {
-          years: 3,
-          titles: ['employe libre service', 'employe de rayon', 'employe commercial', 'mise en rayon', 'chef de rayon',
-            'referent rayon', 'rayonniste', 'rayoniste', 'employe polyvalent', 'reassortisseur', 'employe de magasin'],
-          skills: ['mise en rayon', 'reassort', 'rotation', 'fraicheur', 'fruits et legumes', 'epicerie', 'stock', 'commande',
-            'reception', 'plv', 'etiquetage', 'accueil', 'conseil', 'hygiene', 'frais', 'casse', 'facing', 'balisage',
-            'merchandising', 'grande distribution', 'supermarche', 'hypermarche'],
-          brands: ['monoprix', 'leclerc'],
-        },
-        vente: {
-          years: 3,
-          titles: ['conseiller de vente', 'conseillere de vente', 'vendeur', 'vendeuse', 'conseiller client', 'sales advisor',
-            'sales associate', 'conseiller commercial', 'conseiller vendeur'],
-          skills: ['accueil', 'conseil', 'besoin', 'vente additionnelle', 'service', 'objectif', 'merchandising', 'encaissement',
-            'caisse', 'reassort', 'multimedia', 'telephonie', 'informatique', 'electromenager', 'mode', 'pret a porter',
-            'cabine', 'clientele internationale', 'fidelisation', 'vitrine', 'collection'],
-          brands: ['darty', 'cos'],
         },
       },
     },

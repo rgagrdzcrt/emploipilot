@@ -14,6 +14,22 @@
 // Métiers du profil actif (profiles.js).
 const CATS = ACTIVE_PROFILE.cats;
 const CAT_LABELS = Object.fromEntries(CATS.map(c => [c, CAT_INFO[c].label]));
+
+/* Profil recentré sur certains métiers (purgeOtherCatsBefore, profiles.js) : les offres et les
+ * suivis des autres métiers posés avant cette date sont supprimés. La règle s'applique à chaque
+ * chargement, à l'import d'une sauvegarde et à la synchro : ni un autre appareil ni le gist ne
+ * les ramènent. Une candidature hors de ces métiers faite après cette date reste suivie. */
+const PURGE_BEFORE = ACTIVE_PROFILE.purgeOtherCatsBefore || 0;
+function isPurged(o) {
+  return !!PURGE_BEFORE && (o.trackedAt || 0) < PURGE_BEFORE && !CATS.includes(categoryOf(o));
+}
+function purgeOffers() {
+  if (!PURGE_BEFORE) return;
+  const kept = offers.filter(o => !isPurged(o));
+  if (kept.length === offers.length) return;
+  offers = kept;
+  storeOffers();
+}
 const RELANCE_DAYS = 7;
 
 const RYAN_TEMPLATES = {
@@ -514,7 +530,7 @@ function afterRemoteLoad() {
 
 /** Métier de l'offre ; dans une file ou un tri, menu pour ne parcourir qu'un métier. */
 function pilotCatPill(cat) {
-  if (pilot.single) return `<span class="pill">${esc(CAT_LABELS[cat])}</span>`;
+  if (pilot.single || CATS.length < 2) return `<span class="pill">${esc(CAT_LABELS[cat])}</span>`;
   const current = pilot.cat || 'all';
   const options = [['all', 'Tous les métiers'], ...CATS.map(c => [c, CAT_LABELS[c]])]
     .map(([v, label]) => `<option value="${v}"${v === current ? ' selected' : ''}>${esc(label)}</option>`).join('');
@@ -1008,12 +1024,12 @@ function syncState() {
   const entries = {};
   // Entrées connues ailleurs mais pas encore chargées ici : on les garde.
   Object.values(cache.entries || {}).forEach(e => {
-    if (local.has(e.id)) return;
+    if (local.has(e.id) || isPurged(e)) return;
     if (e.status === 'Ignorée' && now - (e.trackedAt || 0) > IGNORED_KEEP_DAYS * 864e5) return;
     entries[e.id] = e;
   });
   offers.forEach(o => {
-    if (o.demo) return;
+    if (o.demo || isPurged(o)) return;
     const manual = !o.source;
     if (!manual && !o.trackedAt) return;
     if (o.status === 'Ignorée' && !manual) {
@@ -1041,6 +1057,7 @@ function applySync(state) {
   let changed = false;
   const byId = new Map(offers.map(o => [o.id, o]));
   Object.values(state.entries).forEach(e => {
+    if (isPurged(e)) return;
     const o = byId.get(e.id);
     if (o) {
       if ((e.trackedAt || 0) <= (o.trackedAt || 0)) return;
@@ -1237,6 +1254,15 @@ function pilotInit() {
     profile.gazardMigrated = true;
     profile.updatedAt = Date.now();
     store(PROFILE, JSON.stringify(profile));
+  }
+
+  // Profil recentré sur la logistique : le mémo de mots-clés d'origine (stock, rayon, vente),
+  // s'il n'a pas été modifié, laisse place à celui du profil.
+  if (ACTIVE_PROFILE.keywords && /^gestionnaire de stock, stockiste[\s\S]*conseiller de vente Paris$/.test(profile.keywords || '')) {
+    profile.keywords = ACTIVE_PROFILE.keywords;
+    profile.updatedAt = Date.now();
+    store(PROFILE, JSON.stringify(profile));
+    document.getElementById('keywords').value = profile.keywords;
   }
 
   // Nouveau type « direction » : masqué aussi si les types ont déjà été enregistrés.

@@ -210,7 +210,7 @@ function uiRenderQueue() {
   const bar = document.getElementById('queueFilters');
   if (bar) {
     const current = queueCat();
-    bar.hidden = !all.length;
+    bar.hidden = !all.length || CATS.length < 2;
     bar.innerHTML = `<button class="seg${current === 'all' ? ' active' : ''}" data-queue-cat="all">Tous <b>${all.length}</b></button>`
       + CATS.map(c => `<button class="seg${current === c ? ' active' : ''}" data-queue-cat="${c}">${ic(CAT_INFO[c].icon)}${uiEsc(CAT_INFO[c].label)} <b>${all.filter(o => categoryOf(o) === c).length}</b></button>`).join('');
   }

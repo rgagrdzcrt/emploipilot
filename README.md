@@ -12,11 +12,11 @@ Toucher le logo bascule entre deux profils, définis dans `profiles.js`. Le logo
 
 | | Ryan | Zia |
 |---|---|---|
-| Métiers | Stock & logistique, Grande distribution, Vente | Grande distribution, Vente, Restauration & café (service en salle, barista) |
+| Métiers | Stock & logistique uniquement (hors manutentionnaire) | Grande distribution, Vente, Restauration & café (service en salle, barista) |
 | Lettres | Modèles par métier (`pilot.js`) | Modèles par métier (`profiles.js`) |
 | Tri Gmail, onglet Mails | Oui | Non |
 
-Chaque profil garde ses propres données sur l'appareil (offres suivies, critères, modèles, « Mes infos ») et se synchronise dans son propre fichier de gist (`zcrt-suivi.json` / `zcrt-suivi-zia.json`), même avec un seul compte GitHub. La collecte est commune : chaque profil n'affiche que ses métiers. Les coordonnées et les CV ne sont pas dans le dépôt (public) : chacun les renseigne dans « Mes infos » et « CV à joindre ».
+Chaque profil garde ses propres données sur l'appareil (offres suivies, critères, modèles, « Mes infos ») et se synchronise dans son propre fichier de gist (`zcrt-suivi.json` / `zcrt-suivi-zia.json`), même avec un seul compte GitHub. La collecte est commune : chaque profil n'affiche que ses métiers. Les métiers réellement collectés sont listés dans `"categories"` de `sources.json` (aujourd'hui `["stock"]`, le profil de Zia étant en pause) : les offres des autres métiers sont écartées et retirées d'`offres.json` à la collecte suivante. Pour réactiver Zia : remettre ses métiers dans `"categories"` et repasser ses requêtes à `"enabled": true`. Les coordonnées et les CV ne sont pas dans le dépôt (public) : chacun les renseigne dans « Mes infos » et « CV à joindre ».
 
 ## Fichiers principaux
 

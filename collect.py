@@ -52,7 +52,7 @@ CDD_RE = re.compile(r"\b(CDD|contrat [àa] dur[eé]e d[eé]termin[eé]e)\b", re.
 CATEGORY_RE = {
     "stock": re.compile(
         r"stock|logisti|magasinier|pr[eé]parat(?:eur|rice|ion) de commandes|approvision|cariste"
-        r"|r[eé]ceptionnaire|entrep[oô]t|manutention|agent de quai",
+        r"|r[eé]ceptionnaire|entrep[oô]t|agent de quai",
         re.I,
     ),
     "rayon": re.compile(
@@ -81,9 +81,67 @@ CATEGORY_RE = {
     ),
 }
 CATEGORIES = set(CATEGORY_RE)
+
+
+def _target_categories():
+    """Métiers réellement collectés : "categories" dans sources.json (tous si absent).
+    Une offre d'un autre métier est écartée, puis retirée d'offres.json à la collecte suivante."""
+    try:
+        wanted = json.loads(CONFIG.read_text(encoding="utf-8")).get("categories") or []
+    except (OSError, ValueError, AttributeError):
+        wanted = []
+    return {c for c in wanted if c in CATEGORY_RE} or set(CATEGORY_RE)
+
+
+TARGET_CATEGORIES = _target_categories()
+
+# --- Précision de la catégorie « stock » : seulement les vrais postes de logistique ---
+# Métier logistique nommé dans le titre : il l'emporte sur les exclusions ci-dessous.
+STOCK_JOB_RE = re.compile(
+    r"stock|magasinier|pr[eé]parat(?:eur|rice|ion) de commandes|approvision|cariste"
+    r"|r[eé]ceptionnaire|agent de quai|logisticien",
+    re.I,
+)
+STOCK_GENERIC_RE = re.compile(r"logisti|entrep[oô]t", re.I)
+MANUTENTION_RE = re.compile(r"manutention", re.I)
+# Réceptionnaire de garage (conseiller après-vente) : pas de la réception de marchandises.
+GARAGE_RE = re.compile(
+    r"r[eé]ceptionnaire.{0,40}(?:\bauto(?:mobile)?\b|atelier|\bmoto|carrosserie|apr[eè]s.?vente"
+    r"|\bsav\b|\bvag\b|v[eé]hicule|m[eé]cani)",
+    re.I,
+)
+# Autres métiers où « logistique » n'est qu'un à-côté du poste.
+STOCK_SIDE_RE = re.compile(
+    r"maintenance|sonorisation|services? g[eé]n[eé]raux|b[aâ]timent|r[eé]gie|[eé]v[eé]nementiel"
+    r"|administrati|commercial|boulanger",
+    re.I,
+)
+
+
+def stock_off_topic(title):
+    """Titre attrapé par un mot de la logistique sans être un poste de logistique.
+
+    - « Réceptionnaire automobile », « Réceptionnaire atelier » : garage.
+    - « Manutentionnaire », « Manutentionnaire logistique », « Agent de manutention en
+      entrepôt » : écartés. « Magasinier manutentionnaire », « Agent logistique /
+      manutentionnaire » restent (un autre métier est nommé, ou vient en tête).
+    - « Agent de maintenance / logistique », « Assistant administratif et logistique »… :
+      la logistique n'y est qu'une tâche annexe.
+    """
+    if GARAGE_RE.search(title) and not re.search(r"magasinier|stock", title, re.I):
+        return True
+    if STOCK_JOB_RE.search(title):
+        return False
+    manutention = MANUTENTION_RE.search(title)
+    generic = STOCK_GENERIC_RE.search(title)
+    if manutention and (generic is None or manutention.start() < generic.start()):
+        return True
+    return bool(STOCK_SIDE_RE.search(title))
+
+
 # Métiers de l'informatique dont le titre contient « stockage », « stock » ou « serveur ».
 NOT_TARGET_RE = re.compile(
-    r"\bcloud\b|\bsre\b|devops|backup|sauvegarde|data ?cent(?:er|re)|stockage de donn[eé]es"
+    r"\bcloud\b|\bsre\b|devops|backup|sauvegarde|data ?cent(?:er|re)|stockage de donn[eé]es|\bstorage\b"
     r"|serveurs?\s+(?:informatique|linux|windows|web|d['’]applications?)|administrat\w+\s+(?:syst|r[eé]seau|serveur)"
     r"|(?:technicien|ing[eé]nieur)\w*\s+(?:syst|r[eé]seau|serveur|informatique)",
     re.I,
@@ -392,13 +450,16 @@ def classify_category(title):
     """Catégorie déduite du seul titre : les descriptions citent trop souvent
     « vente » ou « stock » pour des métiers sans rapport (cuisinier, data analyst…).
     La catégorie de la requête n'est donc qu'indicative : sans mot-clé métier
-    dans le titre, l'offre est écartée."""
+    dans le titre, l'offre est écartée. Elle l'est aussi si son métier ne fait pas
+    partie des métiers collectés (TARGET_CATEGORIES)."""
     title = title or ""
     if NOT_TARGET_RE.search(title):
         return None
     for name, pattern in CATEGORY_RE.items():  # stock, puis rayon, puis vente
         if pattern.search(title):
-            return name
+            if name == "stock" and stock_off_topic(title):
+                continue
+            return name if name in TARGET_CATEGORIES else None
     return None
 
 
@@ -935,7 +996,7 @@ def fetch_joblet(cfg):
         if not query.get("enabled", True) or not query.get("keywords"):
             continue
         category = query.get("category")
-        if category not in CATEGORIES:
+        if category not in TARGET_CATEGORIES:
             continue
         arguments = {
             "query": str(query["keywords"]),
@@ -1009,7 +1070,7 @@ def fetch_workopia(cfg):
         if not query.get("enabled", True) or not query.get("keywords"):
             continue
         category = query.get("category")
-        if category not in CATEGORIES:
+        if category not in TARGET_CATEGORIES:
             continue
         arguments = {
             "action": "search",
@@ -2070,7 +2131,7 @@ ALERT_MAX_TRAJET = 60
 ALERT_ZONES_TOUJOURS = {"75", "93"}
 
 
-ALERT_CATEGORIES = {"stock", "rayon", "vente"}  # l'alerte ntfy est celle du profil de Ryan
+ALERT_CATEGORIES = {"stock"}  # l'alerte ntfy est celle du profil de Ryan : logistique seule
 
 
 def alert_visible(offer):
