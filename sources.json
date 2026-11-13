@@ -803,7 +803,7 @@
         "location": "Paris"
       }
     ],
-    "maxDaysOld": 15
+    "maxDaysOld": 5
   },
   "joblet": {
     "enabled": true,
