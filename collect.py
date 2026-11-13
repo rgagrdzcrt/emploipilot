@@ -310,6 +310,27 @@ def strip_html(value):
     return re.sub(r"\s+", " ", html.unescape(value)).strip()
 
 
+NOTES_MAX = 3000
+
+
+def rich_text(value):
+    """Texte sans balises qui garde les paragraphes et les listes de l'annonce
+    (le site s'en sert pour présenter la description dans la fenêtre de tri)."""
+    value = re.sub(r"(?is)<(script|style).*?>.*?</\1>", " ", value or "")
+    value = re.sub(r"(?i)<li[^>]*>", "\n• ", value)
+    value = re.sub(r"(?i)<br\s*/?>|</?(?:p|div|ul|ol|h[1-6]|tr)[^>]*>|</li>", "\n", value)
+    value = re.sub(r"(?s)<[^>]+>", " ", value)
+    lines = (re.sub(r"\s+", " ", line).strip() for line in html.unescape(value).splitlines())
+    return "\n".join(line for line in lines if line and line != "•")
+
+
+def cut_text(value, limit=NOTES_MAX):
+    """Coupe sur un mot entier et signale la coupure."""
+    if len(value) <= limit:
+        return value
+    return value[:limit].rsplit(" ", 1)[0].rstrip(" ,;:•\n") + "…"
+
+
 def norm_text(value):
     value = unicodedata.normalize("NFD", (value or "").lower())
     value = "".join(c for c in value if not unicodedata.combining(c))
@@ -505,7 +526,7 @@ def make_offer(title, company, location, text, url, date, source, category=None)
         "category": category,
         "date": parsed_date.isoformat() if parsed_date else "",
         "url": url,
-        "notes": body_text[:1200]
+        "notes": cut_text(rich_text(text))
         or "Ouvre l’annonce pour vérifier les détails.",
         "status": "À examiner",
         "source": source,
@@ -1303,7 +1324,7 @@ def fetch_lever(cfg):
                 locations = [locations]
             location = categories.get("location") or ", ".join(locations)
             url = (job.get("hostedUrl") or job.get("applyUrl") or "").strip()
-            description = job.get("descriptionPlain") or strip_html(job.get("description") or "")
+            description = job.get("descriptionPlain") or job.get("description") or ""
             offer = make_offer(
                 title=job.get("text") or "",
                 company=name,
@@ -1381,10 +1402,10 @@ def fetch_smartrecruiters(cfg):
             except Exception:
                 continue
             sections = ((detail.get("jobAd") or {}).get("sections") or {})
-            description = " ".join(
-                section.get("text", "")
+            description = "\n".join(
+                f"<p>{section.get('title') or ''}</p>{section.get('text') or ''}"
                 for section in sections.values()
-                if isinstance(section, dict)
+                if isinstance(section, dict) and section.get("text")
             )
             location_data = detail.get("location") or posting.get("location") or {}
             location = ", ".join(
@@ -1448,7 +1469,7 @@ def fetch_ashby(cfg):
                 for key in ("addressLocality", "addressRegion", "addressCountry")
                 if address.get(key)
             )
-            description = job.get("descriptionPlain") or strip_html(job.get("descriptionHtml") or "")
+            description = job.get("descriptionPlain") or job.get("descriptionHtml") or ""
             url = (job.get("jobUrl") or job.get("applyUrl") or "").strip()
             offer = make_offer(
                 title=job.get("title") or "",
@@ -1641,7 +1662,9 @@ def merge_into(match, item):
     for field in ("dept", "category"):
         if item.get(field) and not match.get(field):
             match[field] = item[field]
-    if item.get("notes") and not match.get("notesEdited"):
+    # Une source qui n'envoie qu'un extrait ne remplace pas une description plus complète.
+    if (item.get("notes") and not match.get("notesEdited")
+            and len(item["notes"]) >= 0.8 * len(match.get("notes") or "")):
         match["notes"] = item["notes"]
     # Le suivi utilisateur d'un doublon n'est jamais perdu.
     if is_tracked(item) and not is_tracked(match):

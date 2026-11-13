@@ -588,6 +588,112 @@ function metaLine(o) {
   return `<span class="m-company">${esc(o.company)}</span><span>${ic('pin')}${esc(o.location || 'Lieu non précisé')}${d && d !== 'IDF' ? ' (' + esc(d) + ')' : ''}</span>${uiContract(o.contract)}${travelLabel(o) ? `<span class="travel">${ic('route')}${esc(uiTravel(o))}</span>` : ''}<span>${ic('clock')}${esc(when)}</span>${why ? `<span class="hidden-why">${ic('eyeoff')}Masquée : ${esc(why)}</span>` : ''}`;
 }
 
+/* ---------- Fenêtre de tri : fiche de l'offre et description mise en forme ---------- */
+
+// Lignes ajoutées par la collecte à la fin de la description (« Type indiqué : … | Salaire indiqué : … »).
+const NOTE_EXTRA_RE = /^(Type indiqué|Contrat indiqué|Temps indiqué|Salaire indiqué|Salaire affiché par l’annonce) : (.+)$/;
+const NOTE_HEAD_RE = /(^|\s)((?:Description|Descriptif) (?:de l['’]entreprise|du poste|de l['’]offre)|(?:Le |Votre )?[Pp]rofil recherché|Votre profil|Vos missions|Missions principales|Les missions du poste|Informations complémentaires|Qui sommes-nous|[ÀA] propos de nous|Pourquoi nous rejoindre|Qualifications|Avantages|Rémunération)(?: ?[?:])*(?=\s+[A-ZÀÉÈ0-9•-]|\s*$)/g;
+const NOTE_NUM = '(?:\\d{1,3}(?:[\\s.]\\d{3})+(?:,\\d{1,2})?|\\d+(?:[.,]\\d{1,2})?)';
+const NOTE_PAY = NOTE_NUM + '(?:\\s?(?:-|–|à)\\s?' + NOTE_NUM + ')?\\s?k?(?:€|euros?\\b)(?:\\s*(?:bruts?|nets?)\\b)?(?:\\s*(?:\\/|par)\\s*(?:heure|h\\b|mois|an\\b|année|jour))?';
+const NOTE_PAY_RE = new RegExp(NOTE_PAY, 'i');
+const NOTE_MARK_RE = new RegExp('(' + NOTE_PAY
+  + '|caces(?:\\s*(?:n°\\s*)?\\d(?:\\s*(?:,|\\/|-|et)\\s*\\d)*)?|permis\\s+b\\b|d[ée]butant\\S*\\s+accept\\S+'
+  + '|\\d{1,2}\\s*(?:à\\s*\\d{1,2}\\s*)?ans?\\s+(?:minimum\\s+)?d[\'’ ]\\s?exp[ée]rience|temps\\s+(?:plein|partiel|complet)'
+  + '|\\d{2}\\s?h(?:eures)?(?:\\s?\\/\\s?|\\s+par\\s+)semaine|(?:de|en)\\s+nuit\\b|week-?ends?|[23]\\s?[x×*]\\s?8)', 'gi');
+
+/** Sépare le texte de l'annonce des précisions ajoutées par la collecte. */
+function triageNotes(o) {
+  const extras = {}, lines = [];
+  String(o.notes || '').split('\n').forEach(line => {
+    const parts = line.split(' | ');
+    if (parts.every(p => NOTE_EXTRA_RE.test(p))) parts.forEach(p => { const m = p.match(NOTE_EXTRA_RE); extras[m[1]] = m[2]; });
+    else lines.push(line);
+  });
+  const text = lines.join('\n').trim();
+  return { text: /^Ouvre l(?:’annonce|e lien)/.test(text) ? '' : text, extras };
+}
+
+/** Points clés repérés dans l'annonce : ce qui fait dire oui ou non en quelques secondes. */
+function triageFacts(o, text, extras) {
+  const body = (o.title || '') + ' ' + text, low = body.toLowerCase();
+  const cv = ACTIVE_PROFILE.fit || {}, facts = [];
+  const add = (label, value, warn) => { if (value) facts.push({ label, value, warn }); };
+  const money = n => Math.round(n).toLocaleString('fr-FR');
+
+  let pay = extras['Salaire indiqué'] || '';
+  const range = (extras['Salaire affiché par l’annonce'] || '').split('–').map(Number).filter(n => n > 0);
+  if (range.length) {
+    const [a, b] = range;
+    pay = (b && b !== a ? money(a) + ' – ' + money(b) : money(a)) + ' €' + (a >= 5000 ? ' / an' : a >= 500 ? ' / mois' : ' / h');
+  }
+  if (!pay) pay = (body.match(NOTE_PAY_RE) || [''])[0].trim();
+  add('Salaire', pay);
+
+  const given = extras['Temps indiqué'] || extras['Type indiqué'] || '';
+  const time = /full|plein|complet/i.test(given) || /temps (?:plein|complet)|\b3[59] ?h/.test(low) ? 'Temps plein'
+    : /part|partiel/i.test(given) || /temps partiel/.test(low) ? 'Temps partiel' : '';
+  const hours = low.match(/\b(\d{2}) ?h(?:eures)?(?: ?\/ ?| par | )(?:semaine|hebdo)/);
+  add('Temps de travail', [time, hours && hours[1] + ' h / semaine'].filter(Boolean).join(' · '));
+
+  add('Horaires', [
+    /(?:de|en) nuit\b|horaires? de nuit/.test(low) && 'nuit',
+    /[23] ?[x×*] ?8|horaires? post[ée]s|en [ée]quipes? (?:altern|success)/.test(low) && 'en équipes (2×8 / 3×8)',
+    /week-?end|samedi|dimanche/.test(low) && 'week-end',
+    /horaires? de journ[ée]e|en journ[ée]e\b/.test(low) && 'journée',
+  ].filter(Boolean).join(', '));
+
+  const years = low.match(/(\d{1,2}) ?(?:à \d{1,2} )?ans? (?:minimum )?d['’ ] ?exp[ée]rience|exp[ée]rience (?:de |d['’]au moins |minimum (?:de )?)?(\d{1,2}) ans?/);
+  const n = years ? Number(years[1] || years[2]) : 0;
+  add('Expérience', /d[ée]butant\S* accept/.test(low) ? 'débutant accepté' : n ? n + ' an' + (n > 1 ? 's' : '') + ' demandé' + (n > 1 ? 's' : '') : '',
+    n > ((cv.cats && cv.cats[jobCategory(o)] || {}).years || 0) && n > 0 && !/d[ée]butant\S* accept/.test(low));
+
+  const caces = low.match(/caces\s*(?:n°\s*)?((?:\d\s*(?:,|\/|-|et)?\s*)*)/);
+  if (caces) add('CACES', (caces[1].match(/\d/g) || []).join(', ') || 'mentionné', cv.caces === false);
+  if (/permis\s+b\b/.test(low)) add('Permis', 'B', cv.permis === false);
+  if (/d[èe]s que possible|imm[ée]diat|\basap\b/.test(low)) add('Démarrage', 'dès que possible');
+  add('Source', (Array.isArray(o.sources) && o.sources.length ? o.sources : [o.source]).filter(Boolean).join(', '));
+  return facts;
+}
+
+/** Description lisible : intertitres, listes, paragraphes courts, points clés surlignés. */
+function notesHtml(text) {
+  const mark = l => l.split(NOTE_MARK_RE).map((part, i) => i % 2 ? '<mark>' + esc(part) + '</mark>' : esc(part)).join('');
+  let t = text.replace(/^\s*(?:\.{3}|…)\s*/, '… ').replace(/\s*(?:\.{3}|…)\s*$/, ' …')
+    .replace(NOTE_HEAD_RE, '$1\n\u0001$2\n')
+    .replace(/[ \t]+[•●▪◦■][ \t]*/g, '\n• ').replace(/(^|\n)[-–*] /g, '$1• ');
+  if ((t.match(/ - (?=[A-ZÀÉÈ])/g) || []).length > 1) t = t.replace(/ - (?=[A-ZÀÉÈ])/g, '\n• ');
+  const out = [];
+  let list = [];
+  const flush = () => { if (list.length) out.push('<ul>' + list.map(l => '<li>' + mark(l) + '</li>').join('') + '</ul>'); list = []; };
+  t.split('\n').map(l => l.trim()).filter(Boolean).forEach(l => {
+    if (l[0] === '\u0001') { flush(); out.push('<h4>' + esc(l.slice(1)) + '</h4>'); return; }
+    if (l.startsWith('• ')) { list.push(l.slice(2)); return; }
+    flush();
+    // Un long bloc d'un seul tenant est découpé en paragraphes de quelques phrases.
+    let para = '';
+    l.split(/(?<=[.!?]) (?=[A-ZÀÉÈ])/).forEach(sentence => {
+      if (para && para.length + sentence.length > 380) { out.push('<p>' + mark(para) + '</p>'); para = ''; }
+      para += (para ? ' ' : '') + sentence;
+    });
+    out.push('<p>' + mark(para) + '</p>');
+  });
+  flush();
+  return out.join('');
+}
+
+/** Corps de la carte de tri : fiche, adéquation avec le CV, description. */
+function triageBody(o) {
+  const { text, extras } = triageNotes(o);
+  const facts = triageFacts(o, text, extras);
+  const fit = cvFit(o);
+  const source = o.source || 'la source';
+  const why = [...fit.plus.map(p => `<span class="fit-ok">✓ ${esc(p)}</span>`), ...fit.minus.map(m => `<span class="fit-warn">⚠ ${esc(m)}</span>`)].join('');
+  return `<dl class="pilot-facts">${facts.map(f => `<div${f.warn ? ' class="warn"' : ''}><dt>${esc(f.label)}</dt><dd>${esc(f.value)}</dd></div>`).join('')}</dl>
+      <div class="pilot-fit" data-lvl="${fit.score >= 60 ? 'hi' : fit.score >= 30 ? 'mid' : 'lo'}"><span class="fit-score">${fit.score}<small>/100</small></span><span class="fit-label">Adéquation avec ton CV</span><span class="fit-why">${why || 'Peu de points communs avec le CV.'}</span></div>
+      <div class="pilot-notes" tabindex="0">${text ? notesHtml(text) : '<p class="muted">Pas de description fournie par ' + esc(source) + '.</p>'}</div>
+      ${text.length < 320 ? `<p class="pilot-short">${text ? 'Extrait court : ' + esc(source) + ' ne transmet que le début de l’annonce.' : 'Seule l’annonce d’origine donne les détails.'} <button class="ghost" data-act="open">Lire l’annonce complète</button></p>` : ''}`;
+}
+
 function drawPilot() {
   const card = document.getElementById('pilotCard');
   const o = currentOffer();
@@ -608,7 +714,7 @@ function drawPilot() {
 
   if (pilot.mode === 'triage') {
     card.innerHTML = `${head}
-      <p class="pilot-notes">${esc(o.notes || 'Pas de description.')}</p>
+      ${triageBody(o)}
       <p class="swipe-hint">Glisse la carte : <b>→ À postuler</b> · <b>Ignorer ←</b></p>
       <div class="pilot-actions">
         <button data-act="apply"><kbd>A</kbd> À postuler</button>
