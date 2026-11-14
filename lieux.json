@@ -35,6 +35,15 @@
   "min": 71,
   "minAt": "2026-10-26"
  },
+ "arcueil||94": {
+  "dept": "94",
+  "km": 15.6,
+  "label": "Arcueil",
+  "lat": 48.80518,
+  "lon": 2.33347,
+  "min": 68,
+  "minAt": "2026-11-14"
+ },
  "argenteuil||95": {
   "km": 18.0,
   "label": "Argenteuil",
@@ -105,8 +114,8 @@
   "label": "Bobigny",
   "lat": 48.90736,
   "lon": 2.44334,
-  "min": 31,
-  "minAt": "2026-10-13"
+  "min": 32,
+  "minAt": "2026-11-14"
  },
  "bondy||93": {
   "dept": "93",
@@ -159,13 +168,6 @@
   "min": 74,
   "minAt": "2026-11-12"
  },
- "cachan||94": {
-  "dept": "94",
-  "km": 16.8,
-  "label": "Cachan",
-  "lat": 48.79135,
-  "lon": 2.33152
- },
  "canton de goussainville||95": {
   "dept": "95",
   "km": 13.9,
@@ -196,8 +198,8 @@
   "label": "Chanteloup-en-Brie",
   "lat": 48.85986,
   "lon": 2.74125,
-  "min": 91,
-  "minAt": "2026-10-13"
+  "min": 92,
+  "minAt": "2026-11-14"
  },
  "charny|77410|77": {
   "dept": "77",
@@ -452,6 +454,15 @@
   "min": 74,
   "minAt": "2026-11-14"
  },
+ "garges-lès-gonesse||95": {
+  "dept": "95",
+  "km": 9.6,
+  "label": "Garges-lès-Gonesse",
+  "lat": 48.96975,
+  "lon": 2.40086,
+  "min": 74,
+  "minAt": "2026-11-14"
+ },
  "gennevilliers||92": {
   "km": 14.3,
   "label": "Gennevilliers",
@@ -466,8 +477,8 @@
   "label": "Gentilly",
   "lat": 48.81232,
   "lon": 2.34261,
-  "min": 64,
-  "minAt": "2026-10-13"
+  "min": 65,
+  "minAt": "2026-11-14"
  },
  "gonesse||95": {
   "km": 9.3,
@@ -494,14 +505,14 @@
   "min": 77,
   "minAt": "2026-11-04"
  },
- "herblay||95": {
+ "groslay||95": {
   "dept": "95",
-  "km": 26.7,
-  "label": "Herblay-sur-Seine",
-  "lat": 49.00406,
-  "lon": 2.15245,
-  "min": 100,
-  "minAt": "2026-10-26"
+  "km": 13.3,
+  "label": "Groslay",
+  "lat": 48.98474,
+  "lon": 2.35131,
+  "min": 60,
+  "minAt": "2026-11-14"
  },
  "issy-les-moulineaux||92": {
   "km": 18.5,
@@ -658,6 +669,13 @@
   "lon": 2.54793,
   "min": 122,
   "minAt": "2026-10-15"
+ },
+ "limeil-brévannes||94": {
+  "dept": "94",
+  "km": 17.3,
+  "label": "Limeil-Brévannes",
+  "lat": 48.74791,
+  "lon": 2.49242
  },
  "livry-gargan||93": {
   "dept": "93",
@@ -1038,7 +1056,7 @@
   "lat": 48.79381,
   "lon": 2.6091,
   "min": 64,
-  "minAt": "2026-10-12"
+  "minAt": "2026-11-14"
  },
  "puteaux||92": {
   "km": 18.3,
@@ -1370,6 +1388,13 @@
   "min": 78,
   "minAt": "2026-11-12"
  },
+ "villemomble||93": {
+  "dept": "93",
+  "km": 2.6,
+  "label": "Villemomble",
+  "lat": 48.88666,
+  "lon": 2.50872
+ },
  "villeneuve-la-garenne||92": {
   "dept": "92",
   "km": 12.3,
@@ -1472,6 +1497,6 @@
   "lat": 48.81765,
   "lon": 2.61157,
   "min": 76,
-  "minAt": "2026-10-13"
+  "minAt": "2026-11-14"
  }
 }
