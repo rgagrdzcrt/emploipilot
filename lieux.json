@@ -458,6 +458,13 @@
   "min": 36,
   "minAt": "2026-11-13"
  },
+ "dugny||93": {
+  "dept": "93",
+  "km": 6.9,
+  "label": "Dugny",
+  "lat": 48.95015,
+  "lon": 2.42187
+ },
  "ermont||95": {
   "dept": "95",
   "km": 19.2,
@@ -652,13 +659,6 @@
   "min": 79,
   "minAt": "2026-10-12"
  },
- "l'île-saint-denis||93": {
-  "dept": "93",
-  "km": 11.3,
-  "label": "L'Île-Saint-Denis",
-  "lat": 48.93308,
-  "lon": 2.33764
- },
  "la courneuve||93": {
   "km": 6.9,
   "label": "La Courneuve",
@@ -769,6 +769,13 @@
   "lon": 2.40538,
   "min": 55,
   "minAt": "2026-11-14"
+ },
+ "le raincy||93": {
+  "dept": "93",
+  "km": 2.7,
+  "label": "Le Raincy",
+  "lat": 48.89595,
+  "lon": 2.51972
  },
  "le thillay|95500|95": {
   "dept": "95",
