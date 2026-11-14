@@ -108,14 +108,12 @@
   "min": 31,
   "minAt": "2026-10-13"
  },
- "bobigny||93": {
+ "bondy||93": {
   "dept": "93",
-  "km": 3.1,
-  "label": "Bobigny",
-  "lat": 48.90736,
-  "lon": 2.44334,
-  "min": 31,
-  "minAt": "2026-10-13"
+  "km": 0.0,
+  "label": "Bondy",
+  "lat": 48.90365,
+  "lon": 2.48526
  },
  "bonneuil-en-france|95500|94": {},
  "bonneuil-sur-marne||94": {
@@ -160,6 +158,13 @@
   "lon": 2.71534,
   "min": 74,
   "minAt": "2026-11-12"
+ },
+ "cachan||94": {
+  "dept": "94",
+  "km": 16.8,
+  "label": "Cachan",
+  "lat": 48.79135,
+  "lon": 2.33152
  },
  "canton de goussainville||95": {
   "dept": "95",
@@ -217,7 +222,7 @@
   "lat": 48.7949,
   "lon": 2.5415,
   "min": 81,
-  "minAt": "2026-10-12"
+  "minAt": "2026-11-14"
  },
  "chessy|77700|77": {
   "dept": "77",
@@ -228,14 +233,6 @@
   "min": 106,
   "minAt": "2026-11-04"
  },
- "chessy||77": {
-  "km": 20.7,
-  "label": "Chessy",
-  "lat": 48.87144,
-  "lon": 2.76478,
-  "min": 100,
-  "minAt": "2026-10-12"
- },
  "chevilly-larue||94": {
   "km": 18.1,
   "label": "Chevilly-Larue",
@@ -243,15 +240,6 @@
   "lon": 2.35088,
   "min": 90,
   "minAt": "2026-11-12"
- },
- "choisy-le-roi||94": {
-  "dept": "94",
-  "km": 16.4,
-  "label": "Choisy-le-Roi",
-  "lat": 48.76411,
-  "lon": 2.41281,
-  "min": 74,
-  "minAt": "2026-10-26"
  },
  "châtillon||92": {
   "km": 18.3,
@@ -351,8 +339,8 @@
   "label": "Cormeilles-en-Parisis",
   "lat": 48.97034,
   "lon": 2.19574,
-  "min": 73,
-  "minAt": "2026-10-14"
+  "min": 68,
+  "minAt": "2026-11-14"
  },
  "courbevoie|92400|92": {
   "dept": "92",
@@ -362,15 +350,6 @@
   "lon": 2.25706,
   "min": 65,
   "minAt": "2026-11-13"
- },
- "croissy-beaubourg||": {
-  "dept": "77",
-  "km": 15.3,
-  "label": "Croissy-Beaubourg",
-  "lat": 48.82178,
-  "lon": 2.65357,
-  "min": 84,
-  "minAt": "2026-11-12"
  },
  "croissy-beaubourg||77": {
   "km": 15.3,
@@ -404,24 +383,6 @@
   "lon": 2.4442,
   "min": 36,
   "minAt": "2026-11-13"
- },
- "ecouen||95": {
-  "dept": "95",
-  "km": 15.7,
-  "label": "Écouen",
-  "lat": 49.02445,
-  "lon": 2.37457,
-  "min": 88,
-  "minAt": "2026-10-23"
- },
- "ferrières-en-brie||": {
-  "dept": "77",
-  "km": 18.5,
-  "label": "Ferrières-en-Brie",
-  "lat": 48.82469,
-  "lon": 2.70772,
-  "min": 93,
-  "minAt": "2026-10-16"
  },
  "ferrières-en-brie||77": {
   "dept": "77",
@@ -481,6 +442,15 @@
   "label": "Gagny",
   "lat": 48.88191,
   "lon": 2.54565
+ },
+ "garges-lès-gonesse-est||95": {
+  "dept": "95",
+  "km": 9.6,
+  "label": "Garges-lès-Gonesse",
+  "lat": 48.96975,
+  "lon": 2.40086,
+  "min": 74,
+  "minAt": "2026-11-14"
  },
  "gennevilliers||92": {
   "km": 14.3,
@@ -638,23 +608,14 @@
   "min": 92,
   "minAt": "2026-10-13"
  },
- "le plessis-trévise||94": {
-  "dept": "94",
-  "km": 12.3,
-  "label": "Le Plessis-Trévise",
-  "lat": 48.81014,
-  "lon": 2.57623,
-  "min": 68,
-  "minAt": "2026-11-05"
- },
  "le pré-saint-gervais||93": {
   "dept": "93",
   "km": 6.2,
   "label": "Le Pré-Saint-Gervais",
   "lat": 48.88414,
   "lon": 2.40538,
-  "min": 54,
-  "minAt": "2026-10-14"
+  "min": 55,
+  "minAt": "2026-11-14"
  },
  "le thillay|95500|95": {
   "dept": "95",
@@ -679,7 +640,7 @@
   "lat": 48.90679,
   "lon": 2.50561,
   "min": 15,
-  "minAt": "2026-10-13"
+  "minAt": "2026-11-14"
  },
  "levallois-perret||92": {
   "dept": "92",
@@ -775,15 +736,6 @@
   "min": 93,
   "minAt": "2026-11-05"
  },
- "meudon||92": {
-  "dept": "92",
-  "km": 21.5,
-  "label": "Meudon",
-  "lat": 48.80363,
-  "lon": 2.23399,
-  "min": 90,
-  "minAt": "2026-10-15"
- },
  "mitry-mory||77": {
   "km": 10.9,
   "label": "Mitry-Mory",
@@ -800,15 +752,6 @@
   "lon": 2.59148,
   "min": 122,
   "minAt": "2026-11-05"
- },
- "montfermeil||93": {
-  "dept": "93",
-  "km": 6.1,
-  "label": "Montfermeil",
-  "lat": 48.89703,
-  "lon": 2.56873,
-  "min": 46,
-  "minAt": "2026-10-12"
  },
  "montigny-lès-cormeilles||95": {
   "dept": "95",
@@ -861,15 +804,6 @@
   "lon": 2.74974,
   "min": 101,
   "minAt": "2026-11-12"
- },
- "moussy-le-neuf||77": {
-  "dept": "77",
-  "km": 19.9,
-  "label": "Moussy-le-Neuf",
-  "lat": 49.06532,
-  "lon": 2.60222,
-  "min": 99,
-  "minAt": "2026-11-06"
  },
  "nanterre|92000|92": {
   "km": 20.7,
@@ -1032,8 +966,8 @@
   "label": "Paris 19e Arrondissement",
   "lat": 48.88725,
   "lon": 2.38771,
-  "min": 42,
-  "minAt": "2026-10-13"
+  "min": 44,
+  "minAt": "2026-11-14"
  },
  "paris 1er arrondissement|75001|75": {
   "dept": "75",
@@ -1097,15 +1031,6 @@
   "min": 50,
   "minAt": "2026-11-12"
  },
- "pierrelaye|95220|95": {
-  "dept": "95",
-  "km": 26.7,
-  "label": "Pierrelaye",
-  "lat": 49.01667,
-  "lon": 2.16232,
-  "min": 90,
-  "minAt": "2026-11-04"
- },
  "pontault-combault||77": {
   "dept": "77",
   "km": 15.2,
@@ -1114,13 +1039,6 @@
   "lon": 2.6091,
   "min": 64,
   "minAt": "2026-10-12"
- },
- "presles-en-brie||77": {
-  "dept": "77",
-  "km": 28.9,
-  "label": "Presles-en-Brie",
-  "lat": 48.71274,
-  "lon": 2.75287
  },
  "puteaux||92": {
   "km": 18.3,
@@ -1240,15 +1158,6 @@
   "lat": 48.98574,
   "lon": 2.70169
  },
- "saint-ouen-sur-seine||93": {
-  "dept": "93",
-  "km": 11.1,
-  "label": "Saint-Ouen-sur-Seine",
-  "lat": 48.9117,
-  "lon": 2.3334,
-  "min": 56,
-  "minAt": "2026-10-16"
- },
  "saint-ouen||93": {
   "dept": "93",
   "km": 11.1,
@@ -1301,7 +1210,7 @@
   "lat": 48.97352,
   "lon": 2.25369,
   "min": 80,
-  "minAt": "2026-10-13"
+  "minAt": "2026-11-14"
  },
  "santeny|94440|94": {
   "km": 20.8,
@@ -1381,13 +1290,6 @@
   "min": 65,
   "minAt": "2026-11-12"
  },
- "survilliers||95": {
-  "dept": "95",
-  "km": 22.0,
-  "label": "Survilliers",
-  "lat": 49.09802,
-  "lon": 2.53953
- },
  "taverny||95": {
   "dept": "95",
   "km": 24.0,
@@ -1395,7 +1297,7 @@
   "lat": 49.02419,
   "lon": 2.21263,
   "min": 92,
-  "minAt": "2026-10-14"
+  "minAt": "2026-11-14"
  },
  "thiais||94": {
   "km": 17.5,
@@ -1421,15 +1323,6 @@
   "lon": 2.64446,
   "min": 77,
   "minAt": "2026-10-14"
- },
- "tournan-en-brie||77": {
-  "dept": "77",
-  "km": 27.8,
-  "label": "Tournan-en-Brie",
-  "lat": 48.74071,
-  "lon": 2.77287,
-  "min": 84,
-  "minAt": "2026-11-07"
  },
  "tremblay-en-france||93": {
   "dept": "93",
@@ -1477,15 +1370,6 @@
   "min": 78,
   "minAt": "2026-11-12"
  },
- "villemomble||93": {
-  "dept": "93",
-  "km": 2.6,
-  "label": "Villemomble",
-  "lat": 48.88666,
-  "lon": 2.50872,
-  "min": 30,
-  "minAt": "2026-11-12"
- },
  "villeneuve-la-garenne||92": {
   "dept": "92",
   "km": 12.3,
@@ -1527,8 +1411,8 @@
   "label": "Villepinte",
   "lat": 48.95651,
   "lon": 2.53243,
-  "min": 64,
-  "minAt": "2026-10-13"
+  "min": 61,
+  "minAt": "2026-11-14"
  },
  "villiers-sur-marne||94": {
   "dept": "94",
@@ -1537,7 +1421,7 @@
   "lat": 48.82784,
   "lon": 2.5492,
   "min": 55,
-  "minAt": "2026-10-14"
+  "minAt": "2026-11-14"
  },
  "villiers-sur-marne||IDF": {
   "dept": "94",
@@ -1588,14 +1472,6 @@
   "lat": 48.81765,
   "lon": 2.61157,
   "min": 76,
-  "minAt": "2026-10-13"
- },
- "épinay-sur-seine||93": {
-  "km": 13.6,
-  "label": "Épinay-sur-Seine",
-  "lat": 48.95522,
-  "lon": 2.31712,
-  "min": 67,
   "minAt": "2026-10-13"
  }
 }
