@@ -4,7 +4,7 @@ Site statique hébergé sur GitHub Pages, avec collecte planifiée toutes les 6 
 
 ## Profils (Ryan / Zia)
 
-**Profil de Zia en pause** (`disabled: true` dans `profiles.js`) : le site reste sur le profil de Ryan, sans bascule ; ses données sont conservées. Repasser `disabled` à `false` le réactive.
+**Profil de Zia actif.** Pour le mettre en pause : `disabled: true` dans `profiles.js` (le site reste alors sur le profil de Ryan, sans bascule ; ses données sont conservées), puis retirer ses métiers de `"categories"` et passer ses requêtes à `"enabled": false` dans `sources.json`.
 
 **Alerte des nouvelles offres en pause** (`"alerteNouvellesOffres": {"enabled": false}` dans `sources.json`) : la collecte continue et le site reste à jour, mais aucune notification ntfy n'est envoyée pour les nouvelles offres. Les alertes de réponses d'entreprise (tri Gmail) ne changent pas. Repasser `enabled` à `true` la réactive.
 
@@ -16,7 +16,7 @@ Toucher le logo bascule entre deux profils, définis dans `profiles.js`. Le logo
 | Lettres | Modèles par métier (`pilot.js`) | Modèles par métier (`profiles.js`) |
 | Tri Gmail, onglet Mails | Oui | Non |
 
-Chaque profil garde ses propres données sur l'appareil (offres suivies, critères, modèles, « Mes infos ») et se synchronise dans son propre fichier de gist (`zcrt-suivi.json` / `zcrt-suivi-zia.json`), même avec un seul compte GitHub. La collecte est commune : chaque profil n'affiche que ses métiers. Les métiers réellement collectés sont listés dans `"categories"` de `sources.json` (aujourd'hui `["stock"]`, le profil de Zia étant en pause) : les offres des autres métiers sont écartées et retirées d'`offres.json` à la collecte suivante. Pour réactiver Zia : remettre ses métiers dans `"categories"` et repasser ses requêtes à `"enabled": true`. Les coordonnées et les CV ne sont pas dans le dépôt (public) : chacun les renseigne dans « Mes infos » et « CV à joindre ».
+Chaque profil garde ses propres données sur l'appareil (offres suivies, critères, modèles, « Mes infos ») et se synchronise dans son propre fichier de gist (`zcrt-suivi.json` / `zcrt-suivi-zia.json`), même avec un seul compte GitHub. La collecte est commune : chaque profil n'affiche que ses métiers. Les métiers réellement collectés sont listés dans `"categories"` de `sources.json` (aujourd'hui `["stock", "rayon", "vente", "restauration"]`) : les offres des autres métiers sont écartées et retirées d'`offres.json` à la collecte suivante. Adzuna étant limité à `maxRequestsPerRun` requêtes par collecte, ses recherches passent à tour de rôle quand il y en a davantage. Les coordonnées et les CV ne sont pas dans le dépôt (public) : chacun les renseigne dans « Mes infos » et « CV à joindre ».
 
 ## Fichiers principaux
 

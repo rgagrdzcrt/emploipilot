@@ -1143,9 +1143,14 @@ def fetch_adzuna(cfg):
     title_supported = True
     offers = []
 
+    # Plus de recherches actives que de requêtes permises : le point de départ tourne d'une
+    # collecte à l'autre (toutes les 6 h), pour que chaque recherche passe à son tour.
+    queries = [q for q in queries if q.get("enabled", True) and q.get("keywords")]
+    if len(queries) > budget:
+        start = (int(time.time() // (6 * 3600)) * budget) % len(queries)
+        queries = queries[start:] + queries[:start]
+
     for query in queries:
-        if not query.get("enabled", True) or not query.get("keywords"):
-            continue
         if used >= budget:
             print(f"Adzuna : quota de la collecte atteint ({budget} requêtes), recherches suivantes reportées.")
             break

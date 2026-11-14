@@ -26,8 +26,8 @@ const ZCRT_PROFILES = {
     cv: { stock: 'CV_Ryan_Gazard_stock.pdf' },
     ns: '',                      // clés historiques, sans suffixe
     syncFile: 'zcrt-suivi.json', // lu aussi par mail.py (tri Gmail)
-    // Profil recentré sur la logistique (13/11/2026) : rayon et vente ne sont plus collectés
-    // ("categories" dans sources.json) ni affichés.
+    // Profil recentré sur la logistique (13/11/2026) : rayon et vente ne sont plus affichés ici
+    // (ils restent collectés pour le profil de Zia, "categories" dans sources.json).
     cats: ['stock'],
     // Les suivis rayon / vente posés avant cette date sont supprimés, sur chaque appareil et dans
     // le gist (pilot.js, isPurged). Une candidature hors logistique faite ensuite reste suivie.
@@ -64,9 +64,8 @@ const ZCRT_PROFILES = {
   zia: {
     id: 'zia',
     name: 'Zia',
-    // Profil mis en pause (Zia a trouvé un travail) : masqué, ses données restent intactes.
-    // Pour le réactiver : disabled: false.
-    disabled: true,
+    // Profil actif. Pour le mettre en pause (masqué, données intactes) : disabled: true.
+    disabled: false,
     brand: 'ZCRT',
     ns: '__zia',
     syncFile: 'zcrt-suivi-zia.json',

@@ -1,6 +1,9 @@
 {
   "categories": [
-    "stock"
+    "stock",
+    "rayon",
+    "vente",
+    "restauration"
   ],
   "feeds": [],
   "joobleQueries": [
@@ -51,7 +54,7 @@
     },
     {
       "name": "employé libre service · Bondy",
-      "enabled": false,
+      "enabled": true,
       "category": "rayon",
       "keywords": "employé libre service",
       "location": "Bondy",
@@ -59,7 +62,7 @@
     },
     {
       "name": "employé commercial · Bondy",
-      "enabled": false,
+      "enabled": true,
       "category": "rayon",
       "keywords": "employé commercial",
       "location": "Bondy",
@@ -68,7 +71,7 @@
     },
     {
       "name": "mise en rayon · Bondy",
-      "enabled": false,
+      "enabled": true,
       "category": "rayon",
       "keywords": "mise en rayon",
       "location": "Bondy",
@@ -77,7 +80,7 @@
     },
     {
       "name": "employé de rayon · Bondy",
-      "enabled": false,
+      "enabled": true,
       "category": "rayon",
       "keywords": "employé de rayon",
       "location": "Bondy",
@@ -85,7 +88,7 @@
     },
     {
       "name": "vendeur · Bondy",
-      "enabled": false,
+      "enabled": true,
       "category": "vente",
       "keywords": "vendeur",
       "location": "Bondy",
@@ -94,7 +97,7 @@
     },
     {
       "name": "conseiller de vente · Bondy",
-      "enabled": false,
+      "enabled": true,
       "category": "vente",
       "keywords": "conseiller de vente",
       "location": "Bondy",
@@ -103,7 +106,7 @@
     },
     {
       "name": "vendeuse · Bondy",
-      "enabled": false,
+      "enabled": true,
       "category": "vente",
       "keywords": "vendeuse",
       "location": "Bondy",
@@ -265,7 +268,7 @@
     },
     {
       "name": "employé libre service · Paris",
-      "enabled": false,
+      "enabled": true,
       "category": "rayon",
       "keywords": "employé libre service",
       "location": "Paris",
@@ -273,7 +276,7 @@
     },
     {
       "name": "employé commercial · Paris",
-      "enabled": false,
+      "enabled": true,
       "category": "rayon",
       "keywords": "employé commercial",
       "location": "Paris",
@@ -282,7 +285,7 @@
     },
     {
       "name": "mise en rayon · Paris",
-      "enabled": false,
+      "enabled": true,
       "category": "rayon",
       "keywords": "mise en rayon",
       "location": "Paris",
@@ -291,7 +294,7 @@
     },
     {
       "name": "employé de rayon · Paris",
-      "enabled": false,
+      "enabled": true,
       "category": "rayon",
       "keywords": "employé de rayon",
       "location": "Paris",
@@ -299,7 +302,7 @@
     },
     {
       "name": "vendeur · Paris",
-      "enabled": false,
+      "enabled": true,
       "category": "vente",
       "keywords": "vendeur",
       "location": "Paris",
@@ -308,7 +311,7 @@
     },
     {
       "name": "conseiller de vente · Paris",
-      "enabled": false,
+      "enabled": true,
       "category": "vente",
       "keywords": "conseiller de vente",
       "location": "Paris",
@@ -317,7 +320,7 @@
     },
     {
       "name": "vendeuse · Paris",
-      "enabled": false,
+      "enabled": true,
       "category": "vente",
       "keywords": "vendeuse",
       "location": "Paris",
@@ -326,7 +329,7 @@
     },
     {
       "name": "serveur · Paris",
-      "enabled": false,
+      "enabled": true,
       "category": "restauration",
       "keywords": "serveur serveuse",
       "location": "Paris",
@@ -335,7 +338,7 @@
     },
     {
       "name": "chef de rang · Paris",
-      "enabled": false,
+      "enabled": true,
       "category": "restauration",
       "keywords": "chef de rang",
       "location": "Paris",
@@ -343,7 +346,7 @@
     },
     {
       "name": "barista · Paris",
-      "enabled": false,
+      "enabled": true,
       "category": "restauration",
       "keywords": "barista",
       "location": "Paris",
@@ -351,7 +354,7 @@
     },
     {
       "name": "serveur · Bondy",
-      "enabled": false,
+      "enabled": true,
       "category": "restauration",
       "keywords": "serveur serveuse",
       "location": "Bondy",
@@ -487,19 +490,19 @@
       },
       {
         "name": "rayon",
-        "enabled": false,
+        "enabled": true,
         "category": "rayon",
         "keywords": "mise en rayon, employé libre-service, rayoniste"
       },
       {
         "name": "vente",
-        "enabled": false,
+        "enabled": true,
         "category": "vente",
         "keywords": "vendeur en boutique, conseiller de vente en magasin"
       },
       {
         "name": "restauration",
-        "enabled": false,
+        "enabled": true,
         "category": "restauration",
         "keywords": "serveur, serveuse, chef de rang, runner, barista"
       }
@@ -548,7 +551,7 @@
       },
       {
         "name": "employé commercial · Bondy",
-        "enabled": false,
+        "enabled": true,
         "category": "rayon",
         "keywords": "employé commercial",
         "titleOnly": true,
@@ -556,7 +559,7 @@
       },
       {
         "name": "libre service · Bondy",
-        "enabled": false,
+        "enabled": true,
         "category": "rayon",
         "keywords": "libre service",
         "titleOnly": true,
@@ -564,7 +567,7 @@
       },
       {
         "name": "rayon · Bondy",
-        "enabled": false,
+        "enabled": true,
         "category": "rayon",
         "keywords": "rayon",
         "titleOnly": true,
@@ -572,7 +575,7 @@
       },
       {
         "name": "vendeur · Bondy",
-        "enabled": false,
+        "enabled": true,
         "category": "vente",
         "keywords": "vendeur",
         "titleOnly": true,
@@ -580,7 +583,7 @@
       },
       {
         "name": "conseiller vente · Bondy",
-        "enabled": false,
+        "enabled": true,
         "category": "vente",
         "keywords": "conseiller vente",
         "titleOnly": true,
@@ -620,7 +623,7 @@
       },
       {
         "name": "employé commercial · Paris",
-        "enabled": false,
+        "enabled": true,
         "category": "rayon",
         "keywords": "employé commercial",
         "titleOnly": true,
@@ -628,7 +631,7 @@
       },
       {
         "name": "libre service · Paris",
-        "enabled": false,
+        "enabled": true,
         "category": "rayon",
         "keywords": "libre service",
         "titleOnly": true,
@@ -636,7 +639,7 @@
       },
       {
         "name": "rayon · Paris",
-        "enabled": false,
+        "enabled": true,
         "category": "rayon",
         "keywords": "rayon",
         "titleOnly": true,
@@ -644,7 +647,7 @@
       },
       {
         "name": "vendeur · Paris",
-        "enabled": false,
+        "enabled": true,
         "category": "vente",
         "keywords": "vendeur",
         "titleOnly": true,
@@ -652,7 +655,7 @@
       },
       {
         "name": "conseiller vente · Paris",
-        "enabled": false,
+        "enabled": true,
         "category": "vente",
         "keywords": "conseiller vente",
         "titleOnly": true,
@@ -660,7 +663,7 @@
       },
       {
         "name": "serveur · Paris",
-        "enabled": false,
+        "enabled": true,
         "category": "restauration",
         "keywords": "serveur",
         "titleOnly": true,
@@ -668,7 +671,7 @@
       },
       {
         "name": "chef de rang · Paris",
-        "enabled": false,
+        "enabled": true,
         "category": "restauration",
         "keywords": "chef de rang",
         "titleOnly": true,
@@ -676,7 +679,7 @@
       },
       {
         "name": "barista · Paris",
-        "enabled": false,
+        "enabled": true,
         "category": "restauration",
         "keywords": "barista",
         "titleOnly": true,
@@ -684,7 +687,7 @@
       },
       {
         "name": "serveur · Bondy",
-        "enabled": false,
+        "enabled": true,
         "category": "restauration",
         "keywords": "serveur",
         "titleOnly": true,
@@ -831,21 +834,21 @@
       },
       {
         "name": "rayon",
-        "enabled": false,
+        "enabled": true,
         "category": "rayon",
         "keywords": "mise en rayon employé libre-service",
         "location": "Île-de-France, France"
       },
       {
         "name": "vente",
-        "enabled": false,
+        "enabled": true,
         "category": "vente",
         "keywords": "vendeur en boutique conseiller de vente",
         "location": "Paris, France"
       },
       {
         "name": "restauration",
-        "enabled": false,
+        "enabled": true,
         "category": "restauration",
         "keywords": "serveur chef de rang barista",
         "location": "Paris, France"
@@ -864,14 +867,14 @@
       },
       {
         "name": "rayon",
-        "enabled": false,
+        "enabled": true,
         "category": "rayon",
         "keywords": "mise en rayon employé libre-service",
         "city": "Paris"
       },
       {
         "name": "vente",
-        "enabled": false,
+        "enabled": true,
         "category": "vente",
         "keywords": "vendeur en boutique conseiller de vente",
         "city": "Paris"
