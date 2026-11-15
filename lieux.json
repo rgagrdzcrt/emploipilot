@@ -52,13 +52,6 @@
   "min": 70,
   "minAt": "2026-11-15"
  },
- "arnouville|95400|95": {
-  "dept": "95",
-  "km": 10.6,
-  "label": "Arnouville",
-  "lat": 48.98724,
-  "lon": 2.41632
- },
  "asnières-sur-seine||92": {
   "dept": "92",
   "km": 14.2,
@@ -247,6 +240,15 @@
   "lon": 2.74125,
   "min": 92,
   "minAt": "2026-11-14"
+ },
+ "charles-de-gaulles aéroport||95": {
+  "dept": "95",
+  "km": 10.8,
+  "label": "Roissy-en-France",
+  "lat": 48.9989,
+  "lon": 2.51116,
+  "min": 56,
+  "minAt": "2026-11-15"
  },
  "charny|77410|77": {
   "dept": "77",
@@ -450,6 +452,15 @@
   "min": 98,
   "minAt": "2026-11-12"
  },
+ "domont||95": {
+  "dept": "95",
+  "km": 18.0,
+  "label": "Domont",
+  "lat": 49.02871,
+  "lon": 2.32791,
+  "min": 83,
+  "minAt": "2026-11-15"
+ },
  "drancy||93": {
   "km": 3.8,
   "label": "Drancy",
@@ -482,13 +493,6 @@
   "lon": 2.70772,
   "min": 90,
   "minAt": "2026-11-13"
- },
- "fontenay-aux-roses||92": {
-  "dept": "92",
-  "km": 19.2,
-  "label": "Fontenay-aux-Roses",
-  "lat": 48.78953,
-  "lon": 2.28826
  },
  "fontenay-sous-bois||94": {
   "km": 6.0,
@@ -539,6 +543,13 @@
   "label": "Gagny",
   "lat": 48.88191,
   "lon": 2.54565
+ },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829
  },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
@@ -628,7 +639,9 @@
   "km": 26.7,
   "label": "Herblay-sur-Seine",
   "lat": 49.00406,
-  "lon": 2.15245
+  "lon": 2.15245,
+  "min": 107,
+  "minAt": "2026-11-15"
  },
  "issy-les-moulineaux||92": {
   "km": 18.5,
@@ -1095,6 +1108,13 @@
   "min": 52,
   "minAt": "2026-11-04"
  },
+ "neuilly-sur-marne||93": {
+  "dept": "93",
+  "km": 5.8,
+  "label": "Neuilly-sur-Marne",
+  "lat": 48.8649,
+  "lon": 2.53737
+ },
  "neuilly-sur-seine||92": {
   "km": 16.2,
   "label": "Neuilly-sur-Seine",
@@ -1182,7 +1202,9 @@
   "km": 9.0,
   "label": "Paris 11e Arrondissement",
   "lat": 48.86016,
-  "lon": 2.38184
+  "lon": 2.38184,
+  "min": 57,
+  "minAt": "2026-11-15"
  },
  "paris 12e arrondissement|75012|75": {
   "dept": "75",
