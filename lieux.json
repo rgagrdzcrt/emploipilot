@@ -49,8 +49,8 @@
   "label": "Argenteuil",
   "lat": 48.94846,
   "lon": 2.2482,
-  "min": 74,
-  "minAt": "2026-10-12"
+  "min": 70,
+  "minAt": "2026-11-15"
  },
  "arnouville|95400|95": {
   "dept": "95",
@@ -458,19 +458,14 @@
   "min": 36,
   "minAt": "2026-11-13"
  },
- "dugny||93": {
-  "dept": "93",
-  "km": 6.9,
-  "label": "Dugny",
-  "lat": 48.95015,
-  "lon": 2.42187
- },
  "ermont||95": {
   "dept": "95",
   "km": 19.2,
   "label": "Ermont",
   "lat": 48.98906,
-  "lon": 2.2574
+  "lon": 2.2574,
+  "min": 80,
+  "minAt": "2026-11-15"
  },
  "faremoutiers||IDF": {
   "dept": "77",
@@ -487,6 +482,13 @@
   "lon": 2.70772,
   "min": 90,
   "minAt": "2026-11-13"
+ },
+ "fontenay-aux-roses||92": {
+  "dept": "92",
+  "km": 19.2,
+  "label": "Fontenay-aux-Roses",
+  "lat": 48.78953,
+  "lon": 2.28826
  },
  "fontenay-sous-bois||94": {
   "km": 6.0,
@@ -537,13 +539,6 @@
   "label": "Gagny",
   "lat": 48.88191,
   "lon": 2.54565
- },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
  },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
@@ -635,13 +630,6 @@
   "lat": 49.00406,
   "lon": 2.15245
  },
- "herblay||95": {
-  "dept": "95",
-  "km": 26.7,
-  "label": "Herblay-sur-Seine",
-  "lat": 49.00406,
-  "lon": 2.15245
- },
  "issy-les-moulineaux||92": {
   "km": 18.5,
   "label": "Issy-les-Moulineaux",
@@ -659,6 +647,13 @@
   "min": 79,
   "minAt": "2026-10-12"
  },
+ "l'île-saint-denis||93": {
+  "dept": "93",
+  "km": 11.3,
+  "label": "L'Île-Saint-Denis",
+  "lat": 48.93308,
+  "lon": 2.33764
+ },
  "la courneuve||93": {
   "km": 6.9,
   "label": "La Courneuve",
@@ -672,7 +667,9 @@
   "km": 18.3,
   "label": "Puteaux",
   "lat": 48.88416,
-  "lon": 2.2372
+  "lon": 2.2372,
+  "min": 60,
+  "minAt": "2026-11-15"
  },
  "la garenne-colombes||92": {
   "dept": "92",
@@ -706,7 +703,9 @@
   "km": 16.5,
   "label": "Lagny-sur-Marne",
   "lat": 48.87388,
-  "lon": 2.70579
+  "lon": 2.70579,
+  "min": 76,
+  "minAt": "2026-11-15"
  },
  "le blanc-mesnil||93": {
   "dept": "93",
@@ -800,6 +799,13 @@
   "lat": 48.81651,
   "lon": 1.98385
  },
+ "les lilas||93": {
+  "dept": "93",
+  "km": 5.4,
+  "label": "Les Lilas",
+  "lat": 48.88054,
+  "lon": 2.42074
+ },
  "les pavillons-sous-bois||93": {
   "dept": "93",
   "km": 1.5,
@@ -823,8 +829,8 @@
   "label": "Lieusaint",
   "lat": 48.62863,
   "lon": 2.54793,
-  "min": 122,
-  "minAt": "2026-10-15"
+  "min": 120,
+  "minAt": "2026-11-15"
  },
  "limeil-brévannes||94": {
   "dept": "94",
@@ -1089,13 +1095,6 @@
   "min": 52,
   "minAt": "2026-11-04"
  },
- "neuilly-sur-marne||93": {
-  "dept": "93",
-  "km": 5.8,
-  "label": "Neuilly-sur-Marne",
-  "lat": 48.8649,
-  "lon": 2.53737
- },
  "neuilly-sur-seine||92": {
   "km": 16.2,
   "label": "Neuilly-sur-Seine",
@@ -1295,8 +1294,8 @@
   "label": "Paris 4e Arrondissement",
   "lat": 48.85404,
   "lon": 2.35684,
-  "min": 59,
-  "minAt": "2026-10-15"
+  "min": 58,
+  "minAt": "2026-11-15"
  },
  "paris 5e arrondissement|75005|75": {
   "dept": "75",
@@ -1594,8 +1593,8 @@
   "label": "Sceaux",
   "lat": 48.77719,
   "lon": 2.29615,
-  "min": 79,
-  "minAt": "2026-10-15"
+  "min": 80,
+  "minAt": "2026-11-15"
  },
  "serris||77": {
   "km": 22.8,
