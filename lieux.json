@@ -8,15 +8,6 @@
   "min": 70,
   "minAt": "2026-11-13"
  },
- "andilly||95": {
-  "dept": "95",
-  "km": 17.6,
-  "label": "Andilly",
-  "lat": 49.00608,
-  "lon": 2.30222,
-  "min": 98,
-  "minAt": "2026-11-09"
- },
  "antony|92160|92": {
   "dept": "92",
   "km": 21.8,
@@ -83,7 +74,7 @@
   "lat": 48.79774,
   "lon": 2.31012,
   "min": 79,
-  "minAt": "2026-10-12"
+  "minAt": "2026-11-16"
  },
  "bagnolet||93": {
   "km": 6.0,
@@ -92,6 +83,15 @@
   "lon": 2.42502,
   "min": 48,
   "minAt": "2026-11-13"
+ },
+ "bailly-romainvilliers|77700|77": {
+  "dept": "77",
+  "km": 24.9,
+  "label": "Bailly-Romainvilliers",
+  "lat": 48.84898,
+  "lon": 2.81517,
+  "min": 86,
+  "minAt": "2026-11-16"
  },
  "beauchamp||95": {
   "dept": "95",
@@ -162,15 +162,6 @@
   "lon": 2.2432,
   "min": 77,
   "minAt": "2026-11-12"
- },
- "bourg-la-reine||92": {
-  "dept": "92",
-  "km": 18.5,
-  "label": "Bourg-la-Reine",
-  "lat": 48.77989,
-  "lon": 2.31641,
-  "min": 70,
-  "minAt": "2026-10-17"
  },
  "brie-comte-robert||77": {
   "dept": "77",
@@ -373,15 +364,6 @@
   "min": 70,
   "minAt": "2026-11-12"
  },
- "combs-la-ville||77": {
-  "dept": "77",
-  "km": 27.6,
-  "label": "Combs-la-Ville",
-  "lat": 48.66087,
-  "lon": 2.56202,
-  "min": 113,
-  "minAt": "2026-10-29"
- },
  "compans|77290|77": {
   "dept": "77",
   "km": 16.2,
@@ -485,6 +467,15 @@
   "lat": 48.79381,
   "lon": 2.99964
  },
+ "ferrières-en-brie||": {
+  "dept": "77",
+  "km": 18.5,
+  "label": "Ferrières-en-Brie",
+  "lat": 48.82469,
+  "lon": 2.70772,
+  "min": 90,
+  "minAt": "2026-11-16"
+ },
  "ferrières-en-brie||77": {
   "dept": "77",
   "km": 18.5,
@@ -543,13 +534,6 @@
   "label": "Gagny",
   "lat": 48.88191,
   "lon": 2.54565
- },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829
  },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
@@ -642,6 +626,13 @@
   "lon": 2.15245,
   "min": 107,
   "minAt": "2026-11-15"
+ },
+ "herblay||95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Herblay-sur-Seine",
+  "lat": 49.00406,
+  "lon": 2.15245
  },
  "issy-les-moulineaux||92": {
   "km": 18.5,
@@ -782,13 +773,6 @@
   "min": 55,
   "minAt": "2026-11-14"
  },
- "le raincy||93": {
-  "dept": "93",
-  "km": 2.7,
-  "label": "Le Raincy",
-  "lat": 48.89595,
-  "lon": 2.51972
- },
  "le thillay|95500|95": {
   "dept": "95",
   "km": 11.1,
@@ -845,13 +829,6 @@
   "min": 120,
   "minAt": "2026-11-15"
  },
- "limeil-brévannes||94": {
-  "dept": "94",
-  "km": 17.3,
-  "label": "Limeil-Brévannes",
-  "lat": 48.74791,
-  "lon": 2.49242
- },
  "livry-gargan||93": {
   "dept": "93",
   "km": 3.9,
@@ -868,7 +845,7 @@
   "lat": 48.8334,
   "lon": 2.63607,
   "min": 75,
-  "minAt": "2026-10-13"
+  "minAt": "2026-11-16"
  },
  "louvres||95": {
   "dept": "95",
@@ -1107,13 +1084,6 @@
   "lon": 2.50964,
   "min": 52,
   "minAt": "2026-11-04"
- },
- "neuilly-sur-marne||93": {
-  "dept": "93",
-  "km": 5.8,
-  "label": "Neuilly-sur-Marne",
-  "lat": 48.8649,
-  "lon": 2.53737
  },
  "neuilly-sur-seine||92": {
   "km": 16.2,
@@ -1531,6 +1501,15 @@
   "lat": 48.98574,
   "lon": 2.70169
  },
+ "saint-ouen-sur-seine||93": {
+  "dept": "93",
+  "km": 11.1,
+  "label": "Saint-Ouen-sur-Seine",
+  "lat": 48.9117,
+  "lon": 2.3334,
+  "min": 56,
+  "minAt": "2026-11-16"
+ },
  "saint-ouen||93": {
   "dept": "93",
   "km": 11.1,
@@ -1787,13 +1766,6 @@
   "min": 78,
   "minAt": "2026-11-12"
  },
- "villemomble||93": {
-  "dept": "93",
-  "km": 2.6,
-  "label": "Villemomble",
-  "lat": 48.88666,
-  "lon": 2.50872
- },
  "villeneuve-la-garenne||92": {
   "dept": "92",
   "km": 12.3,
@@ -1894,7 +1866,7 @@
   "lat": 49.06907,
   "lon": 2.57029,
   "min": 88,
-  "minAt": "2026-10-16"
+  "minAt": "2026-11-16"
  },
  "égly||IDF": {
   "dept": "91",
