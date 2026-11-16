@@ -52,6 +52,15 @@
   "min": 62,
   "minAt": "2026-11-14"
  },
+ "aubergenville||IDF": {
+  "dept": "78",
+  "km": 46.7,
+  "label": "Aubergenville",
+  "lat": 48.95936,
+  "lon": 1.85126,
+  "min": 124,
+  "minAt": "2026-11-16"
+ },
  "aubervilliers||93": {
   "km": 7.3,
   "label": "Aubervilliers",
@@ -171,6 +180,15 @@
   "lon": 2.61659,
   "min": 118,
   "minAt": "2026-10-28"
+ },
+ "bry-sur-marne||94": {
+  "dept": "94",
+  "km": 7.7,
+  "label": "Bry-sur-Marne",
+  "lat": 48.83925,
+  "lon": 2.52319,
+  "min": 61,
+  "minAt": "2026-11-16"
  },
  "bussy-saint-georges||77": {
   "dept": "77",
@@ -306,13 +324,6 @@
   "lon": 2.28634,
   "min": 84,
   "minAt": "2026-10-13"
- },
- "châtres||77": {
-  "dept": "77",
-  "km": 32.1,
-  "label": "Châtres",
-  "lat": 48.71006,
-  "lon": 2.81022
  },
  "clamart||92": {
   "km": 20.7,
@@ -451,6 +462,13 @@
   "min": 36,
   "minAt": "2026-11-13"
  },
+ "dugny||93": {
+  "dept": "93",
+  "km": 6.9,
+  "label": "Dugny",
+  "lat": 48.95015,
+  "lon": 2.42187
+ },
  "ermont||95": {
   "dept": "95",
   "km": 19.2,
@@ -535,6 +553,15 @@
   "lat": 48.88191,
   "lon": 2.54565
  },
+ "garches||92": {
+  "dept": "92",
+  "km": 22.6,
+  "label": "Garches",
+  "lat": 48.84709,
+  "lon": 2.18829,
+  "min": 80,
+  "minAt": "2026-11-16"
+ },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
   "km": 9.6,
@@ -583,7 +610,9 @@
   "km": 8.2,
   "label": "Gournay-sur-Marne",
   "lat": 48.86071,
-  "lon": 2.57648
+  "lon": 2.57648,
+  "min": 54,
+  "minAt": "2026-11-16"
  },
  "goussainville||95": {
   "km": 13.9,
@@ -648,8 +677,8 @@
   "label": "Ivry-sur-Seine",
   "lat": 48.81275,
   "lon": 2.38643,
-  "min": 79,
-  "minAt": "2026-10-12"
+  "min": 77,
+  "minAt": "2026-11-16"
  },
  "l'île-saint-denis||93": {
   "dept": "93",
@@ -761,8 +790,8 @@
   "label": "Le Plessis-Robinson",
   "lat": 48.78133,
   "lon": 2.26106,
-  "min": 92,
-  "minAt": "2026-10-13"
+  "min": 96,
+  "minAt": "2026-11-16"
  },
  "le pré-saint-gervais||93": {
   "dept": "93",
@@ -773,12 +802,14 @@
   "min": 55,
   "minAt": "2026-11-14"
  },
- "le thillay|95500|95": {
-  "dept": "95",
-  "km": 11.1,
-  "label": "Le Thillay",
-  "lat": 49.00324,
-  "lon": 2.47417
+ "le raincy||93": {
+  "dept": "93",
+  "km": 2.7,
+  "label": "Le Raincy",
+  "lat": 48.89595,
+  "lon": 2.51972,
+  "min": 30,
+  "minAt": "2026-11-16"
  },
  "le thillay||95": {
   "dept": "95",
@@ -795,13 +826,6 @@
   "label": "Les Clayes-sous-Bois",
   "lat": 48.81651,
   "lon": 1.98385
- },
- "les lilas||93": {
-  "dept": "93",
-  "km": 5.4,
-  "label": "Les Lilas",
-  "lat": 48.88054,
-  "lon": 2.42074
  },
  "les pavillons-sous-bois||93": {
   "dept": "93",
@@ -828,6 +852,13 @@
   "lon": 2.54793,
   "min": 120,
   "minAt": "2026-11-15"
+ },
+ "limeil-brévannes||94": {
+  "dept": "94",
+  "km": 17.3,
+  "label": "Limeil-Brévannes",
+  "lat": 48.74791,
+  "lon": 2.49242
  },
  "livry-gargan||93": {
   "dept": "93",
@@ -892,7 +923,9 @@
   "km": 28.1,
   "label": "Mareuil-lès-Meaux",
   "lat": 48.92726,
-  "lon": 2.86788
+  "lon": 2.86788,
+  "min": 108,
+  "minAt": "2026-11-16"
  },
  "marly-la-ville||95": {
   "km": 19.7,
@@ -926,15 +959,6 @@
   "lon": 1.61647,
   "min": 145,
   "minAt": "2026-11-14"
- },
- "meaux||77": {
-  "dept": "77",
-  "km": 30.9,
-  "label": "Meaux",
-  "lat": 48.95942,
-  "lon": 2.90023,
-  "min": 93,
-  "minAt": "2026-11-05"
  },
  "meudon||92": {
   "dept": "92",
@@ -993,13 +1017,6 @@
   "lon": 2.19375,
   "min": 93,
   "minAt": "2026-11-10"
- },
- "montmagny||IDF": {
-  "dept": "95",
-  "km": 12.4,
-  "label": "Montmagny",
-  "lat": 48.96767,
-  "lon": 2.34704
  },
  "montreuil||93": {
   "km": 5.2,
@@ -1074,7 +1091,9 @@
   "km": 72.6,
   "label": "Nemours",
   "lat": 48.26671,
-  "lon": 2.70305
+  "lon": 2.70305,
+  "min": 151,
+  "minAt": "2026-11-16"
  },
  "neuilly-plaisance||93": {
   "dept": "93",
@@ -1084,6 +1103,13 @@
   "lon": 2.50964,
   "min": 52,
   "minAt": "2026-11-04"
+ },
+ "neuilly-sur-marne||93": {
+  "dept": "93",
+  "km": 5.8,
+  "label": "Neuilly-sur-Marne",
+  "lat": 48.8649,
+  "lon": 2.53737
  },
  "neuilly-sur-seine||92": {
   "km": 16.2,
@@ -1237,7 +1263,7 @@
   "lat": 48.89205,
   "lon": 2.34873,
   "min": 49,
-  "minAt": "2026-10-13"
+  "minAt": "2026-11-16"
  },
  "paris 19e arrondissement|75019|75": {
   "dept": "75",
@@ -1262,14 +1288,18 @@
   "km": 7.8,
   "label": "Paris 20e Arrondissement",
   "lat": 48.86337,
-  "lon": 2.39715
+  "lon": 2.39715,
+  "min": 49,
+  "minAt": "2026-11-16"
  },
  "paris 2e arrondissement|75002|75": {
   "dept": "75",
   "km": 11.3,
   "label": "Paris 2e Arrondissement",
   "lat": 48.86767,
-  "lon": 2.34116
+  "lon": 2.34116,
+  "min": 51,
+  "minAt": "2026-11-16"
  },
  "paris 3e arrondissement|75003|75": {
   "dept": "75",
@@ -1295,8 +1325,8 @@
   "label": "Paris 5e Arrondissement",
   "lat": 48.84528,
   "lon": 2.35055,
-  "min": 62,
-  "minAt": "2026-10-13"
+  "min": 60,
+  "minAt": "2026-11-16"
  },
  "paris 6e arrondissement|75006|75": {
   "dept": "75",
@@ -1535,7 +1565,7 @@
   "lat": 48.86172,
   "lon": 2.67667,
   "min": 76,
-  "minAt": "2026-10-13"
+  "minAt": "2026-11-16"
  },
  "saint-thibault-des-vignes||77": {
   "dept": "77",
@@ -1665,6 +1695,15 @@
   "min": 65,
   "minAt": "2026-11-12"
  },
+ "survilliers||95": {
+  "dept": "95",
+  "km": 22.0,
+  "label": "Survilliers",
+  "lat": 49.09802,
+  "lon": 2.53953,
+  "min": 95,
+  "minAt": "2026-11-16"
+ },
  "taverny||95": {
   "dept": "95",
   "km": 24.0,
@@ -1740,15 +1779,6 @@
   "lat": 48.52837,
   "lon": 2.68442
  },
- "vert-le-grand||IDF": {
-  "dept": "91",
-  "km": 37.1,
-  "label": "Vert-le-Grand",
-  "lat": 48.57968,
-  "lon": 2.36163,
-  "min": 130,
-  "minAt": "2026-10-12"
- },
  "vert-saint-denis||93": {},
  "villebon-sur-yvette||IDF": {
   "dept": "91",
@@ -1756,6 +1786,15 @@
   "label": "Villebon-sur-Yvette",
   "lat": 48.69789,
   "lon": 2.23543
+ },
+ "villecresnes||94": {
+  "dept": "94",
+  "km": 20.7,
+  "label": "Villecresnes",
+  "lat": 48.72004,
+  "lon": 2.5296,
+  "min": 103,
+  "minAt": "2026-11-16"
  },
  "villejuif||94": {
   "dept": "94",
@@ -1765,6 +1804,13 @@
   "lon": 2.361,
   "min": 78,
   "minAt": "2026-11-12"
+ },
+ "villemomble||93": {
+  "dept": "93",
+  "km": 2.6,
+  "label": "Villemomble",
+  "lat": 48.88666,
+  "lon": 2.50872
  },
  "villeneuve-la-garenne||92": {
   "dept": "92",
@@ -1890,5 +1936,14 @@
   "label": "Épinay-sur-Seine",
   "lat": 48.95522,
   "lon": 2.31712
+ },
+ "ézanville||95": {
+  "dept": "95",
+  "km": 17.0,
+  "label": "Ézanville",
+  "lat": 49.03154,
+  "lon": 2.35718,
+  "min": 80,
+  "minAt": "2026-11-16"
  }
 }
