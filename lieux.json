@@ -137,6 +137,15 @@
   "min": 32,
   "minAt": "2026-11-14"
  },
+ "bois-colombes|92270|92": {
+  "dept": "92",
+  "km": 15.9,
+  "label": "Bois-Colombes",
+  "lat": 48.91533,
+  "lon": 2.26884,
+  "min": 59,
+  "minAt": "2026-11-17"
+ },
  "boissy-saint-léger||94": {
   "dept": "94",
   "km": 17.1,
@@ -205,6 +214,15 @@
   "label": "Goussainville",
   "lat": 49.02773,
   "lon": 2.46692
+ },
+ "cesson||77": {
+  "dept": "77",
+  "km": 38.8,
+  "label": "Cesson",
+  "lat": 48.56296,
+  "lon": 2.59735,
+  "min": 112,
+  "minAt": "2026-11-17"
  },
  "champigny-sur-marne||94": {
   "dept": "94",
@@ -454,13 +472,6 @@
   "min": 36,
   "minAt": "2026-11-13"
  },
- "dugny||93": {
-  "dept": "93",
-  "km": 6.9,
-  "label": "Dugny",
-  "lat": 48.95015,
-  "lon": 2.42187
- },
  "enghien-les-bains||95": {
   "dept": "95",
   "km": 15.1,
@@ -701,6 +712,15 @@
   "min": 122,
   "minAt": "2026-11-17"
  },
+ "l'île-saint-denis||93": {
+  "dept": "93",
+  "km": 11.3,
+  "label": "L'Île-Saint-Denis",
+  "lat": 48.93308,
+  "lon": 2.33764,
+  "min": 63,
+  "minAt": "2026-11-17"
+ },
  "la courneuve||93": {
   "km": 6.9,
   "label": "La Courneuve",
@@ -928,7 +948,9 @@
   "km": 25.0,
   "label": "Maisons-Laffitte",
   "lat": 48.95117,
-  "lon": 2.15141
+  "lon": 2.15141,
+  "min": 79,
+  "minAt": "2026-11-17"
  },
  "malakoff||92": {
   "km": 17.0,
@@ -1132,6 +1154,15 @@
   "lon": 2.50964,
   "min": 52,
   "minAt": "2026-11-04"
+ },
+ "neuilly-sur-marne||93": {
+  "dept": "93",
+  "km": 5.8,
+  "label": "Neuilly-sur-Marne",
+  "lat": 48.8649,
+  "lon": 2.53737,
+  "min": 56,
+  "minAt": "2026-11-17"
  },
  "neuilly-sur-seine||92": {
   "km": 16.2,
@@ -1617,7 +1648,9 @@
   "km": 12.3,
   "label": "Sarcelles",
   "lat": 48.99132,
-  "lon": 2.38241
+  "lon": 2.38241,
+  "min": 81,
+  "minAt": "2026-11-17"
  },
  "savigny-le-temple||77": {
   "dept": "77",
@@ -1782,7 +1815,9 @@
   "km": 36.4,
   "label": "Vauréal",
   "lat": 49.02931,
-  "lon": 2.02544
+  "lon": 2.02544,
+  "min": 112,
+  "minAt": "2026-11-17"
  },
  "vaux-le-pénil||77": {
   "dept": "77",
@@ -1790,6 +1825,15 @@
   "label": "Vaux-le-Pénil",
   "lat": 48.52837,
   "lon": 2.68442
+ },
+ "vert-le-grand||IDF": {
+  "dept": "91",
+  "km": 37.1,
+  "label": "Vert-le-Grand",
+  "lat": 48.57968,
+  "lon": 2.36163,
+  "min": 130,
+  "minAt": "2026-11-17"
  },
  "vert-saint-denis||93": {},
  "villebon-sur-yvette||IDF": {
@@ -1935,7 +1979,9 @@
   "km": 40.9,
   "label": "Égly",
   "lat": 48.57999,
-  "lon": 2.21978
+  "lon": 2.21978,
+  "min": 121,
+  "minAt": "2026-11-17"
  },
  "émerainville||77": {
   "dept": "77",
