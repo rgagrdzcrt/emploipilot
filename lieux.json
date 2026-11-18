@@ -137,15 +137,6 @@
   "min": 32,
   "minAt": "2026-11-14"
  },
- "bois-colombes|92270|92": {
-  "dept": "92",
-  "km": 15.9,
-  "label": "Bois-Colombes",
-  "lat": 48.91533,
-  "lon": 2.26884,
-  "min": 59,
-  "minAt": "2026-11-17"
- },
  "boissy-saint-léger||94": {
   "dept": "94",
   "km": 17.1,
@@ -445,7 +436,7 @@
   "lat": 48.82178,
   "lon": 2.65357,
   "min": 84,
-  "minAt": "2026-10-14"
+  "minAt": "2026-11-18"
  },
  "créteil||94": {
   "km": 13.5,
@@ -481,12 +472,14 @@
   "min": 36,
   "minAt": "2026-11-13"
  },
- "dugny||93": {
-  "dept": "93",
-  "km": 6.9,
-  "label": "Dugny",
-  "lat": 48.95015,
-  "lon": 2.42187
+ "ecouen||95": {
+  "dept": "95",
+  "km": 15.7,
+  "label": "Écouen",
+  "lat": 49.02445,
+  "lon": 2.37457,
+  "min": 79,
+  "minAt": "2026-11-18"
  },
  "enghien-les-bains||95": {
   "dept": "95",
@@ -633,15 +626,6 @@
   "min": 74,
   "minAt": "2026-11-12"
  },
- "gournay-sur-marne||93": {
-  "dept": "93",
-  "km": 8.2,
-  "label": "Gournay-sur-Marne",
-  "lat": 48.86071,
-  "lon": 2.57648,
-  "min": 54,
-  "minAt": "2026-11-16"
- },
  "goussainville||95": {
   "km": 13.9,
   "label": "Goussainville",
@@ -649,15 +633,6 @@
   "lon": 2.46692,
   "min": 81,
   "minAt": "2026-11-12"
- },
- "gretz-armainvilliers||77": {
-  "dept": "77",
-  "km": 25.6,
-  "label": "Gretz-Armainvilliers",
-  "lat": 48.73832,
-  "lon": 2.72849,
-  "min": 77,
-  "minAt": "2026-11-04"
  },
  "groslay||95": {
   "dept": "95",
@@ -683,13 +658,6 @@
   "lon": 2.15245,
   "min": 107,
   "minAt": "2026-11-15"
- },
- "herblay||95": {
-  "dept": "95",
-  "km": 26.7,
-  "label": "Herblay-sur-Seine",
-  "lat": 49.00406,
-  "lon": 2.15245
  },
  "issy-les-moulineaux||92": {
   "km": 18.5,
@@ -842,15 +810,6 @@
   "min": 59,
   "minAt": "2026-11-17"
  },
- "le pin||77": {
-  "dept": "77",
-  "km": 10.3,
-  "label": "Le Pin",
-  "lat": 48.91261,
-  "lon": 2.62618,
-  "min": 65,
-  "minAt": "2026-11-08"
- },
  "le plessis-robinson||92": {
   "km": 21.3,
   "label": "Le Plessis-Robinson",
@@ -929,6 +888,13 @@
   "lon": 2.54793,
   "min": 120,
   "minAt": "2026-11-15"
+ },
+ "limeil-brévannes||94": {
+  "dept": "94",
+  "km": 17.3,
+  "label": "Limeil-Brévannes",
+  "lat": 48.74791,
+  "lon": 2.49242
  },
  "livry-gargan||93": {
   "dept": "93",
@@ -1177,6 +1143,15 @@
   "lon": 2.50964,
   "min": 52,
   "minAt": "2026-11-04"
+ },
+ "neuilly-sur-marne||93": {
+  "dept": "93",
+  "km": 5.8,
+  "label": "Neuilly-sur-Marne",
+  "lat": 48.8649,
+  "lon": 2.53737,
+  "min": 56,
+  "minAt": "2026-11-18"
  },
  "neuilly-sur-seine||92": {
   "km": 16.2,
@@ -1561,6 +1536,15 @@
   "min": 57,
   "minAt": "2026-11-12"
  },
+ "saint-leu-la-forêt||95": {
+  "dept": "95",
+  "km": 21.5,
+  "label": "Saint-Leu-la-Forêt",
+  "lat": 49.0133,
+  "lon": 2.24294,
+  "min": 79,
+  "minAt": "2026-11-18"
+ },
  "saint-mandé||94": {
   "dept": "94",
   "km": 8.4,
@@ -1613,15 +1597,6 @@
   "min": 56,
   "minAt": "2026-11-12"
  },
- "saint-soupplets||77": {
-  "dept": "77",
-  "km": 27.7,
-  "label": "Saint-Soupplets",
-  "lat": 49.03657,
-  "lon": 2.80622,
-  "min": 107,
-  "minAt": "2026-11-04"
- },
  "saint-thibault-des-vignes|77400|77": {
   "dept": "77",
   "km": 14.8,
@@ -1630,15 +1605,6 @@
   "lon": 2.67667,
   "min": 76,
   "minAt": "2026-11-16"
- },
- "saint-thibault-des-vignes||77": {
-  "dept": "77",
-  "km": 14.8,
-  "label": "Saint-Thibault-des-Vignes",
-  "lat": 48.86172,
-  "lon": 2.67667,
-  "min": 105,
-  "minAt": "2026-11-04"
  },
  "sannois||95": {
   "dept": "95",
