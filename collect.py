@@ -2171,7 +2171,7 @@ def add_travel_info(offers, cfg):
         cache = {}
     api_key = os.environ.get("PRIM_API_KEY", "").strip()
     today = datetime.now(timezone.utc).date()
-    geocoded = timed = 0
+    geocoded = timed = no_route = 0
     used = set()
     for offer in offers:
         query = place_query(offer.get("location"), offer.get("dept") or "")
@@ -2201,8 +2201,17 @@ def add_travel_info(offers, cfg):
                 time.sleep(TRAVEL_PAUSE)
             except (HTTPError, URLError, TimeoutError, ValueError) as exc:
                 code = getattr(exc, "code", "")
-                print(f"Trajet non calculé ({type(exc).__name__} {code}).".replace(" )", ")"))
-                api_key = ""  # quota ou clé refusée : on reprendra à la prochaine collecte
+                if code in (400, 404):
+                    # Pas d'itinéraire pour ce lieu (point hors réseau ou mal placé) : on note
+                    # l'essai (réessayé dans TRAVEL_REFRESH_DAYS jours) et on passe au suivant.
+                    # Avant, cette seule erreur arrêtait le calcul pour toutes les autres offres.
+                    place["min"], place["minAt"] = None, today.isoformat()
+                    timed += 1
+                    no_route += 1
+                    time.sleep(TRAVEL_PAUSE)
+                else:
+                    print(f"Trajet non calculé ({type(exc).__name__} {code}).".replace(" )", ")"))
+                    api_key = ""  # quota ou clé refusée : on reprendra à la prochaine collecte
         offer["km"] = place.get("km")
         if offer.get("dept") in ("", "IDF", None) and place.get("dept") in IDF_DEPTS:
             offer["dept"] = place["dept"]  # « Maulette, IDF » → 78
@@ -2213,7 +2222,8 @@ def add_travel_info(offers, cfg):
     # Seuls les lieux des offres actuelles sont gardés : le cache ne grossit pas indéfiniment.
     cache = {k: v for k, v in cache.items() if k in used}
     PLACES_FILE.write_text(json.dumps(cache, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
-    print(f"Trajets : {geocoded} lieu(x) géolocalisé(s), {timed} temps de trajet calculé(s)"
+    print(f"Trajets : {geocoded} lieu(x) géolocalisé(s), {timed - no_route} temps de trajet calculé(s), "
+          f"{no_route} lieu(x) sans itinéraire"
           + ("" if os.environ.get("PRIM_API_KEY") else " (secret PRIM_API_KEY absent : distance seulement)."))
 
 

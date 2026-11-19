@@ -147,6 +147,33 @@ class FranceTravail(unittest.TestCase):
         self.assertEqual(collect.ft_location(None), "")
 
 
+class Trajets(unittest.TestCase):
+    def test_lieu_sans_itineraire_ne_bloque_pas_les_autres(self):
+        import tempfile
+        from unittest import mock
+        from urllib.error import HTTPError
+
+        offers = [{"location": f"Ville{i} (93)", "dept": "93"} for i in range(3)]
+        answers = iter([HTTPError("u", 404, "aucun itinéraire", {}, None), 25, 40])
+
+        def fake_transit(origin, place, key):
+            answer = next(answers)
+            if isinstance(answer, Exception):
+                raise answer
+            return answer
+
+        with tempfile.TemporaryDirectory() as tmp, \
+                mock.patch.object(collect, "PLACES_FILE", pathlib.Path(tmp) / "lieux.json"), \
+                mock.patch.dict("os.environ", {"PRIM_API_KEY": "cle-de-test"}), \
+                mock.patch.object(collect, "geocode", lambda city, pc, dept: {"lat": 48.9, "lon": 2.5, "dept": "93"}), \
+                mock.patch.object(collect, "transit_minutes_retry", fake_transit), \
+                mock.patch.object(collect.time, "sleep", lambda s: None):
+            collect.add_travel_info(offers, {"origine": {"lat": 48.9, "lon": 2.48}})
+        self.assertNotIn("trajetMin", offers[0])        # 404 : pas d'itinéraire pour ce lieu
+        self.assertEqual(offers[1]["trajetMin"], 25)     # les suivants sont bien calculés
+        self.assertEqual(offers[2]["trajetMin"], 40)
+
+
 class Http(unittest.TestCase):
     def test_reponse_vide(self):
         from unittest import mock

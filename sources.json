@@ -506,7 +506,7 @@
     },
     {
       "name": "réassortisseur · Bondy",
-      "enabled": true,
+      "enabled": false,
       "category": "stock",
       "keywords": "réassortisseur",
       "location": "Bondy",
@@ -515,7 +515,7 @@
     },
     {
       "name": "réassortisseur · Paris",
-      "enabled": true,
+      "enabled": false,
       "category": "stock",
       "keywords": "réassortisseur",
       "location": "Paris",
