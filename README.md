@@ -110,16 +110,25 @@ En local, `python mail.py --essai --jours 30 --detail` affiche chaque décision 
 
 ## Lancer la collecte
 
-Dans GitHub, ouvre **Actions → Collecte des offres → Run workflow**. Le workflow tourne aussi automatiquement toutes les 6 heures. Sans secrets, les connecteurs qui en ont besoin sont ignorés et les connecteurs d’entreprise sans identifiant ne font aucun appel.
+Dans GitHub, ouvre **Actions → Collecte des offres → Run workflow**. Le workflow est aussi planifié toutes les 6 heures (en pratique plus espacé, voir « Limites »). Sans secrets, les connecteurs qui en ont besoin sont ignorés et les connecteurs d’entreprise sans identifiant ne font aucun appel.
 
 ## Limites
 
 - Adzuna demande des identifiants et impose un crédit visible pour chaque annonce affichée.
-- Joblet est une recherche publique sans clé ; ses résultats ont un filtrage strict de la catégorie et du lieu avant ajout.
+- Joblet est une recherche publique sans clé ; ses résultats ont un filtrage strict de la catégorie et du lieu avant ajout. **Désactivé depuis le 19/11/2026** (`"enabled": false` dans `sources.json`) : aucune offre France/Île-de-France retenue sur toutes les collectes vérifiées.
 - Workopia demande un renouvellement OAuth durable. Il est ignoré tant que les deux secrets dédiés ne sont pas configurés.
 - Greenhouse, Lever et Ashby restent inactifs faute d'employeurs pertinents configurés. SmartRecruiters est actif pour les tableaux Groupement Mousquetaires et Courir.
 - La Bonne Alternance est une API réelle, mais elle ne fournit que des offres en alternance. Elle n’est pas ajoutée au collecteur puisque ce site exclut actuellement l’alternance.
-- Les pages GitHub Actions planifiées peuvent être retardées; un workflow inactif peut nécessiter un lancement manuel.
+- Les tâches planifiées de GitHub Actions sont retardées ou sautées. Constaté en novembre 2026 : la collecte, prévue toutes les 6 h, tourne environ toutes les 12 h ; le tri Gmail, prévu toutes les heures, environ toutes les 5 à 10 h. Un lancement manuel (**Run workflow**) reste possible à tout moment.
+
+## Tests
+
+`tests/` vérifie les règles de tri des offres (Python) et du site (JavaScript), sans réseau ni secret. Ils tournent sur GitHub à chaque envoi (`.github/workflows/tests.yml`) ; en local :
+
+```
+python -m unittest discover -s tests
+node --test tests/front.test.js
+```
 
 ## Documentation officielle
 

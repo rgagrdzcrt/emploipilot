@@ -1188,8 +1188,10 @@ function safeJson(text) {
 const TRACK_FIELDS = ['status', 'appliedDate', 'notes', 'notesEdited', 'trackedAt', 'relanceAuto', 'relanceDate',
   'mailKind', 'mailAt', 'mailDate', 'mailSubject', 'mailFrom'];
 
-/** Applique l'état distant : pour chaque offre, la modification la plus récente gagne. */
-function applySync(state) {
+/** Applique l'état distant : pour chaque offre, la modification la plus récente gagne.
+ * firstSync : première synchro de cet appareil. Le profil du gist (infos, modèles, critères)
+ * l'emporte alors toujours : un appareil neuf ne doit jamais remplacer le vrai profil. */
+function applySync(state, firstSync = false) {
   if (!state || !state.entries) return false;
   let changed = false;
   const byId = new Map(offers.map(o => [o.id, o]));
@@ -1206,8 +1208,8 @@ function applySync(state) {
       changed = true;
     }
   });
-  if ((state.profileUpdatedAt || 0) > (profile.updatedAt || 0) && state.profile) {
-    profile = { ...profile, ...state.profile };
+  if (state.profile && (firstSync || (state.profileUpdatedAt || 0) > (profile.updatedAt || 0))) {
+    profile = { ...profile, ...state.profile, updatedAt: state.profileUpdatedAt || state.profile.updatedAt || 0 };
     store(PROFILE, JSON.stringify(profile));
     refreshProfileForms();
     changed = true;
@@ -1260,8 +1262,9 @@ async function syncNow(force = false) {
       id = await findGist();
       remote = await readGist(id);
     }
+    const firstSync = !stored(SYNC_CACHE); // jamais synchronisé sur cet appareil
     store(SYNC_CACHE, JSON.stringify(remote));
-    if (applySync(remote)) { storeOffers(); render(); }
+    if (applySync(remote, firstSync)) { storeOffers(); render(); }
     const local = syncState();
     if (!sameEntries(local.entries, remote.entries) || local.profileUpdatedAt !== (remote.profileUpdatedAt || 0)) {
       await gh('/gists/' + id, {
@@ -1379,25 +1382,30 @@ function pilotInit() {
     store(PROFILE, JSON.stringify(profile));
   }
 
-  // Nom de famille : Cartier → Gazard (profil de Ryan) dans « Mes infos » et les CV à joindre.
-  // updatedAt avancé pour que la synchro l'envoie aussi aux autres appareils.
+  // Nom de famille : Cartier → Gazard (profil de Ryan) dans les CV à joindre.
+  // Le nom de « Mes infos » n'est plus touché (le CV porte désormais « Ryan CARTIER GAZARD »).
+  // updatedAt n'est avancé que si un fichier a vraiment changé : sur un appareil neuf, un profil
+  // vide daté de « maintenant » gagnait la synchro et effaçait le vrai profil partout.
   if (ACTIVE_PROFILE.id === 'ryan' && !profile.gazardMigrated) {
     const gazard = s => String(s || '').replace(/cartier/gi, m => (m === m.toUpperCase() ? 'GAZARD' : 'Gazard'));
-    if (profile.infos && /cartier/i.test(profile.infos.nom || '')) profile.infos.nom = gazard(profile.infos.nom);
+    let changedCv = false;
     // Les CV « Cartier » pointent désormais vers les fichiers réels du Bureau (CV_Ryan_Gazard_*.pdf).
     if (profile.cv) Object.keys(profile.cv).forEach(c => {
-      if (/cartier/i.test(profile.cv[c] || '')) profile.cv[c] = (ACTIVE_PROFILE.cv || {})[c] || gazard(profile.cv[c]);
+      if (/cartier/i.test(profile.cv[c] || '')) {
+        profile.cv[c] = (ACTIVE_PROFILE.cv || {})[c] || gazard(profile.cv[c]);
+        changedCv = true;
+      }
     });
     profile.gazardMigrated = true;
-    profile.updatedAt = Date.now();
+    if (changedCv) profile.updatedAt = Date.now();
     store(PROFILE, JSON.stringify(profile));
   }
 
   // Profil recentré sur la logistique : le mémo de mots-clés d'origine (stock, rayon, vente),
-  // s'il n'a pas été modifié, laisse place à celui du profil.
+  // s'il n'a pas été modifié, laisse place à celui du profil. Sans avancer updatedAt : un
+  // ancien appareil ne doit pas écraser des mots-clés modifiés depuis sur un autre.
   if (ACTIVE_PROFILE.keywords && /^gestionnaire de stock, stockiste[\s\S]*conseiller de vente Paris$/.test(profile.keywords || '')) {
     profile.keywords = ACTIVE_PROFILE.keywords;
-    profile.updatedAt = Date.now();
     store(PROFILE, JSON.stringify(profile));
     document.getElementById('keywords').value = profile.keywords;
   }

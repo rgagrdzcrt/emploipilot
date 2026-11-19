@@ -1005,7 +1005,7 @@
     "maxDaysOld": 5
   },
   "joblet": {
-    "enabled": true,
+    "enabled": false,
     "queries": [
       {
         "name": "stock-logistique",
@@ -1056,7 +1056,8 @@
         "keywords": "serveur chef de rang barista",
         "location": "Paris, France"
       }
-    ]
+    ],
+    "_note": "Désactivé le 19/11/2026 : 0 offre France/IDF sur toutes les collectes vérifiées. Remettre true pour réessayer."
   },
   "workopia": {
     "enabled": false,

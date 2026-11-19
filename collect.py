@@ -1290,10 +1290,13 @@ def fetch_adzuna(cfg):
             if offer["contract"] == "À vérifier":
                 offer["contract"] = {"permanent": "CDI", "contract": "CDD"}.get(job.get("contract_type"), "À vérifier")
             extra = []
+            # Valeurs Adzuna en anglais (permanent, part_time…) traduites pour la fiche.
             if job.get("contract_type"):
-                extra.append("Contrat indiqué : " + str(job["contract_type"]))
+                kind = str(job["contract_type"])
+                extra.append("Contrat indiqué : " + {"permanent": "CDI", "contract": "CDD ou mission"}.get(kind, kind))
             if job.get("contract_time"):
-                extra.append("Temps indiqué : " + str(job["contract_time"]))
+                hours = str(job["contract_time"])
+                extra.append("Temps indiqué : " + {"full_time": "temps plein", "part_time": "temps partiel"}.get(hours, hours))
             if job.get("salary_min") or job.get("salary_max"):
                 minimum = job.get("salary_min")
                 maximum = job.get("salary_max")
@@ -1961,7 +1964,9 @@ def main():
         too_far = [o for o in offers
                    if isinstance(o.get("km"), (int, float)) and o["km"] > max_km and not is_tracked(o)]
         if too_far:
-            offers = [o for o in offers if o not in too_far]
+            # Comparaison par identité (et non par contenu) : linéaire au lieu de quadratique.
+            gone = {id(o) for o in too_far}
+            offers = [o for o in offers if id(o) not in gone]
             removed_by_rule[f"à plus de {max_km} km"] = len(too_far)
 
     def published_days(offer):
@@ -1975,7 +1980,8 @@ def main():
     too_old = [o for o in offers
                if (published_days(o) or 0) > MAX_PUBLICATION_DAYS and not is_tracked(o)]
     if too_old:
-        offers = [o for o in offers if o not in too_old]
+        gone = {id(o) for o in too_old}
+        offers = [o for o in offers if id(o) not in gone]
         removed_by_rule[f"publiées il y a plus de {MAX_PUBLICATION_DAYS} jours"] = len(too_old)
 
     write_offers(offers)
