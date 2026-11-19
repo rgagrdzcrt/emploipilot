@@ -84,5 +84,86 @@ class Offres(unittest.TestCase):
         self.assertEqual(collect.detect_dept("Clichy"), "92")
 
 
+class FranceTravail(unittest.TestCase):
+    """Connecteur France Travail testé hors ligne : appels simulés, aucune clé réelle."""
+
+    def run_fetch(self, answers):
+        from unittest import mock
+        from urllib.error import HTTPError
+        from urllib.parse import parse_qs, urlparse
+        calls = []
+
+        def fake_http_json(req, timeout=35):
+            if req.full_url.startswith(collect.FT_TOKEN_URL):
+                return {"access_token": "jeton-de-test"}
+            calls.append(req.full_url)
+            answer = answers[len(calls) - 1]
+            if isinstance(answer, int):
+                raise HTTPError(req.full_url, answer, "erreur simulée", {}, None)
+            return answer
+
+        cfg = {"departements": ["93"], "queries": [
+            {"name": "magasinage", "category": "stock", "rome": "N1103"},
+            {"name": "stockiste", "category": "stock", "keywords": "stockiste"},
+            {"name": "vide", "category": "stock", "rome": "N1303"},
+        ]}
+        with mock.patch.dict("os.environ", {"FT_CLIENT_ID": "id", "FT_CLIENT_SECRET": "secret"}), \
+                mock.patch.object(collect, "http_json", fake_http_json), \
+                mock.patch.object(collect.time, "sleep", lambda s: None):
+            offers = collect.fetch_francetravail(cfg)
+        return offers, [(urlparse(u), parse_qs(urlparse(u).query)) for u in calls]
+
+    def test_appels_et_offres(self):
+        job = {"id": "123ABC", "intitule": "Magasinier H/F", "typeContrat": "CDI",
+               "dateCreation": "2026-11-18T10:00:00.000Z", "description": "Réception des marchandises.",
+               "entreprise": {"nom": "Entrepôt Test"}, "lieuTravail": {"libelle": "93 - BONDY"}}
+        # 1re recherche : une offre ; 2e : erreur serveur ; 3e : « 204 », réponse vide.
+        offers, calls = self.run_fetch([{"resultats": [job]}, 500, {}])
+        self.assertEqual(len(calls), 3)  # une erreur n'arrête pas les recherches suivantes
+        url, params = calls[0]
+        self.assertEqual(url.path, "/partenaire/offresdemploi/v2/offres/search")
+        self.assertEqual(params["codeROME"], ["N1103"])
+        self.assertEqual(params["departement"], ["93"])
+        self.assertEqual(params["range"], ["0-149"])
+        self.assertIn("minCreationDate", params)
+        self.assertIn("maxCreationDate", params)
+        self.assertEqual(calls[1][1]["motsCles"], ["stockiste"])
+        self.assertEqual(len(offers), 1)
+        offer = offers[0]
+        self.assertEqual(offer["url"], "https://candidat.francetravail.fr/offres/recherche/detail/123ABC")
+        self.assertEqual(offer["location"], "Bondy (93)")
+        self.assertEqual(offer["contract"], "CDI")
+        self.assertEqual(offer["category"], "stock")
+
+    def test_jeton_refuse_arrete_la_source(self):
+        from urllib.error import HTTPError
+        with self.assertRaises(HTTPError):
+            self.run_fetch([401, {}, {}])
+
+    def test_lieux(self):
+        self.assertEqual(collect.ft_location({"libelle": "93 - LE PRE-SAINT-GERVAIS"}), "Le Pre-Saint-Gervais (93)")
+        self.assertEqual(collect.ft_location({"libelle": "75 - Paris 15e Arrondissement"}), "Paris 15e Arrondissement (75)")
+        self.assertEqual(collect.ft_location({"libelle": "Île-de-France"}), "Île-de-France")
+        self.assertEqual(collect.ft_location(None), "")
+
+
+class Http(unittest.TestCase):
+    def test_reponse_vide(self):
+        from unittest import mock
+
+        class Empty:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+            def read(self):
+                return b""
+
+        with mock.patch.object(collect, "urlopen", lambda req, timeout=35: Empty()):
+            self.assertEqual(collect.http_json("https://ex.fr"), {})
+
+
 if __name__ == "__main__":
     unittest.main()

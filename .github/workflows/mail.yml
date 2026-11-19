@@ -17,6 +17,7 @@ on:
         default: false
 permissions:
   contents: read
+  actions: write   # relance de la collecte en retard (dernière étape)
 concurrency:
   group: tri-emails
   cancel-in-progress: false
@@ -46,3 +47,18 @@ jobs:
           ESSAI: ${{ inputs.essai && '--essai' || '' }}
           RECLASSER: ${{ inputs.reclasser && '--reclasser' || '' }}
         run: python mail.py --jours "$JOURS" $ESSAI $RECLASSER
+
+      # GitHub saute souvent les tâches planifiées (constaté en novembre 2026 : environ
+      # 2 collectes sur 4 par jour). Chaque tri planifié relance donc la collecte si la
+      # dernière date de plus de 5 h. Une relance manuelle ne relance rien : pas de boucle.
+      - name: Relancer la collecte si elle a pris du retard
+        if: always() && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          last=$(gh run list -R "$GITHUB_REPOSITORY" -w collect.yml -L 1 --json createdAt -q '.[0].createdAt')
+          age=$(( $(date +%s) - $(date -d "${last:-1970-01-01T00:00:00Z}" +%s) ))
+          echo "Dernière collecte lancée il y a $((age / 3600)) h."
+          if [ "$age" -gt 18000 ]; then
+            gh workflow run collect.yml -R "$GITHUB_REPOSITORY" --ref main && echo "Collecte relancée."
+          fi

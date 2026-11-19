@@ -118,6 +118,20 @@ const DEFAULT_INFOS = { disponibilite: 'immédiatement' };
 
 function templatesOf() { return { ...DEFAULT_TEMPLATES, ...(profile.templates || {}) }; }
 function infosOf() { return { ...DEFAULT_INFOS, ...(profile.infos || {}) }; }
+
+/** Nom de famille « CARTIER GAZARD » (19/11/2026), comme sur le CV. Une seule fois, et sur le
+ * profil le plus récent : juste après la synchro quand elle est active (jamais sur une copie
+ * ancienne, qui écraserait le profil des autres appareils), sinon au chargement. */
+function migrateCartierGazard() {
+  if (ACTIVE_PROFILE.id !== 'ryan' || profile.cartierGazard) return false;
+  profile.cartierGazard = true;
+  if (/^gazard$/i.test(((profile.infos || {}).nom || '').trim())) {
+    profile.infos = { ...profile.infos, nom: 'CARTIER GAZARD' };
+    profile.updatedAt = Date.now(); // vraie modification : la synchro l'envoie aux autres appareils
+  }
+  store(PROFILE, JSON.stringify(profile));
+  return true;
+}
 function cvOf(cat) { return (profile.cv || {})[cat] || (ACTIVE_PROFILE.cv || {})[cat] || ''; }
 
 function jobCategory(o) {
@@ -1209,6 +1223,8 @@ function applySync(state, firstSync = false) {
     }
   });
   if (state.profile && (firstSync || (state.profileUpdatedAt || 0) > (profile.updatedAt || 0))) {
+    // Migration du nom faite sur cette copie seulement : elle se refera sur le profil reçu.
+    if (!state.profile.cartierGazard) delete profile.cartierGazard;
     profile = { ...profile, ...state.profile, updatedAt: state.profileUpdatedAt || state.profile.updatedAt || 0 };
     store(PROFILE, JSON.stringify(profile));
     refreshProfileForms();
@@ -1265,6 +1281,7 @@ async function syncNow(force = false) {
     const firstSync = !stored(SYNC_CACHE); // jamais synchronisé sur cet appareil
     store(SYNC_CACHE, JSON.stringify(remote));
     if (applySync(remote, firstSync)) { storeOffers(); render(); }
+    if (migrateCartierGazard()) refreshProfileForms(); // sur le profil à jour, envoyé juste après
     const local = syncState();
     if (!sameEntries(local.entries, remote.entries) || local.profileUpdatedAt !== (remote.profileUpdatedAt || 0)) {
       await gh('/gists/' + id, {
@@ -1400,6 +1417,9 @@ function pilotInit() {
     if (changedCv) profile.updatedAt = Date.now();
     store(PROFILE, JSON.stringify(profile));
   }
+
+  // Sans synchro, le profil local est le seul : le nom y est mis à jour tout de suite.
+  if (!stored(SYNC_TOKEN)) migrateCartierGazard();
 
   // Profil recentré sur la logistique : le mémo de mots-clés d'origine (stock, rayon, vente),
   // s'il n'a pas été modifié, laisse place à celui du profil. Sans avancer updatedAt : un

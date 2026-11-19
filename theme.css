@@ -542,6 +542,7 @@ button.secondary kbd, button.ghost kbd { background: var(--surface-3); color: va
    Responsive
    ========================================================================== */
 .show-sm { display: none; }
+.only-sm { display: none; }
 
 @media (max-width: 1180px) {
   .job { grid-template-columns: auto minmax(0, 1fr) 160px; }
@@ -609,6 +610,10 @@ button.secondary kbd, button.ghost kbd { background: var(--surface-3); color: va
   .search-box input { font-size: 16px; }
   .hide-sm { display: none; }
   .show-sm { display: inline; }
+  /* Téléphone : 6 onglets en bas au lieu de 7. « Synchro » est rangé dans « Critères ». */
+  .nav button.nav-wide { display: none; }
+  .only-sm { display: flex; }
+  .sync-link { width: 100%; justify-content: center; align-items: center; gap: 8px; min-height: 46px; margin-bottom: 14px; }
   .search-row > button { width: 46px; padding: 0; }
   .filters-toggle { width: auto !important; padding: 0 12px !important; }
   .results-head { flex-direction: column; align-items: flex-start; gap: 6px; }

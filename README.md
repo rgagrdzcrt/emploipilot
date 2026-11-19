@@ -36,7 +36,16 @@ Recherche généraliste configurée par métier dans `sources.json`. La clé res
 
 ### France Travail
 
-Connecteur officiel déjà présent. Il utilise les secrets `FT_CLIENT_ID` et `FT_CLIENT_SECRET`; les départements et métiers interrogés sont réglables dans `sources.json`. L’absence des secrets désactive cette source sans interrompre les autres.
+Connecteur officiel, gratuit, et la source la plus riche pour la logistique, la mise en rayon et la vente. **Inactif tant que ses deux secrets ne sont pas ajoutés** ; l’absence des secrets désactive cette source sans interrompre les autres.
+
+Une recherche par code métier ROME (`"rome"` dans `sources.json`, par exemple `N1103` : magasinage et préparation de commandes) ou par mot-clé (`"keywords"`), dans chaque département listé, limitée aux offres des 5 derniers jours (`"publieesDepuisJours"`). Une recherche en échec n’arrête pas les suivantes ; un jeton refusé arrête la source.
+
+Pour l’activer (une seule fois) :
+
+1. Crée un compte gratuit sur [francetravail.io](https://francetravail.io), puis une application.
+2. Abonne cette application à l’API **Offres d’emploi v2**.
+3. Dans GitHub, **Settings → Secrets and variables → Actions → New repository secret** : ajoute `FT_CLIENT_ID` (identifiant client) et `FT_CLIENT_SECRET` (clé secrète) de cette application.
+4. Lance **Actions → Collecte des offres → Run workflow** : le journal affiche une ligne par recherche (`France Travail [magasinage / 93] : …`).
 
 ### Adzuna
 

@@ -12,7 +12,7 @@ import html
 import time
 import hashlib
 import unicodedata
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from urllib.request import Request, urlopen
@@ -244,24 +244,18 @@ FT_TOKEN_URL = (
     "https://entreprise.francetravail.fr/connexion/oauth2/access_token"
     "?realm=%2Fpartenaire"
 )
-FT_SEARCH_URL = "https://api.francetravail.io/v2/offres/search"
+# Chemin complet de la recherche (l'ancien « /v2/offres/search » n'existe pas).
+FT_SEARCH_URL = "https://api.francetravail.io/partenaire/offresdemploi/v2/offres/search"
 FT_SCOPE = "api_offresdemploiv2 o2dsoffre"
+FT_PAGE = 150  # résultats par appel : maximum permis par l'API
+FT_DETAIL_URL = "https://candidat.francetravail.fr/offres/recherche/detail/{}"
+# Une recherche par code métier ROME (plus large et plus sûr que des listes de mots-clés,
+# dont la combinaison n'est pas documentée) ; le titre de chaque offre est ensuite trié par
+# classify_category comme pour toutes les sources.
 DEFAULT_FT_QUERIES = [
-    {
-        "name": "stock-logistique",
-        "category": "stock",
-        "keywords": "magasinier, gestionnaire de stock, logistique, préparateur de commandes",
-    },
-    {
-        "name": "rayon",
-        "category": "rayon",
-        "keywords": "mise en rayon, employé libre-service, rayoniste",
-    },
-    {
-        "name": "vente",
-        "category": "vente",
-        "keywords": "vendeur, conseiller de vente, prêt-à-porter",
-    },
+    {"name": "magasinage", "category": "stock", "rome": "N1103"},
+    {"name": "rayon", "category": "rayon", "rome": "D1507"},
+    {"name": "vente", "category": "vente", "rome": "D1214"},
 ]
 FT_CONTRACTS = {"CDI": "CDI", "CDD": "CDD", "MIS": "Intérim"}
 
@@ -594,7 +588,9 @@ def make_offer(title, company, location, text, url, date, source, category=None)
 
 def http_json(request, timeout=35):
     with urlopen(request, timeout=timeout) as response:
-        return json.loads(response.read().decode("utf-8"))
+        raw = response.read()
+    # Réponse vide (France Travail répond « 204 No Content » quand rien ne correspond).
+    return json.loads(raw.decode("utf-8")) if raw.strip() else {}
 
 
 # Volume par source et par recherche (annoncé par l'API, reçu, retenu),
@@ -715,22 +711,25 @@ def fetch_francetravail(ft_cfg):
         raise
 
     departements = ft_cfg.get("departements") or ["75", "93"]
-    queries = ft_cfg.get("queries") or DEFAULT_FT_QUERIES
-    offers = []
+    queries = [q for q in (ft_cfg.get("queries") or DEFAULT_FT_QUERIES) if q.get("enabled", True)]
+    # Seulement les offres récentes : les plus anciennes seraient écartées de toute façon.
+    days = int(ft_cfg.get("publieesDepuisJours") or MAX_PUBLICATION_DAYS)
+    now = datetime.now(timezone.utc).replace(microsecond=0)
+    window = {
+        "minCreationDate": (now - timedelta(days=days)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "maxCreationDate": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+    }
+    offers, failures = [], 0
 
     for dept in departements:
         for query in queries:
-            if not query.get("enabled", True):
-                continue
-            params = urlencode(
-                {
-                    "motsCles": query.get("keywords", ""),
-                    "departement": dept,
-                    "range": f"0-{50 - 1}",
-                }
-            )
+            params = {"departement": dept, "range": f"0-{FT_PAGE - 1}", **window}
+            if query.get("rome"):
+                params["codeROME"] = query["rome"]
+            if query.get("keywords"):
+                params["motsCles"] = query["keywords"]
             req = Request(
-                f"{FT_SEARCH_URL}?{params}",
+                f"{FT_SEARCH_URL}?{urlencode(params)}",
                 headers={
                     "User-Agent": UA,
                     "Authorization": f"Bearer {token}",
@@ -738,21 +737,36 @@ def fetch_francetravail(ft_cfg):
                 },
             )
             label = f"{query.get('name')} / {dept}"
-            try:
-                data = http_json(req, timeout=25)
-            except HTTPError as exc:
-                print(f"France Travail [{label}] : erreur HTTP {exc.code}.")
-                raise
-            except (URLError, TimeoutError, ValueError) as exc:
-                print(f"France Travail [{label}] : erreur ({type(exc).__name__}).")
-                raise
+            # Une recherche en échec n'arrête plus les autres ; seul un jeton refusé le fait.
+            data = None
+            for attempt in (1, 2):
+                try:
+                    data = http_json(req, timeout=25)
+                    break
+                except HTTPError as exc:
+                    if exc.code == 401:
+                        raise
+                    if exc.code == 429 and attempt == 1:
+                        time.sleep(2)  # trop d'appels par seconde : une seconde chance
+                        continue
+                    print(f"France Travail [{label}] : erreur HTTP {exc.code}, recherche suivante.")
+                except (URLError, TimeoutError, ValueError) as exc:
+                    print(f"France Travail [{label}] : erreur ({type(exc).__name__}), recherche suivante.")
+                break
+            if data is None:
+                failures += 1
+                continue
 
             count = 0
-            for job in data.get("resultats", []):
+            results = data.get("resultats") or []
+            for job in results:
+                # Offre déposée directement chez France Travail : pas d'URL d'origine.
                 url = ((job.get("origineOffre") or {}).get("urlOrigine") or "").strip()
+                if not url and job.get("id"):
+                    url = FT_DETAIL_URL.format(quote(str(job["id"]), safe=""))
                 contract = FT_CONTRACTS.get(job.get("typeContrat", ""), "À vérifier")
                 parsed_date = parse_date(job.get("dateCreation") or "")
-                location = (job.get("lieuTravail") or {}).get("libelle") or ""
+                location = ft_location(job.get("lieuTravail"))
                 offer = make_offer(
                     title=job.get("intitule") or "",
                     company=(job.get("entreprise") or {}).get("nom") or "",
@@ -772,10 +786,25 @@ def fetch_francetravail(ft_cfg):
                         offer["contract"] = contract
                     offers.append(offer)
                     count += 1
-            print(f"France Travail [{label}] : {count} offres pertinentes.")
-            time.sleep(1)
+            print(f"France Travail [{label}] : {len(results)} offre(s) reçue(s), {count} retenue(s).")
+            record_stats("France Travail", label, len(results), len(results), count, 1)
+            time.sleep(0.5)  # quelques appels par seconde au plus
 
+    if failures and not offers and failures == len(departements) * len(queries):
+        raise RuntimeError("France Travail : toutes les recherches ont échoué.")
     return offers
+
+
+def ft_location(lieu):
+    """« 93 - BONDY » → « Bondy (93) » : lisible, et reconnu par le calcul des trajets."""
+    libelle = ((lieu or {}).get("libelle") or "").strip()
+    match = re.match(r"^(\d{2,3}|2[AB])\s*-\s*(.+)$", libelle)
+    if not match:
+        return libelle
+    city = match.group(2).strip()
+    if city.isupper():
+        city = re.sub(r"(^|[\s\-'’])(\w)", lambda m: m.group(1) + m.group(2).upper(), city.lower())
+    return f"{city} ({match.group(1)})"
 
 
 def api_json(url, label, timeout=30):

@@ -122,8 +122,26 @@ test('service worker : réseau lent → copie locale, sinon réseau', async () =
   assert.strictEqual(await run({ netMs: 120, cached: false }), 'réseau');        // lent mais sans copie : on attend
 });
 
+test('nom « CARTIER GAZARD » : une seule fois, et seulement si le nom était « Gazard »', () => {
+  const src = read('pilot.js');
+  const a = src.indexOf('function migrateCartierGazard'), b = src.indexOf('function cvOf', a);
+  const make = p => new Function('ACTIVE_PROFILE', 'store', 'PROFILE', 'env',
+    `let profile = env.profile;\n${src.slice(a, b)}\nconst r1 = migrateCartierGazard(); const r2 = migrateCartierGazard();\nreturn { r1, r2, profile };`)(
+    { id: 'ryan' }, () => {}, 'profil', { profile: p });
+  const moved = make({ infos: { prenom: 'Ryan', nom: 'Gazard' }, updatedAt: 1 });
+  assert.strictEqual(moved.profile.infos.nom, 'CARTIER GAZARD');
+  assert.strictEqual(moved.profile.infos.prenom, 'Ryan');
+  assert.ok(moved.profile.updatedAt > 1);
+  assert.deepStrictEqual([moved.r1, moved.r2], [true, false]);
+  const other = make({ infos: { nom: 'Martin' }, updatedAt: 1 });
+  assert.strictEqual(other.profile.infos.nom, 'Martin');
+  assert.strictEqual(other.profile.updatedAt, 1); // rien changé : pas de date avancée
+  const empty = make({ updatedAt: 1 });
+  assert.strictEqual(empty.profile.updatedAt, 1);
+});
+
 test('aucun caractère de contrôle dans les fichiers du site', () => {
-  for (const f of ['pilot.js', 'profiles.js', 'ui.js', 'compose.js', 'letters.js', 'sw.js']) {
+  for (const f of ['app.js', 'pilot.js', 'profiles.js', 'ui.js', 'compose.js', 'letters.js', 'sw.js', 'index.html']) {
     assert.ok(!/[\x00-\x08\x0b\x0c\x0e-\x1f]/.test(read(f)), f);
   }
 });

@@ -165,7 +165,7 @@
       "keywords": "agent d'entrepôt",
       "location": "Bondy",
       "radius": "26",
-      "maxPages": 3
+      "maxPages": 1
     },
     {
       "name": "agent d'entrepôt · Paris",
@@ -174,7 +174,7 @@
       "keywords": "agent d'entrepôt",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 3
+      "maxPages": 1
     },
     {
       "name": "employé logistique · Bondy",
@@ -653,40 +653,69 @@
     "enabled": true,
     "departements": [
       "75",
-      "93"
+      "77",
+      "92",
+      "93",
+      "94",
+      "95"
     ],
     "queries": [
       {
-        "name": "stock-logistique",
+        "name": "magasinage",
         "enabled": true,
         "category": "stock",
-        "keywords": "magasinier, gestionnaire de stock, logistique, préparateur de commandes, agent d'entrepôt, réceptionnaire, stockiste"
+        "rome": "N1103"
       },
       {
-        "name": "logistique-coordination",
+        "name": "chaine-logistique",
         "enabled": true,
         "category": "stock",
-        "keywords": "agent logistique, logisticien, coordinateur logistique, responsable logistique, chargé de stock, agent de quai, opérateur logistique, chef d'équipe logistique, magasinier hospitalier, agent logistique hospitalier"
+        "rome": "N1301"
       },
       {
-        "name": "rayon",
+        "name": "exploitation-logistique",
+        "enabled": true,
+        "category": "stock",
+        "rome": "N1303"
+      },
+      {
+        "name": "stockiste",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "stockiste"
+      },
+      {
+        "name": "mise-en-rayon",
         "enabled": true,
         "category": "rayon",
-        "keywords": "mise en rayon, employé libre-service, rayoniste"
+        "rome": "D1507"
       },
       {
-        "name": "vente",
+        "name": "caisse",
         "enabled": true,
         "category": "vente",
-        "keywords": "vendeur en boutique, conseiller de vente en magasin"
+        "rome": "D1505"
       },
       {
-        "name": "restauration",
+        "name": "vente-habillement",
+        "enabled": true,
+        "category": "vente",
+        "rome": "D1214"
+      },
+      {
+        "name": "service-restauration",
         "enabled": true,
         "category": "restauration",
-        "keywords": "serveur, serveuse, chef de rang, runner, barista"
+        "rome": "G1803"
+      },
+      {
+        "name": "cafe-bar",
+        "enabled": true,
+        "category": "restauration",
+        "rome": "G1801"
       }
-    ]
+    ],
+    "_note": "Une recherche par code métier ROME et par département, offres des 5 derniers jours (« publieesDepuisJours »). Inactif tant que les secrets FT_CLIENT_ID et FT_CLIENT_SECRET ne sont pas ajoutés dans GitHub (voir README)."
   },
   "adzuna": {
     "enabled": true,
