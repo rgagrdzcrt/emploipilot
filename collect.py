@@ -52,7 +52,8 @@ CDD_RE = re.compile(r"\b(CDD|contrat [àa] dur[eé]e d[eé]termin[eé]e)\b", re.
 CATEGORY_RE = {
     "stock": re.compile(
         r"stock|logisti|magasinier|pr[eé]parat(?:eur|rice|ion) de commandes|approvision|cariste"
-        r"|r[eé]ceptionnaire|entrep[oô]t|agent de quai",
+        r"|r[eé]ceptionnaire|entrep[oô]t|agent de quai"
+        r"|(?:agent|employ[eé]e?|responsable|gestionnaire|h[oô]te(?:sse)?) (?:de |des |en )?r[eé]serve|r[eé]assortisseu",  # stockiste de magasin : « employé de réserve »
         re.I,
     ),
     "rayon": re.compile(
@@ -99,7 +100,8 @@ TARGET_CATEGORIES = _target_categories()
 # Métier logistique nommé dans le titre : il l'emporte sur les exclusions ci-dessous.
 STOCK_JOB_RE = re.compile(
     r"stock|magasinier|pr[eé]parat(?:eur|rice|ion) de commandes|approvision|cariste"
-    r"|r[eé]ceptionnaire|agent de quai|logisticien",
+    r"|r[eé]ceptionnaire|agent de quai|logisticien"
+    r"|(?:agent|employ[eé]e?|responsable|gestionnaire|h[oô]te(?:sse)?) (?:de |des |en )?r[eé]serve|r[eé]assortisseu",
     re.I,
 )
 STOCK_GENERIC_RE = re.compile(r"logisti|entrep[oô]t", re.I)
@@ -118,6 +120,57 @@ STOCK_SIDE_RE = re.compile(
 )
 
 
+# Approvisionneur (achats / commandes fournisseurs) : écarté, sauf si le titre nomme
+# aussi un poste de terrain (« Magasinier approvisionneur »).
+APPRO_RE = re.compile(r"approvision", re.I)
+APPRO_KEEP_RE = re.compile(r"magasinier|stockiste|pr[eé]parat(?:eur|rice) de commandes|r[eé]ceptionnaire", re.I)
+
+# CACES exigé : Ryan n'en a pas. « Cariste » dans le titre l'impose ; sinon, on lit le texte
+# autour de chaque « CACES » : obligatoire / exigé / requis… écarte l'offre, mais pas
+# « souhaité », « un plus » ou « formation CACES assurée ».
+CARISTE_RE = re.compile(r"cariste|conducteur d['’ ]engins?|chariot", re.I)
+CACES_RE = re.compile(r"c[aà]c[eèé]s", re.I)
+CACES_OPTIONAL_RE = re.compile(
+    r"souhait|appr[eé]ci|un plus|\batout|serait|id[eé]alement|de pr[eé]f[eé]rence|pr[eé]f[eé]rable"
+    r"|formation|form[eé]e?s?\b|financ|passer|obtenir|accompagn|possibilit|pas (?:obligatoire|n[eé]cessaire|exig)"
+    r"|non (?:obligatoire|exig|requis)|sans caces",
+    re.I,
+)
+CACES_REQUIRED_RE = re.compile(
+    r"obligatoire|exig|requis|indispensable|imp[eé]rati|n[eé]cessaire|titulaire|valide|validit"
+    r"|poss[eé]d|d[eé]tent|muni|ma[iî]tris|habilit|autorisation de conduite",
+    re.I,
+)
+
+
+def caces_required(title, text=""):
+    """Vrai si l'offre demande un CACES (ou un poste de cariste)."""
+    if CARISTE_RE.search(title or "") or CACES_RE.search(title or ""):
+        return True  # CACES cité dans le titre : exigé
+    text = text or ""
+    for match in CACES_RE.finditer(text):
+        window = text[max(0, match.start() - 90): match.end() + 90]
+        if CACES_OPTIONAL_RE.search(window):
+            continue
+        if CACES_REQUIRED_RE.search(window):
+            return True
+    return False
+
+
+# Postes écartés malgré un mot de la logistique dans le titre : autre métier (SI, ingénierie,
+# défense, chantier, énergie, santé, commercial, RH, achats, événementiel) ou poste trop
+# senior pour le profil (exploitation, plateforme, régional, optimisation, area manager).
+STOCK_EXCLUDE_RE = re.compile(
+    r"\bsi\b|chef de projet|soutien logistique|\bsli\b|d[eé]fense|biomasse|chantier|usinage|sciage"
+    r"|efficacit[eé] [eé]nerg|cadre sup|\bd['’ ]affaires\b|logisti\w*\s+et\s+[eé]v[eèé]nementiel|\brh\b|achats?\b"
+    r"|area manager|optimisation|planificat|supply chain manager|tracfin"
+    r"|(?:responsable|directeur|directrice|manager)\b.{0,25}(?:exploitation|plateforme|r[eé]gional|site\b)"
+    r"|logistique r[eé]gional"
+    r"|conseill|vend(?:eur|euse)|\bvente\b|caiss",  # stockiste / conseiller de vente : non voulu
+    re.I,
+)
+
+
 def stock_off_topic(title):
     """Titre attrapé par un mot de la logistique sans être un poste de logistique.
 
@@ -128,6 +181,8 @@ def stock_off_topic(title):
     - « Agent de maintenance / logistique », « Assistant administratif et logistique »… :
       la logistique n'y est qu'une tâche annexe.
     """
+    if STOCK_EXCLUDE_RE.search(title):
+        return True
     if GARAGE_RE.search(title) and not re.search(r"magasinier|stock", title, re.I):
         return True
     if STOCK_JOB_RE.search(title):
@@ -160,7 +215,7 @@ DEFAULT_JOOBLE_QUERIES = [
         "enabled": True,
         "category": "stock",
         "keywords": "magasinier, stockiste, gestionnaire de stock, logistique, "
-        "préparateur de commandes, approvisionnement",
+        "préparateur de commandes",
         "location": "Île-de-France",
         "radius": "80",
     },
@@ -216,7 +271,7 @@ DEFAULT_ADZUNA_QUERIES = [
     {
         "name": "stock-logistique",
         "category": "stock",
-        "keywords": "magasinier stockiste gestionnaire stock logistique préparateur commandes approvisionnement",
+        "keywords": "magasinier stockiste gestionnaire stock logistique préparateur commandes",
     },
     {
         "name": "rayon",
@@ -481,6 +536,8 @@ def classify_category(title):
         if pattern.search(title):
             if name == "stock" and stock_off_topic(title):
                 continue
+            if name == "stock" and APPRO_RE.search(title) and not APPRO_KEEP_RE.search(title):
+                return None
             return name if name in TARGET_CATEGORIES else None
     return None
 
@@ -511,7 +568,7 @@ def make_offer(title, company, location, text, url, date, source, category=None)
     # On exclut les stages/alternances, les métiers non recherchés, les lieux
     # hors Île-de-France et les départements exclus.
     if (contract is None or category is None or dept == "HORS" or dept in EXCLUDED_DEPTS
-            or is_excluded_company(company)):
+            or is_excluded_company(company) or caces_required(title_text, body_text)):
         return None
 
     parsed_date = parse_date(date)
@@ -1617,6 +1674,8 @@ def refresh_offer(offer):
         return "département exclu (" + dept + ")"
     offer["dept"] = dept
 
+    if caces_required(title, notes) and not tracked:
+        return "CACES obligatoire"
     category = classify_category(title)
     if category is None:
         if not tracked:
@@ -2150,10 +2209,10 @@ def alert_priority(offer):
 # les offres qui resteront visibles.
 ALERT_HIDDEN_TITLE_RE = re.compile(
     r"luxe|luxury|bijou|joaill|horlog|maroquin"
-    r"|bouch|charcut|poisson|fromag|traiteur|cr[eè]merie|boulangerie|p[aâ]tiss|viennois|coupe"
-    r"|cosm[eé]t|parfum|beaut[eé]|animal|automobile|v[eé]hicule|pneu|auto"
+    r"|bouch|charcut|poisson|fromag|traiteur|cr[eè]merie|boulangerie|p[aâ]tiss|viennois|\bcoupe\b"
+    r"|cosm[eé]t|parfum|beaut[eé]|animal|automobile|v[eé]hicule|pneu|\bauto\b"
     r"|cariste|caces|chariot|week.?end|samedi|dimanche|[eé]tudiant|caiss"
-    r"|directeur|directrice|direction|head of",
+    r"|directeur|directrice|\bdirection\b|head of",
     re.I,
 )
 ALERT_MAX_TRAJET = 60
