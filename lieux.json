@@ -8,15 +8,6 @@
   "min": 70,
   "minAt": "2026-11-13"
  },
- "antony|92160|92": {
-  "dept": "92",
-  "km": 21.8,
-  "label": "Antony",
-  "lat": 48.75102,
-  "lon": 2.29783,
-  "min": 72,
-  "minAt": "2026-11-17"
- },
  "antony||92": {
   "dept": "92",
   "km": 21.8,
@@ -249,7 +240,9 @@
   "km": 21.4,
   "label": "Charny",
   "lat": 48.97165,
-  "lon": 2.76005
+  "lon": 2.76005,
+  "min": null,
+  "minAt": "2026-11-19"
  },
  "chaville||92": {
   "dept": "92",
@@ -399,14 +392,6 @@
   "min": 84,
   "minAt": "2026-11-14"
  },
- "croissy-beaubourg||77": {
-  "km": 15.3,
-  "label": "Croissy-Beaubourg",
-  "lat": 48.82178,
-  "lon": 2.65357,
-  "min": 84,
-  "minAt": "2026-11-18"
- },
  "créteil||94": {
   "km": 13.5,
   "label": "Créteil",
@@ -423,15 +408,6 @@
   "lon": 2.68373,
   "min": 98,
   "minAt": "2026-11-12"
- },
- "domont||95": {
-  "dept": "95",
-  "km": 18.0,
-  "label": "Domont",
-  "lat": 49.02871,
-  "lon": 2.32791,
-  "min": 83,
-  "minAt": "2026-11-15"
  },
  "drancy||93": {
   "km": 3.8,
@@ -473,7 +449,9 @@
   "km": 39.6,
   "label": "Faremoutiers",
   "lat": 48.79381,
-  "lon": 2.99964
+  "lon": 2.99964,
+  "min": null,
+  "minAt": "2026-11-19"
  },
  "ferrières-en-brie||": {
   "dept": "77",
@@ -523,7 +501,9 @@
   "km": 5.0,
   "label": "Gagny",
   "lat": 48.88191,
-  "lon": 2.54565
+  "lon": 2.54565,
+  "min": 43,
+  "minAt": "2026-11-19"
  },
  "garches||92": {
   "dept": "92",
@@ -533,15 +513,6 @@
   "lon": 2.18829,
   "min": 80,
   "minAt": "2026-11-16"
- },
- "garges-lès-gonesse-est||95": {
-  "dept": "95",
-  "km": 9.6,
-  "label": "Garges-lès-Gonesse",
-  "lat": 48.96975,
-  "lon": 2.40086,
-  "min": 74,
-  "minAt": "2026-11-14"
  },
  "garges-lès-gonesse||95": {
   "dept": "95",
@@ -590,7 +561,9 @@
   "km": 44.6,
   "label": "Hardricourt",
   "lat": 49.00776,
-  "lon": 1.89578
+  "lon": 1.89578,
+  "min": 111,
+  "minAt": "2026-11-19"
  },
  "herblay-sur-seine||95": {
   "dept": "95",
@@ -880,7 +853,9 @@
   "km": 44.7,
   "label": "Mareil-sur-Mauldre",
   "lat": 48.89407,
-  "lon": 1.87329
+  "lon": 1.87329,
+  "min": 120,
+  "minAt": "2026-11-19"
  },
  "marly-la-ville||95": {
   "km": 19.7,
@@ -904,7 +879,9 @@
   "km": 46.7,
   "label": "Mauchamps",
   "lat": 48.53004,
-  "lon": 2.195
+  "lon": 2.195,
+  "min": null,
+  "minAt": "2026-11-19"
  },
  "maulette||IDF": {
   "dept": "78",
@@ -946,7 +923,9 @@
   "km": 19.1,
   "label": "Moisselles",
   "lat": 49.04677,
-  "lon": 2.34056
+  "lon": 2.34056,
+  "min": 93,
+  "minAt": "2026-11-19"
  },
  "moisselles||95": {
   "dept": "95",
@@ -1041,7 +1020,9 @@
   "km": 30.3,
   "label": "Nanteuil-lès-Meaux",
   "lat": 48.93344,
-  "lon": 2.89736
+  "lon": 2.89736,
+  "min": 112,
+  "minAt": "2026-11-19"
  },
  "nemours||77": {
   "dept": "77",
@@ -1349,7 +1330,9 @@
   "km": 70.9,
   "label": "Provins",
   "lat": 48.55867,
-  "lon": 3.29816
+  "lon": 3.29816,
+  "min": 143,
+  "minAt": "2026-11-19"
  },
  "puteaux||92": {
   "km": 18.3,
@@ -1476,7 +1459,9 @@
   "km": 21.2,
   "label": "Saint-Mard",
   "lat": 49.0372,
-  "lon": 2.69192
+  "lon": 2.69192,
+  "min": 84,
+  "minAt": "2026-11-19"
  },
  "saint-maur-des-fossés||94": {
   "dept": "94",
@@ -1591,7 +1576,7 @@
   "lat": 48.9582,
   "lon": 2.38247,
   "min": 70,
-  "minAt": "2026-10-12"
+  "minAt": "2026-11-19"
  },
  "sucy-en-brie|94370|94": {
   "dept": "94",
@@ -1685,14 +1670,18 @@
   "km": 44.2,
   "label": "Vaux-le-Pénil",
   "lat": 48.52837,
-  "lon": 2.68442
+  "lon": 2.68442,
+  "min": 149,
+  "minAt": "2026-11-19"
  },
  "villebon-sur-yvette||IDF": {
   "dept": "91",
   "km": 29.3,
   "label": "Villebon-sur-Yvette",
   "lat": 48.69789,
-  "lon": 2.23543
+  "lon": 2.23543,
+  "min": 98,
+  "minAt": "2026-11-19"
  },
  "villecresnes||94": {
   "dept": "94",
@@ -1770,7 +1759,9 @@
   "km": 9.6,
   "label": "Villiers-sur-Marne",
   "lat": 48.82784,
-  "lon": 2.5492
+  "lon": 2.5492,
+  "min": 55,
+  "minAt": "2026-11-19"
  },
  "vincennes||94": {
   "km": 7.2,
@@ -1839,6 +1830,8 @@
   "km": 13.6,
   "label": "Épinay-sur-Seine",
   "lat": 48.95522,
-  "lon": 2.31712
+  "lon": 2.31712,
+  "min": 67,
+  "minAt": "2026-11-19"
  }
 }
