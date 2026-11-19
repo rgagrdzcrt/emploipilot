@@ -20,11 +20,38 @@ const CAT_LABELS = Object.fromEntries(CATS.map(c => [c, CAT_INFO[c].label]));
  * chargement, à l'import d'une sauvegarde et à la synchro : ni un autre appareil ni le gist ne
  * les ramènent. Une candidature hors de ces métiers faite après cette date reste suivie. */
 const PURGE_BEFORE = ACTIVE_PROFILE.purgeOtherCatsBefore || 0;
+/* Remise à zéro (purgeSentBefore) : candidatures envoyées avant cette date, supprimées de la même
+ * façon. Les entretiens restent. Offres non voulues (unwanted) : retirées de « À postuler ». */
+const SENT_PURGE_BEFORE = ACTIVE_PROFILE.purgeSentBefore || 0;
+const SENT_PURGE_STATUSES = ['Candidature envoyée', 'À relancer', 'Refus'];
+const UNWANTED = ACTIVE_PROFILE.unwanted || null;
+const CACES_RE = /c[aà]c[eèé]s/gi;
+const CACES_OPTIONAL_RE = /souhait|appr[eé]ci|un plus|\batout|serait|id[eé]alement|de pr[eé]f[eé]rence|pr[eé]f[eé]rable|formation|form[eé]e?s?\b|financ|passer|obtenir|accompagn|possibilit|pas (?:obligatoire|n[eé]cessaire|exig)|non (?:obligatoire|exig|requis)|sans caces/i;
+const CACES_REQUIRED_RE = /obligatoire|exig|requis|indispensable|imp[eé]rati|n[eé]cessaire|titulaire|valide|validit|poss[eé]d|d[eé]tent|muni|ma[iî]tris|habilit|autorisation de conduite/i;
+/** Même lecture que collect.py (caces_required) : CACES exigé dans le texte de l'annonce. */
+function cacesRequiredInText(text) {
+  for (const m of String(text || '').matchAll(CACES_RE)) {
+    const around = text.slice(Math.max(0, m.index - 90), m.index + m[0].length + 90);
+    if (CACES_OPTIONAL_RE.test(around)) continue;
+    if (CACES_REQUIRED_RE.test(around)) return true;
+  }
+  return false;
+}
+function isUnwanted(o) {
+  if (!UNWANTED) return false;
+  const title = o.title || '';
+  if (UNWANTED.title && UNWANTED.title.test(title)) return true;
+  if (UNWANTED.appro && UNWANTED.appro.test(title) && !(UNWANTED.approKeep && UNWANTED.approKeep.test(title))) return true;
+  return !!UNWANTED.cacesInText && cacesRequiredInText(o.notes);
+}
 function isPurged(o) {
-  return !!PURGE_BEFORE && (o.trackedAt || 0) < PURGE_BEFORE && !CATS.includes(categoryOf(o));
+  if (PURGE_BEFORE && (o.trackedAt || 0) < PURGE_BEFORE && !CATS.includes(categoryOf(o))) return true;
+  if (SENT_PURGE_BEFORE && SENT_PURGE_STATUSES.includes(o.status)
+      && (Date.parse(o.appliedDate || '') || o.trackedAt || 0) < SENT_PURGE_BEFORE) return true;
+  return o.status === 'À postuler' && isUnwanted(o);
 }
 function purgeOffers() {
-  if (!PURGE_BEFORE) return;
+  if (!PURGE_BEFORE && !SENT_PURGE_BEFORE && !UNWANTED) return;
   const kept = offers.filter(o => !isPurged(o));
   if (kept.length === offers.length) return;
   offers = kept;
@@ -483,15 +510,19 @@ function pilotList(mode) {
   // Mêmes doublons retirés que dans la liste des offres.
   // Seulement les métiers du profil actif (l'autre profil a ses propres offres dans offres.json).
   return (document.getElementById('hideDuplicates')?.checked ? dedupe(offers) : offers)
-    .filter(o => (o.status || 'À examiner') === wanted && CATS.includes(categoryOf(o)) && !(hideExcluded && isExcluded(o)))
+    // Offres non voulues (profiles.js, unwanted) : jamais proposées, même avant la prochaine collecte.
+    .filter(o => (o.status || 'À examiner') === wanted && CATS.includes(categoryOf(o)) && !(hideExcluded && isExcluded(o))
+      && !isUnwanted(o))
     .sort(mode === 'queue' && queueSort() === 'date'
       ? (a, b) => offerTime(b) - offerTime(a) || score(b) - score(a)
       : (a, b) => triageRank(a, mode) - triageRank(b, mode) || score(b) - score(a));
 }
 
-/** Tri au doigt : les métiers « triageLast » du profil passent après tous les autres. */
+/** Tri au doigt : les métiers « triageLast » (et les titres « triageLastTitles ») du profil passent après les autres. */
 function triageRank(o, mode) {
-  return mode === 'triage' && (ACTIVE_PROFILE.triageLast || []).includes(categoryOf(o)) ? 1 : 0;
+  if (mode !== 'triage') return 0;
+  if ((ACTIVE_PROFILE.triageLast || []).includes(categoryOf(o))) return 1;
+  return ACTIVE_PROFILE.triageLastTitles && ACTIVE_PROFILE.triageLastTitles.test(o.title || '') ? 1 : 0;
 }
 
 /** Ordre de l'onglet « À postuler » (et de « Lancer la file ») : priorité ou date, plus récentes d'abord. */

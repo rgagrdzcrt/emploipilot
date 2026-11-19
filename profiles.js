@@ -29,12 +29,27 @@ const ZCRT_PROFILES = {
     // Profil recentré sur la logistique (13/11/2026) : rayon et vente ne sont plus affichés ici
     // (ils restent collectés pour le profil de Zia, "categories" dans sources.json).
     cats: ['stock'],
+    // Tri au doigt : préparateur de commandes en dernier (surqualifié, gardé en solution de repli).
+    triageLastTitles: /pr[eé]parat(?:eur|rice) de commandes/i,
     // Les suivis rayon / vente posés avant cette date sont supprimés, sur chaque appareil et dans
     // le gist (pilot.js, isPurged). Une candidature hors logistique faite ensuite reste suivie.
     purgeOtherCatsBefore: Date.UTC(2026, 10, 14),
-    keywords: 'Stockiste, gestionnaire de stock, chargé de stock, coordinateur stock, approvisionneur\n'
+    // Remise à zéro des candidatures (19/11/2026) : celles envoyées avant le 12/11 (statut envoyée,
+    // à relancer ou refus) sont supprimées partout (pilot.js, isPurged). Les entretiens restent.
+    purgeSentBefore: Date.UTC(2026, 10, 12),
+    // Offres non voulues (mêmes règles que collect.py) : retirées de « À postuler ».
+    unwanted: {
+      // Autre métier, poste trop senior, cariste / CACES, poste mêlé de vente.
+      title: /cariste|conducteur d['’ ]engins?|chariot|c[aà]c[eèé]s|conseill|vend(?:eur|euse)|\bvente\b|caiss|\bsi\b|chef de projet|soutien logistique|\bsli\b|d[eé]fense|biomasse|chantier|usinage|sciage|efficacit[eé] [eé]nerg|cadre sup|\bd['’ ]affaires\b|logisti\w*\s+et\s+[eé]v[eèé]nementiel|\brh\b|achats?\b|area manager|optimisation|planificat|supply chain manager|tracfin|(?:responsable|directeur|directrice|manager)\b.{0,25}(?:exploitation|plateforme|r[eé]gional|site\b)|logistique r[eé]gional/i,
+      // Approvisionneur, sauf si le titre nomme aussi un poste de terrain.
+      appro: /approvision/i,
+      approKeep: /magasinier|stockiste|pr[eé]parat(?:eur|rice) de commandes|r[eé]ceptionnaire/i,
+      cacesInText: true,  // CACES obligatoire / exigé / requis dans le texte de l'annonce
+    },
+    keywords: 'Stockiste, gestionnaire de stock, chargé de stock, coordinateur stock\n'
       + 'Magasinier, réceptionnaire, agent logistique, préparateur de commandes, agent d’entrepôt\n'
-      + 'Coordinateur logistique, responsable logistique, chef d’équipe logistique',
+      + 'Coordinateur logistique, responsable logistique, chef d’équipe logistique\n'
+      + 'Logistique hospitalière, stockiste luxe, responsable de réserve, logistique e-commerce',
     mails: true,
     feminine: false,
     // Adéquation offre / CV (pilot.js, cvFit) : d'après cv/cv_stock.html.
@@ -51,10 +66,10 @@ const ZCRT_PROFILES = {
             'charge des stocks', 'coordinateur stock', 'coordinateur de stock', 'agent de stock', 'responsable de stock',
             'responsable des stocks', 'preparateur de commandes', 'agent logistique', 'agent de logistique',
             'coordinateur logistique', 'responsable logistique', 'chef d equipe logistique', 'technicien logistique',
-            'receptionnaire', 'approvisionneur', 'logisticien', 'employe logistique', 'assistant logistique',
+            'receptionnaire', 'logisticien', 'employe logistique', 'assistant logistique',
             'agent d entrepot', 'agent entrepot', 'responsable d entrepot', 'operateur logistique', 'agent de quai'],
           skills: ['reception', 'controle', 'inventaire', 'gestion des stocks', 'stock', 'preparation', 'expedition', 'commande',
-            'fournisseur', 'approvisionnement', 'wms', 'gold', 'excel', 'reserve', 'encadrement', 'hygiene', 'securite',
+            'fournisseur', 'approvisionnement', 'wms', 'cegid', 'gold', 'excel', 'reserve', 'encadrement', 'hygiene', 'securite',
             'logistique', 'reassort', 'ecart', 'livraison', 'quai', 'emballage', 'colis'],
           brands: ['darty'],
         },
