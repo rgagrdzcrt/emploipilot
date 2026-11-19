@@ -532,15 +532,6 @@
   "min": 56,
   "minAt": "2026-11-12"
  },
- "fontenay-trésigny||77": {
-  "dept": "77",
-  "km": 36.3,
-  "label": "Fontenay-Trésigny",
-  "lat": 48.70235,
-  "lon": 2.87571,
-  "min": 150,
-  "minAt": "2026-11-04"
- },
  "fosses||95": {
   "dept": "95",
   "km": 21.8,
@@ -1144,15 +1135,6 @@
   "min": 52,
   "minAt": "2026-11-04"
  },
- "neuilly-sur-marne||93": {
-  "dept": "93",
-  "km": 5.8,
-  "label": "Neuilly-sur-Marne",
-  "lat": 48.8649,
-  "lon": 2.53737,
-  "min": 56,
-  "minAt": "2026-11-18"
- },
  "neuilly-sur-seine||92": {
   "km": 16.2,
   "label": "Neuilly-sur-Seine",
@@ -1177,7 +1159,7 @@
   "lat": 48.84729,
   "lon": 2.6234,
   "min": 64,
-  "minAt": "2026-10-19"
+  "minAt": "2026-11-19"
  },
  "noisy-le-grand||93": {
   "km": 8.6,
@@ -1746,15 +1728,6 @@
   "min": 90,
   "minAt": "2026-11-12"
  },
- "torcy|71210|77": {
-  "dept": "77",
-  "km": 13.3,
-  "label": "Torcy",
-  "lat": 48.84628,
-  "lon": 2.64446,
-  "min": 77,
-  "minAt": "2026-10-27"
- },
  "torcy||77": {
   "km": 13.3,
   "label": "Torcy",
@@ -1788,7 +1761,7 @@
   "lat": 48.82097,
   "lon": 2.28637,
   "min": 83,
-  "minAt": "2026-10-19"
+  "minAt": "2026-11-19"
  },
  "vauréal||IDF": {
   "dept": "95",
