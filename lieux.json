@@ -8,6 +8,15 @@
   "min": 70,
   "minAt": "2026-11-13"
  },
+ "antony|92160|92": {
+  "dept": "92",
+  "km": 21.8,
+  "label": "Antony",
+  "lat": 48.75102,
+  "lon": 2.29783,
+  "min": 72,
+  "minAt": "2026-11-20"
+ },
  "antony||92": {
   "dept": "92",
   "km": 21.8,
@@ -75,15 +84,6 @@
   "lon": 2.42502,
   "min": 48,
   "minAt": "2026-11-13"
- },
- "bailly-romainvilliers|77700|77": {
-  "dept": "77",
-  "km": 24.9,
-  "label": "Bailly-Romainvilliers",
-  "lat": 48.84898,
-  "lon": 2.81517,
-  "min": 86,
-  "minAt": "2026-11-16"
  },
  "beauchamp||95": {
   "dept": "95",
@@ -339,6 +339,15 @@
   "min": 56,
   "minAt": "2026-11-12"
  },
+ "collégien||77": {
+  "dept": "77",
+  "km": 16.0,
+  "label": "Collégien",
+  "lat": 48.83034,
+  "lon": 2.6737,
+  "min": 93,
+  "minAt": "2026-11-20"
+ },
  "colombes||92": {
   "km": 17.5,
   "label": "Colombes",
@@ -391,15 +400,6 @@
   "lon": 2.65357,
   "min": 84,
   "minAt": "2026-11-14"
- },
- "croissy-beaubourg||77": {
-  "dept": "77",
-  "km": 15.3,
-  "label": "Croissy-Beaubourg",
-  "lat": 48.82178,
-  "lon": 2.65357,
-  "min": 84,
-  "minAt": "2026-11-20"
  },
  "créteil||94": {
   "km": 13.5,
@@ -532,6 +532,15 @@
   "min": 80,
   "minAt": "2026-11-16"
  },
+ "garges-lès-gonesse-est||95": {
+  "dept": "95",
+  "km": 9.6,
+  "label": "Garges-lès-Gonesse",
+  "lat": 48.96975,
+  "lon": 2.40086,
+  "min": 74,
+  "minAt": "2026-11-20"
+ },
  "garges-lès-gonesse||95": {
   "dept": "95",
   "km": 9.6,
@@ -591,6 +600,15 @@
   "lon": 2.15245,
   "min": 107,
   "minAt": "2026-11-15"
+ },
+ "herblay||95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Herblay-sur-Seine",
+  "lat": 49.00406,
+  "lon": 2.15245,
+  "min": 104,
+  "minAt": "2026-11-20"
  },
  "issy-les-moulineaux||92": {
   "km": 18.5,
@@ -653,7 +671,6 @@
   "min": 64,
   "minAt": "2026-11-14"
  },
- "la plaine saint-denis||93": {},
  "la queue-en-brie||94": {
   "dept": "94",
   "km": 14.8,
@@ -954,15 +971,6 @@
   "min": 47,
   "minAt": "2026-11-20"
  },
- "montigny-lès-cormeilles||95": {
-  "dept": "95",
-  "km": 23.5,
-  "label": "Montigny-lès-Cormeilles",
-  "lat": 48.99333,
-  "lon": 2.19375,
-  "min": 93,
-  "minAt": "2026-11-10"
- },
  "montmorency||95": {
   "dept": "95",
   "km": 15.3,
@@ -1059,6 +1067,15 @@
   "lon": 2.50964,
   "min": 52,
   "minAt": "2026-11-04"
+ },
+ "neuilly-sur-marne||93": {
+  "dept": "93",
+  "km": 5.8,
+  "label": "Neuilly-sur-Marne",
+  "lat": 48.8649,
+  "lon": 2.53737,
+  "min": 56,
+  "minAt": "2026-11-20"
  },
  "neuilly-sur-seine||92": {
   "km": 16.2,
@@ -1612,6 +1629,15 @@
   "lon": 2.21809,
   "min": 65,
   "minAt": "2026-11-12"
+ },
+ "taverny||95": {
+  "dept": "95",
+  "km": 24.0,
+  "label": "Taverny",
+  "lat": 49.02419,
+  "lon": 2.21263,
+  "min": 92,
+  "minAt": "2026-11-20"
  },
  "thiais||94": {
   "km": 17.5,
