@@ -173,15 +173,6 @@
   "min": 74,
   "minAt": "2026-11-12"
  },
- "cachan||94": {
-  "dept": "94",
-  "km": 16.8,
-  "label": "Cachan",
-  "lat": 48.79135,
-  "lon": 2.33152,
-  "min": 79,
-  "minAt": "2026-11-14"
- },
  "cesson||77": {
   "dept": "77",
   "km": 38.8,
@@ -645,6 +636,24 @@
   "min": 84,
   "minAt": "2026-11-17"
  },
+ "l'isle-adam||95": {
+  "dept": "95",
+  "km": 29.7,
+  "label": "L'Isle-Adam",
+  "lat": 49.11083,
+  "lon": 2.22878,
+  "min": 122,
+  "minAt": "2026-11-20"
+ },
+ "l'île-saint-denis||93": {
+  "dept": "93",
+  "km": 11.3,
+  "label": "L'Île-Saint-Denis",
+  "lat": 48.93308,
+  "lon": 2.33764,
+  "min": 63,
+  "minAt": "2026-11-20"
+ },
  "la courneuve||93": {
   "km": 6.9,
   "label": "La Courneuve",
@@ -671,6 +680,7 @@
   "min": 64,
   "minAt": "2026-11-14"
  },
+ "la plaine saint-denis||93": {},
  "la queue-en-brie||94": {
   "dept": "94",
   "km": 14.8,
@@ -714,6 +724,15 @@
   "lon": 2.42885,
   "min": 53,
   "minAt": "2026-11-13"
+ },
+ "le châtelet-en-brie||77": {
+  "dept": "77",
+  "km": 50.0,
+  "label": "Le Châtelet-en-Brie",
+  "lat": 48.50619,
+  "lon": 2.80338,
+  "min": 162,
+  "minAt": "2026-11-20"
  },
  "le kremlin-bicêtre||94": {
   "dept": "94",
@@ -962,13 +981,13 @@
   "min": 93,
   "minAt": "2026-11-14"
  },
- "montfermeil||93": {
-  "dept": "93",
-  "km": 6.1,
-  "label": "Montfermeil",
-  "lat": 48.89703,
-  "lon": 2.56873,
-  "min": 47,
+ "montigny-lès-cormeilles||95": {
+  "dept": "95",
+  "km": 23.5,
+  "label": "Montigny-lès-Cormeilles",
+  "lat": 48.99333,
+  "lon": 2.19375,
+  "min": 93,
   "minAt": "2026-11-20"
  },
  "montmorency||95": {
