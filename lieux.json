@@ -392,6 +392,15 @@
   "min": 84,
   "minAt": "2026-11-14"
  },
+ "croissy-beaubourg||77": {
+  "dept": "77",
+  "km": 15.3,
+  "label": "Croissy-Beaubourg",
+  "lat": 48.82178,
+  "lon": 2.65357,
+  "min": 84,
+  "minAt": "2026-11-20"
+ },
  "créteil||94": {
   "km": 13.5,
   "label": "Créteil",
@@ -434,6 +443,15 @@
   "lon": 2.30536,
   "min": 65,
   "minAt": "2026-11-17"
+ },
+ "epinay-sur-seine||93": {
+  "dept": "93",
+  "km": 13.6,
+  "label": "Épinay-sur-Seine",
+  "lat": 48.95527,
+  "lon": 2.31691,
+  "min": 67,
+  "minAt": "2026-11-20"
  },
  "ermont||95": {
   "dept": "95",
@@ -607,15 +625,6 @@
   "lat": 48.77685,
   "lon": 2.34199,
   "min": 84,
-  "minAt": "2026-11-17"
- },
- "l'île-saint-denis||93": {
-  "dept": "93",
-  "km": 11.3,
-  "label": "L'Île-Saint-Denis",
-  "lat": 48.93308,
-  "lon": 2.33764,
-  "min": 63,
   "minAt": "2026-11-17"
  },
  "la courneuve||93": {
@@ -936,6 +945,15 @@
   "min": 93,
   "minAt": "2026-11-14"
  },
+ "montfermeil||93": {
+  "dept": "93",
+  "km": 6.1,
+  "label": "Montfermeil",
+  "lat": 48.89703,
+  "lon": 2.56873,
+  "min": 47,
+  "minAt": "2026-11-20"
+ },
  "montigny-lès-cormeilles||95": {
   "dept": "95",
   "km": 23.5,
@@ -1041,15 +1059,6 @@
   "lon": 2.50964,
   "min": 52,
   "minAt": "2026-11-04"
- },
- "neuilly-sur-marne||93": {
-  "dept": "93",
-  "km": 5.8,
-  "label": "Neuilly-sur-Marne",
-  "lat": 48.8649,
-  "lon": 2.53737,
-  "min": 56,
-  "minAt": "2026-11-19"
  },
  "neuilly-sur-seine||92": {
   "km": 16.2,
@@ -1603,15 +1612,6 @@
   "lon": 2.21809,
   "min": 65,
   "minAt": "2026-11-12"
- },
- "taverny||95": {
-  "dept": "95",
-  "km": 24.0,
-  "label": "Taverny",
-  "lat": 49.02419,
-  "lon": 2.21263,
-  "min": 92,
-  "minAt": "2026-11-14"
  },
  "thiais||94": {
   "km": 17.5,
