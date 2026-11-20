@@ -8,15 +8,6 @@
   "min": 70,
   "minAt": "2026-11-13"
  },
- "antony|92160|92": {
-  "dept": "92",
-  "km": 21.8,
-  "label": "Antony",
-  "lat": 48.75102,
-  "lon": 2.29783,
-  "min": 72,
-  "minAt": "2026-11-20"
- },
  "antony||92": {
   "dept": "92",
   "km": 21.8,
@@ -85,6 +76,15 @@
   "min": 48,
   "minAt": "2026-11-13"
  },
+ "bailly-romainvilliers|77700|77": {
+  "dept": "77",
+  "km": 24.9,
+  "label": "Bailly-Romainvilliers",
+  "lat": 48.84898,
+  "lon": 2.81517,
+  "min": 86,
+  "minAt": "2026-11-20"
+ },
  "beauchamp||95": {
   "dept": "95",
   "km": 24.7,
@@ -119,6 +119,15 @@
   "lon": 2.44334,
   "min": 32,
   "minAt": "2026-11-14"
+ },
+ "bois-colombes|92270|92": {
+  "dept": "92",
+  "km": 15.9,
+  "label": "Bois-Colombes",
+  "lat": 48.91533,
+  "lon": 2.26884,
+  "min": 59,
+  "minAt": "2026-11-20"
  },
  "boissy-saint-léger||94": {
   "dept": "94",
@@ -531,15 +540,6 @@
   "lon": 2.40086,
   "min": 74,
   "minAt": "2026-11-20"
- },
- "garges-lès-gonesse||95": {
-  "dept": "95",
-  "km": 9.6,
-  "label": "Garges-lès-Gonesse",
-  "lat": 48.96975,
-  "lon": 2.40086,
-  "min": 74,
-  "minAt": "2026-11-14"
  },
  "gennevilliers||92": {
   "km": 14.3,
@@ -980,15 +980,6 @@
   "lon": 2.34056,
   "min": 93,
   "minAt": "2026-11-14"
- },
- "montigny-lès-cormeilles||95": {
-  "dept": "95",
-  "km": 23.5,
-  "label": "Montigny-lès-Cormeilles",
-  "lat": 48.99333,
-  "lon": 2.19375,
-  "min": 93,
-  "minAt": "2026-11-20"
  },
  "montmorency||95": {
   "dept": "95",
@@ -1649,15 +1640,6 @@
   "min": 65,
   "minAt": "2026-11-12"
  },
- "taverny||95": {
-  "dept": "95",
-  "km": 24.0,
-  "label": "Taverny",
-  "lat": 49.02419,
-  "lon": 2.21263,
-  "min": 92,
-  "minAt": "2026-11-20"
- },
  "thiais||94": {
   "km": 17.5,
   "label": "Thiais",
@@ -1843,15 +1825,6 @@
   "min": 88,
   "minAt": "2026-11-17"
  },
- "vémars||95": {
-  "dept": "95",
-  "km": 19.4,
-  "label": "Vémars",
-  "lat": 49.06907,
-  "lon": 2.57029,
-  "min": 88,
-  "minAt": "2026-11-16"
- },
  "égly||IDF": {
   "dept": "91",
   "km": 40.9,
@@ -1860,15 +1833,6 @@
   "lon": 2.21978,
   "min": 121,
   "minAt": "2026-11-17"
- },
- "émerainville||77": {
-  "dept": "77",
-  "km": 13.3,
-  "label": "Émerainville",
-  "lat": 48.81765,
-  "lon": 2.61157,
-  "min": 76,
-  "minAt": "2026-11-14"
  },
  "épinay-sur-seine||93": {
   "dept": "93",
