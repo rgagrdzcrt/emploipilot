@@ -13,7 +13,7 @@ Toucher le logo bascule entre deux profils, définis dans `profiles.js`. Le logo
 | | Ryan | Zia |
 |---|---|---|
 | Métiers | Stock & logistique (tout ce qui touche au stock et à la réserve : agent, coordinateur ou gestionnaire de stock, stockiste, stockman, réserviste, employé de réserve…), Préparation de commandes (onglet à part), Encadrement en magasin, Logistique aéroport, Tri & inventaire — hors réceptionnaire (sauf « Magasinier réceptionnaire »), manutentionnaire et CACES | Grande distribution, Vente, Restauration & café (service en salle, barista) |
-| Lettres | Modèles par métier (`pilot.js`) | Modèles par métier (`profiles.js`) |
+| Lettres | Composées selon l'offre et l'entreprise (`compose.js`, `letters.js`), conformes au CV joint ; modèles par métier (`pilot.js`) | Modèles par métier (`profiles.js`) |
 | Tri Gmail, onglet Mails | Oui | Non |
 
 Chaque profil garde ses propres données sur l'appareil (offres suivies, critères, modèles, « Mes infos ») et se synchronise dans son propre fichier de gist (`zcrt-suivi.json` / `zcrt-suivi-zia.json`), même avec un seul compte GitHub. La collecte est commune : chaque profil n'affiche que ses métiers. Les métiers réellement collectés sont listés dans `"categories"` de `sources.json` (aujourd'hui `["stock", "preparation", "aeroport", "tri", "encadrement", "rayon", "vente", "restauration"]`) : les offres des autres métiers sont écartées et retirées d'`offres.json` à la collecte suivante. Adzuna étant limité à `maxRequestsPerRun` requêtes par collecte, ses recherches passent à tour de rôle quand il y en a davantage. Les coordonnées et les CV ne sont pas dans le dépôt (public) : chacun les renseigne dans « Mes infos » et « CV à joindre ».

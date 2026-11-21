@@ -66,6 +66,11 @@ test('« À postuler » : offres non voulues retirées, les autres gardées', ()
   }
   // Une candidature déjà envoyée n'est jamais retirée pour son intitulé.
   assert.strictEqual(rules.isPurged({ status: 'Candidature envoyée', appliedDate: '2026-11-18', title: 'Cariste' }), false);
+  // Michael Page : retiré de « À postuler » quel que soit le métier, jamais une candidature envoyée.
+  assert.strictEqual(rules.isPurged({ status: 'À postuler', title: 'Magasinier H/F', company: 'MICHAEL PAGE ADVERTISING' }), true);
+  assert.strictEqual(rules.isPurged({ status: 'À postuler', title: 'Chef de rayon', category: 'encadrement', company: 'Michael Page' }), true);
+  assert.strictEqual(rules.isPurged({ status: 'À postuler', title: 'Magasinier H/F', company: 'Darty' }), false);
+  assert.strictEqual(rules.isPurged({ status: 'Candidature envoyée', appliedDate: '2026-11-18', title: 'Magasinier', company: 'Michael Page' }), false);
 });
 
 test('« À postuler » : règles d’intitulé limitées aux métiers de la logistique', () => {
@@ -102,6 +107,54 @@ test('profil de Ryan : chaque onglet a libellé, icône, CV, modèle de lettre, 
   }
   // Jamais « c'est précisément le métier que j'exerce » pour un poste jamais occupé tel quel.
   for (const c of ['preparation', 'encadrement', 'aeroport', 'tri']) assert.strictEqual(ctx.__lp.ryan.domains[c].exact, false);
+});
+
+test('lettres de Ryan : conformes au CV stock et propres à chaque entreprise', () => {
+  const pilot = read('pilot.js');
+  const fn = name => {
+    const a = pilot.indexOf(`function ${name}(`), b = pilot.indexOf('\n}\n', a);
+    assert.ok(a >= 0 && b > a, `fonction ${name} introuvable`);
+    return pilot.slice(a, b + 2);
+  };
+  const jobWord = pilot.indexOf('const JOB_WORD_RE');
+  const ctx = {
+    ACTIVE_PROFILE: ryan,
+    norm: s => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, ''),
+    jobCategory: o => o.category,
+    infosOf: () => ({ prenom: 'Ryan', nom: 'CARTIER GAZARD', disponibilite: 'immédiatement' }),
+  };
+  vm.createContext(ctx);
+  vm.runInContext([fn('fitText'), pilot.slice(jobWord, pilot.indexOf('\n', jobWord)), fn('letterPoste'), fn('cityOf'),
+    read('letters.js'), read('compose.js'), 'this.__letter = composeLetter;'].join('\n'), ctx);
+  const letter = o => ctx.__letter({ id: o.title + '|' + o.company, contract: 'CDI', notes: '', ...o });
+  const out = Object.fromEntries(Object.entries({
+    carrefour: { title: 'Magasinier H/F', company: 'CARREFOUR', category: 'stock',
+      notes: 'Réception des marchandises et mise en rayon. Chaussures de sécurité fournies, mutuelle santé.' },
+    sephora: { title: 'Coordinateur stock', company: 'Sephora', category: 'stock', notes: 'Suivi des stocks, gestion des ruptures et inventaires.' },
+    darty: { title: 'Magasinier', company: 'Darty', category: 'stock', notes: 'Réception des livraisons.' },
+    interim: { title: 'Préparateur de commandes', company: 'Manpower', category: 'preparation', contract: 'Intérim',
+      notes: 'Préparation des commandes. Chaussures de sécurité, mutuelle santé.' },
+    piste: { title: 'Agent de piste', company: 'Swissport', category: 'aeroport', notes: 'Chargement des bagages.' },
+    kenvue: { title: 'Agent d’inventaire', company: 'Kenvue', category: 'tri', notes: 'Comptages et écarts de stock.' },
+  }).map(([k, o]) => [k, letter(o)]));
+  for (const [k, l] of Object.entries(out)) {
+    // CV stock seulement : ni rayon (Monoprix, E.Leclerc), ni vente (COS), ni ancien intitulé, ni WMS.
+    assert.ok(!/Monoprix|Leclerc|\bCOS\b|WMS|Agent de stock|Plus récemment/.test(l), `${k} :\n${l}`);
+  }
+  assert.match(out.carrefour, /Carrefour/);
+  assert.match(out.carrefour, /la distribution alimentaire/);
+  assert.match(out.sephora, /Coordinateur stock chez Aroma-Zone|Chez Aroma-Zone, comme coordinateur stock/);
+  assert.match(out.sephora, /beauté/);
+  assert.match(out.darty, /Revenir chez Darty/);
+  // Agence jamais nommée ; « chaussures de sécurité » n'est pas la mode, « mutuelle santé » pas la santé.
+  assert.ok(!/Manpower|la mode|la santé/.test(out.interim), out.interim);
+  assert.match(out.piste, /Swissport/);
+  assert.match(out.piste, /aéroportuaire/);
+  assert.match(out.kenvue, /la santé/);
+  // Temps de trajet calculé par la collecte : le site est proche du domicile (jamais pour un département).
+  assert.match(letter({ title: 'Magasinier', company: 'Picard', category: 'stock', location: 'Rosny-sous-Bois (93)', trajetMin: 22 }),
+    /J'habite à Bondy, à environ 20 minutes de Rosny-sous-Bois/);
+  assert.ok(!/J'habite/.test(letter({ title: 'Magasinier', company: 'Picard', category: 'stock', location: 'Seine-Saint-Denis (93)', trajetMin: 22 })));
 });
 
 test('synchro : un appareil neuf ne remplace jamais le profil du gist', () => {

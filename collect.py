@@ -467,8 +467,9 @@ OUTSIDE_IDF_PLACES = [
 IDF_DEPTS = set(DEPT_CITIES)
 # Départements d'Île-de-France reconnus mais trop loin : leurs offres sont écartées.
 EXCLUDED_DEPTS = {"78", "91"}
-# Entreprises dont on ne veut aucune offre (comparaison sans casse ni accents).
-EXCLUDED_COMPANIES = {"gojob"}
+# Entreprises dont on ne veut aucune offre (comparaison sans casse ni accents),
+# y compris « MICHAEL PAGE ADVERTISING », « Michael Page International »…
+EXCLUDED_COMPANIES = {"gojob", "michael-page", "michaelpage"}
 
 
 def is_excluded_company(company):

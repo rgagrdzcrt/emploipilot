@@ -40,6 +40,8 @@ function cacesRequiredInText(text) {
 function isUnwanted(o) {
   if (!UNWANTED) return false;
   const title = o.title || '';
+  // Entreprises écartées quel que soit le métier (Michael Page…).
+  if (UNWANTED.company && UNWANTED.company.test(o.company || '')) return true;
   // Règles d'intitulé : seulement pour les métiers listés (unwanted.cats), tous à défaut.
   const byTitle = !UNWANTED.cats || UNWANTED.cats.includes(categoryOf(o));
   if (byTitle && UNWANTED.title && UNWANTED.title.test(title)) return true;
@@ -67,7 +69,7 @@ const RYAN_TEMPLATES = {
 
 Votre offre de {poste} a retenu toute mon attention. Avec près de 4 ans d'expérience en stock et en logistique, je souhaite mettre ma rigueur et mon savoir-faire au service de votre équipe.
 
-Magasinier chez Darty à Paris, je réceptionnais et contrôlais chaque jour une livraison importante et j'organisais une très grande réserve, pour que chaque produit soit retrouvé rapidement. Responsable logistique au Carré Médical, j'ai ensuite piloté les stocks et les commandes fournisseurs de matériel médical et encadré une équipe de six livreurs. Plus récemment, j'ai assuré le suivi des stocks et l'expédition des commandes d'un catalogue en ligne de plus de 400 références. J'utilise au quotidien G.O.L.D, un WMS et Excel.
+Coordinateur stock chez Aroma-Zone à Rosny-sous-Bois, j'ai coordonné les réceptions et la mise en stock, organisé la réserve et suivi les ruptures pour planifier le réassort. Responsable logistique au Carré Médical, j'ai piloté les stocks et les commandes fournisseurs de matériel médical et encadré une équipe de six livreurs. Magasinier chez Darty à Paris, je réceptionnais et contrôlais les livraisons quotidiennes et j'organisais une très grande réserve, pour que chaque produit soit retrouvé rapidement. J'ai aussi géré à distance les stocks et les expéditions d'une boutique en ligne de plus de 400 références. J'utilise G.O.L.D, CEGID et Excel.
 
 {accroche}
 
@@ -81,7 +83,7 @@ Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distin
 
 Votre offre de {poste} a retenu toute mon attention. Avec près de 4 ans d'expérience en stock et en logistique, la préparation des commandes fait partie de mon quotidien depuis mes débuts.
 
-Magasinier chez Darty à Paris, je préparais les commandes et assurais le réassort des rayons à partir d'une très grande réserve, organisée pour que chaque produit soit retrouvé rapidement. Au Carré Médical, j'ai préparé et suivi les commandes destinées aux établissements de santé. Plus récemment, j'ai géré la préparation et l'expédition des commandes d'un catalogue en ligne de plus de 400 références.
+Magasinier chez Darty à Paris, je préparais les commandes et assurais le réassort des rayons à partir d'une très grande réserve, organisée pour que chaque produit soit retrouvé rapidement. Au Carré Médical, j'ai préparé et suivi les commandes destinées aux établissements de santé. J'ai aussi géré à distance la préparation et l'expédition des commandes d'une boutique en ligne de plus de 400 références.
 
 Rigoureux, organisé et ponctuel, je veille au respect des normes d'hygiène et de sécurité.
 
@@ -113,7 +115,7 @@ Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distin
 
 Votre offre de {poste} a retenu toute mon attention. Avec près de 4 ans d'expérience en stock et en logistique, je souhaite mettre ma rigueur et mon sens de l'organisation au service de vos opérations.
 
-Magasinier chez Darty à Paris, je réceptionnais et contrôlais chaque jour une livraison importante et traitais les écarts. Responsable logistique au Carré Médical, j'ai coordonné les opérations logistiques et encadré une équipe de six livreurs. J'ai aussi géré la préparation et l'expédition des commandes d'une boutique en ligne de plus de 400 références.
+Coordinateur stock chez Aroma-Zone à Rosny-sous-Bois, j'ai coordonné les réceptions et la mise en stock. Magasinier chez Darty à Paris, je réceptionnais et contrôlais les livraisons quotidiennes et traitais les écarts. Responsable logistique au Carré Médical, j'ai coordonné les opérations logistiques et encadré une équipe de six livreurs.
 
 Anglais bilingue et titulaire du permis B, je suis ponctuel et je veille au respect des règles de sécurité.
 
@@ -129,7 +131,7 @@ Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distin
 
 Votre offre de {poste} a retenu toute mon attention. Avec près de 4 ans d'expérience en stock et en logistique, je suis à l'aise avec les tâches qui demandent précision et régularité : réception, contrôle, inventaires et suivi des écarts.
 
-Agent de stock chez Aroma-Zone à Rosny-sous-Bois, j'ai réceptionné et contrôlé les livraisons et participé aux inventaires. Magasinier chez Darty à Paris, je traitais les écarts de stock et organisais une très grande réserve. Au Carré Médical, j'ai préparé et suivi les commandes destinées aux établissements de santé.
+Coordinateur stock chez Aroma-Zone à Rosny-sous-Bois, j'ai coordonné les réceptions et préparé les inventaires, avec l'analyse des écarts. Magasinier chez Darty à Paris, je traitais les écarts de stock et organisais une très grande réserve. Au Carré Médical, j'ai préparé et suivi les commandes destinées aux établissements de santé.
 
 Rigoureux, organisé et ponctuel, je suis à l'aise en équipe.
 
@@ -257,7 +259,7 @@ function letterPoste(o) {
     .replace(/[\s,;:.–-]+$/, '').replace(/^[\s,;:.–-]+/, '').replace(/\s{2,}/g, ' ').trim();
   // Minuscules, sauf les sigles d'un titre écrit en casse normale (« ELS », « PAP »…).
   const allCaps = poste === poste.toUpperCase();
-  return poste.split(' ').map(w => !allCaps && /^[A-Z]{2,4}$/.test(w) ? w : w.toLowerCase()).join(' ') || 'ce poste';
+  return poste.split(' ').map(w => !allCaps && /^(?=.*[A-Z])[A-Z0-9]{2,4}$/.test(w) ? w : w.toLowerCase()).join(' ') || 'ce poste';
 }
 
 function fillTemplate(o) {

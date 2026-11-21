@@ -142,6 +142,17 @@ class Offres(unittest.TestCase):
         self.assertEqual(offer["category"], "stock")
         self.assertEqual(offer["dept"], "93")
 
+    def test_entreprises_exclues(self):
+        # Michael Page (toutes ses variantes) et Gojob : aucune offre, quel que soit le métier.
+        for company in ("Michael Page", "MICHAEL PAGE ADVERTISING", "MichaelPage", "Gojob"):
+            self.assertIsNone(
+                collect.make_offer("Magasinier H/F", company, "Bondy (93)", "CDI", "https://ex.fr/3", "", "Test"), company
+            )
+        # Offre déjà enregistrée : retirée à la collecte suivante, sauf si l'utilisateur la suit.
+        offer = {"title": "Magasinier H/F", "company": "Michael Page", "location": "Bondy (93)", "url": "https://ex.fr/4"}
+        self.assertEqual(collect.refresh_offer(dict(offer)), "entreprise exclue")
+        self.assertEqual(collect.refresh_offer(dict(offer, status="Candidature envoyée")), "")
+
     def test_departements(self):
         self.assertEqual(collect.detect_dept("Clichy-sous-Bois"), "93")
         self.assertEqual(collect.detect_dept("Clichy"), "92")

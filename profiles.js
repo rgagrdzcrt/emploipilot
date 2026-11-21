@@ -62,6 +62,8 @@ const ZCRT_PROFILES = {
         // Achats, optimisation, planification, sauf « Responsable optimisation des stocks ».
         [/achats?\b|optimisation|planificat/i, /stock/i],
       ],
+      // Entreprises écartées quel que soit le métier (comme EXCLUDED_COMPANIES dans collect.py).
+      company: /michael\W*page/i,
       cacesInText: true,  // CACES obligatoire / exigé / requis dans le texte de l'annonce
       // Règles d'intitulé ci-dessus : métiers de la logistique seulement (« Responsable de point
       // de vente » ou « Chef de caisse » sont voulus dans l'onglet Encadrement).
