@@ -165,10 +165,21 @@ STOCK_SIDE_RE = re.compile(
 )
 
 
-# Approvisionneur (achats / commandes fournisseurs) : écarté, sauf si le titre nomme
-# aussi un poste de terrain (« Magasinier approvisionneur »).
+# Approvisionneur (achats / commandes fournisseurs) : écarté, sauf si le titre nomme aussi
+# le stock ou un poste de terrain (« Magasinier approvisionneur », « Gestionnaire stock et
+# approvisionnements ») : tout ce qui touche au stock est gardé.
 APPRO_RE = re.compile(r"approvision", re.I)
-APPRO_KEEP_RE = re.compile(r"magasinier|stockiste|pr[eé]parat(?:eur|rice) de commandes|r[eé]ceptionnaire", re.I)
+APPRO_KEEP_RE = re.compile(r"magasinier|stock|r[eé]serv|pr[eé]parat(?:eur|rice) de commandes", re.I)
+
+# Réceptionnaire (E.Leclerc, Carrefour…) : non voulu (21/11/2026), sauf si le titre nomme aussi
+# le stock, la réserve ou un magasinier (« Magasinier réceptionnaire », « Agent de stock / réception »).
+RECEP_RE = re.compile(
+    r"r[eé]ceptionnaire|r[eé]ception\s+(?:des\s+|de\s+)?marchandises|agent[\w().·/-]*\s+de\s+r[eé]ception\b", re.I
+)
+RECEP_KEEP_RE = re.compile(r"magasini|stock|r[eé]serv", re.I)
+# Achats, optimisation, planification : autre métier ou poste trop senior, sauf si le titre
+# nomme le stock (« Responsable optimisation des stocks », « Assistant achats et stocks »).
+STOCK_SOFT_EXCLUDE_RE = re.compile(r"achats?\b|optimisation|planificat", re.I)
 
 # CACES exigé : Ryan n'en a pas. « Cariste » dans le titre l'impose ; sinon, on lit le texte
 # autour de chaque « CACES » : obligatoire / exigé / requis… écarte l'offre, mais pas
@@ -204,12 +215,13 @@ def caces_required(title, text=""):
 
 
 # Postes écartés malgré un mot de la logistique dans le titre : autre métier (SI, ingénierie,
-# défense, chantier, énergie, santé, commercial, RH, achats, événementiel) ou poste trop
-# senior pour le profil (exploitation, plateforme, régional, optimisation, area manager).
+# défense, chantier, énergie, santé, commercial, RH, événementiel) ou poste trop senior pour
+# le profil (exploitation, plateforme, régional, area manager). Achats, optimisation et
+# planification : voir STOCK_SOFT_EXCLUDE_RE.
 STOCK_EXCLUDE_RE = re.compile(
     r"\bsi\b|chef de projet|soutien logistique|\bsli\b|d[eé]fense|biomasse|chantier|usinage|sciage"
-    r"|efficacit[eé] [eé]nerg|cadre sup|\bd['’ ]affaires\b|logisti\w*\s+et\s+[eé]v[eèé]nementiel|\brh\b|achats?\b"
-    r"|area manager|optimisation|planificat|supply chain manager|tracfin"
+    r"|efficacit[eé] [eé]nerg|cadre sup|\bd['’ ]affaires\b|logisti\w*\s+et\s+[eé]v[eèé]nementiel|\brh\b"
+    r"|area manager|supply chain manager|tracfin"
     r"|(?:responsable|directeur|directrice|manager)\b.{0,25}(?:exploitation|plateforme|r[eé]gional|site\b)"
     r"|logistique r[eé]gional"
     r"|conseill|vend(?:eur|euse)|\bvente\b|caiss"  # stockiste / conseiller de vente : non voulu
@@ -228,7 +240,7 @@ STOCK_EXCLUDE_RE = re.compile(
 # stock, le premier nommé l'emporte (« Magasinier préparateur de commandes » : stock ;
 # « Préparateur de commandes logistique », « Agent de tri - logistique » : onglet détaché).
 STOCK_NAMED_RE = re.compile(
-    r"stock|magasini|r[eé]ceptionnaire|agent de quai|logisticien|\br[eé]serves?\b|r[eé]serviste|r[eé]assortisseu"
+    r"stock|magasini|agent de quai|logisticien|\br[eé]serves?\b|r[eé]serviste|r[eé]assortisseu"
     r"|(?:agent|employ[eé]|op[eé]rat|technicien|assistant|coordinat|responsable|gestionnaire|chef\s+d['’ ]\s*[eé]quipe)"
     + _G + r"\s+(?:de\s+|en\s+)?logisti"
     r"|agent" + _G + r"\s+d['’ ]\s*entrep[oô]t",
@@ -285,8 +297,13 @@ def stock_off_topic(title):
       manutentionnaire » restent (un autre métier est nommé, ou vient en tête).
     - « Agent de maintenance / logistique », « Assistant administratif et logistique »… :
       la logistique n'y est qu'une tâche annexe.
+    - « Réceptionnaire » seul (E.Leclerc, Carrefour…) : non voulu ; « Magasinier réceptionnaire » reste.
     """
     if STOCK_EXCLUDE_RE.search(title):
+        return True
+    if STOCK_SOFT_EXCLUDE_RE.search(title) and not re.search(r"stock", title, re.I):
+        return True
+    if RECEP_RE.search(title) and not RECEP_KEEP_RE.search(title):
         return True
     if GARAGE_RE.search(title) and not re.search(r"magasinier|stock", title, re.I):
         return True

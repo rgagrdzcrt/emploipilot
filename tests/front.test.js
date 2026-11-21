@@ -57,6 +57,9 @@ test('« À postuler » : offres non voulues retirées, les autres gardées', ()
     ['Préparateur de commandes', 'Vous êtes titulaire du CACES 1 et 3.', true],
     ['Préparateur de commandes', 'CACES 1 souhaité.', false],
     ['Gestionnaire de stock H/F', '', false], ['Assistant logistique', '', false],
+    ['E.Leclerc - Réceptionnaire - H/F', '', true], ['Magasinier réceptionnaire', '', false],
+    ['Responsable optimisation des stocks', '', false], ['Assistant achats', '', true],
+    ['Gestionnaire stock et approvisionnements', '', false],
   ];
   for (const [title, notes, expected] of cases) {
     assert.strictEqual(rules.isPurged({ status: 'À postuler', title, notes }), expected, title);

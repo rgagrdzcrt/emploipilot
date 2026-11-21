@@ -43,7 +43,8 @@ function isUnwanted(o) {
   // Règles d'intitulé : seulement pour les métiers listés (unwanted.cats), tous à défaut.
   const byTitle = !UNWANTED.cats || UNWANTED.cats.includes(categoryOf(o));
   if (byTitle && UNWANTED.title && UNWANTED.title.test(title)) return true;
-  if (byTitle && UNWANTED.appro && UNWANTED.appro.test(title) && !(UNWANTED.approKeep && UNWANTED.approKeep.test(title))) return true;
+  // [mots écartés, mots qui gardent l'offre] : « Réceptionnaire » non, « Magasinier réceptionnaire » oui.
+  if (byTitle && (UNWANTED.unless || []).some(([out, keep]) => out.test(title) && !keep.test(title))) return true;
   return !!UNWANTED.cacesInText && cacesRequiredInText(o.notes);
 }
 function isPurged(o) {

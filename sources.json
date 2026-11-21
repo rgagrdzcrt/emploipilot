@@ -49,7 +49,7 @@
     },
     {
       "name": "réceptionnaire · Bondy",
-      "enabled": true,
+      "enabled": false,
       "category": "stock",
       "keywords": "réceptionnaire",
       "location": "Bondy",
@@ -155,7 +155,7 @@
     },
     {
       "name": "réceptionnaire · Paris",
-      "enabled": true,
+      "enabled": false,
       "category": "stock",
       "keywords": "réceptionnaire",
       "location": "Paris",
@@ -876,6 +876,60 @@
       "location": "Paris",
       "radius": "26",
       "maxPages": 1
+    },
+    {
+      "name": "coordinateur stock · Bondy",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "coordinateur stock",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "coordinateur stock · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "coordinateur stock",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "contrôleur de stock · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "contrôleur de stock",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "responsable des stocks · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "responsable des stocks",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "assistant stock · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "assistant stock",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "employé de stock · Bondy",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "employé de stock",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 1
     }
   ],
   "franceTravail": {
@@ -1010,7 +1064,7 @@
       {
         "name": "stock et réserve",
         "enabled": true,
-        "keywords": "magasinier magasiniere stockiste stockman stock reserve reserviste receptionnaire logisticien reassortisseur",
+        "keywords": "magasinier magasiniere stockiste stockman stock reserve reserviste logisticien reassortisseur",
         "maxPages": 5
       },
       {
@@ -1099,7 +1153,7 @@
       },
       {
         "name": "réceptionnaire · Bondy",
-        "enabled": true,
+        "enabled": false,
         "category": "stock",
         "keywords": "réceptionnaire",
         "titleOnly": true,
@@ -1171,7 +1225,7 @@
       },
       {
         "name": "réceptionnaire · Paris",
-        "enabled": true,
+        "enabled": false,
         "category": "stock",
         "keywords": "réceptionnaire",
         "titleOnly": true,

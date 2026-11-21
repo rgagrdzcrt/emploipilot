@@ -26,13 +26,26 @@ class Categories(unittest.TestCase):
     def test_tout_ce_qui_touche_a_la_reserve(self):
         for title in ("Stockman H/F", "Assistant stockiste (H/F)", "Réserviste H/F - Magasin Paris 8",
                       "Hôte(sse) de réserve CDI", "Agent de réserve", "Back of House Associate - Paris",
-                      "Agent de réception des marchandises", "Stock & Logistics Advisor"):
+                      "Stock & Logistics Advisor"):
             with self.subTest(title=title):
                 self.assertEqual(self.cat(title), "stock")
         for title in ("Réserviste opérationnel gendarmerie", "Garde de la réserve naturelle",
                       "Commis back of house restaurant"):
             with self.subTest(title=title):
                 self.assertIsNone(self.cat(title))
+
+    def test_receptionnaires_ecartes_tout_le_stock_garde(self):
+        # Réceptionnaire seul : non voulu ; s'il nomme aussi le stock ou un magasinier, il reste.
+        for title, expected in (("Réceptionnaire - H/F", None), ("RÉCEPTIONNAIRE MAGASIN H/F - H/F", None),
+                                ("Agent de réception des marchandises", None), ("Réceptionnaire (F/H)", None),
+                                ("Magasinier réceptionnaire", "stock"), ("Agent de stock / réceptionnaire", "stock"),
+                                ("Réceptionnaire / préparateur de commandes", "preparation"),
+                                ("Agent de stock", "stock"), ("Coordinateur stock H/F", "stock"),
+                                ("Responsable Optimisation des Stocks H/F", "stock"),
+                                ("Gestionnaire stock et approvisionnements", "stock"),
+                                ("Assistant achats et stocks", "stock"), ("Approvisionneur H/F", None)):
+            with self.subTest(title=title):
+                self.assertEqual(self.cat(title), expected)
 
     def test_preparation_onglet_detache(self):
         # Le premier métier nommé l'emporte ; « Préparateur » seul (pharmacie, véhicules) n'en est pas.
@@ -81,7 +94,7 @@ class Categories(unittest.TestCase):
     def test_hors_sujet_et_trop_senior_ecartes(self):
         for title in ("CHEF DE PROJET SI - Domaine Logistique", "Logisticien biomasse F/H",
                       "Responsable Soutien Logistique Intégré (SLI)", "Responsable d'exploitation logistique",
-                      "Responsable plateforme logistique H/F", "Responsable Optimisation des Stocks H/F",
+                      "Responsable plateforme logistique H/F", "Responsable Optimisation logistique H/F",
                       "Responsable logistique et évènementiel", "Assistant(e) rh/logistique (F/H)",
                       "ASSISTANT LOGISTIQUE, ACHATS (F/H)", "Responsable d'equipe logistique (H/F), Area Manager"):
             with self.subTest(title=title):

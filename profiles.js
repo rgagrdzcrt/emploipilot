@@ -51,10 +51,17 @@ const ZCRT_PROFILES = {
     // Offres non voulues (mêmes règles que collect.py) : retirées de « À postuler ».
     unwanted: {
       // Autre métier, poste trop senior, cariste / CACES, poste mêlé de vente.
-      title: /cariste|conducteur d['’ ]engins?|chariot|c[aà]c[eèé]s|conseill|vend(?:eur|euse)|\bvente\b|caiss|\bsi\b|chef de projet|soutien logistique|\bsli\b|d[eé]fense|biomasse|chantier|usinage|sciage|efficacit[eé] [eé]nerg|cadre sup|\bd['’ ]affaires\b|logisti\w*\s+et\s+[eé]v[eèé]nementiel|\brh\b|achats?\b|area manager|optimisation|planificat|supply chain manager|tracfin|(?:responsable|directeur|directrice|manager)\b.{0,25}(?:exploitation|plateforme|r[eé]gional|site\b)|logistique r[eé]gional/i,
-      // Approvisionneur, sauf si le titre nomme aussi un poste de terrain.
-      appro: /approvision/i,
-      approKeep: /magasinier|stockiste|pr[eé]parat(?:eur|rice) de commandes|r[eé]ceptionnaire/i,
+      title: /cariste|conducteur d['’ ]engins?|chariot|c[aà]c[eèé]s|conseill|vend(?:eur|euse)|\bvente\b|caiss|\bsi\b|chef de projet|soutien logistique|\bsli\b|d[eé]fense|biomasse|chantier|usinage|sciage|efficacit[eé] [eé]nerg|cadre sup|\bd['’ ]affaires\b|logisti\w*\s+et\s+[eé]v[eèé]nementiel|\brh\b|area manager|supply chain manager|tracfin|(?:responsable|directeur|directrice|manager)\b.{0,25}(?:exploitation|plateforme|r[eé]gional|site\b)|logistique r[eé]gional/i,
+      // Écartés sauf si le titre nomme aussi le stock (tout ce qui touche au stock est voulu) :
+      // [mots écartés, mots qui gardent l'offre].
+      unless: [
+        // Approvisionneur, sauf « Magasinier approvisionneur », « Gestionnaire stock et approvisionnements ».
+        [/approvision/i, /magasinier|stock|r[eé]serv|pr[eé]parat(?:eur|rice) de commandes/i],
+        // Réceptionnaire (E.Leclerc, Carrefour…), sauf « Magasinier réceptionnaire », « Agent de stock / réception ».
+        [/r[eé]ceptionnaire|r[eé]ception\s+(?:des\s+|de\s+)?marchandises|agent\S*\s+de\s+r[eé]ception\b/i, /magasini|stock|r[eé]serv/i],
+        // Achats, optimisation, planification, sauf « Responsable optimisation des stocks ».
+        [/achats?\b|optimisation|planificat/i, /stock/i],
+      ],
       cacesInText: true,  // CACES obligatoire / exigé / requis dans le texte de l'annonce
       // Règles d'intitulé ci-dessus : métiers de la logistique seulement (« Responsable de point
       // de vente » ou « Chef de caisse » sont voulus dans l'onglet Encadrement).
@@ -62,7 +69,8 @@ const ZCRT_PROFILES = {
     },
     keywords: 'Stockiste, assistant stockiste, stockman, gestionnaire de stock, chargé de stock, coordinateur stock\n'
       + 'Employé de réserve, hôte de réserve, réserviste, responsable de réserve, stockiste luxe\n'
-      + 'Magasinier, réceptionnaire, agent logistique, agent d’entrepôt, préparateur de commandes\n'
+      + 'Agent de stock, employé de stock, contrôleur de stock, responsable des stocks\n'
+      + 'Magasinier, agent logistique, agent d’entrepôt, préparateur de commandes\n'
       + 'Coordinateur logistique, responsable logistique, chef d’équipe logistique\n'
       + 'Chef de rayon, manager de rayon, adjoint ou responsable de magasin\n'
       + 'Agent de piste, agent d’escale, agent de fret (Roissy, Orly)\n'
@@ -83,7 +91,7 @@ const ZCRT_PROFILES = {
             'charge des stocks', 'coordinateur stock', 'coordinateur de stock', 'agent de stock', 'responsable de stock',
             'responsable des stocks', 'preparateur de commandes', 'agent logistique', 'agent de logistique',
             'coordinateur logistique', 'responsable logistique', 'chef d equipe logistique', 'technicien logistique',
-            'receptionnaire', 'logisticien', 'employe logistique', 'assistant logistique',
+            'logisticien', 'employe logistique', 'assistant logistique',
             'agent d entrepot', 'agent entrepot', 'responsable d entrepot', 'operateur logistique', 'agent de quai',
             'stockman', 'assistant stockiste', 'employe de reserve', 'agent de reserve', 'responsable de reserve'],
           skills: ['reception', 'controle', 'inventaire', 'gestion des stocks', 'stock', 'preparation', 'expedition', 'commande',
