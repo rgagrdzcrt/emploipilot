@@ -330,15 +330,6 @@
   "min": 56,
   "minAt": "2026-11-12"
  },
- "collégien||77": {
-  "dept": "77",
-  "km": 16.0,
-  "label": "Collégien",
-  "lat": 48.83034,
-  "lon": 2.6737,
-  "min": 93,
-  "minAt": "2026-11-20"
- },
  "colombes||92": {
   "km": 17.5,
   "label": "Colombes",
@@ -556,6 +547,15 @@
   "min": 81,
   "minAt": "2026-11-12"
  },
+ "gretz-armainvilliers||77": {
+  "dept": "77",
+  "km": 25.6,
+  "label": "Gretz-Armainvilliers",
+  "lat": 48.73832,
+  "lon": 2.72849,
+  "min": 77,
+  "minAt": "2026-11-21"
+ },
  "hardricourt||IDF": {
   "dept": "78",
   "km": 44.6,
@@ -573,15 +573,6 @@
   "lon": 2.15245,
   "min": 107,
   "minAt": "2026-11-15"
- },
- "herblay||95": {
-  "dept": "95",
-  "km": 26.7,
-  "label": "Herblay-sur-Seine",
-  "lat": 49.00406,
-  "lon": 2.15245,
-  "min": 104,
-  "minAt": "2026-11-20"
  },
  "issy-les-moulineaux||92": {
   "km": 18.5,
@@ -884,6 +875,15 @@
   "min": 120,
   "minAt": "2026-11-19"
  },
+ "mareuil-lès-meaux||77": {
+  "dept": "77",
+  "km": 28.1,
+  "label": "Mareuil-lès-Meaux",
+  "lat": 48.92726,
+  "lon": 2.86788,
+  "min": 108,
+  "minAt": "2026-11-21"
+ },
  "marly-la-ville||95": {
   "km": 19.7,
   "label": "Marly-la-Ville",
@@ -962,6 +962,15 @@
   "lon": 2.34056,
   "min": 93,
   "minAt": "2026-11-14"
+ },
+ "moissy-cramayel||77": {
+  "dept": "77",
+  "km": 31.9,
+  "label": "Moissy-Cramayel",
+  "lat": 48.62572,
+  "lon": 2.59148,
+  "min": 122,
+  "minAt": "2026-11-21"
  },
  "montigny-lès-cormeilles||95": {
   "dept": "95",
@@ -1824,6 +1833,15 @@
   "lon": 2.57029,
   "min": 88,
   "minAt": "2026-11-17"
+ },
+ "vémars||95": {
+  "dept": "95",
+  "km": 19.4,
+  "label": "Vémars",
+  "lat": 49.06907,
+  "lon": 2.57029,
+  "min": 88,
+  "minAt": "2026-11-21"
  },
  "égly||IDF": {
   "dept": "91",
