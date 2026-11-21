@@ -182,15 +182,6 @@
   "min": 74,
   "minAt": "2026-11-12"
  },
- "cergy||95": {
-  "dept": "95",
-  "km": 35.6,
-  "label": "Cergy",
-  "lat": 49.04227,
-  "lon": 2.04555,
-  "min": 105,
-  "minAt": "2026-11-21"
- },
  "champigny-sur-marne||94": {
   "dept": "94",
   "km": 10.0,
@@ -278,15 +269,6 @@
   "lon": 2.35088,
   "min": 90,
   "minAt": "2026-11-12"
- },
- "choisy-le-roi||94": {
-  "dept": "94",
-  "km": 16.4,
-  "label": "Choisy-le-Roi",
-  "lat": 48.76411,
-  "lon": 2.41281,
-  "min": 74,
-  "minAt": "2026-11-17"
  },
  "châtillon||92": {
   "km": 18.3,
@@ -426,15 +408,6 @@
   "min": 79,
   "minAt": "2026-11-18"
  },
- "enghien-les-bains||95": {
-  "dept": "95",
-  "km": 15.1,
-  "label": "Enghien-les-Bains",
-  "lat": 48.97097,
-  "lon": 2.30536,
-  "min": 65,
-  "minAt": "2026-11-17"
- },
  "epinay-sur-seine||93": {
   "dept": "93",
   "km": 13.6,
@@ -470,15 +443,6 @@
   "lon": 2.70772,
   "min": 90,
   "minAt": "2026-11-16"
- },
- "ferrières-en-brie||77": {
-  "dept": "77",
-  "km": 18.5,
-  "label": "Ferrières-en-Brie",
-  "lat": 48.82469,
-  "lon": 2.70772,
-  "min": 90,
-  "minAt": "2026-11-13"
  },
  "fontenay-sous-bois||94": {
   "km": 6.0,
@@ -592,15 +556,6 @@
   "min": 107,
   "minAt": "2026-11-15"
  },
- "herblay||95": {
-  "dept": "95",
-  "km": 26.7,
-  "label": "Herblay-sur-Seine",
-  "lat": 49.00406,
-  "lon": 2.15245,
-  "min": 104,
-  "minAt": "2026-11-21"
- },
  "issy-les-moulineaux||92": {
   "km": 18.5,
   "label": "Issy-les-Moulineaux",
@@ -617,24 +572,6 @@
   "lon": 2.38643,
   "min": 77,
   "minAt": "2026-11-16"
- },
- "joinville-le-pont||94": {
-  "dept": "94",
-  "km": 9.3,
-  "label": "Joinville-le-Pont",
-  "lat": 48.82033,
-  "lon": 2.47193,
-  "min": 65,
-  "minAt": "2026-11-17"
- },
- "l'haÿ-les-roses||94": {
-  "dept": "94",
-  "km": 17.6,
-  "label": "L'Haÿ-les-Roses",
-  "lat": 48.77685,
-  "lon": 2.34199,
-  "min": 84,
-  "minAt": "2026-11-17"
  },
  "l'isle-adam||95": {
   "dept": "95",
@@ -679,15 +616,6 @@
   "lon": 2.24441,
   "min": 64,
   "minAt": "2026-11-14"
- },
- "la queue-en-brie||94": {
-  "dept": "94",
-  "km": 14.8,
-  "label": "La Queue-en-Brie",
-  "lat": 48.78623,
-  "lon": 2.57913,
-  "min": 71,
-  "minAt": "2026-10-29"
  },
  "lagny-sur-marne||77": {
   "dept": "77",
@@ -752,15 +680,6 @@
   "min": 122,
   "minAt": "2026-11-21"
  },
- "le perreux-sur-marne||94": {
-  "dept": "94",
-  "km": 6.8,
-  "label": "Le Perreux-sur-Marne",
-  "lat": 48.8435,
-  "lon": 2.50442,
-  "min": 59,
-  "minAt": "2026-11-17"
- },
  "le plessis-robinson||92": {
   "km": 21.3,
   "label": "Le Plessis-Robinson",
@@ -794,15 +713,6 @@
   "lat": 48.81651,
   "lon": 1.98385,
   "min": 118,
-  "minAt": "2026-11-17"
- },
- "les lilas||93": {
-  "dept": "93",
-  "km": 5.4,
-  "label": "Les Lilas",
-  "lat": 48.88054,
-  "lon": 2.42074,
-  "min": 52,
   "minAt": "2026-11-17"
  },
  "les pavillons-sous-bois||93": {
@@ -1104,15 +1014,6 @@
   "min": 58,
   "minAt": "2026-11-14"
  },
- "noiseau||IDF": {
-  "dept": "94",
-  "km": 15.2,
-  "label": "Noiseau",
-  "lat": 48.77345,
-  "lon": 2.54996,
-  "min": 83,
-  "minAt": "2026-11-21"
- },
  "noisiel||77": {
   "dept": "77",
   "km": 11.9,
@@ -1403,15 +1304,6 @@
   "min": 56,
   "minAt": "2026-11-12"
  },
- "romainville||93": {
-  "dept": "93",
-  "km": 4.1,
-  "label": "Romainville",
-  "lat": 48.88408,
-  "lon": 2.43806,
-  "min": 50,
-  "minAt": "2026-11-14"
- },
  "rosny-sous-bois|93110|93": {
   "km": 3.3,
   "label": "Rosny-sous-Bois",
@@ -1455,15 +1347,6 @@
   "minAt": "2026-10-28"
  },
  "république||": {},
- "saint-brice-sous-forêt||95": {
-  "dept": "95",
-  "km": 14.7,
-  "label": "Saint-Brice-sous-Forêt",
-  "lat": 49.00169,
-  "lon": 2.35117,
-  "min": 87,
-  "minAt": "2026-11-21"
- },
  "saint-cloud||92": {
   "km": 20.9,
   "label": "Saint-Cloud",
@@ -1551,14 +1434,6 @@
   "lon": 2.25369,
   "min": 80,
   "minAt": "2026-11-14"
- },
- "santeny|94440|94": {
-  "km": 20.8,
-  "label": "Santeny",
-  "lat": 48.72565,
-  "lon": 2.57267,
-  "min": 115,
-  "minAt": "2026-11-13"
  },
  "sarcelles||95": {
   "dept": "95",
@@ -1663,15 +1538,6 @@
   "lon": 2.55497,
   "min": 70,
   "minAt": "2026-11-12"
- },
- "valenton||94": {
-  "dept": "94",
-  "km": 17.3,
-  "label": "Valenton",
-  "lat": 48.74932,
-  "lon": 2.45916,
-  "min": 87,
-  "minAt": "2026-11-17"
  },
  "vanves||92": {
   "dept": "92",

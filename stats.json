@@ -1,43 +1,43 @@
 {
- "collecte": "2026-11-21T15:59:41.502677+00:00",
- "offres_finales": 1500,
- "nouvelles": 107,
+ "collecte": "2026-11-21T19:05:49.468057+00:00",
+ "offres_finales": 1369,
+ "nouvelles": 147,
  "offres_finales_par_source": {
-  "Adzuna": 632,
-  "Jooble": 470,
-  "EURES": 307,
+  "Adzuna": 599,
+  "Jooble": 433,
+  "EURES": 250,
   "HelloWork": 52,
-  "Meteojob": 24,
-  "SmartRecruiters": 15
+  "Meteojob": 22,
+  "SmartRecruiters": 13
  },
  "retirees": {
-  "entreprise exclue": 18,
-  "à plus de 30 km": 31,
-  "publiées il y a plus de 5 jours": 76
+  "métier non recherché": 153,
+  "à plus de 30 km": 28,
+  "publiées il y a plus de 5 jours (15 pour les stockistes)": 97
  },
  "recherches": [
   {
    "source": "EURES",
    "recherche": "stock et réserve",
-   "annoncees": 202,
-   "recues": 200,
-   "retenues": 31,
-   "pages": 4
+   "annoncees": 413,
+   "recues": 300,
+   "retenues": 63,
+   "pages": 6
   },
   {
    "source": "EURES",
    "recherche": "logistique et entrepôt",
-   "annoncees": 374,
-   "recues": 350,
-   "retenues": 59,
+   "annoncees": 343,
+   "recues": 343,
+   "retenues": 20,
    "pages": 7
   },
   {
    "source": "EURES",
    "recherche": "préparation de commandes",
-   "annoncees": 430,
+   "annoncees": 427,
    "recues": 400,
-   "retenues": 60,
+   "retenues": 27,
    "pages": 8
   },
   {
@@ -50,17 +50,17 @@
   },
   {
    "source": "EURES",
-   "recherche": "tri et inventaire",
-   "annoncees": 255,
-   "recues": 250,
-   "retenues": 13,
+   "recherche": "tri",
+   "annoncees": 247,
+   "recues": 247,
+   "retenues": 7,
    "pages": 5
   },
   {
    "source": "EURES",
    "recherche": "rayon",
-   "annoncees": 232,
-   "recues": 232,
+   "annoncees": 231,
+   "recues": 231,
    "retenues": 47,
    "pages": 5
   },
@@ -69,60 +69,44 @@
    "recherche": "magasin et boutique",
    "annoncees": 405,
    "recues": 400,
-   "retenues": 71,
+   "retenues": 22,
    "pages": 8
   },
   {
    "source": "EURES",
    "recherche": "vente (profil de Zia)",
-   "annoncees": 1581,
+   "annoncees": 1580,
    "recues": 300,
-   "retenues": 75,
+   "retenues": 73,
    "pages": 6
   },
   {
    "source": "EURES",
    "recherche": "restauration (profil de Zia)",
-   "annoncees": 656,
+   "annoncees": 648,
    "recues": 300,
-   "retenues": 15,
+   "retenues": 13,
    "pages": 6
   },
   {
    "source": "Adzuna",
-   "recherche": "agent logistique · Bondy",
+   "recherche": "stockiste · Bondy",
    "annoncees": 15,
    "recues": 15,
-   "retenues": 8,
-   "pages": 1
-  },
-  {
-   "source": "Adzuna",
-   "recherche": "agent logistique · Paris",
-   "annoncees": 13,
-   "recues": 13,
-   "retenues": 3,
-   "pages": 1
-  },
-  {
-   "source": "Adzuna",
-   "recherche": "stock · Bondy",
-   "annoncees": 21,
-   "recues": 21,
    "retenues": 15,
    "pages": 1
   },
   {
    "source": "Adzuna",
-   "recherche": "stock · Paris",
-   "annoncees": 23,
-   "recues": 23,
-   "retenues": 16,
+   "recherche": "stockiste · Paris",
+   "annoncees": 11,
+   "recues": 11,
+   "retenues": 11,
    "pages": 1
   },
   {
    "source": "Adzuna",
-   "recherche": "agent entrepot · Bondy",
+   "recherche": "stock associate · Paris",
    "annoncees": 0,
    "recues": 0,
    "retenues": 0,
@@ -130,74 +114,58 @@
   },
   {
    "source": "Adzuna",
-   "recherche": "agent entrepot · Paris",
-   "annoncees": 0,
-   "recues": 0,
-   "retenues": 0,
-   "pages": 1
-  },
-  {
-   "source": "Adzuna",
-   "recherche": "logisticien · Bondy",
-   "annoncees": 6,
-   "recues": 6,
-   "retenues": 3,
-   "pages": 1
-  },
-  {
-   "source": "Adzuna",
-   "recherche": "logisticien · Paris",
+   "recherche": "réserve · Paris",
    "annoncees": 7,
    "recues": 7,
-   "retenues": 4,
+   "retenues": 0,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "coordinateur logistique · Bondy",
-   "annoncees": 11,
-   "recues": 11,
+   "annoncees": 9,
+   "recues": 9,
    "retenues": 7,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "coordinateur logistique · Paris",
-   "annoncees": 15,
-   "recues": 15,
-   "retenues": 7,
+   "annoncees": 5,
+   "recues": 5,
+   "retenues": 4,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "responsable logistique · Bondy",
-   "annoncees": 142,
+   "annoncees": 67,
    "recues": 50,
-   "retenues": 33,
+   "retenues": 11,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "responsable logistique · Paris",
-   "annoncees": 168,
-   "recues": 50,
-   "retenues": 27,
+   "annoncees": 44,
+   "recues": 44,
+   "retenues": 10,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "chef equipe logistique · Bondy",
-   "annoncees": 5,
-   "recues": 5,
-   "retenues": 5,
+   "annoncees": 1,
+   "recues": 1,
+   "retenues": 1,
    "pages": 1
   },
   {
    "source": "Adzuna",
    "recherche": "chef equipe logistique · Paris",
-   "annoncees": 4,
-   "recues": 4,
-   "retenues": 4,
+   "annoncees": 0,
+   "recues": 0,
+   "retenues": 0,
    "pages": 1
   },
   {
@@ -211,9 +179,9 @@
   {
    "source": "Adzuna",
    "recherche": "réserviste · Paris",
-   "annoncees": 1,
-   "recues": 1,
-   "retenues": 1,
+   "annoncees": 0,
+   "recues": 0,
+   "retenues": 0,
    "pages": 1
   },
   {
@@ -258,7 +226,39 @@
   },
   {
    "source": "Adzuna",
-   "recherche": "inventaire · Bondy",
+   "recherche": "chef de rayon · Bondy",
+   "annoncees": 19,
+   "recues": 19,
+   "retenues": 15,
+   "pages": 1
+  },
+  {
+   "source": "Adzuna",
+   "recherche": "chef de rayon · Paris",
+   "annoncees": 5,
+   "recues": 5,
+   "retenues": 4,
+   "pages": 1
+  },
+  {
+   "source": "Adzuna",
+   "recherche": "manager de rayon · Bondy",
+   "annoncees": 18,
+   "recues": 18,
+   "retenues": 16,
+   "pages": 1
+  },
+  {
+   "source": "Adzuna",
+   "recherche": "magasinier · Saint-Denis",
+   "annoncees": 13,
+   "recues": 13,
+   "retenues": 11,
+   "pages": 1
+  },
+  {
+   "source": "Adzuna",
+   "recherche": "magasinier · Montreuil",
    "annoncees": 1,
    "recues": 1,
    "retenues": 0,
@@ -268,16 +268,16 @@
    "source": "SmartRecruiters",
    "recherche": "Groupement Mousquetaires (Intermarché, Netto, Bricorama)",
    "annoncees": 500,
-   "recues": 303,
-   "retenues": 49,
+   "recues": 295,
+   "retenues": 47,
    "pages": 0
   },
   {
    "source": "SmartRecruiters",
    "recherche": "Groupement Mousquetaires (activités centrales et logistiques)",
    "annoncees": 91,
-   "recues": 6,
-   "retenues": 6,
+   "recues": 5,
+   "retenues": 5,
    "pages": 0
   },
   {
@@ -292,8 +292,8 @@
    "source": "SmartRecruiters",
    "recherche": "SMCP (Sandro, Maje, Claudie Pierlot)",
    "annoncees": 114,
-   "recues": 61,
-   "retenues": 53,
+   "recues": 52,
+   "retenues": 45,
    "pages": 0
   },
   {
@@ -332,9 +332,10 @@
    "source": "SmartRecruiters",
    "recherche": "H&M",
    "annoncees": 7,
-   "recues": 3,
-   "retenues": 2,
+   "recues": 2,
+   "retenues": 1,
    "pages": 0
   }
- ]
+ ],
+ "joobleSuite": "magasinier · Bondy"
 }
