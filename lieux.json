@@ -120,15 +120,6 @@
   "min": 32,
   "minAt": "2026-11-14"
  },
- "bois-colombes|92270|92": {
-  "dept": "92",
-  "km": 15.9,
-  "label": "Bois-Colombes",
-  "lat": 48.91533,
-  "lon": 2.26884,
-  "min": 59,
-  "minAt": "2026-11-20"
- },
  "boissy-saint-léger||94": {
   "dept": "94",
   "km": 17.1,
@@ -513,15 +504,6 @@
   "lon": 2.32454,
   "min": 84,
   "minAt": "2026-11-14"
- },
- "gagny||93": {
-  "dept": "93",
-  "km": 5.0,
-  "label": "Gagny",
-  "lat": 48.88191,
-  "lon": 2.54565,
-  "min": 43,
-  "minAt": "2026-11-19"
  },
  "garches||92": {
   "dept": "92",
@@ -981,6 +963,15 @@
   "min": 93,
   "minAt": "2026-11-14"
  },
+ "montigny-lès-cormeilles||95": {
+  "dept": "95",
+  "km": 23.5,
+  "label": "Montigny-lès-Cormeilles",
+  "lat": 48.99333,
+  "lon": 2.19375,
+  "min": 93,
+  "minAt": "2026-11-21"
+ },
  "montmorency||95": {
   "dept": "95",
   "km": 15.3,
@@ -1013,8 +1004,8 @@
   "label": "Montsoult",
   "lat": 49.06858,
   "lon": 2.31183,
-  "min": 91,
-  "minAt": "2026-10-21"
+  "min": 90,
+  "minAt": "2026-11-21"
  },
  "montsoult||IDF": {
   "dept": "95",
@@ -1640,6 +1631,15 @@
   "min": 65,
   "minAt": "2026-11-12"
  },
+ "taverny||95": {
+  "dept": "95",
+  "km": 24.0,
+  "label": "Taverny",
+  "lat": 49.02419,
+  "lon": 2.21263,
+  "min": 92,
+  "minAt": "2026-11-21"
+ },
  "thiais||94": {
   "km": 17.5,
   "label": "Thiais",
@@ -1833,6 +1833,15 @@
   "lon": 2.21978,
   "min": 121,
   "minAt": "2026-11-17"
+ },
+ "émerainville||77": {
+  "dept": "77",
+  "km": 13.3,
+  "label": "Émerainville",
+  "lat": 48.81765,
+  "lon": 2.61157,
+  "min": 76,
+  "minAt": "2026-11-21"
  },
  "épinay-sur-seine||93": {
   "dept": "93",
