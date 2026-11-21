@@ -48,6 +48,9 @@ const ZCRT_PROFILES = {
     // Remise à zéro des candidatures (19/11/2026) : celles envoyées avant le 12/11 (statut envoyée,
     // à relancer ou refus) sont supprimées partout (pilot.js, isPurged). Les entretiens restent.
     purgeSentBefore: Date.UTC(2026, 10, 12),
+    // Zones (21/11/2026) : le 93 et le 75 d'abord ; en 92, 77 et 94, seuls les stockistes restent
+    // visibles (pilot.js, zoneHides), sauf l'onglet Aéroport (Orly). Le 95 garde la règle des 60 min.
+    zones: { stockisteOnly: ['92', '77', '94'], exemptCats: ['aeroport'] },
     // Offres non voulues (mêmes règles que collect.py) : retirées de « À postuler ».
     unwanted: {
       // Autre métier, poste trop senior, cariste / CACES, poste mêlé de vente.

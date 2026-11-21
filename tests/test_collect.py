@@ -311,6 +311,18 @@ class Eures(unittest.TestCase):
         self.assertEqual(first["contract"], "CDI")
         self.assertEqual(second["contract"], "Intérim")
 
+    def test_departements_et_delai_par_recherche(self):
+        # « stock et réserve » : 15 jours (période d'un mois demandée à EURES) ; départements propres à la recherche.
+        page = {"numberRecords": 3, "jvs": [
+            self.jv("9100001", "Stockiste H/F", nuts="FR102", days=10),  # Seine-et-Marne : hors de la recherche
+            self.jv("9100002", "Stockiste H/F", nuts="FR106", days=10),  # Seine-Saint-Denis, 10 jours : gardée
+            self.jv("9100003", "Stockiste H/F", nuts="FR106", days=20),  # trop ancienne
+        ]}
+        cfg = {"queries": [{"name": "stock", "keywords": "stockiste", "departements": ["93"], "publieesDepuisJours": 15}]}
+        offers, bodies = self.run_fetch([page], cfg=cfg)
+        self.assertEqual(bodies[0]["publicationPeriod"], "LAST_MONTH")
+        self.assertEqual([o["id"] for o in offers], ["ft_9100002"])
+
     def test_ignore_quand_france_travail_actif(self):
         offers, bodies = self.run_fetch([], env={"FT_CLIENT_ID": "id", "FT_CLIENT_SECRET": "secret"})
         self.assertEqual((offers, bodies), ([], []))

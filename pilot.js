@@ -436,6 +436,14 @@ function hidingType(o) {
   return JOB_TYPES.find(t => hidden.includes(t.id) && matchesType(t, o) && (!stockiste || STOCKISTE_TYPES_KEPT.includes(t.id)));
 }
 
+/** Départements où seuls les stockistes restent visibles (profil de Ryan, 21/11/2026 : 92, 77, 94),
+ * sauf pour les onglets exemptés (Aéroport : Orly) ; 75 et 93 toujours gardés. */
+function zoneHides(o) {
+  const z = ACTIVE_PROFILE.zones;
+  if (!z || !(z.stockisteOnly || []).includes(deptOf(o))) return false;
+  return !(z.exemptCats || []).includes(categoryOf(o)) && !isStockiste(o);
+}
+
 function tooOld(o) {
   const d = parseDate(offerDate(o));
   return !!d && Date.now() - d.getTime() > maxAgeDays(o) * 864e5;
@@ -453,7 +461,7 @@ function excludedWords() {
 function isHiddenType(o) {
   if (isTracked(o)) return false;
   if (tooOld(o)) return true;
-  if (hidingType(o)) return true;
+  if (hidingType(o) || zoneHides(o)) return true;
   const t = norm(o.title || '');
   return excludedWords().some(w => t.includes(w));
 }
@@ -476,6 +484,7 @@ function hiddenReason(o) {
   if (tooOld(o)) return 'publiée il y a plus de ' + maxAgeDays(o) + ' j';
   const type = hidingType(o);
   if (type) return 'type masqué « ' + type.label + ' »';
+  if (zoneHides(o)) return 'en ' + deptOf(o) + ', seuls les stockistes sont gardés';
   const t = norm(o.title || '');
   const word = excludedWords().find(w => t.includes(w));
   if (word) return 'mot exclu « ' + word + ' »';

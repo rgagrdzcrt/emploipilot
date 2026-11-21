@@ -208,9 +208,16 @@ test('stockistes : 15 jours et jamais masqués par un type, sauf cariste et dire
   const src = read('pilot.js');
   const a = src.indexOf('const JOB_TYPES'), b = src.indexOf('function hiddenTypes', a);
   assert.ok(a >= 0 && b > a);
-  const t = new Function('norm', 'profile', 'ACTIVE_PROFILE', 'parseDate', 'offerDate',
-    src.slice(a, b) + '\nfunction hiddenTypes() { return DEFAULT_HIDDEN_TYPES; }\nreturn { maxAgeDays, hidingType, tooOld };')(
-    s => String(s || '').toLowerCase(), {}, {}, s => (s ? new Date(s) : null), o => o.date);
+  const t = new Function('norm', 'profile', 'ACTIVE_PROFILE', 'parseDate', 'offerDate', 'deptOf', 'categoryOf',
+    src.slice(a, b) + '\nfunction hiddenTypes() { return DEFAULT_HIDDEN_TYPES; }\nreturn { maxAgeDays, hidingType, tooOld, zoneHides };')(
+    s => String(s || '').toLowerCase(), {}, { zones: ryan.zones }, s => (s ? new Date(s) : null), o => o.date, o => o.dept, o => o.category);
+  // Zones de Ryan : 93 et 75 toujours ; en 92, 77 et 94, seulement les stockistes (onglet Aéroport à part).
+  assert.deepStrictEqual([...ryan.zones.stockisteOnly], ['92', '77', '94']);
+  assert.strictEqual(t.zoneHides({ title: 'Magasinier', dept: '77', category: 'stock' }), true);
+  assert.strictEqual(t.zoneHides({ title: 'Stockiste H/F', dept: '92', category: 'stock' }), false);
+  assert.strictEqual(t.zoneHides({ title: 'Magasinier', dept: '93', category: 'stock' }), false);
+  assert.strictEqual(t.zoneHides({ title: 'Magasinier', dept: '95', category: 'stock' }), false);
+  assert.strictEqual(t.zoneHides({ title: 'Agent de piste', dept: '94', category: 'aeroport' }), false);
   const daysAgo = n => new Date(Date.now() - n * 864e5).toISOString();
   assert.strictEqual(t.maxAgeDays({ title: 'Stockiste H/F' }), 15);
   assert.strictEqual(t.maxAgeDays({ title: 'Employé de réserve' }), 15);

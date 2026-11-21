@@ -1211,6 +1211,8 @@ def fetch_eures(cfg):
         label = query.get("name") or query["keywords"]
         # Délai propre à la recherche (« stock et réserve » : 15 jours, comme MAX_STOCKISTE_DAYS).
         q_days = int(query.get("publieesDepuisJours") or days)
+        # Départements propres à la recherche (métiers de Ryan hors stockiste : 75, 93, 95).
+        q_depts = {str(d) for d in query["departements"]} if query.get("departements") else depts
         q_cutoff = (time.time() - q_days * 86400) * 1000
         period = "LAST_WEEK" if q_days <= 7 else "LAST_MONTH"
         announced = received = kept = pages = 0
@@ -1232,7 +1234,7 @@ def fetch_eures(cfg):
             pages += 1
             received += len(jobs)
             for jv in jobs:
-                offer = eures_offer(jv, depts, q_cutoff)
+                offer = eures_offer(jv, q_depts, q_cutoff)
                 if offer:
                     offers.append(offer)
                     kept += 1

@@ -17,7 +17,7 @@
       "category": "stock",
       "keywords": "magasinier",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 4
     },
     {
@@ -26,7 +26,7 @@
       "category": "stock",
       "keywords": "préparateur de commandes",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 3
     },
     {
@@ -35,7 +35,7 @@
       "category": "stock",
       "keywords": "gestionnaire de stock",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 3
     },
     {
@@ -44,7 +44,7 @@
       "category": "stock",
       "keywords": "agent logistique",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 3
     },
     {
@@ -53,7 +53,7 @@
       "category": "stock",
       "keywords": "réceptionnaire",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 3
     },
     {
@@ -123,7 +123,7 @@
       "category": "stock",
       "keywords": "magasinier",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 4
     },
     {
@@ -132,7 +132,7 @@
       "category": "stock",
       "keywords": "préparateur de commandes",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 3
     },
     {
@@ -141,7 +141,7 @@
       "category": "stock",
       "keywords": "gestionnaire de stock",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 3
     },
     {
@@ -150,7 +150,7 @@
       "category": "stock",
       "keywords": "agent logistique",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 3
     },
     {
@@ -159,7 +159,7 @@
       "category": "stock",
       "keywords": "réceptionnaire",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 3
     },
     {
@@ -168,7 +168,7 @@
       "category": "stock",
       "keywords": "agent d'entrepôt",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 1
     },
     {
@@ -177,7 +177,7 @@
       "category": "stock",
       "keywords": "agent d'entrepôt",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -186,7 +186,7 @@
       "category": "stock",
       "keywords": "employé logistique",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 2
     },
     {
@@ -195,7 +195,7 @@
       "category": "stock",
       "keywords": "employé logistique",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 2
     },
     {
@@ -204,7 +204,7 @@
       "category": "stock",
       "keywords": "manutentionnaire",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 2
     },
     {
@@ -213,7 +213,7 @@
       "category": "stock",
       "keywords": "manutentionnaire",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 2
     },
     {
@@ -222,7 +222,7 @@
       "category": "stock",
       "keywords": "opérateur logistique",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 2
     },
     {
@@ -231,7 +231,7 @@
       "category": "stock",
       "keywords": "opérateur logistique",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 2
     },
     {
@@ -260,7 +260,7 @@
       "category": "stock",
       "keywords": "agent de quai",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 2
     },
     {
@@ -269,7 +269,7 @@
       "category": "stock",
       "keywords": "approvisionneur",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 1
     },
     {
@@ -372,7 +372,7 @@
       "category": "stock",
       "keywords": "chargé de stock",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 3
     },
     {
@@ -381,7 +381,7 @@
       "category": "stock",
       "keywords": "chargé de stock",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 3
     },
     {
@@ -390,7 +390,7 @@
       "category": "stock",
       "keywords": "coordinateur logistique",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 1
     },
     {
@@ -399,7 +399,7 @@
       "category": "stock",
       "keywords": "coordinateur logistique",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -408,7 +408,7 @@
       "category": "stock",
       "keywords": "responsable logistique",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 2
     },
     {
@@ -417,7 +417,7 @@
       "category": "stock",
       "keywords": "responsable logistique",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 2
     },
     {
@@ -426,7 +426,7 @@
       "category": "stock",
       "keywords": "logisticien",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 1
     },
     {
@@ -435,7 +435,7 @@
       "category": "stock",
       "keywords": "logisticien",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -444,7 +444,7 @@
       "category": "stock",
       "keywords": "assistant logistique",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 1
     },
     {
@@ -453,7 +453,7 @@
       "category": "stock",
       "keywords": "assistant logistique",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -462,7 +462,7 @@
       "category": "stock",
       "keywords": "approvisionneur",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -471,7 +471,7 @@
       "category": "stock",
       "keywords": "agent de quai",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 2
     },
     {
@@ -520,7 +520,7 @@
       "category": "stock",
       "keywords": "réassortisseur",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 1
     },
     {
@@ -529,7 +529,7 @@
       "category": "stock",
       "keywords": "réassortisseur",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -538,7 +538,7 @@
       "category": "stock",
       "keywords": "chef d'équipe logistique",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 2
     },
     {
@@ -547,7 +547,7 @@
       "category": "stock",
       "keywords": "chef d'équipe logistique",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 2
     },
     {
@@ -556,7 +556,7 @@
       "category": "stock",
       "keywords": "magasinier hospitalier",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 1
     },
     {
@@ -565,7 +565,7 @@
       "category": "stock",
       "keywords": "magasinier hospitalier",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -574,7 +574,7 @@
       "category": "stock",
       "keywords": "agent logistique hospitalier",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 1
     },
     {
@@ -583,7 +583,7 @@
       "category": "stock",
       "keywords": "agent logistique hospitalier",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -622,7 +622,7 @@
       "category": "stock",
       "keywords": "gestionnaire de stock e-commerce",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 1
     },
     {
@@ -631,7 +631,7 @@
       "category": "stock",
       "keywords": "gestionnaire de stock e-commerce",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -640,7 +640,7 @@
       "category": "stock",
       "keywords": "logisticien e-commerce",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -649,7 +649,7 @@
       "category": "stock",
       "keywords": "logistics coordinator",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -738,7 +738,7 @@
       "category": "preparation",
       "keywords": "préparateur logistique",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 2
     },
     {
@@ -747,7 +747,7 @@
       "category": "preparation",
       "keywords": "préparateur e-commerce",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 1
     },
     {
@@ -792,7 +792,7 @@
       "category": "tri",
       "keywords": "agent de tri",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 2
     },
     {
@@ -801,7 +801,7 @@
       "category": "tri",
       "keywords": "agent de tri",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -810,7 +810,7 @@
       "category": "tri",
       "keywords": "agent d'inventaire",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 1
     },
     {
@@ -819,7 +819,7 @@
       "category": "tri",
       "keywords": "inventoriste",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 1
     },
     {
@@ -828,7 +828,7 @@
       "category": "encadrement",
       "keywords": "chef de rayon",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 2
     },
     {
@@ -837,7 +837,7 @@
       "category": "encadrement",
       "keywords": "chef de rayon",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 2
     },
     {
@@ -846,7 +846,7 @@
       "category": "encadrement",
       "keywords": "manager de rayon",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 2
     },
     {
@@ -855,7 +855,7 @@
       "category": "encadrement",
       "keywords": "manager de rayon",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -864,7 +864,7 @@
       "category": "encadrement",
       "keywords": "responsable de magasin",
       "location": "Bondy",
-      "radius": "26",
+      "radius": "16",
       "maxPages": 2
     },
     {
@@ -873,7 +873,7 @@
       "category": "encadrement",
       "keywords": "responsable de magasin",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 2
     },
     {
@@ -882,7 +882,7 @@
       "category": "encadrement",
       "keywords": "adjoint responsable magasin",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -891,7 +891,7 @@
       "category": "encadrement",
       "keywords": "responsable de boutique",
       "location": "Paris",
-      "radius": "26",
+      "radius": "8",
       "maxPages": 1
     },
     {
@@ -1073,6 +1073,91 @@
       "radius": "26",
       "maxPages": 1,
       "priorite": true
+    },
+    {
+      "name": "stockiste · Saint-Denis",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockiste",
+      "location": "Saint-Denis",
+      "radius": "8",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "stockiste · Montreuil",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockiste",
+      "location": "Montreuil",
+      "radius": "8",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "stockiste · Rosny-sous-Bois",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockiste",
+      "location": "Rosny-sous-Bois",
+      "radius": "8",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "stockiste · Aubervilliers",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockiste",
+      "location": "Aubervilliers",
+      "radius": "8",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "magasinier · Saint-Denis",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "magasinier",
+      "location": "Saint-Denis",
+      "radius": "8",
+      "maxPages": 1
+    },
+    {
+      "name": "magasinier · Montreuil",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "magasinier",
+      "location": "Montreuil",
+      "radius": "8",
+      "maxPages": 1
+    },
+    {
+      "name": "magasinier · Aulnay-sous-Bois",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "magasinier",
+      "location": "Aulnay-sous-Bois",
+      "radius": "8",
+      "maxPages": 1
+    },
+    {
+      "name": "préparateur de commandes · Aulnay-sous-Bois",
+      "enabled": true,
+      "category": "preparation",
+      "keywords": "préparateur de commandes",
+      "location": "Aulnay-sous-Bois",
+      "radius": "8",
+      "maxPages": 1
+    },
+    {
+      "name": "agent logistique · Saint-Denis",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "agent logistique",
+      "location": "Saint-Denis",
+      "radius": "8",
+      "maxPages": 1
     }
   ],
   "franceTravail": {
@@ -1215,13 +1300,23 @@
         "name": "logistique et entrepôt",
         "enabled": true,
         "keywords": "logistique logisticienne entrepot",
-        "maxPages": 8
+        "maxPages": 8,
+        "departements": [
+          "75",
+          "93",
+          "95"
+        ]
       },
       {
         "name": "préparation de commandes",
         "enabled": true,
         "keywords": "preparateur preparatrice picking picker",
-        "maxPages": 8
+        "maxPages": 8,
+        "departements": [
+          "75",
+          "93",
+          "95"
+        ]
       },
       {
         "name": "aéroport",
@@ -1233,7 +1328,12 @@
         "name": "tri",
         "enabled": true,
         "keywords": "tri trieur trieuse",
-        "maxPages": 6
+        "maxPages": 6,
+        "departements": [
+          "75",
+          "93",
+          "95"
+        ]
       },
       {
         "name": "rayon",
@@ -1277,7 +1377,8 @@
         "category": "stock",
         "keywords": "magasinier",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "stockiste · Bondy",
@@ -1295,7 +1396,8 @@
         "category": "stock",
         "keywords": "préparateur commandes",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "réceptionnaire · Bondy",
@@ -1303,7 +1405,8 @@
         "category": "stock",
         "keywords": "réceptionnaire",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "employé commercial · Bondy",
@@ -1351,7 +1454,8 @@
         "category": "stock",
         "keywords": "magasinier",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "distance": 8
       },
       {
         "name": "stockiste · Paris",
@@ -1369,7 +1473,8 @@
         "category": "stock",
         "keywords": "préparateur commandes",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "distance": 8
       },
       {
         "name": "réceptionnaire · Paris",
@@ -1377,7 +1482,8 @@
         "category": "stock",
         "keywords": "réceptionnaire",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "distance": 8
       },
       {
         "name": "employé commercial · Paris",
@@ -1457,7 +1563,8 @@
         "category": "stock",
         "keywords": "agent logistique",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "agent logistique · Paris",
@@ -1465,7 +1572,8 @@
         "category": "stock",
         "keywords": "agent logistique",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "distance": 8
       },
       {
         "name": "stock · Bondy",
@@ -1473,7 +1581,8 @@
         "category": "stock",
         "keywords": "stock",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "stock · Paris",
@@ -1481,7 +1590,8 @@
         "category": "stock",
         "keywords": "stock",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "distance": 8
       },
       {
         "name": "agent entrepot · Bondy",
@@ -1489,7 +1599,8 @@
         "category": "stock",
         "keywords": "agent entrepot",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "agent entrepot · Paris",
@@ -1497,7 +1608,8 @@
         "category": "stock",
         "keywords": "agent entrepot",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "distance": 8
       },
       {
         "name": "logisticien · Bondy",
@@ -1505,7 +1617,8 @@
         "category": "stock",
         "keywords": "logisticien",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "logisticien · Paris",
@@ -1513,7 +1626,8 @@
         "category": "stock",
         "keywords": "logisticien",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "distance": 8
       },
       {
         "name": "approvisionneur · Bondy",
@@ -1521,7 +1635,8 @@
         "category": "stock",
         "keywords": "approvisionneur",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "approvisionneur · Paris",
@@ -1529,7 +1644,8 @@
         "category": "stock",
         "keywords": "approvisionneur",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "distance": 8
       },
       {
         "name": "coordinateur logistique · Bondy",
@@ -1537,7 +1653,8 @@
         "category": "stock",
         "keywords": "coordinateur logistique",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "coordinateur logistique · Paris",
@@ -1545,7 +1662,8 @@
         "category": "stock",
         "keywords": "coordinateur logistique",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "distance": 8
       },
       {
         "name": "responsable logistique · Bondy",
@@ -1553,7 +1671,8 @@
         "category": "stock",
         "keywords": "responsable logistique",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "responsable logistique · Paris",
@@ -1561,7 +1680,8 @@
         "category": "stock",
         "keywords": "responsable logistique",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "distance": 8
       },
       {
         "name": "chef equipe logistique · Bondy",
@@ -1569,7 +1689,8 @@
         "category": "stock",
         "keywords": "chef equipe logistique",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "chef equipe logistique · Paris",
@@ -1577,7 +1698,8 @@
         "category": "stock",
         "keywords": "chef equipe logistique",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "distance": 8
       },
       {
         "name": "stockman · Paris",
@@ -1586,7 +1708,8 @@
         "keywords": "stockman",
         "titleOnly": true,
         "location": "Paris",
-        "maxDaysOld": 15
+        "maxDaysOld": 15,
+        "distance": 8
       },
       {
         "name": "réserviste · Paris",
@@ -1595,7 +1718,8 @@
         "keywords": "réserviste",
         "titleOnly": true,
         "location": "Paris",
-        "maxDaysOld": 15
+        "maxDaysOld": 15,
+        "distance": 8
       },
       {
         "name": "préparateur logistique · Bondy",
@@ -1603,7 +1727,8 @@
         "category": "preparation",
         "keywords": "préparateur logistique",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "agent de piste · Bondy",
@@ -1635,7 +1760,8 @@
         "category": "tri",
         "keywords": "agent de tri",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "inventaire · Bondy",
@@ -1643,7 +1769,8 @@
         "category": "tri",
         "keywords": "inventaire",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "chef de rayon · Bondy",
@@ -1651,7 +1778,8 @@
         "category": "encadrement",
         "keywords": "chef de rayon",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "chef de rayon · Paris",
@@ -1659,7 +1787,8 @@
         "category": "encadrement",
         "keywords": "chef de rayon",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "distance": 8
       },
       {
         "name": "manager de rayon · Bondy",
@@ -1667,7 +1796,8 @@
         "category": "encadrement",
         "keywords": "manager de rayon",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "responsable magasin · Bondy",
@@ -1675,7 +1805,8 @@
         "category": "encadrement",
         "keywords": "responsable magasin",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "distance": 15
       },
       {
         "name": "responsable magasin · Paris",
@@ -1683,7 +1814,8 @@
         "category": "encadrement",
         "keywords": "responsable magasin",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "distance": 8
       },
       {
         "name": "stock associate · Paris",
@@ -1704,6 +1836,24 @@
         "location": "Paris",
         "priorite": true,
         "maxDaysOld": 15
+      },
+      {
+        "name": "magasinier · Saint-Denis",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "magasinier",
+        "titleOnly": true,
+        "location": "Saint-Denis",
+        "distance": 8
+      },
+      {
+        "name": "magasinier · Montreuil",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "magasinier",
+        "titleOnly": true,
+        "location": "Montreuil",
+        "distance": 8
       }
     ],
     "maxDaysOld": 5
