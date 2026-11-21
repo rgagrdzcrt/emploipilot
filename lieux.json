@@ -147,15 +147,6 @@
   "min": 32,
   "minAt": "2026-11-14"
  },
- "boissy-saint-léger||94": {
-  "dept": "94",
-  "km": 17.1,
-  "label": "Boissy-Saint-Léger",
-  "lat": 48.75128,
-  "lon": 2.52001,
-  "min": 93,
-  "minAt": "2026-11-14"
- },
  "bondy||93": {
   "dept": "93",
   "km": 0.0,
@@ -199,15 +190,6 @@
   "lon": 2.71534,
   "min": 74,
   "minAt": "2026-11-12"
- },
- "cachan||94": {
-  "dept": "94",
-  "km": 16.8,
-  "label": "Cachan",
-  "lat": 48.79135,
-  "lon": 2.33152,
-  "min": 79,
-  "minAt": "2026-11-21"
  },
  "cergy||95": {
   "dept": "95",
@@ -366,6 +348,15 @@
   "min": 56,
   "minAt": "2026-11-12"
  },
+ "collégien||77": {
+  "dept": "77",
+  "km": 16.0,
+  "label": "Collégien",
+  "lat": 48.83034,
+  "lon": 2.6737,
+  "min": 93,
+  "minAt": "2026-11-21"
+ },
  "colombes||92": {
   "km": 17.5,
   "label": "Colombes",
@@ -399,15 +390,6 @@
   "lat": 48.9135,
   "lon": 2.57804,
   "min": 44,
-  "minAt": "2026-11-21"
- },
- "coupvray|77700|77": {
-  "dept": "77",
-  "km": 22.7,
-  "label": "Coupvray",
-  "lat": 48.8942,
-  "lon": 2.79504,
-  "min": 108,
   "minAt": "2026-11-21"
  },
  "courbevoie|92400|92": {
@@ -735,14 +717,6 @@
   "min": 71,
   "minAt": "2026-10-29"
  },
- "lagny-sur-marne|77400|77": {
-  "km": 16.5,
-  "label": "Lagny-sur-Marne",
-  "lat": 48.87388,
-  "lon": 2.70579,
-  "min": 76,
-  "minAt": "2026-11-12"
- },
  "lagny-sur-marne||77": {
   "dept": "77",
   "km": 16.5,
@@ -796,6 +770,15 @@
   "lon": 2.59354,
   "min": 77,
   "minAt": "2026-11-05"
+ },
+ "le mée-sur-seine||77": {
+  "dept": "77",
+  "km": 41.9,
+  "label": "Le Mée-sur-Seine",
+  "lat": 48.53994,
+  "lon": 2.63415,
+  "min": 122,
+  "minAt": "2026-11-21"
  },
  "le perreux-sur-marne||94": {
   "dept": "94",
@@ -1044,13 +1027,13 @@
   "min": 122,
   "minAt": "2026-11-21"
  },
- "montigny-lès-cormeilles||95": {
+ "montmagny||95": {
   "dept": "95",
-  "km": 23.5,
-  "label": "Montigny-lès-Cormeilles",
-  "lat": 48.99333,
-  "lon": 2.19375,
-  "min": 93,
+  "km": 12.4,
+  "label": "Montmagny",
+  "lat": 48.96767,
+  "lon": 2.34704,
+  "min": 80,
   "minAt": "2026-11-21"
  },
  "montmorency||95": {
@@ -1459,7 +1442,6 @@
   "min": 60,
   "minAt": "2026-11-12"
  },
- "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
@@ -1721,15 +1703,6 @@
   "min": 65,
   "minAt": "2026-11-12"
  },
- "taverny||95": {
-  "dept": "95",
-  "km": 24.0,
-  "label": "Taverny",
-  "lat": 49.02419,
-  "lon": 2.21263,
-  "min": 92,
-  "minAt": "2026-11-21"
- },
  "thiais||94": {
   "km": 17.5,
   "label": "Thiais",
@@ -1853,15 +1826,6 @@
   "min": 87,
   "minAt": "2026-11-12"
  },
- "villeparisis||77": {
-  "dept": "77",
-  "km": 10.4,
-  "label": "Villeparisis",
-  "lat": 48.94354,
-  "lon": 2.61475,
-  "min": 51,
-  "minAt": "2026-11-21"
- },
  "villepinte||93": {
   "dept": "93",
   "km": 6.8,
@@ -1869,15 +1833,6 @@
   "lat": 48.95651,
   "lon": 2.53243,
   "min": 61,
-  "minAt": "2026-11-14"
- },
- "villiers-sur-marne||94": {
-  "dept": "94",
-  "km": 9.6,
-  "label": "Villiers-sur-Marne",
-  "lat": 48.82784,
-  "lon": 2.5492,
-  "min": 55,
   "minAt": "2026-11-14"
  },
  "villiers-sur-marne||IDF": {
