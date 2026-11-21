@@ -8,6 +8,15 @@
   "min": 70,
   "minAt": "2026-11-13"
  },
+ "antony|92160|92": {
+  "dept": "92",
+  "km": 21.8,
+  "label": "Antony",
+  "lat": 48.75102,
+  "lon": 2.29783,
+  "min": 72,
+  "minAt": "2026-11-21"
+ },
  "antony||92": {
   "dept": "92",
   "km": 21.8,
@@ -68,6 +77,15 @@
   "min": 50,
   "minAt": "2026-11-12"
  },
+ "bagneux||92": {
+  "dept": "92",
+  "km": 17.4,
+  "label": "Bagneux",
+  "lat": 48.79774,
+  "lon": 2.31012,
+  "min": 79,
+  "minAt": "2026-11-21"
+ },
  "bagnolet||93": {
   "km": 6.0,
   "label": "Bagnolet",
@@ -93,6 +111,15 @@
   "lon": 2.19149,
   "min": 100,
   "minAt": "2026-10-28"
+ },
+ "bessancourt||95": {
+  "dept": "95",
+  "km": 25.1,
+  "label": "Bessancourt",
+  "lat": 49.03776,
+  "lon": 2.20789,
+  "min": 89,
+  "minAt": "2026-11-21"
  },
  "bezons||95": {
   "km": 19.9,
@@ -173,14 +200,23 @@
   "min": 74,
   "minAt": "2026-11-12"
  },
- "cesson||77": {
-  "dept": "77",
-  "km": 38.8,
-  "label": "Cesson",
-  "lat": 48.56296,
-  "lon": 2.59735,
-  "min": 112,
-  "minAt": "2026-11-17"
+ "cachan||94": {
+  "dept": "94",
+  "km": 16.8,
+  "label": "Cachan",
+  "lat": 48.79135,
+  "lon": 2.33152,
+  "min": 79,
+  "minAt": "2026-11-21"
+ },
+ "cergy||95": {
+  "dept": "95",
+  "km": 35.6,
+  "label": "Cergy",
+  "lat": 49.04227,
+  "lon": 2.04555,
+  "min": 105,
+  "minAt": "2026-11-21"
  },
  "champigny-sur-marne||94": {
   "dept": "94",
@@ -356,6 +392,24 @@
   "min": 68,
   "minAt": "2026-11-14"
  },
+ "coubron||93": {
+  "dept": "93",
+  "km": 6.9,
+  "label": "Coubron",
+  "lat": 48.9135,
+  "lon": 2.57804,
+  "min": 44,
+  "minAt": "2026-11-21"
+ },
+ "coupvray|77700|77": {
+  "dept": "77",
+  "km": 22.7,
+  "label": "Coupvray",
+  "lat": 48.8942,
+  "lon": 2.79504,
+  "min": 108,
+  "minAt": "2026-11-21"
+ },
  "courbevoie|92400|92": {
   "dept": "92",
   "km": 16.7,
@@ -514,6 +568,15 @@
   "min": 74,
   "minAt": "2026-11-20"
  },
+ "garges-lès-gonesse||95": {
+  "dept": "95",
+  "km": 9.6,
+  "label": "Garges-lès-Gonesse",
+  "lat": 48.96975,
+  "lon": 2.40086,
+  "min": 74,
+  "minAt": "2026-11-21"
+ },
  "gennevilliers||92": {
   "km": 14.3,
   "label": "Gennevilliers",
@@ -573,6 +636,15 @@
   "lon": 2.15245,
   "min": 107,
   "minAt": "2026-11-15"
+ },
+ "herblay||95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Herblay-sur-Seine",
+  "lat": 49.00406,
+  "lon": 2.15245,
+  "min": 104,
+  "minAt": "2026-11-21"
  },
  "issy-les-moulineaux||92": {
   "km": 18.5,
@@ -1104,6 +1176,15 @@
   "min": 58,
   "minAt": "2026-11-14"
  },
+ "noiseau||IDF": {
+  "dept": "94",
+  "km": 15.2,
+  "label": "Noiseau",
+  "lat": 48.77345,
+  "lon": 2.54996,
+  "min": 83,
+  "minAt": "2026-11-21"
+ },
  "noisiel||77": {
   "dept": "77",
   "km": 11.9,
@@ -1447,6 +1528,15 @@
   "minAt": "2026-10-28"
  },
  "république||": {},
+ "saint-brice-sous-forêt||95": {
+  "dept": "95",
+  "km": 14.7,
+  "label": "Saint-Brice-sous-Forêt",
+  "lat": 49.00169,
+  "lon": 2.35117,
+  "min": 87,
+  "minAt": "2026-11-21"
+ },
  "saint-cloud||92": {
   "km": 20.9,
   "label": "Saint-Cloud",
@@ -1560,15 +1650,6 @@
   "lon": 2.38241,
   "min": 81,
   "minAt": "2026-11-17"
- },
- "savigny-le-temple||77": {
-  "dept": "77",
-  "km": 35.8,
-  "label": "Savigny-le-Temple",
-  "lat": 48.58773,
-  "lon": 2.57666,
-  "min": 117,
-  "minAt": "2026-11-10"
  },
  "sceaux||92": {
   "dept": "92",
@@ -1771,6 +1852,15 @@
   "lon": 2.4497,
   "min": 87,
   "minAt": "2026-11-12"
+ },
+ "villeparisis||77": {
+  "dept": "77",
+  "km": 10.4,
+  "label": "Villeparisis",
+  "lat": 48.94354,
+  "lon": 2.61475,
+  "min": 51,
+  "minAt": "2026-11-21"
  },
  "villepinte||93": {
   "dept": "93",
