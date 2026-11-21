@@ -142,7 +142,7 @@ test('lettres de Ryan : conformes au CV stock et propres à chaque entreprise', 
     interim: { title: 'Préparateur de commandes', company: 'Manpower', category: 'preparation', contract: 'Intérim',
       notes: 'Préparation des commandes. Chaussures de sécurité, mutuelle santé.' },
     piste: { title: 'Agent de piste', company: 'Swissport', category: 'aeroport', notes: 'Chargement des bagages.' },
-    kenvue: { title: 'Agent d’inventaire', company: 'Kenvue', category: 'tri', notes: 'Comptages et écarts de stock.' },
+    kenvue: { title: 'Agent de tri colis', company: 'Kenvue', category: 'tri', notes: 'Tri des colis et contrôle des écarts.' },
   }).map(([k, o]) => [k, letter(o)]));
   for (const [k, l] of Object.entries(out)) {
     // CV stock seulement : ni rayon (Monoprix, E.Leclerc), ni vente (COS), ni ancien intitulé, ni WMS.
@@ -202,6 +202,27 @@ test('lettre en PDF : fichier valide, accents, justifiée, coordonnées en tête
   assert.strictEqual(ctx.__name(infos, 'Carrefour'), 'Lettre_motivation_CARTIER_GAZARD_Ryan_Carrefour.pdf');
   assert.strictEqual(ctx.__name({}, 'L’Oréal'), 'Lettre_motivation_L_Oreal.pdf');
   assert.deepStrictEqual(['Bondy 93140', '12 rue X, 93140 Bondy', 'Bondy (93)', '12 rue X'].map(a => ctx.__city(a)), ['Bondy', 'Bondy', 'Bondy', '']);
+});
+
+test('stockistes : 15 jours et jamais masqués par un type, sauf cariste et direction', () => {
+  const src = read('pilot.js');
+  const a = src.indexOf('const JOB_TYPES'), b = src.indexOf('function hiddenTypes', a);
+  assert.ok(a >= 0 && b > a);
+  const t = new Function('norm', 'profile', 'ACTIVE_PROFILE', 'parseDate', 'offerDate',
+    src.slice(a, b) + '\nfunction hiddenTypes() { return DEFAULT_HIDDEN_TYPES; }\nreturn { maxAgeDays, hidingType, tooOld };')(
+    s => String(s || '').toLowerCase(), {}, {}, s => (s ? new Date(s) : null), o => o.date);
+  const daysAgo = n => new Date(Date.now() - n * 864e5).toISOString();
+  assert.strictEqual(t.maxAgeDays({ title: 'Stockiste H/F' }), 15);
+  assert.strictEqual(t.maxAgeDays({ title: 'Employé de réserve' }), 15);
+  assert.strictEqual(t.maxAgeDays({ title: 'Magasinier' }), 5);
+  assert.strictEqual(t.tooOld({ title: 'Stockiste', date: daysAgo(10) }), false);
+  assert.strictEqual(t.tooOld({ title: 'Magasinier', date: daysAgo(10) }), true);
+  assert.strictEqual(t.tooOld({ title: 'Stockiste', date: daysAgo(16) }), true);
+  // Types masqués par défaut (luxe, cosmétique, week-end…) : sans effet sur un stockiste.
+  assert.strictEqual(t.hidingType({ title: 'Stockiste luxe H/F' }), undefined);
+  assert.strictEqual(t.hidingType({ title: 'Stockiste parfumerie week-end' }), undefined);
+  assert.strictEqual((t.hidingType({ title: 'Conseiller de vente luxe' }) || {}).id, 'luxe');
+  assert.strictEqual((t.hidingType({ title: 'Stockiste cariste CACES' }) || {}).id, 'cariste');
 });
 
 test('synchro : un appareil neuf ne remplace jamais le profil du gist', () => {

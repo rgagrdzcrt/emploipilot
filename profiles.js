@@ -16,7 +16,7 @@ const CAT_INFO = {
   preparation: { label: 'Préparation de commandes', icon: 'clipboard' },
   encadrement: { label: 'Encadrement en magasin', icon: 'user' },
   aeroport: { label: 'Logistique aéroport', icon: 'plane' },
-  tri: { label: 'Tri & inventaire', icon: 'scan' },
+  tri: { label: 'Tri de colis', icon: 'scan' },
   rayon: { label: 'Magasins & grande distribution', icon: 'cart' },
   vente: { label: 'Vente', icon: 'tag' },
   restauration: { label: 'Restauration & café', icon: 'cup' },
@@ -37,7 +37,7 @@ const ZCRT_PROFILES = {
     // Profil recentré sur la logistique (13/11/2026) : rayon et vente ne sont plus affichés ici
     // (ils restent collectés pour le profil de Zia, "categories" dans sources.json).
     // Onglets ajoutés le 21/11/2026 : préparation de commandes (détachée du stock), encadrement
-    // en magasin, logistique aéroport, tri & inventaire.
+    // en magasin, logistique aéroport, tri (sans inventoriste depuis le 21/11/2026).
     cats: ['stock', 'preparation', 'encadrement', 'aeroport', 'tri'],
     tag: 'Logistique & magasin',  // étiquette du bandeau d'accueil (les 5 métiers à la suite débordent)
     // Tri au doigt : préparateur de commandes en dernier (surqualifié, gardé en solution de repli).
@@ -84,9 +84,9 @@ const ZCRT_PROFILES = {
       + 'Agent de stock, employé de stock, contrôleur de stock, responsable des stocks\n'
       + 'Magasinier, agent logistique, agent d’entrepôt, préparateur de commandes\n'
       + 'Coordinateur logistique, responsable logistique, chef d’équipe logistique\n'
-      + 'Chef de rayon, manager de rayon, adjoint ou responsable de magasin\n'
+      + 'Chef de rayon, manager de rayon, chef de caisse\n'
       + 'Agent de piste, agent d’escale, agent de fret (Roissy, Orly)\n'
-      + 'Agent de tri, agent d’inventaire, inventoriste',
+      + 'Agent de tri, trieur, agent de tri de colis',
     mails: true,
     feminine: false,
     // Adéquation offre / CV (pilot.js, cvFit) : d'après cv/cv_stock.html.

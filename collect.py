@@ -33,6 +33,20 @@ MAX_AGE_DAYS = 45
 # Annonce publiée (ou mise à jour, pour Jooble) il y a plus de 5 jours : retirée
 # même si une source la propose encore.
 MAX_PUBLICATION_DAYS = 5
+# Stockiste et postes voisins (réserve, stock associate, agent ou employé de stock…), cœur de la
+# recherche de Ryan : gardés 15 jours (choix du 21/11/2026). Même liste dans pilot.js (STOCKISTE_RE).
+MAX_STOCKISTE_DAYS = 15
+STOCKISTE_RE = re.compile(
+    r"stockist|stockman|stock\s*(?:associate|room|controller|keeper)|\br[eé]serv(?:e|es|iste|istes)\b|r[eé]assortisseu"
+    r"|back[\s-]?of[\s-]?house|\bboh\b|inventory\s+associate"
+    r"|(?:agent|employ[eé]|[eé]quipi|h[oô]te|assistant|op[eé]rat)\w*\s+(?:de\s+|du\s+|en\s+)?stock",
+    re.I,
+)
+
+
+def max_publication_days(title):
+    """Âge maximal d'une annonce : 15 jours pour les stockistes et la réserve, 5 pour le reste."""
+    return MAX_STOCKISTE_DAYS if STOCKISTE_RE.search(title or "") else MAX_PUBLICATION_DAYS
 MAX_UNSEEN_DAYS = 7
 
 STAGE_RE = re.compile(
@@ -70,7 +84,8 @@ CATEGORY_RE = {
         # Tout ce qui touche à la réserve d'un magasin : stockman, stockiste, réserviste,
         # « employé de réserve », « hôte(sse) de réserve », « back of house » (luxe)…
         r"|\br[eé]serves?\b|r[eé]serviste|r[eé]assortisseu|back[\s-]?of[\s-]?house|\bboh\b"
-        r"|r[eé]ception\s+(?:des\s+|de\s+)?marchandises",
+        r"|r[eé]ception\s+(?:des\s+|de\s+)?marchandises"
+        r"|\binventory\b",  # « Inventory Associate » (luxe) : stockiste ; analyste écarté (STOCK_OTHER_JOB_RE)
         re.I,
     ),
     "preparation": PREPA_RE,
@@ -81,14 +96,12 @@ CATEGORY_RE = {
         r"|assistant" + _G + r"\s+(?:de\s+)?transit",
         re.I,
     ),
-    # Tri (colis, courrier) et inventaire (pas le tri des déchets, voir TRI_EXCLUDE_RE).
+    # Tri de colis et de courrier (pas le tri des déchets, voir TRI_EXCLUDE_RE). Plus d'inventoriste
+    # depuis le 21/11/2026 (INVENTORY_COUNT_RE).
     "tri": re.compile(
         r"(?:agent|op[eé]rat|employ[eé]|[eé]quipi|technicien)" + _G + r"\s+(?:de\s+|du\s+)?tri\b|\btrieu(?:r|se)s?\b"
         r"|\btri\s+(?:de\s+|des\s+|du\s+)?(?:colis|courriers?|postal|paquets?)|centre\s+de\s+tri"
-        r"|traitement\s+du\s+courrier"
-        r"|(?:agent|op[eé]rat|employ[eé]|[eé]quipi|charg[eé]|assistant|technicien|contr[oô]leu)" + _G
-        + r"\s+(?:d['’ ]\s*|de\s+l['’]\s*)?inventaires?"
-        r"|inventoristes?|\binventory\b",
+        r"|traitement\s+du\s+courrier",
         re.I,
     ),
     # Encadrement en magasin : chef / manager de rayon, adjoint ou responsable de magasin…
@@ -289,7 +302,14 @@ ENCADREMENT_EXCLUDE_RE = re.compile(
 
 
 STOCK_DRIVE_RE = re.compile(r"chauffeu|livreu|conducteu|dispatch|transport", re.I)
-STOCK_OTHER_JOB_RE = re.compile(r"\badv\b|\bdata\b|tech\s*lead|d[eé]veloppeu|technicien|maintenance", re.I)
+STOCK_OTHER_JOB_RE = re.compile(r"\badv\b|\bdata\b|tech\s*lead|d[eé]veloppeu|technicien|maintenance|analyst", re.I)
+# Inventoriste et agent d'inventaire (comptages pour les sociétés d'inventaire) : écartés (21/11/2026),
+# sauf si le titre nomme aussi le stock ou la réserve.
+INVENTORY_COUNT_RE = re.compile(
+    r"inventori|(?:agent|op[eé]rat|employ[eé]|[eé]quipi|charg[eé]|assistant|technicien|contr[oô]leu)\S*\s+"
+    r"(?:d['’ ]\s*|de\s+l['’]\s*)?inventaires?",
+    re.I,
+)
 STOCK_BIG_SITE_RE = re.compile(
     r"(?:responsable|directeu|directrice|manager|superviseu|chef)\w*.{0,40}?"
     r"(?:entrep[oô]t|\bsite\b|secteur|activit[eé]|d[eé]partement|plateforme|exploitation|op[eé]rations)"
@@ -724,6 +744,8 @@ def classify_category(title):
     title = title or ""
     if NOT_TARGET_RE.search(title):
         return None
+    if INVENTORY_COUNT_RE.search(title) and not re.search(r"stock|r[eé]serv", title, re.I):
+        return None  # inventoriste : ni Tri, ni Rayon
     split = logistics_split(title)
     if split:
         return split if split in TARGET_CATEGORIES else None
@@ -1123,11 +1145,12 @@ def eures_reference(jv_id):
     return reference if point == "9" and re.fullmatch(r"[0-9A-Z]{5,12}", reference) else ""
 
 
-def _eures_body(keywords, page):
+def _eures_body(keywords, page, period="LAST_WEEK"):
     return {
         "resultsPerPage": EURES_PAGE, "page": page, "sortSearch": "MOST_RECENT",
-        # Créées ou modifiées dans la semaine ; la date de création est vérifiée ensuite.
-        "publicationPeriod": "LAST_WEEK",
+        # Créées ou modifiées dans la période (semaine, ou mois pour la recherche des stockistes) ;
+        # la date de création est vérifiée ensuite.
+        "publicationPeriod": period,
         "keywords": [{"keyword": keywords, "specificSearchCode": "TITLE"}],
         "locationCodes": ["fr10"],  # Île-de-France : l'API ne filtre pas par département
         "occupationUris": [], "skillUris": [], "requiredExperienceCodes": [], "positionScheduleCodes": [],
@@ -1186,11 +1209,15 @@ def fetch_eures(cfg):
     offers, failures = [], 0
     for query in queries:
         label = query.get("name") or query["keywords"]
+        # Délai propre à la recherche (« stock et réserve » : 15 jours, comme MAX_STOCKISTE_DAYS).
+        q_days = int(query.get("publieesDepuisJours") or days)
+        q_cutoff = (time.time() - q_days * 86400) * 1000
+        period = "LAST_WEEK" if q_days <= 7 else "LAST_MONTH"
         announced = received = kept = pages = 0
         for page in range(1, max(1, int(query.get("maxPages") or default_pages)) + 1):
             req = Request(
                 EURES_SEARCH_URL,
-                data=json.dumps(_eures_body(query["keywords"], page)).encode("utf-8"),
+                data=json.dumps(_eures_body(query["keywords"], page, period)).encode("utf-8"),
                 headers={"User-Agent": UA, "Content-Type": "application/json", "Accept": "application/json"},
                 method="POST",
             )
@@ -1205,14 +1232,14 @@ def fetch_eures(cfg):
             pages += 1
             received += len(jobs)
             for jv in jobs:
-                offer = eures_offer(jv, depts, cutoff_ms)
+                offer = eures_offer(jv, depts, q_cutoff)
                 if offer:
                     offers.append(offer)
                     kept += 1
             # Tri par date de modification : une page qui finit avant la période (créée au
             # plus tard quand elle a été modifiée) clôt la recherche.
             last_modified = int((jobs[-1].get("lastModificationDate") or 0) if jobs else 0)
-            if len(jobs) < EURES_PAGE or page * EURES_PAGE >= announced or last_modified < cutoff_ms:
+            if len(jobs) < EURES_PAGE or page * EURES_PAGE >= announced or last_modified < q_cutoff:
                 break
             time.sleep(1)
         print(f"EURES [{label}] : {received} offre(s) reçue(s) sur {announced}, {kept} retenue(s).")
@@ -1682,7 +1709,7 @@ def fetch_adzuna(cfg):
                     **search,
                     "where": query.get("location") or location,
                     "distance": max(1, int(query.get("distance", distance))),
-                    "max_days_old": int(cfg.get("maxDaysOld", 60)),
+                    "max_days_old": int(query.get("maxDaysOld") or cfg.get("maxDaysOld", 60)),  # 15 j : stockistes
                     "sort_by": "date",
                     "content-type": "application/json",
                 }
@@ -2428,11 +2455,12 @@ def main():
         return (datetime.now(timezone.utc) - pub).days
 
     too_old = [o for o in offers
-               if (published_days(o) or 0) > MAX_PUBLICATION_DAYS and not is_tracked(o)]
+               if (published_days(o) or 0) > max_publication_days(o.get("title")) and not is_tracked(o)]
     if too_old:
         gone = {id(o) for o in too_old}
         offers = [o for o in offers if id(o) not in gone]
-        removed_by_rule[f"publiées il y a plus de {MAX_PUBLICATION_DAYS} jours"] = len(too_old)
+        removed_by_rule[f"publiées il y a plus de {MAX_PUBLICATION_DAYS} jours "
+                        f"({MAX_STOCKISTE_DAYS} pour les stockistes)"] = len(too_old)
 
     write_offers(offers)
     save_pending_alert([item for item in new_items if item in offers])

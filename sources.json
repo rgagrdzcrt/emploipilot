@@ -806,7 +806,7 @@
     },
     {
       "name": "agent d'inventaire · Bondy",
-      "enabled": true,
+      "enabled": false,
       "category": "tri",
       "keywords": "agent d'inventaire",
       "location": "Bondy",
@@ -815,7 +815,7 @@
     },
     {
       "name": "inventoriste · Bondy",
-      "enabled": true,
+      "enabled": false,
       "category": "tri",
       "keywords": "inventoriste",
       "location": "Bondy",
@@ -953,6 +953,126 @@
       "radius": "26",
       "maxPages": 1,
       "priorite": true
+    },
+    {
+      "name": "stockiste boutique · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockiste boutique",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "stockiste mode · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockiste mode",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "stockiste parfumerie · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockiste parfumerie",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "stockiste grand magasin · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockiste grand magasin",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "stockiste centre commercial · Bondy",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockiste centre commercial",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "stockiste aéroport · Roissy-en-France",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockiste aéroport",
+      "location": "Roissy-en-France",
+      "radius": "26",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "stockiste temps partiel · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockiste temps partiel",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "stockiste CDI · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockiste CDI",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "stockroom associate · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockroom associate",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "back of house · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "back of house",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "inventory associate · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "inventory associate",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1,
+      "priorite": true
+    },
+    {
+      "name": "agent de réserve · Bondy",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "agent de réserve",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 1,
+      "priorite": true
     }
   ],
   "franceTravail": {
@@ -1016,7 +1136,7 @@
       },
       {
         "name": "inventaire",
-        "enabled": true,
+        "enabled": false,
         "category": "tri",
         "keywords": "inventaire"
       },
@@ -1088,7 +1208,8 @@
         "name": "stock et réserve",
         "enabled": true,
         "keywords": "magasinier magasiniere stockiste stockman stock reserve reserviste logisticien reassortisseur",
-        "maxPages": 6
+        "maxPages": 6,
+        "publieesDepuisJours": 15
       },
       {
         "name": "logistique et entrepôt",
@@ -1109,9 +1230,9 @@
         "maxPages": 4
       },
       {
-        "name": "tri et inventaire",
+        "name": "tri",
         "enabled": true,
-        "keywords": "tri trieur trieuse inventaire inventoriste",
+        "keywords": "tri trieur trieuse",
         "maxPages": 6
       },
       {
@@ -1165,7 +1286,8 @@
         "keywords": "stockiste",
         "titleOnly": true,
         "location": "Bondy",
-        "priorite": true
+        "priorite": true,
+        "maxDaysOld": 15
       },
       {
         "name": "préparateur commandes · Bondy",
@@ -1238,7 +1360,8 @@
         "keywords": "stockiste",
         "titleOnly": true,
         "location": "Paris",
-        "priorite": true
+        "priorite": true,
+        "maxDaysOld": 15
       },
       {
         "name": "préparateur commandes · Paris",
@@ -1462,7 +1585,8 @@
         "category": "stock",
         "keywords": "stockman",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "maxDaysOld": 15
       },
       {
         "name": "réserviste · Paris",
@@ -1470,7 +1594,8 @@
         "category": "stock",
         "keywords": "réserviste",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "maxDaysOld": 15
       },
       {
         "name": "préparateur logistique · Bondy",
@@ -1514,7 +1639,7 @@
       },
       {
         "name": "inventaire · Bondy",
-        "enabled": true,
+        "enabled": false,
         "category": "tri",
         "keywords": "inventaire",
         "titleOnly": true,
@@ -1559,6 +1684,26 @@
         "keywords": "responsable magasin",
         "titleOnly": true,
         "location": "Paris"
+      },
+      {
+        "name": "stock associate · Paris",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "stock associate",
+        "titleOnly": true,
+        "location": "Paris",
+        "priorite": true,
+        "maxDaysOld": 15
+      },
+      {
+        "name": "réserve · Paris",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "réserve",
+        "titleOnly": true,
+        "location": "Paris",
+        "priorite": true,
+        "maxDaysOld": 15
       }
     ],
     "maxDaysOld": 5

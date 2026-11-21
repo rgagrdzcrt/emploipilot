@@ -67,14 +67,29 @@ class Categories(unittest.TestCase):
             with self.subTest(title=title):
                 self.assertEqual(self.cat(title), expected)
 
-    def test_tri_et_inventaire(self):
+    def test_tri_de_colis_sans_inventoriste(self):
+        # Inventoriste et agent d'inventaire écartés (21/11/2026), même « grande distribution » (pas l'onglet
+        # Rayon) ; « Inventory Associate » (luxe) est un stockiste, l'analyste ne l'est pas.
         for title, expected in (("Agent de tri colis (H/F)", "tri"), ("Trieur / Trieuse", "tri"),
-                                ("Équipier(e) d'inventaire", "tri"), ("Inventoriste", "tri"),
+                                ("Équipier(e) d'inventaire", None), ("Inventoriste", None),
+                                ("Inventoriste Magasin grande distribution", None),
                                 ("Agent de tri - logistique", "tri"), ("Magasinier inventaire", "stock"),
+                                ("Gestionnaire Inventaires et Stocks H/F", "stock"), ("Inventory Associate - Paris", "stock"),
+                                ("Order Management & Inventory Analyst", None),
                                 ("Agent de tri des déchets", None), ("Infirmier de tri", None),
                                 ("Chargé d'inventaire du patrimoine", None)):
             with self.subTest(title=title):
                 self.assertEqual(self.cat(title), expected)
+
+    def test_delai_stockistes(self):
+        # Stockiste et postes voisins : 15 jours ; le reste : 5 jours.
+        for title in ("Stockiste H/F", "Stockman", "Employé de réserve", "Hôtesse de réserve", "Réserviste 25h",
+                      "Stock Associate", "Agent de stock", "Employée de stock", "Back of House Associate"):
+            with self.subTest(title=title):
+                self.assertEqual(collect.max_publication_days(title), 15)
+        for title in ("Magasinier", "Gestionnaire de stock", "Préparateur de commandes", "Chef de rayon"):
+            with self.subTest(title=title):
+                self.assertEqual(collect.max_publication_days(title), 5)
 
     def test_encadrement_en_magasin(self):
         # Revue du 21/11/2026 : chefs et managers de rayon, de caisse ou de drive ; ni responsable, ni

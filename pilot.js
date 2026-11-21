@@ -417,14 +417,28 @@ const JOB_TYPES = [
   { id: 'direction', label: 'Postes de direction (directeur, head of)', re: /directeur|directrice|\bdirection\b|head of/i },
 ];
 const MAX_OFFER_AGE_DAYS = 5; // annonces publiées il y a plus de 5 jours : masquées (même limite que collect.py)
+// Stockiste et postes voisins (réserve, stock associate, agent ou employé de stock…) : gardés 15 jours
+// et jamais masqués par un type (luxe, cosmétique, week-end…), sauf cariste et direction
+// (choix du 21/11/2026 ; même liste que STOCKISTE_RE dans collect.py).
+const MAX_STOCKISTE_DAYS = 15;
+const STOCKISTE_RE = /stockist|stockman|stock\s*(?:associate|room|controller|keeper)|\br[eé]serv(?:e|es|iste|istes)\b|r[eé]assortisseu|back[\s-]?of[\s-]?house|\bboh\b|inventory\s+associate|(?:agent|employ[eé]|[eé]quipi|h[oô]te|assistant|op[eé]rat)\w*\s+(?:de\s+|du\s+|en\s+)?stock/i;
+const STOCKISTE_TYPES_KEPT = ['cariste', 'direction'];
+function isStockiste(o) { return STOCKISTE_RE.test(o.title || ''); }
+function maxAgeDays(o) { return isStockiste(o) ? MAX_STOCKISTE_DAYS : MAX_OFFER_AGE_DAYS; }
 
 function matchesType(type, o) {
   return type.test ? type.test(o) : type.re.test(o.title || '');
 }
 
+/** Premier type masqué qui s'applique à l'offre (un stockiste n'est masqué que comme cariste ou direction). */
+function hidingType(o) {
+  const hidden = hiddenTypes(), stockiste = isStockiste(o);
+  return JOB_TYPES.find(t => hidden.includes(t.id) && matchesType(t, o) && (!stockiste || STOCKISTE_TYPES_KEPT.includes(t.id)));
+}
+
 function tooOld(o) {
   const d = parseDate(offerDate(o));
-  return !!d && Date.now() - d.getTime() > MAX_OFFER_AGE_DAYS * 864e5;
+  return !!d && Date.now() - d.getTime() > maxAgeDays(o) * 864e5;
 }
 const DEFAULT_HIDDEN_TYPES = ACTIVE_PROFILE.hiddenTypes
   || ['luxe', 'bouche', 'cosmetique', 'animalerie', 'auto', 'cariste', 'weekend', 'caisse', 'direction'];
@@ -439,8 +453,7 @@ function excludedWords() {
 function isHiddenType(o) {
   if (isTracked(o)) return false;
   if (tooOld(o)) return true;
-  const hidden = hiddenTypes();
-  if (JOB_TYPES.some(t => hidden.includes(t.id) && matchesType(t, o))) return true;
+  if (hidingType(o)) return true;
   const t = norm(o.title || '');
   return excludedWords().some(w => t.includes(w));
 }
@@ -460,9 +473,8 @@ function repereesOf(cat) {
 /** Pourquoi une offre est masquée (texte court), ou '' si elle est visible. */
 function hiddenReason(o) {
   if (isTracked(o)) return '';
-  if (tooOld(o)) return 'publiée il y a plus de ' + MAX_OFFER_AGE_DAYS + ' j';
-  const hidden = hiddenTypes();
-  const type = JOB_TYPES.find(t => hidden.includes(t.id) && matchesType(t, o));
+  if (tooOld(o)) return 'publiée il y a plus de ' + maxAgeDays(o) + ' j';
+  const type = hidingType(o);
   if (type) return 'type masqué « ' + type.label + ' »';
   const t = norm(o.title || '');
   const word = excludedWords().find(w => t.includes(w));
