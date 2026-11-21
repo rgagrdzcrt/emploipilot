@@ -65,6 +65,42 @@ test('« À postuler » : offres non voulues retirées, les autres gardées', ()
   assert.strictEqual(rules.isPurged({ status: 'Candidature envoyée', appliedDate: '2026-11-18', title: 'Cariste' }), false);
 });
 
+test('« À postuler » : règles d’intitulé limitées aux métiers de la logistique', () => {
+  const r = slice('const PURGE_BEFORE', 'function purgeOffers', {
+    ACTIVE_PROFILE: ryan, CATS: ryan.cats, categoryOf: o => o.category || 'stock',
+  });
+  const cases = [
+    ['Responsable de point de vente', 'encadrement', '', false], ['Chef de caisse', 'encadrement', '', false],
+    ['Préparateur de commandes vendeur', 'preparation', '', true],
+    ['Agent de piste', 'aeroport', 'CACES 1 obligatoire.', true], ['Agent de tri', 'tri', '', false],
+  ];
+  for (const [title, category, notes, expected] of cases) {
+    assert.strictEqual(r.isPurged({ status: 'À postuler', title, category, notes }), expected, title);
+  }
+});
+
+test('profil de Ryan : chaque onglet a libellé, icône, CV, modèle de lettre, score et missions', () => {
+  const ctx = { document: stub, window: stub, navigator: stub, location: { search: '', hash: '' },
+    localStorage: { getItem: () => null, setItem() {}, removeItem() {} } };
+  vm.createContext(ctx);
+  vm.runInContext(read('profiles.js') + ';this.__info = CAT_INFO;', ctx);
+  vm.runInContext(read('compose.js') + ';this.__lp = LETTER_PROFILE;', ctx);
+  vm.runInContext(read('letters.js') + ';this.__lt = LETTER_TAILOR;', ctx);
+  const html = read('index.html'), pilot = read('pilot.js');
+  assert.deepStrictEqual([...ryan.cats], ['stock', 'preparation', 'encadrement', 'aeroport', 'tri']);
+  for (const c of ryan.cats) {
+    assert.ok(ctx.__info[c] && ctx.__info[c].label, `libellé ${c}`);
+    assert.ok(html.includes(`<symbol id="i-${ctx.__info[c].icon}"`), `icône ${c}`);
+    assert.ok(ryan.cv[c], `CV ${c}`);
+    assert.ok(ryan.fit.cats[c] && ryan.fit.cats[c].titles.length, `score ${c}`);
+    assert.ok(new RegExp(`\\n  ${c}: \`Madame, Monsieur,`).test(pilot), `modèle de lettre ${c}`);
+    assert.ok(ctx.__lp.ryan.domains[c] && ctx.__lp.ryan.defaultQualities[c], `lettre composée ${c}`);
+    assert.ok((ctx.__lt.ryan.missions[c] || []).length >= 4, `missions ${c}`);
+  }
+  // Jamais « c'est précisément le métier que j'exerce » pour un poste jamais occupé tel quel.
+  for (const c of ['preparation', 'encadrement', 'aeroport', 'tri']) assert.strictEqual(ctx.__lp.ryan.domains[c].exact, false);
+});
+
 test('synchro : un appareil neuf ne remplace jamais le profil du gist', () => {
   const src = read('pilot.js');
   const a = src.indexOf('function applySync'), b = src.indexOf('function applySyncCache');

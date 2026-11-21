@@ -1,6 +1,6 @@
 
 #!/usr/bin/env python3
-"""EmploiPilot : collecte Jooble, API France Travail et flux RSS/Atom autorisés.
+"""EmploiPilot : collecte Jooble, Adzuna, API France Travail, EURES et flux RSS/Atom autorisés.
 
 - Aucune candidature automatique : ce script ne fait que collecter et organiser.
 - Les clés API restent dans les secrets GitHub Actions (jamais imprimées ici).
@@ -10,6 +10,7 @@ import re
 import json
 import html
 import time
+import base64
 import hashlib
 import unicodedata
 from datetime import datetime, timedelta, timezone
@@ -48,17 +49,60 @@ INTERIM_RE = re.compile(r"\b(int[eé]rim|int[eé]rimaire|mission temporaire)\b",
 CDI_RE = re.compile(r"\b(CDI|contrat [àa] dur[eé]e ind[eé]termin[eé]e)\b", re.I)
 CDD_RE = re.compile(r"\b(CDD|contrat [àa] dur[eé]e d[eé]termin[eé]e)\b", re.I)
 
-# Ordre important : un « magasinier vendeur » relève d'abord du stock.
+# Suffixe de genre ou d'écriture inclusive accolé à un métier : « Agent(e) », « Équipier.ère »…
+_G = r"[\w().·/-]*"
+
+# Préparation de commandes (onglet à part) : « Préparateur(trice) de commande(s) », « Préparateur
+# logistique », « Préparateur de colis », picking. Pas « Préparateur » seul (pharmacie, véhicules…).
+PREPA_RE = re.compile(
+    r"pr[eé]parat(?:eur|rice|ion)[\w().·/-]*(?:\s*[/-]\s*pr[eé]parat\w*)?\s+(?:de\s+|des\s+)?(?:commandes?|colis)\b"
+    r"|pr[eé]parat(?:eur|rice)[\w().·/-]*\s+(?:logisti|e-?commerce|drive\b|d['’ ]?entrep[oô]t|de\s+quai)"
+    r"|order\s*picker|\bpick(?:er|ing)\b|agent\w*\s+de\s+pr[eé]paration\b",
+    re.I,
+)
+
+# Ordre important : un « magasinier vendeur » relève d'abord du stock. Les métiers détachés du
+# stock (préparation, aéroport, tri & inventaire) sont départagés par logistics_split().
 CATEGORY_RE = {
     "stock": re.compile(
         r"stock|logisti|magasinier|pr[eé]parat(?:eur|rice|ion) de commandes|approvision|cariste"
         r"|r[eé]ceptionnaire|entrep[oô]t|agent de quai"
-        r"|(?:agent|employ[eé]e?|responsable|gestionnaire|h[oô]te(?:sse)?) (?:de |des |en )?r[eé]serve|r[eé]assortisseu",  # stockiste de magasin : « employé de réserve »
+        # Tout ce qui touche à la réserve d'un magasin : stockman, stockiste, réserviste,
+        # « employé de réserve », « hôte(sse) de réserve », « back of house » (luxe)…
+        r"|\br[eé]serves?\b|r[eé]serviste|r[eé]assortisseu|back[\s-]?of[\s-]?house|\bboh\b"
+        r"|r[eé]ception\s+(?:des\s+|de\s+)?marchandises",
+        re.I,
+    ),
+    "preparation": PREPA_RE,
+    # Logistique aéroportuaire : fret, piste, escale, bagages (pas la sûreté, voir AEROPORT_EXCLUDE_RE).
+    "aeroport": re.compile(
+        r"\bfret\b|\bfreight\b|\bcargo\b|\bramp\b|bagagiste|baggage|\bbagages?\b|avitaill|\bhandling\b|a[eé]roportuaire"
+        r"|agent" + _G + r"\s+(?:de\s+piste|piste|d['’ ]\s*escale|de\s+trafic|de\s+passage\b|passage\b|de\s+transit)"
+        r"|assistant" + _G + r"\s+(?:de\s+)?transit",
+        re.I,
+    ),
+    # Tri (colis, courrier) et inventaire (pas le tri des déchets, voir TRI_EXCLUDE_RE).
+    "tri": re.compile(
+        r"(?:agent|op[eé]rat|employ[eé]|[eé]quipi|technicien)" + _G + r"\s+(?:de\s+|du\s+)?tri\b|\btrieu(?:r|se)s?\b"
+        r"|\btri\s+(?:de\s+|des\s+|du\s+)?(?:colis|courriers?|postal|paquets?)|centre\s+de\s+tri"
+        r"|traitement\s+du\s+courrier"
+        r"|(?:agent|op[eé]rat|employ[eé]|[eé]quipi|charg[eé]|assistant|technicien|contr[oô]leu)" + _G
+        + r"\s+(?:d['’ ]\s*|de\s+l['’]\s*)?inventaires?"
+        r"|inventoristes?|\binventory\b",
+        re.I,
+    ),
+    # Encadrement en magasin : chef / manager de rayon, adjoint ou responsable de magasin…
+    "encadrement": re.compile(
+        r"chef(?:fe)?\s+de\s+(?:rayon|caisses?|magasin|boutique)|(?:manager|responsable|r[eé]f[eé]rent\w*)\s+(?:de\s+|du\s+)?rayon"
+        r"|(?:responsable|directeur|directrice|manager|g[eé]rant\w*|adjoint\w*|co-?manager|assistant\w*\s+manager)\b"
+        r".{0,30}?\b(?:magasins?|boutiques?|points?\s+de\s+ventes?|supermarch\w*|hypermarch\w*|sup[eé]rettes?|surface\s+de\s+vente)"
+        r"|\b(?:store|shop|department)\s+manager|\bassistant\w*\s+manager\b"
+        r"|manager\s+(?:de\s+|du\s+)?(?:commerce|caisses?|march[eé]|frais|univers|libre.?service)",
         re.I,
     ),
     "rayon": re.compile(
         r"mise en rayon|employ[eé].{0,12}rayon|employ[eé]e? commercia|rayonn?iste|libre.?service"
-        r"|r[eé]assort|r[eé]serviste|grande distribution",
+        r"|r[eé]assort|grande distribution",
         re.I,
     ),
     # Postes de vente en magasin uniquement : « boutique » ou « vente » seuls
@@ -115,7 +159,8 @@ GARAGE_RE = re.compile(
 # Autres métiers où « logistique » n'est qu'un à-côté du poste.
 STOCK_SIDE_RE = re.compile(
     r"maintenance|sonorisation|services? g[eé]n[eé]raux|b[aâ]timent|r[eé]gie|[eé]v[eé]nementiel"
-    r"|administrati|commercial|boulanger",
+    r"|administrati|commercial|boulanger"
+    r"|cantine|restauration scolaire|[eé]lectricien|monteur|m[eé]canicien|plombier|soudeur|frigoriste|chauffagiste",
     re.I,
 )
 
@@ -129,7 +174,8 @@ APPRO_KEEP_RE = re.compile(r"magasinier|stockiste|pr[eé]parat(?:eur|rice) de co
 # autour de chaque « CACES » : obligatoire / exigé / requis… écarte l'offre, mais pas
 # « souhaité », « un plus » ou « formation CACES assurée ».
 CARISTE_RE = re.compile(r"cariste|conducteur d['’ ]engins?|chariot", re.I)
-CACES_RE = re.compile(r"c[aà]c[eèé]s", re.I)
+# « R485 », « R489 » : recommandations CACES (gerbeur, chariot…), souvent citées sans le mot CACES.
+CACES_RE = re.compile(r"c[aà]c[eèé]s|\bR\s?48[2-9]\b|\bR\s?490\b", re.I)
 CACES_OPTIONAL_RE = re.compile(
     r"souhait|appr[eé]ci|un plus|\batout|serait|id[eé]alement|de pr[eé]f[eé]rence|pr[eé]f[eé]rable"
     r"|formation|form[eé]e?s?\b|financ|passer|obtenir|accompagn|possibilit|pas (?:obligatoire|n[eé]cessaire|exig)"
@@ -166,7 +212,66 @@ STOCK_EXCLUDE_RE = re.compile(
     r"|area manager|optimisation|planificat|supply chain manager|tracfin"
     r"|(?:responsable|directeur|directrice|manager)\b.{0,25}(?:exploitation|plateforme|r[eé]gional|site\b)"
     r"|logistique r[eé]gional"
-    r"|conseill|vend(?:eur|euse)|\bvente\b|caiss",  # stockiste / conseiller de vente : non voulu
+    r"|conseill|vend(?:eur|euse)|\bvente\b|caiss"  # stockiste / conseiller de vente : non voulu
+    # « Réserve » hors magasin : armée, gendarmerie, réserve naturelle ; « back of house » en cuisine.
+    r"|r[eé]serv\w*\s+(?:naturel|op[eé]rationnel|militaire|citoyen|sanitaire|communal|de\s+(?:la\s+)?(?:gendarmerie|police|biosph))"
+    r"|gendarm|militaire|sapeurs?.pompiers?|arm[eé]e\s+de\s+(?:terre|l['’]air)|marine\s+nationale"
+    # Sécurité, ingénierie, conseil et direction : autre métier ou poste trop senior.
+    r"|agent\w*\s+de\s+(?:s[eé]curit[eé]|s[uû]ret[eé])|\bssiap\b|business\s+analyst|consultant|ing[eé]nieur|virtualisation"
+    r"|m[eé]canicien"
+    r"|direct(?:eur|rice)\b.{0,30}(?:logisti|op[eé]rations|services|supply|entrep)"
+    r"|back[\s-]?of[\s-]?house.{0,40}(?:restau|cuisin|kitchen|food|crew)|(?:restau|cuisin|kitchen|food|crew|commis).{0,40}back[\s-]?of[\s-]?house",
+    re.I,
+)
+
+# Stock nommé dans le titre (pas « logistique » seul) : départage avec les métiers détachés du
+# stock, le premier nommé l'emporte (« Magasinier préparateur de commandes » : stock ;
+# « Préparateur de commandes logistique », « Agent de tri - logistique » : onglet détaché).
+STOCK_NAMED_RE = re.compile(
+    r"stock|magasini|r[eé]ceptionnaire|agent de quai|logisticien|\br[eé]serves?\b|r[eé]serviste|r[eé]assortisseu"
+    r"|(?:agent|employ[eé]|op[eé]rat|technicien|assistant|coordinat|responsable|gestionnaire|chef\s+d['’ ]\s*[eé]quipe)"
+    + _G + r"\s+(?:de\s+|en\s+)?logisti"
+    r"|agent" + _G + r"\s+d['’ ]\s*entrep[oô]t",
+    re.I,
+)
+# Métiers détachés du stock, avec leurs exclusions (autre métier sous le même mot).
+PREPA_EXCLUDE_RE = re.compile(
+    r"v[eé]hicule|automobile|\bauto\b|carross|pharmac|m[eé]dicament|st[eé]rilis|culinaire|cuisine|physique"
+    r"|esth[eé]ti|peinture|bateau|nautique|mat[eé]riel\s+m[eé]dical|biolog|laborat|m[eé]cani|[eé]lectric"
+    r"|conseill|vend(?:eur|euse)|\bvente\b|caiss",  # poste mêlé de vente : comme pour le stock
+    re.I,
+)
+AEROPORT_EXCLUDE_RE = re.compile(
+    r"s[uû]ret[eé]|s[eé]curit[eé]|filtrage|\bpif\b|\bssiap\b|\baps\b"
+    r"|pilote|steward|h[oô]tesse\s+de\s+l['’]air|navigant|\bpnc\b|contr[oô]leu\w*\s+a[eé]rien"
+    r"|m[eé]cani|technici|maintenance|ing[eé]ni|engineer|avionique|d[eé]clarant"
+    r"|commercial|sales|business|account|d['’ ]affaires|directeu|directric|head\s+of|chef\s+de\s+projet|manager"
+    r"|conducteu|chauffeu|driver|livreu|coursi|v[eé]lo|bike"
+    r"|propret[eé]|nettoyage|entretien|m[eé]nage|vend|conseill|caiss"
+    # Accueil et salons (service aux passagers), hôtellerie, chantiers, encadrement des opérations.
+    r"|accueil|salon|lounge|voiturier|h[oô]tel|concierg|\bopc\b|\bprojets?\b|chantier|travaux"
+    r"|(?:responsable|chef)\w*.{0,25}(?:exploitation|op[eé]rations)",
+    re.I,
+)
+TRI_EXCLUDE_RE = re.compile(
+    r"d[eé]chets?|recycl|ordures|s[eé]lectif|valoris|environnement|textile|v[eê]tements?|ressourcerie"
+    r"|d[eé]ch[eè]tt?erie|encombrants|patrimoine|cultur|archiv|biblioth|mus[eé]e|monument|forest|faune|flore"
+    r"|biodivers|naturalist|[eé]colog|botani|herbier|informatique|logiciel|immobili|comptab|financ"
+    r"|m[eé]dical|infirm|urgences|sant[eé]",
+    re.I,
+)
+SPLIT_EXCLUDE_RE = {"preparation": PREPA_EXCLUDE_RE, "aeroport": AEROPORT_EXCLUDE_RE, "tri": TRI_EXCLUDE_RE}
+# Encadrement : pas la restauration, l'hôtellerie, le web, les achats, l'optique ou la pharmacie,
+# ni l'encadrement multi-sites (régional, réseau, zone).
+ENCADREMENT_EXCLUDE_RE = re.compile(
+    r"restau|fast.?food|\bfood\b|burger|pizz|sandwich|snack|\bbar\b|caf[eé]|brasserie|traiteur|boulang|p[aâ]tisser"
+    r"|cuisine|kitchen|\bcrew\b|mcdo|kfc|starbucks|subway|h[oô]tel"
+    r"|en\s+ligne|e-?commerce|\bweb\b|digital|marketing|merchandis|visuel|visual|achat|acheteu|buyer"
+    r"|optique|opticien|pharmac|audio|laborat|banque|bancaire|assurance|immobili|automobile|\bauto\b|concession"
+    r"|s[eé]curit[eé]|s[uû]ret[eé]|\bsav\b|apr[eè]s.?vente|commercial"
+    r"|r[eé]gional|r[eé]gion\b|national|multi.?sites?|r[eé]seau|\bzone\b|district|\barea\b|si[eè]ge"
+    # Poste de vente ou d'employé « évolutif » (« Vendeur polyvalent - futur adjoint ») : pas encore de l'encadrement.
+    r"|^\W*(?:vendeu|conseill|caissi|h[oô]te|employ|[eé]quipi)",
     re.I,
 )
 
@@ -455,6 +560,43 @@ def offer_keys(offer):
     return {k for k in keys if k}
 
 
+def dept_only(offer):
+    """Lieu réduit au département (offres EURES) : « Seine-Saint-Denis (93) ». Paris n'en fait pas
+    partie : « Paris » est aussi le lieu donné par les autres sources (même clé de contenu)."""
+    first = re.split(r"[,(]", offer.get("location") or "", maxsplit=1)[0].strip()
+    return slug(first) in {slug(v) for k, v in DEPT_LABELS.items() if k != "75"} | {"ile-de-france"}
+
+
+def region_key(offer):
+    """Poste + entreprise + département, pour reconnaître une offre au département seul."""
+    dept, company = str(offer.get("dept") or ""), offer.get("company")
+    if dept not in IDF_DEPTS or not norm_text(company) or company == PLACEHOLDER_COMPANY:
+        return ""
+    return "|".join((norm_text(GENDER_RE.sub(" ", offer.get("title") or "")), norm_text(company), dept))
+
+
+def lookup_keys(offer):
+    """Clés cherchées dans l'index. Une offre au département seul retrouve la même offre (poste,
+    entreprise, département) donnée avec sa ville, et inversement ; deux offres avec chacune leur
+    ville ne sont jamais fusionnées par ce biais (deux magasins du même département)."""
+    keys = offer_keys(offer)
+    key = region_key(offer)
+    if key:
+        keys.add(("dept*|" if dept_only(offer) else "dept0|") + key)
+    return keys
+
+
+def index_keys(offer):
+    """Clés sous lesquelles une offre est rangée dans l'index (voir lookup_keys)."""
+    keys = offer_keys(offer)
+    key = region_key(offer)
+    if key:
+        keys.add("dept*|" + key)
+        if dept_only(offer):
+            keys.add("dept0|" + key)
+    return keys
+
+
 def slug(value):
     value = unicodedata.normalize("NFD", (value or "").lower())
     value = "".join(c for c in value if not unicodedata.combining(c))
@@ -526,14 +668,36 @@ def classify_category(title):
     title = title or ""
     if NOT_TARGET_RE.search(title):
         return None
-    for name, pattern in CATEGORY_RE.items():  # stock, puis rayon, puis vente
+    split = logistics_split(title)
+    if split:
+        return split if split in TARGET_CATEGORIES else None
+    for name, pattern in CATEGORY_RE.items():  # stock, encadrement, rayon, vente, restauration
+        if name in SPLIT_EXCLUDE_RE:
+            continue  # départagés par logistics_split
         if pattern.search(title):
             if name == "stock" and stock_off_topic(title):
                 continue
             if name == "stock" and APPRO_RE.search(title) and not APPRO_KEEP_RE.search(title):
                 return None
+            if name == "encadrement" and ENCADREMENT_EXCLUDE_RE.search(title):
+                continue
             return name if name in TARGET_CATEGORIES else None
     return None
+
+
+def logistics_split(title):
+    """Préparation, aéroport ou tri & inventaire si ce métier est nommé avant tout métier du
+    stock (« Agent de tri - logistique » : tri ; « Magasinier préparateur de commandes » : stock)."""
+    found = []
+    for name, exclude in SPLIT_EXCLUDE_RE.items():
+        match = CATEGORY_RE[name].search(title)
+        if match and not exclude.search(title):
+            found.append((match.start(), name))
+    if not found:
+        return None
+    position, name = min(found)
+    named = STOCK_NAMED_RE.search(title)
+    return None if named and named.start() < position else name
 
 
 def is_tracked(offer):
@@ -805,6 +969,140 @@ def ft_location(lieu):
     if city.isupper():
         city = re.sub(r"(^|[\s\-'’])(\w)", lambda m: m.group(1) + m.group(2).upper(), city.lower())
     return f"{city} ({match.group(1)})"
+
+
+# EURES, le portail européen de l'emploi (Commission européenne), rediffuse sans clé les offres
+# de France Travail et de ses partenaires (agences d'intérim, Meteojob…). Sa recherche publique
+# est appelée en lecture seule ; chaque offre renvoie à sa page France Travail, dont la
+# référence est contenue dans l'identifiant EURES. Seul le département est connu (pas la ville).
+EURES_SEARCH_URL = "https://europa.eu/eures/api/jv-searchengine/public/jv-search/search"
+EURES_PAGE = 50  # maximum accepté par l'API
+EURES_NUTS = {"fr101": "75", "fr102": "77", "fr103": "78", "fr104": "91",
+              "fr105": "92", "fr106": "93", "fr107": "94", "fr108": "95"}
+DEPT_LABELS = {"75": "Paris", "77": "Seine-et-Marne", "78": "Yvelines", "91": "Essonne",
+               "92": "Hauts-de-Seine", "93": "Seine-Saint-Denis", "94": "Val-de-Marne", "95": "Val-d'Oise"}
+# Mots du titre, reliés par OU (une expression entre guillemets n'est pas prise en compte).
+DEFAULT_EURES_QUERIES = [
+    {"name": "stock et réserve", "keywords": "magasinier stockiste stockman stock reserve reserviste receptionnaire"},
+    {"name": "préparation de commandes", "keywords": "preparateur preparatrice picking picker"},
+]
+# Offre « temporaire » d'une agence d'intérim connue : mission d'intérim plutôt que CDD.
+INTERIM_AGENCY_RE = re.compile(
+    r"int[eé]rim|adecco|manpower|randstad|synergie|proman|\bcrit\b|start\s*people|samsic|partnaire|actual"
+    r"|supplay|temporis|kelly|iziwork|staffmatch|expectra|ergalis|triangle|leader\s+int",
+    re.I,
+)
+
+
+def eures_reference(jv_id):
+    """« ODY4NTA2MSA5 » (« 8685061 9 ») → « 8685061 » : référence France Travail de l'offre.
+    Le 9 final désigne France Travail ; une offre d'un autre point de contact est ignorée."""
+    try:
+        raw = base64.b64decode(jv_id + "=" * (-len(jv_id) % 4)).decode("ascii")
+    except (ValueError, UnicodeDecodeError):
+        return ""
+    reference, _, point = raw.partition(" ")
+    return reference if point == "9" and re.fullmatch(r"[0-9A-Z]{5,12}", reference) else ""
+
+
+def _eures_body(keywords, page):
+    return {
+        "resultsPerPage": EURES_PAGE, "page": page, "sortSearch": "MOST_RECENT",
+        # Créées ou modifiées dans la semaine ; la date de création est vérifiée ensuite.
+        "publicationPeriod": "LAST_WEEK",
+        "keywords": [{"keyword": keywords, "specificSearchCode": "TITLE"}],
+        "locationCodes": ["fr10"],  # Île-de-France : l'API ne filtre pas par département
+        "occupationUris": [], "skillUris": [], "requiredExperienceCodes": [], "positionScheduleCodes": [],
+        "sectorCodes": [], "educationAndQualificationLevelCodes": [], "positionOfferingCodes": [],
+        "euresFlagCodes": [], "otherBenefitsCodes": [], "requiredLanguages": [], "minNumberPost": None,
+        "sessionId": "emploipilot",
+    }
+
+
+def eures_offer(jv, depts, cutoff_ms):
+    """Offre EURES → offre du site (None si hors période, hors département ou hors métier)."""
+    reference = eures_reference(str(jv.get("id") or ""))
+    created = int(jv.get("creationDate") or 0)
+    regions = (jv.get("locationMap") or {}).get("FR") or []
+    dept = next((EURES_NUTS[str(r).lower()] for r in regions if str(r).lower() in EURES_NUTS), "")
+    code = str(jv.get("positionOfferingCode") or "").lower()
+    if (not reference or created < cutoff_ms or dept not in depts
+            or code in ("internship", "apprenticeship", "traineeship")):
+        return None
+    translation = next(iter((jv.get("translations") or {}).values()), None) or {}
+    title = jv.get("title") or translation.get("title") or ""
+    text = jv.get("description") or translation.get("description") or ""
+    company = (jv.get("employer") or {}).get("name") or ""
+    if norm_text(company) in ("nonrenseigne", "nonrenseignee", "confidentiel", "entrepriseconfidentielle"):
+        company = ""  # employeur masqué par France Travail
+    offer = make_offer(
+        title=title, company=company, location=f"{DEPT_LABELS[dept]} ({dept})", text=text,
+        url=FT_DETAIL_URL.format(quote(reference, safe="")),
+        date=datetime.fromtimestamp(created / 1000, timezone.utc).isoformat(), source="EURES",
+    )
+    if not offer:
+        return None
+    offer["id"] = f"ft_{reference}"  # même identifiant que l'offre lue par l'API France Travail
+    offer["dept"] = dept
+    if offer["contract"] == "À vérifier" and code == "directhire":
+        offer["contract"] = "CDI"
+    elif offer["contract"] == "À vérifier" and code == "temporary":
+        offer["contract"] = "Intérim" if INTERIM_AGENCY_RE.search(company) else "CDD"
+    return offer
+
+
+def fetch_eures(cfg):
+    """Offres France Travail rediffusées par EURES, en Île-de-France, sans clé."""
+    if not cfg.get("enabled", True):
+        return []
+    if (cfg.get("sansFranceTravail", True) and os.environ.get("FT_CLIENT_ID", "").strip()
+            and os.environ.get("FT_CLIENT_SECRET", "").strip()):
+        print("EURES ignoré : l'API France Travail est active (mêmes offres, avec la ville).")
+        return []
+    queries = [q for q in (cfg.get("queries") or DEFAULT_EURES_QUERIES)
+               if q.get("enabled", True) and q.get("keywords")]
+    depts = {str(d) for d in (cfg.get("departements") or ["75", "77", "92", "93", "94", "95"])}
+    days = int(cfg.get("publieesDepuisJours") or MAX_PUBLICATION_DAYS)
+    cutoff_ms = (time.time() - days * 86400) * 1000
+    default_pages = max(1, int(cfg.get("maxPages") or 4))
+    offers, failures = [], 0
+    for query in queries:
+        label = query.get("name") or query["keywords"]
+        announced = received = kept = pages = 0
+        for page in range(1, max(1, int(query.get("maxPages") or default_pages)) + 1):
+            req = Request(
+                EURES_SEARCH_URL,
+                data=json.dumps(_eures_body(query["keywords"], page)).encode("utf-8"),
+                headers={"User-Agent": UA, "Content-Type": "application/json", "Accept": "application/json"},
+                method="POST",
+            )
+            try:
+                data = http_json(req, timeout=40)
+            except (HTTPError, URLError, TimeoutError, ValueError) as exc:
+                print(f"EURES [{label}] : erreur ({type(exc).__name__}), recherche suivante.")
+                failures += 1
+                break
+            jobs = data.get("jvs") or []
+            announced = int(data.get("numberRecords") or 0)
+            pages += 1
+            received += len(jobs)
+            for jv in jobs:
+                offer = eures_offer(jv, depts, cutoff_ms)
+                if offer:
+                    offers.append(offer)
+                    kept += 1
+            # Tri par date de modification : une page qui finit avant la période (créée au
+            # plus tard quand elle a été modifiée) clôt la recherche.
+            last_modified = int((jobs[-1].get("lastModificationDate") or 0) if jobs else 0)
+            if len(jobs) < EURES_PAGE or page * EURES_PAGE >= announced or last_modified < cutoff_ms:
+                break
+            time.sleep(1)
+        print(f"EURES [{label}] : {received} offre(s) reçue(s) sur {announced}, {kept} retenue(s).")
+        record_stats("EURES", label, announced, received, kept, pages)
+        time.sleep(1)
+    if failures and failures == len(queries):
+        raise RuntimeError("EURES : toutes les recherches ont échoué.")
+    return offers
 
 
 def api_json(url, label, timeout=30):
@@ -1746,6 +2044,10 @@ def merge_into(match, item):
         current = match.get(field)
         if item.get(field) and (not current or current in (PLACEHOLDER_COMPANY, PLACEHOLDER_LOCATION)):
             match[field] = item[field]
+    # Lieu réduit au département (EURES) : la ville donnée par une autre source le précise.
+    if (item.get("location") and dept_only(match) and not dept_only(item)
+            and str(item.get("dept") or "") == str(match.get("dept") or "")):
+        match["location"] = item["location"]
     for field in ("date", "updated", "created"):
         if item.get(field) and not match.get(field):
             match[field] = item[field]
@@ -1787,7 +2089,7 @@ def dedupe(offers):
     result, index = [], {}
     merged_count = 0
     for offer in offers:
-        keys = offer_keys(offer)
+        keys = lookup_keys(offer)
         match = next((index[k] for k in keys if k in index), None)
         if match is None:
             result.append(offer)
@@ -1795,7 +2097,7 @@ def dedupe(offers):
         else:
             merge_into(match, offer)
             merged_count += 1
-        for key in keys | offer_keys(match):
+        for key in offer_keys(offer) | index_keys(match):
             index.setdefault(key, match)
     return result, merged_count
 
@@ -1835,7 +2137,7 @@ def main():
 
     index = {}
     for item in merged:
-        for key in offer_keys(item):
+        for key in index_keys(item):
             index.setdefault(key, item)
 
     try:
@@ -1871,6 +2173,12 @@ def main():
             fresh.extend(fetch_francetravail(ft_cfg))
         except Exception as exc:
             errors.append({"source": "France Travail", "error": type(exc).__name__})
+
+    # EURES : offres France Travail rediffusées sans clé (ignoré quand l'API France Travail est active).
+    try:
+        fresh.extend(fetch_eures(config.get("eures") or {}))
+    except Exception as exc:
+        errors.append({"source": "EURES", "error": type(exc).__name__})
 
     # API généraliste Adzuna ; nécessite deux secrets GitHub facultatifs.
     try:
@@ -1943,7 +2251,7 @@ def main():
     for item in fresh:
         item["collectedAt"] = now
         item["lastSeen"] = today.isoformat()
-        keys = offer_keys(item)
+        keys = lookup_keys(item)
         match = next((index[k] for k in keys if k in index), None)
         if match is not None:
             updated_count += 1
@@ -1958,7 +2266,7 @@ def main():
             new_items.append(item)
             match = item
         # Index recalculé : les variantes déjà vues pointent vers la même offre.
-        for key in keys | offer_keys(match):
+        for key in offer_keys(item) | index_keys(match):
             index.setdefault(key, match)
 
     kept = [item for item in merged if should_keep(item, today)]
@@ -2264,7 +2572,8 @@ ALERT_MAX_TRAJET = 60
 ALERT_ZONES_TOUJOURS = {"75", "93"}
 
 
-ALERT_CATEGORIES = {"stock"}  # l'alerte ntfy est celle du profil de Ryan : logistique seule
+# L'alerte ntfy est celle du profil de Ryan : ses métiers (logistique et onglets voisins).
+ALERT_CATEGORIES = {"stock", "preparation", "aeroport", "tri", "encadrement"}
 
 
 def alert_visible(offer):

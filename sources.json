@@ -1,6 +1,10 @@
 {
   "categories": [
     "stock",
+    "preparation",
+    "aeroport",
+    "tri",
+    "encadrement",
     "rayon",
     "vente",
     "restauration"
@@ -647,6 +651,231 @@
       "location": "Paris",
       "radius": "26",
       "maxPages": 1
+    },
+    {
+      "name": "stockman · Bondy",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockman",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "stockman · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stockman",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "assistant stockiste · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "assistant stockiste",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "réserviste · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "réserviste",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "hôte de réserve · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "hôte de réserve",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "agent de réserve · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "agent de réserve",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "stock associate · Paris",
+      "enabled": true,
+      "category": "stock",
+      "keywords": "stock associate",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "préparateur logistique · Bondy",
+      "enabled": true,
+      "category": "preparation",
+      "keywords": "préparateur logistique",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "préparateur e-commerce · Bondy",
+      "enabled": true,
+      "category": "preparation",
+      "keywords": "préparateur e-commerce",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "agent de piste · Bondy",
+      "enabled": true,
+      "category": "aeroport",
+      "keywords": "agent de piste",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "agent d'escale · Bondy",
+      "enabled": true,
+      "category": "aeroport",
+      "keywords": "agent d'escale",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "agent de fret · Bondy",
+      "enabled": true,
+      "category": "aeroport",
+      "keywords": "agent de fret",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "bagagiste · Bondy",
+      "enabled": true,
+      "category": "aeroport",
+      "keywords": "bagagiste",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "agent de tri · Bondy",
+      "enabled": true,
+      "category": "tri",
+      "keywords": "agent de tri",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "agent de tri · Paris",
+      "enabled": true,
+      "category": "tri",
+      "keywords": "agent de tri",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "agent d'inventaire · Bondy",
+      "enabled": true,
+      "category": "tri",
+      "keywords": "agent d'inventaire",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "inventoriste · Bondy",
+      "enabled": true,
+      "category": "tri",
+      "keywords": "inventoriste",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "chef de rayon · Bondy",
+      "enabled": true,
+      "category": "encadrement",
+      "keywords": "chef de rayon",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "chef de rayon · Paris",
+      "enabled": true,
+      "category": "encadrement",
+      "keywords": "chef de rayon",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "manager de rayon · Bondy",
+      "enabled": true,
+      "category": "encadrement",
+      "keywords": "manager de rayon",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "manager de rayon · Paris",
+      "enabled": true,
+      "category": "encadrement",
+      "keywords": "manager de rayon",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "responsable de magasin · Bondy",
+      "enabled": true,
+      "category": "encadrement",
+      "keywords": "responsable de magasin",
+      "location": "Bondy",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "responsable de magasin · Paris",
+      "enabled": true,
+      "category": "encadrement",
+      "keywords": "responsable de magasin",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 2
+    },
+    {
+      "name": "adjoint responsable magasin · Paris",
+      "enabled": true,
+      "category": "encadrement",
+      "keywords": "adjoint responsable magasin",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1
+    },
+    {
+      "name": "responsable de boutique · Paris",
+      "enabled": true,
+      "category": "encadrement",
+      "keywords": "responsable de boutique",
+      "location": "Paris",
+      "radius": "26",
+      "maxPages": 1
     }
   ],
   "franceTravail": {
@@ -685,6 +914,54 @@
         "keywords": "stockiste"
       },
       {
+        "name": "escale-aeroportuaire",
+        "enabled": true,
+        "category": "aeroport",
+        "rome": "N2201"
+      },
+      {
+        "name": "pistes-aeroportuaires",
+        "enabled": true,
+        "category": "aeroport",
+        "rome": "N2203"
+      },
+      {
+        "name": "fret",
+        "enabled": true,
+        "category": "aeroport",
+        "keywords": "fret"
+      },
+      {
+        "name": "manutention-tri",
+        "enabled": true,
+        "category": "tri",
+        "rome": "N1105"
+      },
+      {
+        "name": "inventaire",
+        "enabled": true,
+        "category": "tri",
+        "keywords": "inventaire"
+      },
+      {
+        "name": "management-magasin",
+        "enabled": true,
+        "category": "encadrement",
+        "rome": "D1301"
+      },
+      {
+        "name": "rayon-alimentaire",
+        "enabled": true,
+        "category": "encadrement",
+        "rome": "D1502"
+      },
+      {
+        "name": "rayon-non-alimentaire",
+        "enabled": true,
+        "category": "encadrement",
+        "rome": "D1503"
+      },
+      {
         "name": "mise-en-rayon",
         "enabled": true,
         "category": "rayon",
@@ -716,6 +993,76 @@
       }
     ],
     "_note": "Une recherche par code métier ROME et par département, offres des 5 derniers jours (« publieesDepuisJours »). Inactif tant que les secrets FT_CLIENT_ID et FT_CLIENT_SECRET ne sont pas ajoutés dans GitHub (voir README)."
+  },
+  "eures": {
+    "enabled": true,
+    "sansFranceTravail": true,
+    "departements": [
+      "75",
+      "77",
+      "92",
+      "93",
+      "94",
+      "95"
+    ],
+    "maxPages": 4,
+    "queries": [
+      {
+        "name": "stock et réserve",
+        "enabled": true,
+        "keywords": "magasinier magasiniere stockiste stockman stock reserve reserviste receptionnaire logisticien reassortisseur",
+        "maxPages": 5
+      },
+      {
+        "name": "logistique et entrepôt",
+        "enabled": true,
+        "keywords": "logistique logisticienne entrepot quai",
+        "maxPages": 8
+      },
+      {
+        "name": "préparation de commandes",
+        "enabled": true,
+        "keywords": "preparateur preparatrice picking picker",
+        "maxPages": 8
+      },
+      {
+        "name": "aéroport",
+        "enabled": true,
+        "keywords": "piste escale fret bagagiste bagages aeroportuaire cargo trafic",
+        "maxPages": 4
+      },
+      {
+        "name": "tri et inventaire",
+        "enabled": true,
+        "keywords": "tri trieur trieuse inventaire inventoriste",
+        "maxPages": 6
+      },
+      {
+        "name": "rayon",
+        "enabled": true,
+        "keywords": "rayon",
+        "maxPages": 5
+      },
+      {
+        "name": "magasin et boutique",
+        "enabled": true,
+        "keywords": "magasin boutique store",
+        "maxPages": 8
+      },
+      {
+        "name": "vente (profil de Zia)",
+        "enabled": true,
+        "keywords": "vendeur vendeuse conseiller conseillere caissier caissiere",
+        "maxPages": 6
+      },
+      {
+        "name": "restauration (profil de Zia)",
+        "enabled": true,
+        "keywords": "serveur serveuse barista barman runner",
+        "maxPages": 6
+      }
+    ],
+    "_note": "Offres France Travail et partenaires rediffusées par EURES (portail européen de l'emploi), sans clé. Mots du titre reliés par OU ; seul le département est connu. Ignoré automatiquement quand l'API France Travail est active (« sansFranceTravail »)."
   },
   "adzuna": {
     "enabled": true,
@@ -1027,6 +1374,110 @@
         "enabled": true,
         "category": "stock",
         "keywords": "chef equipe logistique",
+        "titleOnly": true,
+        "location": "Paris"
+      },
+      {
+        "name": "stockman · Paris",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "stockman",
+        "titleOnly": true,
+        "location": "Paris"
+      },
+      {
+        "name": "réserviste · Paris",
+        "enabled": true,
+        "category": "stock",
+        "keywords": "réserviste",
+        "titleOnly": true,
+        "location": "Paris"
+      },
+      {
+        "name": "préparateur logistique · Bondy",
+        "enabled": true,
+        "category": "preparation",
+        "keywords": "préparateur logistique",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "agent de piste · Bondy",
+        "enabled": true,
+        "category": "aeroport",
+        "keywords": "agent de piste",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "agent escale · Bondy",
+        "enabled": true,
+        "category": "aeroport",
+        "keywords": "agent escale",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "agent fret · Bondy",
+        "enabled": true,
+        "category": "aeroport",
+        "keywords": "agent fret",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "agent de tri · Bondy",
+        "enabled": true,
+        "category": "tri",
+        "keywords": "agent de tri",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "inventaire · Bondy",
+        "enabled": true,
+        "category": "tri",
+        "keywords": "inventaire",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "chef de rayon · Bondy",
+        "enabled": true,
+        "category": "encadrement",
+        "keywords": "chef de rayon",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "chef de rayon · Paris",
+        "enabled": true,
+        "category": "encadrement",
+        "keywords": "chef de rayon",
+        "titleOnly": true,
+        "location": "Paris"
+      },
+      {
+        "name": "manager de rayon · Bondy",
+        "enabled": true,
+        "category": "encadrement",
+        "keywords": "manager de rayon",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "responsable magasin · Bondy",
+        "enabled": true,
+        "category": "encadrement",
+        "keywords": "responsable magasin",
+        "titleOnly": true,
+        "location": "Bondy"
+      },
+      {
+        "name": "responsable magasin · Paris",
+        "enabled": true,
+        "category": "encadrement",
+        "keywords": "responsable magasin",
         "titleOnly": true,
         "location": "Paris"
       }

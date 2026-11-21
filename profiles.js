@@ -13,6 +13,10 @@ const ZCRT_PROFILE_KEY = 'zcrt_active_profile';
 /** Métiers connus du site (catégories calculées par collect.py). */
 const CAT_INFO = {
   stock: { label: 'Stock & logistique', icon: 'package' },
+  preparation: { label: 'Préparation de commandes', icon: 'clipboard' },
+  encadrement: { label: 'Encadrement en magasin', icon: 'user' },
+  aeroport: { label: 'Logistique aéroport', icon: 'plane' },
+  tri: { label: 'Tri & inventaire', icon: 'scan' },
   rayon: { label: 'Magasins & grande distribution', icon: 'cart' },
   vente: { label: 'Vente', icon: 'tag' },
   restauration: { label: 'Restauration & café', icon: 'cup' },
@@ -23,12 +27,19 @@ const ZCRT_PROFILES = {
     id: 'ryan',
     name: 'Ryan',
     brand: 'RGRD',               // logo affiché sur ce profil
-    cv: { stock: 'CV_Ryan_Gazard_stock.pdf' },
+    // Encadrement : CV « rayon » (chef de rayon chez Monoprix, référent chez E.Leclerc), comme la lettre.
+    cv: {
+      stock: 'CV_Ryan_Gazard_stock.pdf', preparation: 'CV_Ryan_Gazard_stock.pdf', aeroport: 'CV_Ryan_Gazard_stock.pdf',
+      tri: 'CV_Ryan_Gazard_stock.pdf', encadrement: 'CV_Ryan_Gazard_rayon.pdf',
+    },
     ns: '',                      // clés historiques, sans suffixe
     syncFile: 'zcrt-suivi.json', // lu aussi par mail.py (tri Gmail)
     // Profil recentré sur la logistique (13/11/2026) : rayon et vente ne sont plus affichés ici
     // (ils restent collectés pour le profil de Zia, "categories" dans sources.json).
-    cats: ['stock'],
+    // Onglets ajoutés le 21/11/2026 : préparation de commandes (détachée du stock), encadrement
+    // en magasin, logistique aéroport, tri & inventaire.
+    cats: ['stock', 'preparation', 'encadrement', 'aeroport', 'tri'],
+    tag: 'Logistique & magasin',  // étiquette du bandeau d'accueil (les 5 métiers à la suite débordent)
     // Tri au doigt : préparateur de commandes en dernier (surqualifié, gardé en solution de repli).
     triageLastTitles: /pr[eé]parat(?:eur|rice) de commandes/i,
     // Les suivis rayon / vente posés avant cette date sont supprimés, sur chaque appareil et dans
@@ -45,11 +56,17 @@ const ZCRT_PROFILES = {
       appro: /approvision/i,
       approKeep: /magasinier|stockiste|pr[eé]parat(?:eur|rice) de commandes|r[eé]ceptionnaire/i,
       cacesInText: true,  // CACES obligatoire / exigé / requis dans le texte de l'annonce
+      // Règles d'intitulé ci-dessus : métiers de la logistique seulement (« Responsable de point
+      // de vente » ou « Chef de caisse » sont voulus dans l'onglet Encadrement).
+      cats: ['stock', 'preparation', 'aeroport', 'tri'],
     },
-    keywords: 'Stockiste, gestionnaire de stock, chargé de stock, coordinateur stock\n'
-      + 'Magasinier, réceptionnaire, agent logistique, préparateur de commandes, agent d’entrepôt\n'
+    keywords: 'Stockiste, assistant stockiste, stockman, gestionnaire de stock, chargé de stock, coordinateur stock\n'
+      + 'Employé de réserve, hôte de réserve, réserviste, responsable de réserve, stockiste luxe\n'
+      + 'Magasinier, réceptionnaire, agent logistique, agent d’entrepôt, préparateur de commandes\n'
       + 'Coordinateur logistique, responsable logistique, chef d’équipe logistique\n'
-      + 'Logistique hospitalière, stockiste luxe, responsable de réserve, logistique e-commerce',
+      + 'Chef de rayon, manager de rayon, adjoint ou responsable de magasin\n'
+      + 'Agent de piste, agent d’escale, agent de fret (Roissy, Orly)\n'
+      + 'Agent de tri, agent d’inventaire, inventoriste',
     mails: true,
     feminine: false,
     // Adéquation offre / CV (pilot.js, cvFit) : d'après cv/cv_stock.html.
@@ -67,11 +84,46 @@ const ZCRT_PROFILES = {
             'responsable des stocks', 'preparateur de commandes', 'agent logistique', 'agent de logistique',
             'coordinateur logistique', 'responsable logistique', 'chef d equipe logistique', 'technicien logistique',
             'receptionnaire', 'logisticien', 'employe logistique', 'assistant logistique',
-            'agent d entrepot', 'agent entrepot', 'responsable d entrepot', 'operateur logistique', 'agent de quai'],
+            'agent d entrepot', 'agent entrepot', 'responsable d entrepot', 'operateur logistique', 'agent de quai',
+            'stockman', 'assistant stockiste', 'employe de reserve', 'agent de reserve', 'responsable de reserve'],
           skills: ['reception', 'controle', 'inventaire', 'gestion des stocks', 'stock', 'preparation', 'expedition', 'commande',
             'fournisseur', 'approvisionnement', 'wms', 'cegid', 'gold', 'excel', 'reserve', 'encadrement', 'hygiene', 'securite',
             'logistique', 'reassort', 'ecart', 'livraison', 'quai', 'emballage', 'colis'],
-          brands: ['darty'],
+          brands: ['darty', 'aroma zone'],
+        },
+        // Préparation des commandes : chez Darty, au Carré Médical et pour une boutique en ligne.
+        preparation: {
+          years: 4,
+          titles: ['preparateur de commandes', 'preparatrice de commandes', 'agent de preparation', 'preparateur logistique',
+            'magasinier', 'agent de stock', 'agent logistique'],
+          skills: ['preparation', 'commande', 'expedition', 'colis', 'emballage', 'picking', 'scan', 'reception', 'controle',
+            'stock', 'reassort', 'inventaire', 'e commerce', 'quai', 'wms', 'cegid', 'gold', 'hygiene', 'securite', 'logistique'],
+          brands: ['darty', 'aroma zone'],
+        },
+        // Chef de rayon (Monoprix), référent rayon (E.Leclerc), responsable logistique (équipe de 6).
+        encadrement: {
+          years: 3,
+          titles: ['chef de rayon', 'manager de rayon', 'responsable de rayon', 'referent rayon', 'responsable logistique',
+            'chef d equipe', 'responsable de reserve', 'coordinateur logistique'],
+          skills: ['encadrement', 'equipe', 'management', 'animation', 'planning', 'commande', 'stock', 'gestion des stocks',
+            'inventaire', 'approvisionnement', 'reassort', 'chiffre d affaires', 'objectifs', 'ventes', 'casse', 'demarque',
+            'plv', 'fraicheur', 'reception', 'hygiene', 'securite', 'excel', 'gold'],
+          brands: ['monoprix', 'leclerc', 'darty'],
+        },
+        // Pas d'expérience en aéroport : seule la logistique (réception, expédition, colis) compte.
+        aeroport: {
+          years: 4,
+          titles: ['magasinier', 'agent de stock', 'agent logistique', 'responsable logistique', 'coordinateur logistique'],
+          skills: ['reception', 'controle', 'expedition', 'colis', 'logistique', 'livraison', 'emballage', 'stock',
+            'inventaire', 'commande', 'equipe', 'coordination', 'hygiene', 'securite', 'quai'],
+          brands: [],
+        },
+        tri: {
+          years: 4,
+          titles: ['agent de stock', 'magasinier', 'gestionnaire de stock'],
+          skills: ['inventaire', 'ecart', 'comptage', 'controle', 'reception', 'expedition', 'colis', 'stock', 'rangement',
+            'logistique', 'commande', 'livraison', 'emballage', 'cegid', 'gold', 'excel', 'securite'],
+          brands: ['darty', 'aroma zone'],
         },
       },
     },

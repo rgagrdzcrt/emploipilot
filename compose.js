@@ -12,23 +12,34 @@ const LETTER_PROFILE = {
   ryan: {
     domains: {
       stock: { years: 'près de 4 ans', domain: 'en stock et en logistique' },
+      // exact: false → jamais « c'est précisément le métier que j'exerce » (poste jamais occupé tel quel).
+      preparation: { years: 'près de 4 ans', domain: 'en stock et en logistique', exact: false },
+      aeroport: { years: 'près de 4 ans', domain: 'en stock et en logistique', exact: false },
+      tri: { years: 'près de 4 ans', domain: 'en stock et en logistique', exact: false },
+      encadrement: { years: 'près de 3 ans', domain: "en encadrement d'équipe, en magasin et en logistique", exact: false },
       rayon: { years: 'plus de 3 ans', domain: 'en grande distribution' },
       vente: { years: 'plus de 3 ans', domain: 'dans la vente' },
     },
     experiences: [
-      { cats: ['stock'], re: /reception|livraison|controle|reserve|rangement|stock|reassort|inventaire|ecart|magasinier/g,
+      { cats: ['stock', 'tri', 'aeroport', 'preparation'], re: /reception|livraison|controle|reserve|rangement|stock|reassort|inventaire|ecart|magasinier/g,
         text: ["Magasinier chez Darty à Paris, je réceptionnais et contrôlais chaque jour une livraison importante, je suivais les écarts et j'organisais une très grande réserve pour que chaque produit soit retrouvé rapidement.",
           "Chez Darty, en tant que magasinier, j'ai géré au quotidien la réception, le contrôle et la mise en stock des livraisons, ainsi que le réassort des rayons."] },
-      { cats: ['stock'], re: /commande|fournisseur|approvision|encadr|equipe|coordin|livreur|medical|sante|pilot|responsable/g,
+      { cats: ['stock', 'encadrement', 'aeroport'], re: /commande|fournisseur|approvision|encadr|equipe|coordin|livreur|medical|sante|pilot|responsable/g,
         text: ["Responsable logistique au Carré Médical, j'ai piloté les stocks et les commandes fournisseurs de matériel médical et encadré une équipe de six livreurs.",
           "Au Carré Médical, j'ai pris en charge toute la logistique : suivi des stocks, commandes auprès des fournisseurs et coordination d'une équipe de six livreurs."] },
-      { cats: ['stock'], re: /preparation|commande|expedition|colis|emballage|e commerce|ecommerce|catalogue|reference|envoi|picking/g,
+      { cats: ['stock', 'preparation', 'tri'], re: /preparation|commande|expedition|colis|emballage|e commerce|ecommerce|catalogue|reference|envoi|picking/g,
         text: ["Plus récemment, j'ai assuré le suivi des stocks, la préparation et l'expédition des commandes d'un catalogue en ligne de plus de 400 références.",
           "Pour une boutique en ligne de plus de 400 références, j'ai géré le référencement, le suivi des stocks et l'expédition des commandes."] },
-      { cats: ['rayon'], re: /mise en rayon|reassort|frais|fruits|legumes|rotation|qualite|casse|commande|chef de rayon|equipe|monoprix/g,
+      { cats: ['preparation'], re: /etablissements? de sante|hopit|clinique|medical|sante|pharma/g,
+        text: ["Au Carré Médical, j'ai préparé et suivi les commandes de matériel médical destinées aux établissements de santé.",
+          "Au Carré Médical, je préparais et suivais les commandes destinées aux établissements de santé."] },
+      { cats: ['stock', 'tri'], re: /reserve|inventaire|rupture|reassort|cosmeti|beaute|magasin|boutique/g,
+        text: ["Agent de stock chez Aroma-Zone, j'ai réceptionné et contrôlé les livraisons, organisé la réserve du magasin et participé aux inventaires.",
+          "Chez Aroma-Zone, j'ai assuré la mise en stock, l'organisation de la réserve, le réassort des rayons et le suivi des ruptures."] },
+      { cats: ['rayon', 'encadrement'], re: /mise en rayon|reassort|frais|fruits|legumes|rotation|qualite|casse|commande|chef de rayon|equipe|monoprix/g,
         text: ["J'ai commencé comme employé de rayon Fruits & Légumes chez Monoprix, avant d'en devenir chef de rayon : mise en rayon, fraîcheur, commandes et suivi des stocks pour limiter la casse.",
           "Chez Monoprix, d'abord employé puis chef du rayon Fruits & Légumes, j'ai assuré le réassort, la rotation et la qualité des produits, tout en gérant les commandes et l'équipe."] },
-      { cats: ['rayon'], re: /epicerie|stock|commande|plv|evenement|operation|equipe|coordin|proprete|reassort|leclerc/g,
+      { cats: ['rayon', 'encadrement'], re: /epicerie|stock|commande|plv|evenement|operation|equipe|coordin|proprete|reassort|leclerc/g,
         text: ["Chez E.Leclerc, comme référent du rayon épicerie, j'ai suivi les stocks et les commandes, coordonné l'équipe pour le réassort et la propreté des rayons, et mis en place les PLV.",
           "Référent épicerie chez E.Leclerc, je pilotais les stocks, les commandes et le réassort, et j'animais les opérations commerciales du rayon."] },
       { cats: ['vente'], re: /conseil|besoin|multimedia|telephonie|informatique|technique|services|objectif|vente additionnelle|equipe|darty/g,
@@ -46,6 +57,10 @@ const LETTER_PROFILE = {
     ],
     defaultQualities: {
       stock: ['rigoureux', 'organisé', 'fiable'],
+      preparation: ['rigoureux', 'organisé', 'ponctuel'],
+      encadrement: ['organisé', "à l'aise en équipe", 'fiable'],
+      aeroport: ['ponctuel', 'rigoureux', 'fiable'],
+      tri: ['rigoureux', 'ponctuel', 'fiable'],
       rayon: ['ponctuel', 'polyvalent', "à l'aise en équipe"],
       vente: ['souriant', "à l'écoute", 'motivé par les objectifs'],
     },
@@ -81,7 +96,7 @@ function composeLetter(o) {
 
   // 1. Accroche.
   const openings = [
-    `Votre offre ${dePoste(poste)} a retenu toute mon attention : c'est précisément le métier que j'exerce depuis ${dom.years}.`,
+    ...(dom.exact === false ? [] : [`Votre offre ${dePoste(poste)} a retenu toute mon attention : c'est précisément le métier que j'exerce depuis ${dom.years}.`]),
     `C'est avec un grand intérêt que je vous propose ma candidature au poste ${dePoste(poste)}. Fort de ${dom.years} d'expérience ${dom.domain}, je suis opérationnel rapidement.`,
     `${capFirst(dom.years)} d'expérience ${dom.domain} m'ont donné les réflexes qu'exige un poste ${dePoste(poste)} : votre annonce a donc tout de suite retenu mon attention.`,
   ];

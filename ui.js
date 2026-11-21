@@ -342,6 +342,10 @@ document.addEventListener('click', e => {
 /* Recherche complémentaire sur d'autres sites, pré-remplie selon le métier affiché. */
 const ELSEWHERE_QUERIES = {
   stock: 'magasinier cariste préparateur de commandes',
+  preparation: 'préparateur de commandes',
+  encadrement: 'chef de rayon',
+  aeroport: 'agent de piste',
+  tri: 'agent de tri',
   rayon: 'employé libre service mise en rayon',
   vente: 'vendeur conseiller de vente',
 };

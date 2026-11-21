@@ -18,10 +18,60 @@ class Categories(unittest.TestCase):
         for title in ("Stockiste H/F", "Magasinier", "Gestionnaire de stock", "Agent de stock",
                       "Employé de réserve H/F", "Réassortisseur", "Responsable de réserve",
                       "Chef d'équipe logistique", "Stock controller", "Logistics coordinator",
-                      "Magasinier hospitalier", "Préparateur de commandes CDI",
+                      "Magasinier hospitalier", "Magasinier préparateur de commandes",
                       "Magasinier approvisionneur", "Responsable adjoint logistique"):
             with self.subTest(title=title):
                 self.assertEqual(self.cat(title), "stock")
+
+    def test_tout_ce_qui_touche_a_la_reserve(self):
+        for title in ("Stockman H/F", "Assistant stockiste (H/F)", "Réserviste H/F - Magasin Paris 8",
+                      "Hôte(sse) de réserve CDI", "Agent de réserve", "Back of House Associate - Paris",
+                      "Agent de réception des marchandises", "Stock & Logistics Advisor"):
+            with self.subTest(title=title):
+                self.assertEqual(self.cat(title), "stock")
+        for title in ("Réserviste opérationnel gendarmerie", "Garde de la réserve naturelle",
+                      "Commis back of house restaurant"):
+            with self.subTest(title=title):
+                self.assertIsNone(self.cat(title))
+
+    def test_preparation_onglet_detache(self):
+        # Le premier métier nommé l'emporte ; « Préparateur » seul (pharmacie, véhicules) n'en est pas.
+        for title, expected in (("Préparateur de commandes CDI", "preparation"),
+                                ("Préparateur(trice) de commande H/F", "preparation"),
+                                ("Préparateur logistique", "preparation"), ("Order picker", "preparation"),
+                                ("Préparateur de commandes / Magasinier", "preparation"),
+                                ("Magasinier préparateur de commandes", "stock"),
+                                ("Préparateur de commandes vendeur", "vente"),
+                                ("Préparateur en pharmacie", None), ("Préparateur de véhicules", None)):
+            with self.subTest(title=title):
+                self.assertEqual(self.cat(title), expected)
+
+    def test_logistique_aeroport(self):
+        for title, expected in (("Agent de piste aéroportuaire (H/F)", "aeroport"), ("Agent(e) d'escale", "aeroport"),
+                                ("Agent de fret aérien", "aeroport"), ("Bagagiste Roissy CDG", "aeroport"),
+                                ("Agent de sûreté aéroportuaire", None), ("Vendeur boutique aéroport", "vente"),
+                                ("Agent logistique fret", "stock"), ("Magasinier aéroportuaire", "stock")):
+            with self.subTest(title=title):
+                self.assertEqual(self.cat(title), expected)
+
+    def test_tri_et_inventaire(self):
+        for title, expected in (("Agent de tri colis (H/F)", "tri"), ("Trieur / Trieuse", "tri"),
+                                ("Équipier(e) d'inventaire", "tri"), ("Inventoriste", "tri"),
+                                ("Agent de tri - logistique", "tri"), ("Magasinier inventaire", "stock"),
+                                ("Agent de tri des déchets", None), ("Infirmier de tri", None),
+                                ("Chargé d'inventaire du patrimoine", None)):
+            with self.subTest(title=title):
+                self.assertEqual(self.cat(title), expected)
+
+    def test_encadrement_en_magasin(self):
+        for title, expected in (("Chef de rayon fruits et légumes", "encadrement"), ("Manager de rayon frais", "encadrement"),
+                                ("Adjoint(e) responsable de magasin", "encadrement"), ("Store Manager - Paris", "encadrement"),
+                                ("Responsable de point de vente", "encadrement"), ("Chef de caisse", "encadrement"),
+                                ("Responsable de réserve", "stock"), ("Assistant manager restaurant", None),
+                                ("Responsable de magasin régional", None), ("Responsable boutique en ligne", None),
+                                ("Employé de rayon", "rayon")):
+            with self.subTest(title=title):
+                self.assertEqual(self.cat(title), expected)
 
     def test_approvisionneur_ecarte(self):
         for title in ("Approvisionneur H/F", "Assistant(e) approvisionnements H/F", "Livreur Approvisionneur"):
@@ -145,6 +195,86 @@ class FranceTravail(unittest.TestCase):
         self.assertEqual(collect.ft_location({"libelle": "75 - Paris 15e Arrondissement"}), "Paris 15e Arrondissement (75)")
         self.assertEqual(collect.ft_location({"libelle": "Île-de-France"}), "Île-de-France")
         self.assertEqual(collect.ft_location(None), "")
+
+
+class Eures(unittest.TestCase):
+    """Connecteur EURES testé hors ligne : réponses simulées."""
+
+    @staticmethod
+    def jv(reference, title, nuts="FR106", days=1, code="directhire", company="Entrepôt Test"):
+        import base64
+        import time as _time
+        created = int((_time.time() - days * 86400) * 1000)
+        return {"id": base64.b64encode(f"{reference} 9".encode()).decode().rstrip("="), "title": title,
+                "description": "Réception et rangement des marchandises.", "creationDate": str(created),
+                "lastModificationDate": str(created), "locationMap": {"FR": [nuts]},
+                "positionOfferingCode": code, "employer": {"name": company}}
+
+    def run_fetch(self, pages, env=None, cfg=None):
+        from unittest import mock
+        bodies = []
+
+        def fake_http_json(req, timeout=35):
+            import json as _json
+            bodies.append(_json.loads(req.data.decode("utf-8")))
+            return pages[len(bodies) - 1]
+
+        with mock.patch.dict("os.environ", env or {}, clear=False), \
+                mock.patch.object(collect, "http_json", fake_http_json), \
+                mock.patch.object(collect.time, "sleep", lambda s: None):
+            if not env:
+                import os
+                os.environ.pop("FT_CLIENT_ID", None)
+                os.environ.pop("FT_CLIENT_SECRET", None)
+            offers = collect.fetch_eures(cfg or {"queries": [{"name": "stock", "keywords": "magasinier stockiste"}]})
+        return offers, bodies
+
+    def test_reference_france_travail(self):
+        self.assertEqual(collect.eures_reference("ODY4NTA2MSA5"), "8685061")  # « 8685061 9 »
+        self.assertEqual(collect.eures_reference("MjE2U0JEVCA5"), "216SBDT")
+        self.assertEqual(collect.eures_reference("pas-du-base64!"), "")
+
+    def test_offres_retenues(self):
+        page = {"numberRecords": 4, "jvs": [
+            self.jv("216SBDT", "Stockiste H/F"),
+            self.jv("8685061", "Magasinier H/F", code="temporary", company="CRIT INTERIM"),
+            self.jv("9000001", "Magasinier H/F", nuts="FR103"),     # Yvelines : département exclu
+            self.jv("9000002", "Gestionnaire de stock", days=9),    # créée il y a plus de 5 jours
+        ]}
+        offers, bodies = self.run_fetch([page])
+        self.assertEqual(len(bodies), 1)  # moins de 50 résultats : une seule page
+        self.assertEqual(bodies[0]["keywords"][0], {"keyword": "magasinier stockiste", "specificSearchCode": "TITLE"})
+        self.assertEqual(bodies[0]["locationCodes"], ["fr10"])
+        self.assertEqual([o["id"] for o in offers], ["ft_216SBDT", "ft_8685061"])
+        first, second = offers
+        self.assertEqual(first["url"], "https://candidat.francetravail.fr/offres/recherche/detail/216SBDT")
+        self.assertEqual((first["location"], first["dept"], first["category"]), ("Seine-Saint-Denis (93)", "93", "stock"))
+        self.assertEqual(first["contract"], "CDI")
+        self.assertEqual(second["contract"], "Intérim")
+
+    def test_ignore_quand_france_travail_actif(self):
+        offers, bodies = self.run_fetch([], env={"FT_CLIENT_ID": "id", "FT_CLIENT_SECRET": "secret"})
+        self.assertEqual((offers, bodies), ([], []))
+
+
+class Doublons(unittest.TestCase):
+    def offer(self, title, company, location, url):
+        return collect.make_offer(title, company, location, "CDI", url, "", "Test")
+
+    def test_departement_seul_et_ville_fusionnes(self):
+        eures = self.offer("Magasinier H/F", "Leroy Merlin", "Seine-Saint-Denis (93)", "https://ex.fr/eures")
+        jooble = self.offer("Magasinier (H/F)", "Leroy Merlin", "Bobigny (93)", "https://ex.fr/jooble")
+        for first, second in ((eures, jooble), (jooble, eures)):
+            with self.subTest(first=first["url"]):
+                result, merged = collect.dedupe([dict(first), dict(second)])
+                self.assertEqual((len(result), merged), (1, 1))
+                self.assertEqual(result[0]["location"], "Bobigny (93)")  # la ville précise le département
+
+    def test_deux_villes_jamais_fusionnees(self):
+        a = self.offer("Magasinier H/F", "Leroy Merlin", "Bobigny (93)", "https://ex.fr/a")
+        b = self.offer("Magasinier H/F", "Leroy Merlin", "Montreuil (93)", "https://ex.fr/b")
+        result, merged = collect.dedupe([a, b])
+        self.assertEqual((len(result), merged), (2, 0))
 
 
 class Trajets(unittest.TestCase):

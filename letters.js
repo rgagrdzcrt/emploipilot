@@ -100,6 +100,25 @@ const LETTER_TAILOR = {
   },
 };
 
+// Onglets ajoutés au profil de Ryan (21/11/2026) : seulement des missions qu'il a réellement
+// tenues, pour que la preuve citée dans la lettre reste vraie (jamais « agent de piste » ou « de tri »).
+(() => {
+  const m = LETTER_TAILOR.ryan.missions;
+  const pick = (list, ...labels) => list.filter(x => labels.includes(x.label));
+  m.preparation = pick(m.stock, 'la préparation des commandes', 'l’organisation du stock', 'les inventaires', 'le réassort',
+    'les outils informatiques', 'le respect des règles de sécurité');
+  m.aeroport = pick(m.stock, 'la réception des marchandises', 'la préparation des commandes', 'la coordination d’équipe',
+    'le respect des règles de sécurité');
+  m.tri = pick(m.stock, 'les inventaires', 'la réception des marchandises', 'la préparation des commandes',
+    'l’organisation du stock', 'les outils informatiques', 'le respect des règles de sécurité');
+  m.encadrement = [
+    { re: /encadr|manag|animer|animation|diriger|chef d equipe|planning/, label: 'l’encadrement de l’équipe', proof: 'chef de rayon chez Monoprix, j’ai géré l’équipe du rayon Fruits & Légumes, et j’ai encadré six livreurs au Carré Médical' },
+    { re: /chiffre d affaires|objectifs?|ventes|resultats|indicateurs/, label: 'le suivi des ventes', proof: 'chez Monoprix, je suivais les ventes du rayon et ajustais les commandes pour limiter la casse' },
+    ...pick(m.rayon, 'la gestion des stocks et des commandes', 'la mise en rayon et le réassort', 'la présentation du rayon',
+      'la fraîcheur des produits', 'la réception des marchandises', 'l’étiquetage et le balisage'),
+  ];
+})();
+
 // Agences d'intérim et cabinets de recrutement : jamais présentés comme l'employeur.
 const LETTER_AGENCY_RE = /adecco|manpower|randstad|\bcrit\b|adequat|synergie|proman|start people|temporis|partnaire|supplay|gojob|staffmatch|interim|talents? |sintel|hays|page personnel|michael page|lhh|expectra|recrutement/i;
 

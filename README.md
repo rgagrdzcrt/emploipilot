@@ -12,11 +12,11 @@ Toucher le logo bascule entre deux profils, définis dans `profiles.js`. Le logo
 
 | | Ryan | Zia |
 |---|---|---|
-| Métiers | Stock & logistique uniquement (hors manutentionnaire) | Grande distribution, Vente, Restauration & café (service en salle, barista) |
+| Métiers | Stock & logistique (dont tout ce qui touche à la réserve : stockiste, stockman, réserviste, employé de réserve…), Préparation de commandes (onglet à part), Encadrement en magasin, Logistique aéroport, Tri & inventaire — hors manutentionnaire et CACES | Grande distribution, Vente, Restauration & café (service en salle, barista) |
 | Lettres | Modèles par métier (`pilot.js`) | Modèles par métier (`profiles.js`) |
 | Tri Gmail, onglet Mails | Oui | Non |
 
-Chaque profil garde ses propres données sur l'appareil (offres suivies, critères, modèles, « Mes infos ») et se synchronise dans son propre fichier de gist (`zcrt-suivi.json` / `zcrt-suivi-zia.json`), même avec un seul compte GitHub. La collecte est commune : chaque profil n'affiche que ses métiers. Les métiers réellement collectés sont listés dans `"categories"` de `sources.json` (aujourd'hui `["stock", "rayon", "vente", "restauration"]`) : les offres des autres métiers sont écartées et retirées d'`offres.json` à la collecte suivante. Adzuna étant limité à `maxRequestsPerRun` requêtes par collecte, ses recherches passent à tour de rôle quand il y en a davantage. Les coordonnées et les CV ne sont pas dans le dépôt (public) : chacun les renseigne dans « Mes infos » et « CV à joindre ».
+Chaque profil garde ses propres données sur l'appareil (offres suivies, critères, modèles, « Mes infos ») et se synchronise dans son propre fichier de gist (`zcrt-suivi.json` / `zcrt-suivi-zia.json`), même avec un seul compte GitHub. La collecte est commune : chaque profil n'affiche que ses métiers. Les métiers réellement collectés sont listés dans `"categories"` de `sources.json` (aujourd'hui `["stock", "preparation", "aeroport", "tri", "encadrement", "rayon", "vente", "restauration"]`) : les offres des autres métiers sont écartées et retirées d'`offres.json` à la collecte suivante. Adzuna étant limité à `maxRequestsPerRun` requêtes par collecte, ses recherches passent à tour de rôle quand il y en a davantage. Les coordonnées et les CV ne sont pas dans le dépôt (public) : chacun les renseigne dans « Mes infos » et « CV à joindre ».
 
 ## Fichiers principaux
 
@@ -46,6 +46,12 @@ Pour l’activer (une seule fois) :
 2. Abonne cette application à l’API **Offres d’emploi v2**.
 3. Dans GitHub, **Settings → Secrets and variables → Actions → New repository secret** : ajoute `FT_CLIENT_ID` (identifiant client) et `FT_CLIENT_SECRET` (clé secrète) de cette application.
 4. Lance **Actions → Collecte des offres → Run workflow** : le journal affiche une ligne par recherche (`France Travail [magasinage / 93] : …`).
+
+### EURES (offres France Travail, sans clé)
+
+EURES, le portail européen de l’emploi de la Commission européenne, rediffuse les offres de France Travail et de ses partenaires (agences d’intérim, Meteojob…). Sa recherche publique est lue sans compte ni clé, en lecture seule, avec 9 recherches sur le titre des offres (`"eures"` dans `sources.json` : stock et réserve, logistique, préparation, aéroport, tri et inventaire, rayon, magasin, vente, restauration). Seules les offres créées depuis 5 jours dans les départements listés sont gardées, puis triées par métier comme les autres.
+
+Chaque offre renvoie directement à sa page France Travail (la référence France Travail est contenue dans l’identifiant EURES) et garde le même identifiant (`ft_…`) que si elle venait de l’API France Travail. EURES ne donne que le **département**, pas la ville : pas de temps de trajet pour ces offres, sauf quand la même offre arrive aussi par Jooble ou Adzuna (elle est alors fusionnée et prend leur ville). Dès que les secrets France Travail sont ajoutés, EURES est ignoré automatiquement (`"sansFranceTravail": true`) : l’API officielle donne les mêmes offres, avec la ville.
 
 ### Adzuna
 
@@ -124,6 +130,7 @@ Dans GitHub, ouvre **Actions → Collecte des offres → Run workflow**. Le work
 ## Limites
 
 - Adzuna demande des identifiants et impose un crédit visible pour chaque annonce affichée.
+- EURES ne donne que le département des offres (pas de temps de trajet) et ne filtre pas lui-même par département : toute l’Île-de-France est lue puis triée. Ses recherches relient les mots par OU ; une expression entre guillemets n’est pas prise en compte.
 - Joblet est une recherche publique sans clé ; ses résultats ont un filtrage strict de la catégorie et du lieu avant ajout. **Désactivé depuis le 19/11/2026** (`"enabled": false` dans `sources.json`) : aucune offre France/Île-de-France retenue sur toutes les collectes vérifiées.
 - Workopia demande un renouvellement OAuth durable. Il est ignoré tant que les deux secrets dédiés ne sont pas configurés.
 - Greenhouse, Lever et Ashby restent inactifs faute d'employeurs pertinents configurés. SmartRecruiters est actif pour les tableaux Groupement Mousquetaires et Courir.
@@ -147,6 +154,7 @@ node --test tests/front.test.js
 - [SmartRecruiters — API publique des annonces](https://developers.smartrecruiters.com/docs/endpoints)
 - [Ashby — Job Postings API](https://developers.ashbyhq.com/docs/public-job-posting-api)
 - [France Travail — portail développeurs](https://francetravail.io)
+- [EURES — portail européen de l’emploi](https://europa.eu/eures/portal/jv-se/search)
 - [Joblet — connecteur MCP officiel](https://joblet.ai/grok-connector)
 - [Workopia — serveur MCP officiel et OAuth](https://github.com/workopia/workopia-mcp)
 - [La Bonne Alternance — API](https://api.apprentissage.beta.gouv.fr/fr/explorer)

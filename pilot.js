@@ -25,7 +25,7 @@ const PURGE_BEFORE = ACTIVE_PROFILE.purgeOtherCatsBefore || 0;
 const SENT_PURGE_BEFORE = ACTIVE_PROFILE.purgeSentBefore || 0;
 const SENT_PURGE_STATUSES = ['Candidature envoyée', 'À relancer', 'Refus'];
 const UNWANTED = ACTIVE_PROFILE.unwanted || null;
-const CACES_RE = /c[aà]c[eèé]s/gi;
+const CACES_RE = /c[aà]c[eèé]s|\bR\s?48[2-9]\b|\bR\s?490\b/gi; // « R485 », « R489 » : CACES sans le mot
 const CACES_OPTIONAL_RE = /souhait|appr[eé]ci|un plus|\batout|serait|id[eé]alement|de pr[eé]f[eé]rence|pr[eé]f[eé]rable|formation|form[eé]e?s?\b|financ|passer|obtenir|accompagn|possibilit|pas (?:obligatoire|n[eé]cessaire|exig)|non (?:obligatoire|exig|requis)|sans caces/i;
 const CACES_REQUIRED_RE = /obligatoire|exig|requis|indispensable|imp[eé]rati|n[eé]cessaire|titulaire|valide|validit|poss[eé]d|d[eé]tent|muni|ma[iî]tris|habilit|autorisation de conduite/i;
 /** Même lecture que collect.py (caces_required) : CACES exigé dans le texte de l'annonce. */
@@ -40,8 +40,10 @@ function cacesRequiredInText(text) {
 function isUnwanted(o) {
   if (!UNWANTED) return false;
   const title = o.title || '';
-  if (UNWANTED.title && UNWANTED.title.test(title)) return true;
-  if (UNWANTED.appro && UNWANTED.appro.test(title) && !(UNWANTED.approKeep && UNWANTED.approKeep.test(title))) return true;
+  // Règles d'intitulé : seulement pour les métiers listés (unwanted.cats), tous à défaut.
+  const byTitle = !UNWANTED.cats || UNWANTED.cats.includes(categoryOf(o));
+  if (byTitle && UNWANTED.title && UNWANTED.title.test(title)) return true;
+  if (byTitle && UNWANTED.appro && UNWANTED.appro.test(title) && !(UNWANTED.approKeep && UNWANTED.approKeep.test(title))) return true;
   return !!UNWANTED.cacesInText && cacesRequiredInText(o.notes);
 }
 function isPurged(o) {
@@ -65,6 +67,70 @@ const RYAN_TEMPLATES = {
 Votre offre de {poste} a retenu toute mon attention. Avec près de 4 ans d'expérience en stock et en logistique, je souhaite mettre ma rigueur et mon savoir-faire au service de votre équipe.
 
 Magasinier chez Darty à Paris, je réceptionnais et contrôlais chaque jour une livraison importante et j'organisais une très grande réserve, pour que chaque produit soit retrouvé rapidement. Responsable logistique au Carré Médical, j'ai ensuite piloté les stocks et les commandes fournisseurs de matériel médical et encadré une équipe de six livreurs. Plus récemment, j'ai assuré le suivi des stocks et l'expédition des commandes d'un catalogue en ligne de plus de 400 références. J'utilise au quotidien G.O.L.D, un WMS et Excel.
+
+{accroche}
+
+Disponible {disponibilite}, je serais heureux de vous rencontrer pour vous présenter ma motivation.
+
+Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
+
+{prenom} {nom}
+{telephone} — {email}`,
+  preparation: `Madame, Monsieur,
+
+Votre offre de {poste} a retenu toute mon attention. Avec près de 4 ans d'expérience en stock et en logistique, la préparation des commandes fait partie de mon quotidien depuis mes débuts.
+
+Magasinier chez Darty à Paris, je préparais les commandes et assurais le réassort des rayons à partir d'une très grande réserve, organisée pour que chaque produit soit retrouvé rapidement. Au Carré Médical, j'ai préparé et suivi les commandes destinées aux établissements de santé. Plus récemment, j'ai géré la préparation et l'expédition des commandes d'un catalogue en ligne de plus de 400 références.
+
+Rigoureux, organisé et ponctuel, je veille au respect des normes d'hygiène et de sécurité.
+
+{accroche}
+
+Disponible {disponibilite}, je serais heureux de vous rencontrer pour vous présenter ma motivation.
+
+Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
+
+{prenom} {nom}
+{telephone} — {email}`,
+  encadrement: `Madame, Monsieur,
+
+Votre offre de {poste} a retenu toute mon attention. Chef de rayon chez Monoprix puis référent du rayon épicerie chez E.Leclerc, j'ai l'habitude de faire vivre un rayon et d'animer une équipe au quotidien.
+
+Chez Monoprix à Aulnay-sous-Bois, j'ai piloté le rayon Fruits & Légumes : approvisionnements, gestion des stocks et de l'équipe, suivi des ventes et ajustement des commandes pour limiter la casse. Chez E.Leclerc, j'ai coordonné l'équipe pour assurer le réassort et la propreté des rayons, et mis en place les PLV et les événements commerciaux. Responsable logistique au Carré Médical, j'ai aussi encadré une équipe de six livreurs.
+
+Organisé, rigoureux et à l'aise en équipe, j'aime donner l'exemple sur le terrain.
+
+{accroche}
+
+Disponible {disponibilite}, je serais heureux de vous rencontrer pour vous présenter ma motivation.
+
+Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
+
+{prenom} {nom}
+{telephone} — {email}`,
+  aeroport: `Madame, Monsieur,
+
+Votre offre de {poste} a retenu toute mon attention. Avec près de 4 ans d'expérience en stock et en logistique, je souhaite mettre ma rigueur et mon sens de l'organisation au service de vos opérations.
+
+Magasinier chez Darty à Paris, je réceptionnais et contrôlais chaque jour une livraison importante et traitais les écarts. Responsable logistique au Carré Médical, j'ai coordonné les opérations logistiques et encadré une équipe de six livreurs. J'ai aussi géré la préparation et l'expédition des commandes d'une boutique en ligne de plus de 400 références.
+
+Anglais bilingue et titulaire du permis B, je suis ponctuel et je veille au respect des règles de sécurité.
+
+{accroche}
+
+Disponible {disponibilite}, je serais heureux de vous rencontrer pour vous présenter ma motivation.
+
+Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.
+
+{prenom} {nom}
+{telephone} — {email}`,
+  tri: `Madame, Monsieur,
+
+Votre offre de {poste} a retenu toute mon attention. Avec près de 4 ans d'expérience en stock et en logistique, je suis à l'aise avec les tâches qui demandent précision et régularité : réception, contrôle, inventaires et suivi des écarts.
+
+Agent de stock chez Aroma-Zone à Rosny-sous-Bois, j'ai réceptionné et contrôlé les livraisons et participé aux inventaires. Magasinier chez Darty à Paris, je traitais les écarts de stock et organisais une très grande réserve. Au Carré Médical, j'ai préparé et suivi les commandes destinées aux établissements de santé.
+
+Rigoureux, organisé et ponctuel, je suis à l'aise en équipe.
 
 {accroche}
 
