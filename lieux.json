@@ -112,15 +112,6 @@
   "min": 100,
   "minAt": "2026-10-28"
  },
- "bessancourt||95": {
-  "dept": "95",
-  "km": 25.1,
-  "label": "Bessancourt",
-  "lat": 49.03776,
-  "lon": 2.20789,
-  "min": 89,
-  "minAt": "2026-11-21"
- },
  "bezons||95": {
   "km": 19.9,
   "label": "Bezons",
@@ -244,15 +235,6 @@
   "min": 56,
   "minAt": "2026-11-15"
  },
- "charny|77410|77": {
-  "dept": "77",
-  "km": 21.4,
-  "label": "Charny",
-  "lat": 48.97165,
-  "lon": 2.76005,
-  "min": null,
-  "minAt": "2026-11-19"
- },
  "chaville||92": {
   "dept": "92",
   "km": 24.1,
@@ -279,15 +261,6 @@
   "lon": 2.5415,
   "min": 81,
   "minAt": "2026-11-14"
- },
- "chessy|77700|77": {
-  "dept": "77",
-  "km": 20.7,
-  "label": "Chessy",
-  "lat": 48.87144,
-  "lon": 2.76478,
-  "min": 106,
-  "minAt": "2026-11-04"
  },
  "chessy||77": {
   "dept": "77",
@@ -707,7 +680,6 @@
   "min": 64,
   "minAt": "2026-11-14"
  },
- "la plaine saint-denis||93": {},
  "la queue-en-brie||94": {
   "dept": "94",
   "km": 14.8,
@@ -814,15 +786,6 @@
   "lon": 2.51972,
   "min": 30,
   "minAt": "2026-11-16"
- },
- "le thillay|95500|95": {
-  "dept": "95",
-  "km": 11.1,
-  "label": "Le Thillay",
-  "lat": 49.00324,
-  "lon": 2.47417,
-  "min": 87,
-  "minAt": "2026-11-19"
  },
  "les clayes-sous-bois||IDF": {
   "dept": "78",
@@ -1000,15 +963,6 @@
   "min": 68,
   "minAt": "2026-11-13"
  },
- "moisselles|95570|95": {
-  "dept": "95",
-  "km": 19.1,
-  "label": "Moisselles",
-  "lat": 49.04677,
-  "lon": 2.34056,
-  "min": 93,
-  "minAt": "2026-11-19"
- },
  "moisselles||95": {
   "dept": "95",
   "km": 19.1,
@@ -1025,15 +979,6 @@
   "lat": 48.62572,
   "lon": 2.59148,
   "min": 122,
-  "minAt": "2026-11-21"
- },
- "montmagny||95": {
-  "dept": "95",
-  "km": 12.4,
-  "label": "Montmagny",
-  "lat": 48.96767,
-  "lon": 2.34704,
-  "min": 80,
   "minAt": "2026-11-21"
  },
  "montmorency||95": {
@@ -1544,15 +1489,6 @@
   "min": 79,
   "minAt": "2026-11-18"
  },
- "saint-mandé||94": {
-  "dept": "94",
-  "km": 8.4,
-  "label": "Saint-Mandé",
-  "lat": 48.84153,
-  "lon": 2.41944,
-  "min": 64,
-  "minAt": "2026-11-14"
- },
  "saint-mard||77": {
   "dept": "77",
   "km": 21.2,
@@ -1905,14 +1841,5 @@
   "lon": 2.61157,
   "min": 76,
   "minAt": "2026-11-21"
- },
- "épinay-sur-seine||93": {
-  "dept": "93",
-  "km": 13.6,
-  "label": "Épinay-sur-Seine",
-  "lat": 48.95522,
-  "lon": 2.31712,
-  "min": 67,
-  "minAt": "2026-11-19"
  }
 }
