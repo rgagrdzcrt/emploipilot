@@ -12,7 +12,7 @@ Toucher le logo bascule entre deux profils, définis dans `profiles.js`. Le logo
 
 | | Ryan | Zia |
 |---|---|---|
-| Métiers | Stock & logistique (tout ce qui touche au stock et à la réserve : agent, coordinateur ou gestionnaire de stock, stockiste, stockman, réserviste, employé de réserve…), Préparation de commandes (onglet à part), Encadrement en magasin, Logistique aéroport, Tri & inventaire — hors réceptionnaire (sauf « Magasinier réceptionnaire »), manutentionnaire et CACES | Grande distribution, Vente, Restauration & café (service en salle, barista) |
+| Métiers | Stock & logistique (tout ce qui touche au stock et à la réserve : agent, coordinateur ou gestionnaire de stock, stockiste, stockman, réserviste, employé de réserve…), Préparation de commandes (onglet à part), Encadrement en magasin (chefs et managers de rayon et de caisse), Logistique aéroport, Tri & inventaire — hors réceptionnaire (sauf « Magasinier réceptionnaire »), manutention, agent de quai, CACES, transport et livraison, encadrement de gros sites logistiques (responsable d'entrepôt, de secteur…) et responsables ou adjoints de magasin | Grande distribution, Vente, Restauration & café (service en salle, barista) |
 | Lettres | Composées selon l'offre et l'entreprise (`compose.js`, `letters.js`), conformes au CV joint ; modèles par métier (`pilot.js`) ; téléchargeables en PDF (`letterpdf.js`) | Modèles par métier (`profiles.js`) ; téléchargeables en PDF (`letterpdf.js`) |
 | Tri Gmail, onglet Mails | Oui | Non |
 

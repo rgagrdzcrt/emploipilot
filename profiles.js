@@ -61,12 +61,22 @@ const ZCRT_PROFILES = {
         [/r[eé]ceptionnaire|r[eé]ception\s+(?:des\s+|de\s+)?marchandises|agent\S*\s+de\s+r[eé]ception\b/i, /magasini|stock|r[eé]serv/i],
         // Achats, optimisation, planification, sauf « Responsable optimisation des stocks ».
         [/achats?\b|optimisation|planificat/i, /stock/i],
+        // Revue de l'onglet Stock (21/11/2026), comme stock_review_reject dans collect.py ;
+        // 3e élément : onglets où la règle s'applique.
+        [/chauffeu|livreu|conducteu|dispatch|transport/i, /(?!)/, ['stock']], // jamais gardé, même « Magasinier livreur »
+        [/\badv\b|\bdata\b|tech\s*lead|d[eé]veloppeu|technicien|maintenance/i, /stock|r[eé]serv/i, ['stock']],
+        [/(?:responsable|directeu|directrice|manager|superviseu|chef)\S*.{0,40}?(?:entrep[oô]t|\bsite\b|secteur|activit[eé]|d[eé]partement|plateforme|exploitation|op[eé]rations)|superviseu|pilotage|\bmanager\b/i,
+          /stock|magasini|r[eé]serv/i, ['stock']],
+        [/\bquai\b|manutention/i, /stock|magasini|r[eé]serv/i, ['stock']],
+        // Onglet Encadrement : ni responsable, directeur, gérant ou adjoint de magasin (ENCADREMENT_STORE_RE).
+        [/(?:responsable|directeu|directrice|g[eé]rant|manager|chef|adjoint|assistant|second)\S*(?:\s+\S+){0,4}?\s+(?:magasin|boutique|point\s+de\s+vente|supermarch|hypermarch|sup[eé]rette|surface\s+de\s+vente|store|shop)|(?:store|shop|assistant)\s+manager|co.?manager|adjoint\S*\s+de\s+direction/i,
+          /rayon|caisse|secteur|univers|d[eé]partement|department|frais|drive/i, ['encadrement']],
       ],
       // Entreprises écartées quel que soit le métier (comme EXCLUDED_COMPANIES dans collect.py).
       company: /michael\W*page/i,
       cacesInText: true,  // CACES obligatoire / exigé / requis dans le texte de l'annonce
-      // Règles d'intitulé ci-dessus : métiers de la logistique seulement (« Responsable de point
-      // de vente » ou « Chef de caisse » sont voulus dans l'onglet Encadrement).
+      // Règles d'intitulé ci-dessus : métiers de la logistique seulement (« Chef de rayon » ou
+      // « Chef de caisse » sont voulus dans l'onglet Encadrement), sauf celles qui nomment leurs onglets.
       cats: ['stock', 'preparation', 'aeroport', 'tri'],
     },
     keywords: 'Stockiste, assistant stockiste, stockman, gestionnaire de stock, chargé de stock, coordinateur stock\n'

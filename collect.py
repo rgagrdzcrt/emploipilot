@@ -288,6 +288,44 @@ ENCADREMENT_EXCLUDE_RE = re.compile(
 )
 
 
+STOCK_DRIVE_RE = re.compile(r"chauffeu|livreu|conducteu|dispatch|transport", re.I)
+STOCK_OTHER_JOB_RE = re.compile(r"\badv\b|\bdata\b|tech\s*lead|d[eé]veloppeu|technicien|maintenance", re.I)
+STOCK_BIG_SITE_RE = re.compile(
+    r"(?:responsable|directeu|directrice|manager|superviseu|chef)\w*.{0,40}?"
+    r"(?:entrep[oô]t|\bsite\b|secteur|activit[eé]|d[eé]partement|plateforme|exploitation|op[eé]rations)"
+    r"|superviseu|pilotage|\bmanager\b",
+    re.I,
+)
+STOCK_DOCK_RE = re.compile(r"\bquai\b|manutention", re.I)
+STOCK_KEEP_RE = re.compile(r"stock|magasini|r[eé]serv", re.I)
+# Revue de l'onglet Encadrement (21/11/2026) : ni responsable, directeur, gérant ou adjoint de
+# magasin, de boutique ou de point de vente (store manager, co-manager…) ; restent les chefs et
+# managers de rayon, de caisse, de secteur, de département ou d'univers.
+ENCADREMENT_STORE_RE = re.compile(
+    r"(?:responsable|directeu|directrice|g[eé]rant|manager|chef|adjoint|assistant|second)\S*(?:\s+\S+){0,4}?\s+"
+    r"(?:magasin|boutique|point\s+de\s+vente|supermarch|hypermarch|sup[eé]rette|surface\s+de\s+vente|store|shop)"
+    r"|(?:store|shop|assistant)\s+manager|co.?manager|adjoint\S*\s+de\s+direction",
+    re.I,
+)
+ENCADREMENT_KEEP_RE = re.compile(r"rayon|caisse|secteur|univers|d[eé]partement|department|frais|drive", re.I)
+
+
+def stock_review_reject(title):
+    """Revue de l'onglet Stock (21/11/2026), offres écartées sans passer à un autre onglet
+    (« Responsable de secteur logistique » n'est pas un chef de rayon) :
+    - conduite, livraison, transport, même « Magasinier livreur » ;
+    - ADV, data, technicien, maintenance, sans stock ni réserve dans le titre ;
+    - encadrement de gros sites (responsable d'entrepôt, de secteur, d'activité, superviseur…),
+      agent de quai, manutention, sauf si le titre nomme le stock, la réserve ou le magasinier
+      (« Stock Manager », « Superviseur stock » restent ; « Chef d'équipe logistique » aussi).
+    """
+    if STOCK_DRIVE_RE.search(title):
+        return True
+    if STOCK_OTHER_JOB_RE.search(title) and not re.search(r"stock|r[eé]serv", title, re.I):
+        return True
+    return bool((STOCK_BIG_SITE_RE.search(title) or STOCK_DOCK_RE.search(title)) and not STOCK_KEEP_RE.search(title))
+
+
 def stock_off_topic(title):
     """Titre attrapé par un mot de la logistique sans être un poste de logistique.
 
@@ -693,12 +731,16 @@ def classify_category(title):
         if name in SPLIT_EXCLUDE_RE:
             continue  # départagés par logistics_split
         if pattern.search(title):
+            if name == "stock" and stock_review_reject(title):
+                return None
             if name == "stock" and stock_off_topic(title):
                 continue
             if name == "stock" and APPRO_RE.search(title) and not APPRO_KEEP_RE.search(title):
                 return None
             if name == "encadrement" and ENCADREMENT_EXCLUDE_RE.search(title):
                 continue
+            if name == "encadrement" and ENCADREMENT_STORE_RE.search(title) and not ENCADREMENT_KEEP_RE.search(title):
+                return None  # responsable ou adjoint de magasin : ni Encadrement, ni Vente
             return name if name in TARGET_CATEGORIES else None
     return None
 

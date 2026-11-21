@@ -43,10 +43,13 @@ function isUnwanted(o) {
   // Entreprises écartées quel que soit le métier (Michael Page…).
   if (UNWANTED.company && UNWANTED.company.test(o.company || '')) return true;
   // Règles d'intitulé : seulement pour les métiers listés (unwanted.cats), tous à défaut.
-  const byTitle = !UNWANTED.cats || UNWANTED.cats.includes(categoryOf(o));
+  const cat = categoryOf(o);
+  const byTitle = !UNWANTED.cats || UNWANTED.cats.includes(cat);
   if (byTitle && UNWANTED.title && UNWANTED.title.test(title)) return true;
-  // [mots écartés, mots qui gardent l'offre] : « Réceptionnaire » non, « Magasinier réceptionnaire » oui.
-  if (byTitle && (UNWANTED.unless || []).some(([out, keep]) => out.test(title) && !keep.test(title))) return true;
+  // [mots écartés, mots qui gardent l'offre, onglets (facultatif, unwanted.cats à défaut)] :
+  // « Réceptionnaire » non, « Magasinier réceptionnaire » oui.
+  if ((UNWANTED.unless || []).some(([out, keep, cats]) => (cats ? cats.includes(cat) : byTitle)
+    && out.test(title) && !keep.test(title))) return true;
   return !!UNWANTED.cacesInText && cacesRequiredInText(o.notes);
 }
 function isPurged(o) {

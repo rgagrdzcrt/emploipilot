@@ -77,14 +77,34 @@ class Categories(unittest.TestCase):
                 self.assertEqual(self.cat(title), expected)
 
     def test_encadrement_en_magasin(self):
+        # Revue du 21/11/2026 : chefs et managers de rayon, de caisse ou de drive ; ni responsable, ni
+        # directeur, ni adjoint de magasin (écartés, sans passer à l'onglet Vente).
         for title, expected in (("Chef de rayon fruits et légumes", "encadrement"), ("Manager de rayon frais", "encadrement"),
-                                ("Adjoint(e) responsable de magasin", "encadrement"), ("Store Manager - Paris", "encadrement"),
-                                ("Responsable de point de vente", "encadrement"), ("Chef de caisse", "encadrement"),
+                                ("Adjoint(e) responsable de magasin", None), ("Store Manager - Paris", None),
+                                ("Responsable de point de vente", None), ("Directeur de Supermarché (H/F)", None),
+                                ("RESPONSABLE ADJOINT/E MAGASIN- Serris (77449) (H/F)", None), ("Chef de caisse", "encadrement"),
+                                ("ADJOINT RESPONSABLE RAYON EPICERIE (H/F)", "encadrement"),
+                                ("Manager Drive (F/H) - Hypermarché", "encadrement"),
                                 ("Responsable de réserve", "stock"), ("Assistant manager restaurant", None),
                                 ("Responsable de magasin régional", None), ("Responsable boutique en ligne", None),
                                 ("Employé de rayon", "rayon")):
             with self.subTest(title=title):
                 self.assertEqual(self.cat(title), expected)
+
+    def test_revue_onglet_stock(self):
+        # Écartées sans passer à un autre onglet (« Responsable de secteur » n'est pas un chef de rayon).
+        for title in ("Responsable de Secteur Logistique H/F", "Responsable entrepôt logistique (H/F)",
+                      "Superviseur d'Opérations Logistiques et Entrepôt (H/F)", "Agent de quai H/F",
+                      "Agent de logistique et de manutention en grande distribution (H/F)", "MAGASINIER LIVREUR",
+                      "DISPATCHER TRANSPORT ET LOGISTIQUE (H/F)", "Tech Lead Data | Logistique 2.0 | Paris",
+                      "Technicien logistique (H/F)", "Gestionnaire ADV et Flux Logistiques (H/F)"):
+            with self.subTest(title=title):
+                self.assertIsNone(self.cat(title))
+        for title in ("Chef d'équipe logistique (H/F)", "Responsable logistique (H/F)", "Coordinateur logistique (H/F)",
+                      "Stock Manager H/F", "SUPERVISEUR STOCK VALLÉE VILLAGE (F/H)", "Agent logistique (H/F)",
+                      "Magasinier manutentionnaire", "Responsable Adjoint Logistique F/H"):
+            with self.subTest(title=title):
+                self.assertEqual(self.cat(title), "stock")
 
     def test_approvisionneur_ecarte(self):
         for title in ("Approvisionneur H/F", "Assistant(e) approvisionnements H/F", "Livreur Approvisionneur"):

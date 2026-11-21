@@ -256,7 +256,7 @@
     },
     {
       "name": "agent de quai · Bondy",
-      "enabled": true,
+      "enabled": false,
       "category": "stock",
       "keywords": "agent de quai",
       "location": "Bondy",
@@ -467,7 +467,7 @@
     },
     {
       "name": "agent de quai · Paris",
-      "enabled": true,
+      "enabled": false,
       "category": "stock",
       "keywords": "agent de quai",
       "location": "Paris",
@@ -860,7 +860,7 @@
     },
     {
       "name": "responsable de magasin · Bondy",
-      "enabled": true,
+      "enabled": false,
       "category": "encadrement",
       "keywords": "responsable de magasin",
       "location": "Bondy",
@@ -869,7 +869,7 @@
     },
     {
       "name": "responsable de magasin · Paris",
-      "enabled": true,
+      "enabled": false,
       "category": "encadrement",
       "keywords": "responsable de magasin",
       "location": "Paris",
@@ -878,7 +878,7 @@
     },
     {
       "name": "adjoint responsable magasin · Paris",
-      "enabled": true,
+      "enabled": false,
       "category": "encadrement",
       "keywords": "adjoint responsable magasin",
       "location": "Paris",
@@ -887,7 +887,7 @@
     },
     {
       "name": "responsable de boutique · Paris",
-      "enabled": true,
+      "enabled": false,
       "category": "encadrement",
       "keywords": "responsable de boutique",
       "location": "Paris",
@@ -1022,7 +1022,7 @@
       },
       {
         "name": "management-magasin",
-        "enabled": true,
+        "enabled": false,
         "category": "encadrement",
         "rome": "D1301"
       },
@@ -1093,7 +1093,7 @@
       {
         "name": "logistique et entrepôt",
         "enabled": true,
-        "keywords": "logistique logisticienne entrepot quai",
+        "keywords": "logistique logisticienne entrepot",
         "maxPages": 8
       },
       {
@@ -1546,7 +1546,7 @@
       },
       {
         "name": "responsable magasin · Bondy",
-        "enabled": true,
+        "enabled": false,
         "category": "encadrement",
         "keywords": "responsable magasin",
         "titleOnly": true,
@@ -1554,7 +1554,7 @@
       },
       {
         "name": "responsable magasin · Paris",
-        "enabled": true,
+        "enabled": false,
         "category": "encadrement",
         "keywords": "responsable magasin",
         "titleOnly": true,

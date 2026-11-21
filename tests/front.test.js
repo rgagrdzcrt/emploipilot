@@ -78,7 +78,14 @@ test('« À postuler » : règles d’intitulé limitées aux métiers de la log
     ACTIVE_PROFILE: ryan, CATS: ryan.cats, categoryOf: o => o.category || 'stock',
   });
   const cases = [
-    ['Responsable de point de vente', 'encadrement', '', false], ['Chef de caisse', 'encadrement', '', false],
+    // Encadrement (revue du 21/11/2026) : chefs de rayon et de caisse oui, responsables ou adjoints de magasin non.
+    ['Responsable de point de vente', 'encadrement', '', true], ['Chef de caisse', 'encadrement', '', false],
+    ['Responsable adjoint de magasin', 'encadrement', '', true], ['Chef de rayon fruits et légumes', 'encadrement', '', false],
+    ['Manager Drive (F/H) - Hypermarché', 'encadrement', '', false],
+    // Stock : ni gros sites, quai, manutention ou livraison ; « Stock Manager », chef d'équipe et coordinateur restent.
+    ['Responsable de Secteur Logistique H/F', 'stock', '', true], ['Chef d’équipe logistique', 'stock', '', false],
+    ['Agent de quai H/F', 'stock', '', true], ['Agent de quai H/F', 'aeroport', '', false], ['MAGASINIER LIVREUR', 'stock', '', true],
+    ['Stock Manager H/F', 'stock', '', false], ['Coordinateur logistique', 'stock', '', false],
     ['Préparateur de commandes vendeur', 'preparation', '', true],
     ['Agent de piste', 'aeroport', 'CACES 1 obligatoire.', true], ['Agent de tri', 'tri', '', false],
   ];
