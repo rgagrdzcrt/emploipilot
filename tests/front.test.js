@@ -110,7 +110,7 @@ test('profil de Ryan : chaque onglet a libellé, icône, CV, modèle de lettre, 
 });
 
 test('lettres de Ryan : conformes au CV stock et propres à chaque entreprise', () => {
-  const pilot = read('pilot.js');
+  const pilot = read('pilot.js').replace(/\r\n/g, '\n'); // copie Windows : fins de ligne CRLF
   const fn = name => {
     const a = pilot.indexOf(`function ${name}(`), b = pilot.indexOf('\n}\n', a);
     assert.ok(a >= 0 && b > a, `fonction ${name} introuvable`);
