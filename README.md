@@ -16,7 +16,7 @@ Toucher le logo bascule entre deux profils, définis dans `profiles.js`. Le logo
 | Lettres | Composées selon l'offre et l'entreprise (`compose.js`, `letters.js`), conformes au CV joint ; modèles par métier (`pilot.js`) | Modèles par métier (`profiles.js`) |
 | Tri Gmail, onglet Mails | Oui | Non |
 
-Chaque profil garde ses propres données sur l'appareil (offres suivies, critères, modèles, « Mes infos ») et se synchronise dans son propre fichier de gist (`zcrt-suivi.json` / `zcrt-suivi-zia.json`), même avec un seul compte GitHub. La collecte est commune : chaque profil n'affiche que ses métiers. Les métiers réellement collectés sont listés dans `"categories"` de `sources.json` (aujourd'hui `["stock", "preparation", "aeroport", "tri", "encadrement", "rayon", "vente", "restauration"]`) : les offres des autres métiers sont écartées et retirées d'`offres.json` à la collecte suivante. Adzuna étant limité à `maxRequestsPerRun` requêtes par collecte, ses recherches passent à tour de rôle quand il y en a davantage. Les coordonnées et les CV ne sont pas dans le dépôt (public) : chacun les renseigne dans « Mes infos » et « CV à joindre ».
+Chaque profil garde ses propres données sur l'appareil (offres suivies, critères, modèles, « Mes infos ») et se synchronise dans son propre fichier de gist (`zcrt-suivi.json` / `zcrt-suivi-zia.json`), même avec un seul compte GitHub. La collecte est commune : chaque profil n'affiche que ses métiers. Les métiers réellement collectés sont listés dans `"categories"` de `sources.json` (aujourd'hui `["stock", "preparation", "aeroport", "tri", "encadrement", "rayon", "vente", "restauration"]`) : les offres des autres métiers sont écartées et retirées d'`offres.json` à la collecte suivante. Adzuna (`maxRequestsPerRun` requêtes par collecte) et Jooble (`joobleMaxRequestsPerRun` pages par collecte, environ 450 acceptées par jour) ont un quota : les recherches marquées `"priorite": true` (stockiste, réserve, stock) passent à chaque collecte, les autres à tour de rôle. Les coordonnées et les CV ne sont pas dans le dépôt (public) : chacun les renseigne dans « Mes infos » et « CV à joindre ».
 
 ## Fichiers principaux
 
@@ -32,7 +32,7 @@ Chaque profil garde ses propres données sur l'appareil (offres suivies, critèr
 
 ### Jooble
 
-Recherche généraliste configurée par métier dans `sources.json`. La clé reste dans le secret GitHub `JOOBLE_API_KEY`.
+Recherche généraliste configurée par métier dans `sources.json`. La clé reste dans le secret GitHub `JOOBLE_API_KEY`. Au-delà d'environ 450 pages par jour, Jooble refuse les demandes (erreur 429) : la collecte s'arrête alors au premier refus, et la suivante reprend là où elle s'était arrêtée (`joobleSuite` dans `stats.json`), après les recherches prioritaires.
 
 ### France Travail
 

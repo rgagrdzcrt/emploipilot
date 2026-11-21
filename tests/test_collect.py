@@ -346,5 +346,53 @@ class Http(unittest.TestCase):
             self.assertEqual(collect.http_json("https://ex.fr"), {})
 
 
+class JoobleQuota(unittest.TestCase):
+    """Quota Jooble : recherches stockiste d'abord, arrêt au premier refus, reprise ensuite."""
+
+    def test_prioritaires_puis_reprise(self):
+        queries = [{"name": n, "keywords": n, "priorite": n.startswith("stock")}
+                   for n in ("a", "stockiste", "b", "c", "stockman", "d")]
+        first, rest = collect.jooble_plan(queries, "c")
+        self.assertEqual([q["name"] for q in first], ["stockiste", "stockman"])
+        self.assertEqual([q["name"] for q in rest], ["c", "d", "a", "b"])
+        # Reprise inconnue (recherche renommée ou supprimée) : on repart du début.
+        self.assertEqual([q["name"] for q in collect.jooble_plan(queries, "zz")[1]], ["a", "b", "c", "d"])
+
+    def run_all(self, queries, suite, refuse=None, budget=None):
+        from unittest import mock
+        from urllib.error import HTTPError
+        calls, state = [], {"quota": False, "pages": 0, "suite": suite}
+
+        def fake(api_key, query, max_pages=1):
+            calls.append(query["name"])
+            if query["name"] == refuse:  # Jooble refuse : quota du jour épuisé
+                state["quota"] = True
+                raise HTTPError("https://ex.fr", 429, "Too Many Requests", None, None)
+            state["pages"] += max_pages
+            return []
+
+        config = {"joobleQueries": queries}
+        if budget:
+            config["joobleMaxRequestsPerRun"] = budget
+        with mock.patch.object(collect, "fetch_jooble", fake), mock.patch.object(collect, "JOOBLE_STATE", state), \
+                mock.patch.object(collect, "JOOBLE_PAUSE", 0):
+            errors = []
+            collect.fetch_jooble_all("cle", config, errors)
+        return calls, state["suite"], errors
+
+    def test_arret_au_premier_refus(self):
+        queries = [{"name": n, "keywords": n, "priorite": n == "stockiste"} for n in ("a", "b", "stockiste", "c", "d")]
+        calls, suite, errors = self.run_all(queries, "b", refuse="c")
+        self.assertEqual(calls, ["stockiste", "b", "c"])  # prioritaire, reprise à « b », plus rien après le refus
+        self.assertEqual(suite, "c")  # « c » n'a rien reçu : elle passera en premier la prochaine fois
+        self.assertEqual(len(errors), 1)
+
+    def test_plafond_de_pages(self):
+        queries = [{"name": n, "keywords": n, "maxPages": 2} for n in ("a", "b", "c", "d")]
+        calls, suite, _ = self.run_all(queries, "c", budget=4)
+        self.assertEqual(calls, ["c", "d"])
+        self.assertEqual(suite, "a")
+
+
 if __name__ == "__main__":
     unittest.main()

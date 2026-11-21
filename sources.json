@@ -241,7 +241,8 @@
       "keywords": "stockiste",
       "location": "Bondy",
       "radius": "26",
-      "maxPages": 5
+      "maxPages": 5,
+      "priorite": true
     },
     {
       "name": "stockiste · Paris",
@@ -250,7 +251,8 @@
       "keywords": "stockiste",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 5
+      "maxPages": 5,
+      "priorite": true
     },
     {
       "name": "agent de quai · Bondy",
@@ -479,7 +481,8 @@
       "keywords": "agent de stock",
       "location": "Bondy",
       "radius": "26",
-      "maxPages": 2
+      "maxPages": 2,
+      "priorite": true
     },
     {
       "name": "agent de stock · Paris",
@@ -488,7 +491,8 @@
       "keywords": "agent de stock",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 2
+      "maxPages": 2,
+      "priorite": true
     },
     {
       "name": "employé de réserve · Bondy",
@@ -497,7 +501,8 @@
       "keywords": "employé de réserve",
       "location": "Bondy",
       "radius": "26",
-      "maxPages": 2
+      "maxPages": 2,
+      "priorite": true
     },
     {
       "name": "employé de réserve · Paris",
@@ -506,7 +511,8 @@
       "keywords": "employé de réserve",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 2
+      "maxPages": 2,
+      "priorite": true
     },
     {
       "name": "réassortisseur · Bondy",
@@ -587,7 +593,8 @@
       "keywords": "responsable de réserve",
       "location": "Bondy",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "responsable de réserve · Paris",
@@ -596,7 +603,8 @@
       "keywords": "responsable de réserve",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "stockiste luxe · Paris",
@@ -605,7 +613,8 @@
       "keywords": "stockiste luxe",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 2
+      "maxPages": 2,
+      "priorite": true
     },
     {
       "name": "gestionnaire de stock e-commerce · Bondy",
@@ -650,7 +659,8 @@
       "keywords": "stock controller",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "stockman · Bondy",
@@ -659,7 +669,8 @@
       "keywords": "stockman",
       "location": "Bondy",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "stockman · Paris",
@@ -668,7 +679,8 @@
       "keywords": "stockman",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "assistant stockiste · Paris",
@@ -677,7 +689,8 @@
       "keywords": "assistant stockiste",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "réserviste · Paris",
@@ -686,7 +699,8 @@
       "keywords": "réserviste",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "hôte de réserve · Paris",
@@ -695,7 +709,8 @@
       "keywords": "hôte de réserve",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "agent de réserve · Paris",
@@ -704,7 +719,8 @@
       "keywords": "agent de réserve",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "stock associate · Paris",
@@ -713,7 +729,8 @@
       "keywords": "stock associate",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "préparateur logistique · Bondy",
@@ -884,7 +901,8 @@
       "keywords": "coordinateur stock",
       "location": "Bondy",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "coordinateur stock · Paris",
@@ -893,7 +911,8 @@
       "keywords": "coordinateur stock",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "contrôleur de stock · Paris",
@@ -902,7 +921,8 @@
       "keywords": "contrôleur de stock",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "responsable des stocks · Paris",
@@ -911,7 +931,8 @@
       "keywords": "responsable des stocks",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "assistant stock · Paris",
@@ -920,7 +941,8 @@
       "keywords": "assistant stock",
       "location": "Paris",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     },
     {
       "name": "employé de stock · Bondy",
@@ -929,7 +951,8 @@
       "keywords": "employé de stock",
       "location": "Bondy",
       "radius": "26",
-      "maxPages": 1
+      "maxPages": 1,
+      "priorite": true
     }
   ],
   "franceTravail": {
@@ -1065,7 +1088,7 @@
         "name": "stock et réserve",
         "enabled": true,
         "keywords": "magasinier magasiniere stockiste stockman stock reserve reserviste logisticien reassortisseur",
-        "maxPages": 5
+        "maxPages": 6
       },
       {
         "name": "logistique et entrepôt",
@@ -1141,7 +1164,8 @@
         "category": "stock",
         "keywords": "stockiste",
         "titleOnly": true,
-        "location": "Bondy"
+        "location": "Bondy",
+        "priorite": true
       },
       {
         "name": "préparateur commandes · Bondy",
@@ -1213,7 +1237,8 @@
         "category": "stock",
         "keywords": "stockiste",
         "titleOnly": true,
-        "location": "Paris"
+        "location": "Paris",
+        "priorite": true
       },
       {
         "name": "préparateur commandes · Paris",
@@ -1695,6 +1720,7 @@
     "boards": []
   },
   "joobleMaxPages": 2,
+  "joobleMaxRequestsPerRun": 110,
   "alerteNouvellesOffres": {
     "enabled": false
   }

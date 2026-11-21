@@ -805,6 +805,61 @@ def _jooble_page(api_key, query, page, per_page):
     return http_json(req)
 
 
+# Jooble accepte environ 450 pages par jour (refus 429 au-delà, constaté les 20 et 21/11/2026) ;
+# un passage complet en demande ~170. À chaque collecte : les recherches « priorite » d'abord
+# (stockiste, réserve, stock), puis les autres reprennent là où la précédente s'est arrêtée
+# (« joobleSuite » dans stats.json), dans la limite de joobleMaxRequestsPerRun pages, et
+# Jooble s'arrête au premier refus au lieu d'insister sur toutes les recherches restantes.
+JOOBLE_BUDGET = 110
+JOOBLE_PAUSE = 2  # secondes entre deux recherches
+JOOBLE_STATE = {"quota": False, "pages": 0, "suite": ""}
+
+
+def jooble_plan(queries, suite):
+    """Ordre de passage : (recherches prioritaires, autres à partir de la recherche `suite`)."""
+    active = [q for q in queries if q.get("enabled", True) and q.get("keywords")]
+    first = [q for q in active if q.get("priorite")]
+    rest = [q for q in active if not q.get("priorite")]
+    names = [q.get("name") for q in rest]
+    start = names.index(suite) if suite in names else 0
+    return first, rest[start:] + rest[:start]
+
+
+def previous_jooble_suite():
+    """Recherche Jooble où reprendre, notée par la collecte précédente dans stats.json."""
+    try:
+        return str(json.loads(STATS_FILE.read_text(encoding="utf-8")).get("joobleSuite") or "")
+    except (OSError, ValueError, AttributeError):
+        return ""
+
+
+def fetch_jooble_all(api_key, config, errors):
+    """Toutes les recherches Jooble de la collecte (voir JOOBLE_BUDGET)."""
+    default_pages = max(1, int(config.get("joobleMaxPages", 1)))
+    budget = max(1, int(config.get("joobleMaxRequestsPerRun", JOOBLE_BUDGET)))
+    first, rest = jooble_plan(config.get("joobleQueries") or DEFAULT_JOOBLE_QUERIES, JOOBLE_STATE["suite"])
+    if rest:
+        JOOBLE_STATE["suite"] = rest[0].get("name", "")
+    offers = []
+    for i, query in enumerate(first + rest):
+        if JOOBLE_STATE["quota"] or JOOBLE_STATE["pages"] >= budget:
+            why = "refus 429" if JOOBLE_STATE["quota"] else f"{budget} pages lues"
+            print(f"Jooble : {why}, recherches suivantes reportées à la prochaine collecte "
+                  f"(reprise à « {JOOBLE_STATE['suite']} »).")
+            break
+        pages = min(max(1, int(query.get("maxPages", default_pages))), budget - JOOBLE_STATE["pages"])
+        try:
+            offers.extend(fetch_jooble(api_key, query, max_pages=pages))
+            done = True
+        except Exception as exc:
+            errors.append({"source": f"Jooble/{query.get('name', '?')}", "error": type(exc).__name__})
+            done = not JOOBLE_STATE["quota"]  # refusée faute de quota : elle repassera en premier
+        if i >= len(first) and done:
+            JOOBLE_STATE["suite"] = rest[(i - len(first) + 1) % len(rest)].get("name", "")
+        time.sleep(JOOBLE_PAUSE)
+    return offers
+
+
 def fetch_jooble(api_key, query, max_pages=1, per_page=50):
     """Lit jusqu'à `max_pages` pages de résultats (50 offres chacune)."""
     jobs, total, pages = [], 0, 0
@@ -815,9 +870,12 @@ def fetch_jooble(api_key, query, max_pages=1, per_page=50):
             # Ne jamais afficher l'URL complète : elle contient la clé API.
             code = getattr(exc, "code", type(exc).__name__)
             print(f"Jooble [{query.get('name')}] page {page} : erreur {code}.")
+            if code == 429:
+                JOOBLE_STATE["quota"] = True  # quota du jour épuisé : plus aucune recherche
             if page == 1:
                 raise
             break  # quota ou incident : on garde les pages déjà lues
+        JOOBLE_STATE["pages"] += 1
         page_jobs = data.get("jobs", [])
         total = int(data.get("totalCount") or total or 0)
         jobs.extend(page_jobs)
@@ -1545,12 +1603,17 @@ def fetch_adzuna(cfg):
     title_supported = True
     offers = []
 
-    # Plus de recherches actives que de requêtes permises : le point de départ tourne d'une
-    # collecte à l'autre (toutes les 6 h), pour que chaque recherche passe à son tour.
+    # Recherches « priorite » (stockiste) à chaque collecte ; pour les autres, plus nombreuses que
+    # les requêtes permises, le point de départ tourne d'une collecte à l'autre (toutes les 6 h),
+    # pour que chaque recherche passe à son tour.
     queries = [q for q in queries if q.get("enabled", True) and q.get("keywords")]
-    if len(queries) > budget:
-        start = (int(time.time() // (6 * 3600)) * budget) % len(queries)
-        queries = queries[start:] + queries[:start]
+    first = [q for q in queries if q.get("priorite")]
+    rest = [q for q in queries if not q.get("priorite")]
+    room = max(1, budget - len(first) * max_pages)
+    if len(rest) > room:
+        start = (int(time.time() // (6 * 3600)) * room) % len(rest)
+        rest = rest[start:] + rest[:start]
+    queries = first + rest
 
     for query in queries:
         if used >= budget:
@@ -2166,23 +2229,13 @@ def main():
     errors = []
     fresh = []
 
-    # Jooble : une requête par métier visé (configurable dans sources.json).
+    # Jooble : une requête par métier visé (configurable dans sources.json), dans la limite du quota.
     api_key = os.environ.get("JOOBLE_API_KEY", "").strip()
+    JOOBLE_STATE["suite"] = previous_jooble_suite()
     if not api_key:
         print("Jooble ignoré : secret JOOBLE_API_KEY absent.")
     else:
-        jooble_pages = max(1, int(config.get("joobleMaxPages", 1)))
-        for query in config.get("joobleQueries") or DEFAULT_JOOBLE_QUERIES:
-            if not query.get("enabled", True) or not query.get("keywords"):
-                continue
-            try:
-                pages = max(1, int(query.get("maxPages", jooble_pages)))
-                fresh.extend(fetch_jooble(api_key, query, max_pages=pages))
-                time.sleep(2)
-            except Exception as exc:
-                errors.append(
-                    {"source": f"Jooble/{query.get('name', '?')}", "error": type(exc).__name__}
-                )
+        fresh.extend(fetch_jooble_all(api_key, config, errors))
 
     # API France Travail (offre d'emploi v2), source officielle et autorisée.
     ft_cfg = config.get("franceTravail") or {}
@@ -2371,6 +2424,7 @@ def write_stats(offers, new_count, removed_by_rule, now):
         "offres_finales_par_source": dict(sorted(by_source.items(), key=lambda kv: -kv[1])),
         "retirees": removed_by_rule,
         "recherches": SOURCE_STATS,
+        "joobleSuite": JOOBLE_STATE["suite"],  # reprise des recherches Jooble à la collecte suivante
     }, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
