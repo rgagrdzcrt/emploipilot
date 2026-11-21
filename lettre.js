@@ -64,17 +64,12 @@ function lmAutofill() {
   lmRender();
 }
 
-function lmPrint() {
+/** Lettre affichée (modifications comprises) en fichier PDF : letterpdf.js. */
+function lmPdf() {
   const text = lmEl('lmOut').value;
   if (!text) return;
-  const win = window.open('', '_blank');
-  if (!win) { toast('Autorise les fenêtres pour imprimer'); return; }
-  win.document.write('<!doctype html><meta charset="utf-8"><title>Lettre de motivation</title>'
-    + '<style>body{font:12pt/1.55 Georgia,serif;margin:22mm 20mm;white-space:pre-wrap;color:#111}</style>'
-    + uiEsc(text));
-  win.document.close();
-  win.focus();
-  win.print();
+  if (typeof downloadLetterPdf !== 'function') { toast('Recharge la page pour télécharger la lettre en PDF'); return; }
+  downloadLetterPdf(text, lmOffer());
 }
 
 function lmClear() {
@@ -100,7 +95,7 @@ function lmInit() {
   }));
   lmEl('lmAgain').onclick = () => { lmSeed++; lmRender(); };
   lmEl('lmCopy').onclick = () => lmEl('lmOut').value && copyText(lmEl('lmOut').value, 'Lettre');
-  lmEl('lmPrint').onclick = lmPrint;
+  lmEl('lmPrint').onclick = lmPdf; // identifiant d'origine : une ancienne copie en cache trouve toujours son bouton
   lmEl('lmClear').onclick = lmClear;
   try { lmEl('lmText').value = localStorage.getItem(LM_DRAFT) || ''; } catch (e) { /* stockage indisponible */ }
   lmAutofill();

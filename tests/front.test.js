@@ -157,6 +157,46 @@ test('lettres de Ryan : conformes au CV stock et propres à chaque entreprise', 
   assert.ok(!/J'habite/.test(letter({ title: 'Magasinier', company: 'Picard', category: 'stock', location: 'Seine-Saint-Denis (93)', trajetMin: 22 })));
 });
 
+test('lettre en PDF : fichier valide, accents, justifiée, coordonnées en tête, nom de fichier', () => {
+  const ctx = {};
+  vm.createContext(ctx);
+  vm.runInContext(read('letterpdf.js') + ';this.__pdf = buildLetterPdf; this.__name = letterPdfName; this.__city = pdfSenderCity;', ctx);
+  const infos = { prenom: 'Ryan', nom: 'CARTIER GAZARD', adresse: '12 rue de la Gare, 93140 Bondy', telephone: '+33 6 00 00 00 00', email: 'ryan@example.com' };
+  const text = 'Madame, Monsieur,\n\nVotre offre de magasinier chez Carrefour a retenu toute mon attention : '
+    + 'c’est précisément le métier que j’exerce depuis près de 4 ans. '
+    + 'Réception, contrôle et mise en stock « au quotidien » — sans écart, avec rigueur et méthode. '.repeat(3)
+    + '\n\nJe vous prie d’agréer, Madame, Monsieur, l’expression de mes salutations distinguées.'
+    + '\n\nRyan CARTIER GAZARD\n+33 6 00 00 00 00 — ryan@example.com';
+  const pdf = ctx.__pdf({ text, infos, company: 'Carrefour', city: 'Rosny-sous-Bois', poste: 'magasinier', date: new Date(2026, 10, 21) });
+  assert.ok(pdf.startsWith('%PDF-1.4\n') && pdf.endsWith('%%EOF\n'));
+  assert.ok(/^[\n\x20-\x7e]*$/.test(pdf), 'PDF en ASCII : les décalages sont des octets');
+  // Table xref : chaque décalage pointe sur son objet, startxref sur « xref » ; longueurs de flux exactes.
+  const start = Number(pdf.match(/startxref\n(\d+)\n%%EOF\n$/)[1]);
+  assert.strictEqual(pdf.slice(start, start + 5), 'xref\n');
+  pdf.slice(start).match(/^\d{10} 00000 n $/gm).forEach((e, i) => assert.ok(pdf.startsWith(`${i + 1} 0 obj`, Number(e.slice(0, 10))), `objet ${i + 1}`));
+  for (const m of pdf.matchAll(/<< \/Length (\d+) >>\nstream\n/g)) {
+    const end = m.index + m[0].length + Number(m[1]);
+    assert.strictEqual(pdf.slice(end, end + 10), '\nendstream');
+  }
+  assert.match(pdf, /\(Madame, Monsieur,\) Tj/);
+  assert.match(pdf, /\(Objet : Candidature au poste de magasinier\) Tj/);
+  assert.match(pdf, /\(Bondy, le 21 novembre 2026\) Tj/);
+  assert.match(pdf, /\(Carrefour\) Tj/);
+  assert.match(pdf, /\\351/); // « é » en WinAnsi
+  assert.match(pdf, /\\222/); // « ’ »
+  assert.match(pdf, /\\227/); // « — »
+  assert.match(pdf, /\\253/); // « « »
+  assert.match(pdf, / [1-9][\d.]* Tw /, 'lignes justifiées');
+  assert.strictEqual(pdf.split('(ryan@example.com) Tj').length, 2, 'coordonnées une seule fois, en tête');
+  assert.match(pdf, /\/Count 1 /);
+  // Lettre longue : deuxième page.
+  const long = ctx.__pdf({ text: text.replace('Madame, Monsieur,', 'Madame, Monsieur,\n\n' + 'Une phrase de plus. '.repeat(330)), infos });
+  assert.match(long, /\/Count 2 /);
+  assert.strictEqual(ctx.__name(infos, 'Carrefour'), 'Lettre_motivation_CARTIER_GAZARD_Ryan_Carrefour.pdf');
+  assert.strictEqual(ctx.__name({}, 'L’Oréal'), 'Lettre_motivation_L_Oreal.pdf');
+  assert.deepStrictEqual(['Bondy 93140', '12 rue X, 93140 Bondy', 'Bondy (93)', '12 rue X'].map(a => ctx.__city(a)), ['Bondy', 'Bondy', 'Bondy', '']);
+});
+
 test('synchro : un appareil neuf ne remplace jamais le profil du gist', () => {
   const src = read('pilot.js');
   const a = src.indexOf('function applySync'), b = src.indexOf('function applySyncCache');
@@ -233,7 +273,7 @@ test('nom « CARTIER GAZARD » : une seule fois, et seulement si le nom était �
 });
 
 test('aucun caractère de contrôle dans les fichiers du site', () => {
-  for (const f of ['app.js', 'pilot.js', 'profiles.js', 'ui.js', 'compose.js', 'letters.js', 'sw.js', 'index.html']) {
+  for (const f of ['app.js', 'pilot.js', 'profiles.js', 'ui.js', 'compose.js', 'letters.js', 'letterpdf.js', 'lettre.js', 'sw.js', 'index.html']) {
     assert.ok(!/[\x00-\x08\x0b\x0c\x0e-\x1f]/.test(read(f)), f);
   }
 });

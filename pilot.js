@@ -864,6 +864,7 @@ function drawPilot() {
     <div class="pilot-actions">
       <button data-act="go"><kbd>Entrée</kbd> Ouvrir l’annonce + copier la lettre</button>
       <button class="secondary" data-act="open" ${o.url ? '' : 'disabled title="Pas de lien pour cette offre"'}><kbd>O</kbd> Ouvrir l’annonce</button>
+      <button class="secondary" data-act="pdf" title="Pour les annonces qui demandent la lettre en fichier"><kbd>P</kbd> <svg class="ic" aria-hidden="true"><use href="#i-download"/></svg>Lettre en PDF</button>
       <button class="ok" data-act="sent"><kbd>Espace</kbd> Candidature envoyée</button>
       <button class="ghost" data-act="skip"><kbd>→</kbd> Plus tard</button>
       <button class="ghost" data-act="ignore"><kbd>X</kbd> <svg class="ic" aria-hidden="true"><use href="#i-trash"/></svg>Supprimer</button>
@@ -1041,6 +1042,13 @@ function pilotAct(action) {
   const o = currentOffer();
   if (!o) return;
   if (action === 'open') { if (o.url) window.open(o.url, '_blank', 'noopener'); return; }
+  // Lettre affichée (modifications comprises) en fichier PDF ; pas pour un message de relance.
+  if (action === 'pdf') {
+    if (isRelanceOpen()) return;
+    if (typeof downloadLetterPdf !== 'function') { toast('Recharge la page pour télécharger la lettre en PDF'); return; }
+    downloadLetterPdf(letterText(), o);
+    return;
+  }
   if (action === 'go') {
     copyText(letterText(), 'Lettre');
     if (o.url) window.open(o.url, '_blank', 'noopener');
@@ -1070,7 +1078,7 @@ function pilotKey(e) {
   const k = e.key.toLowerCase();
   const map = pilot.mode === 'triage'
     ? { a: 'apply', x: 'ignore', o: 'open', arrowright: 'skip', arrowleft: 'undo' }
-    : { enter: 'go', ' ': isRelanceOpen() ? 'relanced' : 'sent', o: 'open', x: 'ignore', arrowright: 'skip', arrowleft: 'undo' };
+    : { enter: 'go', ' ': isRelanceOpen() ? 'relanced' : 'sent', o: 'open', p: 'pdf', x: 'ignore', arrowright: 'skip', arrowleft: 'undo' };
   if (map[k]) { e.preventDefault(); pilotAct(map[k]); }
 }
 
