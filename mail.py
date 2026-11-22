@@ -188,6 +188,26 @@ NOISE_DOMAINS = (
     "michaelpage.fr", "distrijob.fr", "jobtransport.com", "jobleads.com", "jobs2web.com",
 )
 
+# Confirmation d'Indeed après une candidature faite sur Indeed (« Candidature envoyée »,
+# « Les éléments suivants ont été envoyés à… », « Merci de votre candidature, elle est arrivée ») :
+# un accusé de réception, et non du bruit comme ses alertes d'offres. Lue dans l'objet ou le début du texte.
+INDEED_DOMAINS = ("indeed.com", "indeedemail.com")
+INDEED_SENT = [
+    r"\bcandidature (indeed|envoyee)\b",
+    r"\bindeed (application|candidature)\b",
+    r"\bapplication (submitted|sent)\b|\byour application (was|has been) (sent|submitted)\b",
+    r"\belements suivants ont ete (envoyes|transmis)\b|\bitems were sent to\b",
+    r"\bcandidature (a|est) (bien )?(ete )?(envoyee|transmise|arrivee|recue)\b",
+    r"\bmerci (pour|de) (votre|ta) candidature\b|\bmerci d avoir postule\b|\bthank(s| you) for applying\b",
+]
+# Rappels, suivis et suggestions d'Indeed (dans l'objet) : pas une nouvelle candidature.
+INDEED_NOT_SENT = re.compile(
+    r"\bn oubliez pas\b|\bavez vous postule\b|\b(finalis|termin|complet)\w* (votre|ta) candidature\b|\bconsult"
+    r"|\bmise a jour\b|\brappel\b|\bsimilaires?\b|\bpostulez\b|\bnouvelles? offres?\b|\bvos candidatures\b"
+    r"|\bstatut\b|\bviewed\b|\bdon t forget\b|\bsimilar\b|\breminder\b")
+# Confirmations d'Indeed rangées en bruit avant que le tri sache les lire (option « reclasser »).
+INDEED_QUERY = "from:(indeed.com OR indeedemail.com) newer_than:60d"
+
 # Plateformes de recrutement : leurs e-mails concernent une candidature.
 ATS_DOMAINS = (
     "smartrecruiters.com", "teamtailor.com", "teamtailor-mail.com", "lever.co", "greenhouse.io",
@@ -295,7 +315,13 @@ def classify(mail, applications):
     mail["related"] = bool(re.search(CANDIDATURE, text)) or domain_in(domain, ATS_DOMAINS)
 
     kind = detect_kind(mail["subject"], mail["body"][:6000])
-    app, ambiguous = match_application(mail, applications)
+    # Confirmation d'Indeed : un accusé, rapproché seulement par le poste et l'entreprise qu'elle cite
+    # (son texte propose aussi d'autres offres, qui ne doivent pas servir au rapprochement).
+    if kind not in ("refus", "entretien") and indeed_confirmation(mail):
+        kind = "accuse"
+        app, ambiguous = indeed_match(mail, applications), False
+    else:
+        app, ambiguous = match_application(mail, applications)
     ats = domain_in(domain, ATS_DOMAINS)
 
     # Envoi de masse d'un site d'emploi ou d'une enseigne (alertes, publicités, conseils).
@@ -347,6 +373,8 @@ def application_from_mail(mail):
     body = " ".join(mail["body"][:6000].split())
     if NOT_SENT.search(subject):
         return None
+    if domain_in(domain, INDEED_DOMAINS):
+        return indeed_application(mail)
     if domain_in(domain, ("meteojob.com",)):
         m = re.search(r"envoy[ée]e [àa] (.+?) pour le poste de [\"«]\s*(.+?)\s*[\"»]", subject)
         return (m.group(2), m.group(1), "Meteojob") if m else None
@@ -479,6 +507,64 @@ def generic_application(mail, subject, body):
     return title or UNKNOWN_TITLE, company, GENERIC_SITE
 
 
+# Indeed : « Candidature envoyée », le poste, « Entreprise - Ville », puis « Les éléments suivants
+# ont été envoyés à Entreprise. » ; l'objet peut citer le poste (« Indeed Application: Magasinier »).
+INDEED_HEAD = re.compile(r"(?i)\W*(?:candidature envoy[ée]e|application submitted|"
+                         r"votre candidature a (?:bien )?été envoyée)\W*")
+INDEED_SUBJECT = re.compile(r"(?i)^(?:indeed\s+(?:application|candidature)|candidature\s+(?:indeed|envoy[ée]e))"
+                            r"\s*:\s*(?P<t>.+)$")
+INDEED_SENT_TO = re.compile(r"(?i)(?:ont été (?:envoyés|transmis) à|were sent to)\s+(?P<c>.{2,80}?)\s*[.!](?:\s|$)")
+VIA_INDEED = re.compile(r"(?i)^(?P<c>.+?)\s+via\s+Indeed\b")  # employeur qui écrit par la messagerie d'Indeed
+
+
+def indeed_confirmation(mail):
+    """E-mail d'Indeed qui confirme l'envoi d'une candidature (ni alerte, ni rappel, ni suivi)."""
+    if not domain_in(domain_of(mail["from_addr"]), INDEED_DOMAINS):
+        return False
+    subject = norm(mail["subject"])
+    if INDEED_NOT_SENT.search(subject) or NOT_SENT.search(mail["subject"]):
+        return False
+    return has(INDEED_SENT, subject + " . " + norm(mail["body"][:1500]))
+
+
+def indeed_application(mail):
+    """(poste, entreprise, « Indeed ») d'une confirmation d'Indeed, avec repli sur la lecture générale."""
+    subject = " ".join(mail["subject"].split())
+    lines = [" ".join(line.split()) for line in mail["body"][:6000].splitlines() if line.strip()]
+    title = company = ""
+    m = INDEED_SUBJECT.search(subject)
+    if m:
+        title = m.group("t")
+    for i, line in enumerate(lines[:40]):
+        if INDEED_HEAD.fullmatch(line):
+            nxt = lines[i + 1:i + 3]
+            title = title or (nxt[0] if nxt else "")
+            if len(nxt) > 1 and re.search(r"\s[-–]\s", nxt[1]):
+                company = re.split(r"\s[-–]\s", nxt[1])[0]
+            break
+    if TITLE_BAD.search(_clean(title)):  # une phrase (« Votre candidature… »), pas un intitulé
+        title = ""
+    m = INDEED_SENT_TO.search(" ".join(lines))
+    company = m.group("c") if m else company
+    m = VIA_INDEED.search(mail.get("from_name") or "")
+    company = company or (m.group("c") if m else "")
+    if not title or not company:
+        g_title, g_company, _ = generic_application(mail, subject, " ".join(lines))
+        title = title or ("" if g_title == UNKNOWN_TITLE else g_title)
+        if not company and norm(g_company) not in ("indeed", norm(PLACEHOLDER_COMPANY)):
+            company = g_company
+    company = _clean(company, 60)
+    if company:  # « Indeed Application: Magasinier - Carrefour » : l'entreprise n'est pas dans le poste
+        title = re.sub(r"\s[-–]\s" + re.escape(company) + r"$", "", title, flags=re.I)
+    return _clean(title) or UNKNOWN_TITLE, company or PLACEHOLDER_COMPANY, "Indeed"
+
+
+def indeed_match(mail, applications):
+    """Candidature suivie dont la confirmation d'Indeed cite le poste et l'entreprise."""
+    title, company, _ = indeed_application(mail)
+    return next((a for a in applications if same_offer(a.get("company"), a.get("title"), company, title)), None)
+
+
 def load_offers():
     try:
         with open(OFFERS_FILE, encoding="utf-8") as f:
@@ -509,8 +595,10 @@ def add_outside_application(entries, offers, mail, title, company, site, now_ms)
     for entry in entries.values():
         if same_offer(entry.get("company"), entry.get("title"), company, title):
             return None
-        # Même e-mail relu, ou rappel du même expéditeur avec le même objet.
-        if entry.get("mailSubject") == mail["subject"][:140] and entry.get("mailFrom") == mail["from_name"][:80]:
+        # Même e-mail relu, ou rappel du même expéditeur avec le même objet. Indeed peut garder le
+        # même objet pour toutes ses confirmations : seul le même e-mail compte alors.
+        if entry.get("mailSubject") == mail["subject"][:140] and entry.get("mailFrom") == mail["from_name"][:80] \
+                and (site != "Indeed" or entry.get("mailAt") == mail["at"]):
             return None
     applied = time.strftime("%Y-%m-%d", time.localtime(mail["at"] / 1000))
     offer = next((o for o in offers if same_offer(o.get("company"), o.get("title"), company, title)), None)
@@ -524,6 +612,8 @@ def add_outside_application(entries, offers, mail, title, company, site, now_ms)
             "title": title, "company": company, "location": "", "contract": "À vérifier",
             "date": "", "url": "", "created": applied,
             "notes": (f"Candidature faite sur {site}, ajoutée au suivi depuis l'accusé de réception."
+                      + (" Poste ou entreprise à vérifier."
+                         if title == UNKNOWN_TITLE or company == PLACEHOLDER_COMPANY else "")
                       if site != GENERIC_SITE else
                       f"Ajoutée automatiquement depuis l'accusé de réception « {mail['subject'][:100]} » "
                       f"({mail['from_name'][:60]}). Poste et entreprise lus dans l'e-mail : à vérifier."),
@@ -835,14 +925,18 @@ def mail_row(mail, d, label=None):
 
 
 def reclassify(gmail, gist_id, applications, essai):
-    """Repasse les e-mails déjà libellés (hors bruit) avec les règles actuelles :
-    corrige leur libellé et rend son statut à une candidature passée à tort en Refus ou Entretien.
-    Les accusés ne sont relus que pour réparer le statut : un libellé posé à la main n'est pas modifié."""
+    """Repasse les e-mails déjà libellés (hors bruit, sauf les e-mails d'Indeed des 60 derniers jours)
+    avec les règles actuelles : corrige leur libellé et rend son statut à une candidature passée à tort
+    en Refus ou Entretien. Les accusés ne sont relus que pour réparer le statut : un libellé posé à la
+    main n'est pas modifié."""
     labels = gmail.label_ids(sorted(LABELS.values()))
     found = {}
     for key in ("refus", "entretien", "action", "verifier", "accuse"):
         for message_id in gmail.message_ids(label_id=labels[LABELS[key]]):
             found.setdefault(message_id, key)
+    # Confirmations de candidature d'Indeed rangées en bruit avant que le tri sache les lire.
+    for message_id in gmail.message_ids(INDEED_QUERY, label_id=labels[LABELS["bruit"]]):
+        found.setdefault(message_id, "bruit")
     print(f"Reclassement : {len(found)} e-mail(s) déjà libellé(s) à revoir.")
 
     checked, changes = [], []
@@ -906,13 +1000,15 @@ def reclassify(gmail, gist_id, applications, essai):
     if confirmed:
         print(f"{confirmed} offre(s) « À postuler » passée(s) en « Candidature envoyée ».")
 
-    # Candidatures faites directement sur HelloWork ou Meteojob, avant que le suivi sache les lire.
+    # Candidatures faites directement sur un site d'emploi (HelloWork, Meteojob, Indeed…),
+    # avant que le suivi sache les lire.
     added, offers = 0, None
     for mail, d in sorted(checked, key=lambda c: c[0]["at"]):
-        found = application_from_mail(mail) if not d["app"] and d["kind"] == "accuse" else None
-        if found:
+        # « parsed » et non « found » : found (e-mails relus et leur ancien libellé) sert encore plus bas.
+        parsed = application_from_mail(mail) if not d["app"] and d["kind"] == "accuse" else None
+        if parsed:
             offers = load_offers() if offers is None else offers
-            if add_outside_application(entries, offers, mail, *found, now_ms):
+            if add_outside_application(entries, offers, mail, *parsed, now_ms):
                 added += 1
                 changed = True
     if added:
