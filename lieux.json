@@ -147,6 +147,15 @@
   "min": 59,
   "minAt": "2026-11-22"
  },
+ "boissy-saint-léger||94": {
+  "dept": "94",
+  "km": 17.1,
+  "label": "Boissy-Saint-Léger",
+  "lat": 48.75128,
+  "lon": 2.52001,
+  "min": 93,
+  "minAt": "2026-11-22"
+ },
  "bondy||93": {
   "dept": "93",
   "km": 0.0,
@@ -190,15 +199,6 @@
   "lon": 2.71534,
   "min": 74,
   "minAt": "2026-11-12"
- },
- "cachan||94": {
-  "dept": "94",
-  "km": 16.8,
-  "label": "Cachan",
-  "lat": 48.79135,
-  "lon": 2.33152,
-  "min": 79,
-  "minAt": "2026-11-22"
  },
  "champigny-sur-marne||94": {
   "dept": "94",
@@ -383,15 +383,6 @@
   "min": 44,
   "minAt": "2026-11-21"
  },
- "coupvray|77700|77": {
-  "dept": "77",
-  "km": 22.7,
-  "label": "Coupvray",
-  "lat": 48.8942,
-  "lon": 2.79504,
-  "min": 108,
-  "minAt": "2026-11-22"
- },
  "courbevoie|92400|92": {
   "dept": "92",
   "km": 16.7,
@@ -452,15 +443,6 @@
   "lon": 2.37457,
   "min": 79,
   "minAt": "2026-11-18"
- },
- "enghien-les-bains||95": {
-  "dept": "95",
-  "km": 15.1,
-  "label": "Enghien-les-Bains",
-  "lat": 48.97097,
-  "lon": 2.30536,
-  "min": 65,
-  "minAt": "2026-11-22"
  },
  "epinay-sur-seine||93": {
   "dept": "93",
@@ -635,15 +617,6 @@
   "lon": 2.38643,
   "min": 77,
   "minAt": "2026-11-16"
- },
- "joinville-le-pont||94": {
-  "dept": "94",
-  "km": 9.3,
-  "label": "Joinville-le-Pont",
-  "lat": 48.82033,
-  "lon": 2.47193,
-  "min": 65,
-  "minAt": "2026-11-22"
  },
  "l'haÿ-les-roses||94": {
   "dept": "94",
@@ -1018,13 +991,13 @@
   "min": 47,
   "minAt": "2026-11-22"
  },
- "montmagny||95": {
+ "montigny-lès-cormeilles||95": {
   "dept": "95",
-  "km": 12.4,
-  "label": "Montmagny",
-  "lat": 48.96767,
-  "lon": 2.34704,
-  "min": 80,
+  "km": 23.5,
+  "label": "Montigny-lès-Cormeilles",
+  "lat": 48.99333,
+  "lon": 2.19375,
+  "min": 93,
   "minAt": "2026-11-22"
  },
  "montmorency||95": {
@@ -1080,15 +1053,6 @@
   "minAt": "2026-11-12"
  },
  "morigny-champigny||94": {},
- "moussy-le-neuf|77230|77": {
-  "dept": "77",
-  "km": 19.9,
-  "label": "Moussy-le-Neuf",
-  "lat": 49.06532,
-  "lon": 2.60222,
-  "min": 99,
-  "minAt": "2026-11-22"
- },
  "nanterre|92000|92": {
   "km": 20.7,
   "label": "Nanterre",
@@ -1149,15 +1113,6 @@
   "lon": 2.26587,
   "min": 60,
   "minAt": "2026-11-12"
- },
- "nogent-sur-marne||94": {
-  "dept": "94",
-  "km": 7.4,
-  "label": "Nogent-sur-Marne",
-  "lat": 48.83747,
-  "lon": 2.48091,
-  "min": 58,
-  "minAt": "2026-11-22"
  },
  "noisiel||77": {
   "dept": "77",
@@ -1354,15 +1309,6 @@
   "min": 58,
   "minAt": "2026-11-15"
  },
- "paris 5e arrondissement|75005|75": {
-  "dept": "75",
-  "km": 11.8,
-  "label": "Paris 5e Arrondissement",
-  "lat": 48.84528,
-  "lon": 2.35055,
-  "min": 60,
-  "minAt": "2026-11-16"
- },
  "paris 6e arrondissement|75006|75": {
   "dept": "75",
   "km": 12.8,
@@ -1433,7 +1379,6 @@
   "min": 60,
   "minAt": "2026-11-12"
  },
- "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
@@ -1580,6 +1525,15 @@
   "lon": 2.25369,
   "min": 80,
   "minAt": "2026-11-14"
+ },
+ "santeny|94440|94": {
+  "dept": "94",
+  "km": 20.8,
+  "label": "Santeny",
+  "lat": 48.72565,
+  "lon": 2.57267,
+  "min": 115,
+  "minAt": "2026-11-22"
  },
  "sarcelles||95": {
   "dept": "95",
@@ -1792,6 +1746,15 @@
   "min": 61,
   "minAt": "2026-11-14"
  },
+ "villiers-sur-marne||94": {
+  "dept": "94",
+  "km": 9.6,
+  "label": "Villiers-sur-Marne",
+  "lat": 48.82784,
+  "lon": 2.5492,
+  "min": 55,
+  "minAt": "2026-11-22"
+ },
  "villiers-sur-marne||IDF": {
   "dept": "94",
   "km": 9.6,
@@ -1862,14 +1825,5 @@
   "lon": 2.61157,
   "min": 76,
   "minAt": "2026-11-21"
- },
- "épinay-sur-seine||93": {
-  "dept": "93",
-  "km": 13.6,
-  "label": "Épinay-sur-Seine",
-  "lat": 48.95527,
-  "lon": 2.31691,
-  "min": 67,
-  "minAt": "2026-11-22"
  }
 }
