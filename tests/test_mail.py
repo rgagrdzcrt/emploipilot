@@ -93,6 +93,65 @@ class Confirmations(unittest.TestCase):
                                  "bruit")
 
 
+class FormatsReels(unittest.TestCase):
+    """Cas reçus le 22/11/2026."""
+
+    def test_objet_candidatures_via_indeed(self):
+        m = message("Candidatures via Indeed : Stockiste H/F", "Bonjour Ryan,\nMerci d'avoir postulé.",
+                    sender="Indeed Apply <indeedapply@indeed.com>")
+        self.assertEqual(mail.classify(m, [])["label"], "accuse")
+        self.assertEqual(mail.application_from_mail(m), ("Stockiste H/F", mail.PLACEHOLDER_COMPANY, "Indeed"))
+        # Fiche de l'offre dans le texte : l'intitulé puis « Entreprise - Ville ».
+        m["body"] = "Votre candidature a été transmise.\nStockiste H/F\nSephora - Rosny-sous-Bois (93)\n"
+        self.assertEqual(mail.application_from_mail(m), ("Stockiste H/F", "Sephora", "Indeed"))
+
+    def test_trois_fiches_incompletes_ne_s_ecrasent_pas(self):
+        entries = {}
+        for i, title in enumerate(("Stockiste H/F", "Gestionnaire de parc/Stock H/F", "Gestionnaire de stocks")):
+            m = message("Candidatures via Indeed : " + title, "Merci d'avoir postulé.", at=AT + i,
+                        sender="Indeed Apply <indeedapply@indeed.com>", mid=str(i))
+            mail.add_outside_application(entries, [], m, *mail.application_from_mail(m), AT)
+        self.assertEqual(len(entries), 3)
+        # Même sans poste ni entreprise lisibles, deux e-mails différents donnent deux fiches.
+        for i in (10, 11):
+            m = message(f"Votre candidature n°{i}", "Merci.", at=AT + i, sender="Recrutement <rh@exemple.fr>", mid=str(i))
+            mail.add_outside_application(entries, [], m, mail.UNKNOWN_TITLE, mail.PLACEHOLDER_COMPANY, "e-mail", AT)
+        self.assertEqual(len(entries), 5)
+
+    def test_fiche_a_preciser_completee_quand_l_e_mail_est_relu(self):
+        m = message("Candidatures via Indeed : Stockiste H/F", "Merci d'avoir postulé.",
+                    sender="Indeed Apply <indeedapply@indeed.com>")
+        entries = {"old": {"id": "old", "title": mail.UNKNOWN_TITLE, "company": mail.PLACEHOLDER_COMPANY,
+                           "status": "Candidature envoyée", "via": "Indeed", "mailAt": AT,
+                           "mailSubject": m["subject"], "mailFrom": m["from_name"]}}
+        mail.add_outside_application(entries, [], m, *mail.application_from_mail(m), AT)
+        self.assertEqual([(e["id"], e["title"]) for e in entries.values()], [("old", "Stockiste H/F")])
+
+    def test_hellowork_rapproche_par_l_objet_et_non_par_les_offres_proposees(self):
+        crit = tracked("Crit", "Chef d'équipe logistique (H/F)")
+        m = message("Votre candidature est arrivée chez Staffizy",
+                    "Votre candidature « Agent de stock H/F » pour l'entreprise Staffizy.\n"
+                    "Offres similaires : Chef d'équipe logistique (H/F) - Crit - Bobigny",
+                    sender="Hellowork Candidature <candidature@hellowork.com>")
+        d = mail.classify(m, [crit])
+        self.assertEqual((d["label"], d["app"]), ("accuse", None))
+        self.assertEqual(mail.application_from_mail(m), ("Agent de stock H/F", "Staffizy", "HelloWork"))
+
+
+    def test_fiche_emploi_n_attire_plus_les_autres_e_mails(self):
+        emploi = tracked("Emploi", mail.UNKNOWN_TITLE)
+        m = message("Votre candidature spontanée au sein du Conseil Départemental de la Seine-Saint-Denis",
+                    "Nous avons bien reçu votre candidature. Direction de l'emploi et des carrières.",
+                    sender="CD 93 <recrutement@seinesaintdenis.fr>")
+        self.assertIsNone(mail.classify(m, [emploi])["app"])
+
+    def test_questionnaire_de_satisfaction_range_en_bruit(self):
+        m = message("Combien d'étoiles donnez-vous à emploi-collectivites.fr ? ? ?",
+                    "Vous avez postulé récemment : donnez-nous votre avis.",
+                    sender="Emploi-Collectivites.fr <contact@emploi-collectivites.fr>")
+        self.assertEqual(mail.classify(m, [])["label"], "bruit")
+
+
 class AjoutAuSuivi(unittest.TestCase):
     def test_deux_confirmations_au_meme_objet_donnent_deux_candidatures(self):
         entries = {}
@@ -118,13 +177,16 @@ def raw(m):
 
 
 class FakeGmail:
-    def __init__(self, messages):
+    def __init__(self, messages, by_label=None):
         self.messages, self.modified = {m["id"]: raw(m) for m in messages}, []
+        self.by_label = by_label  # libellé → identifiants ; sinon tout vient de la recherche Indeed
 
     def label_ids(self, names):
         return {n: "Label_" + n.rpartition("/")[2] for n in names}
 
     def message_ids(self, query=None, label_id=None):
+        if self.by_label is not None:
+            return [] if query else self.by_label.get(label_id, [])
         return list(self.messages) if query == mail.INDEED_QUERY else []
 
     def message(self, message_id):
@@ -137,25 +199,44 @@ class FakeGmail:
         return {"emailAddress": "test@example.com"}
 
 
+def run_reclassify(gmail, entries=None):
+    """Reclassement complet sur un faux Gmail ; renvoie les fichiers écrits dans le gist."""
+    saved, state = [], {"entries": entries or {}}
+    originals = mail.read_gist, mail.gist_call, mail.load_offers
+    mail.read_gist = lambda gist_id: (state, {"mails": [], "account": "test@example.com"})
+    mail.gist_call = lambda path, body=None: saved.append(body)
+    mail.load_offers = lambda: []
+    try:
+        with contextlib.redirect_stdout(io.StringIO()):
+            mail.reclassify(gmail, "gist", mail.applications_of(state), essai=False)
+    finally:
+        mail.read_gist, mail.gist_call, mail.load_offers = originals
+    return saved[-1]["files"]
+
+
 class Reclassement(unittest.TestCase):
+    def test_e_mail_mal_rattache_detache_de_la_candidature(self):
+        # « Finalisez… Pradagroup » avait été posé sur Michael Page, cité dans les offres proposées.
+        finalise = message("Finalisez votre candidature sur le site de Pradagroup",
+                           "Pour finaliser votre candidature, rendez-vous sur le site de Pradagroup.\n"
+                           "Offres similaires : Agent logistique aéronautique H/F - Michael Page - Roissy",
+                           sender="Hellowork Candidature <candidature@hellowork.com>", mid="p")
+        entries = {"mp": {"id": "mp", "company": "Michael Page", "title": "Agent logistique aéronautique H/F",
+                          "status": "À relancer", "appliedDate": "2026-11-13", "mailKind": "action", "mailAt": AT,
+                          "mailSubject": finalise["subject"], "mailFrom": finalise["from_name"]}}
+        files = run_reclassify(FakeGmail([finalise], by_label={"Label_À faire": ["p"]}), entries)
+        mp = json.loads(files[mail.SYNC_FILE]["content"])["entries"]["mp"]
+        self.assertEqual(mp["status"], "À relancer")
+        self.assertNotIn("mailKind", mp)
+
     def test_confirmations_indeed_rangees_en_bruit_rattrapees(self):
         gmail = FakeGmail([message("Votre candidature a été envoyée", INDEED_FR, mid="a"),
                            message("Nouvelles offres : magasinier", "Magasinier H/F", mid="b",
                                    sender="Indeed <alert@indeed.com>")])
-        saved = []
-        originals = mail.read_gist, mail.gist_call, mail.load_offers
-        mail.read_gist = lambda gist_id: ({"entries": {}}, {"mails": [], "account": "test@example.com"})
-        mail.gist_call = lambda path, body=None: saved.append(body)
-        mail.load_offers = lambda: []
-        try:
-            with contextlib.redirect_stdout(io.StringIO()):
-                mail.reclassify(gmail, "gist", [], essai=False)
-        finally:
-            mail.read_gist, mail.gist_call, mail.load_offers = originals
+        files = run_reclassify(gmail)
         # Seule la confirmation change de libellé (Bruit → Accusé), l'alerte reste du bruit.
         self.assertEqual(gmail.modified, [("a", ["Label_Accusé"], ["Label_Bruit"])])
-        files = saved[-1]["files"]
-        entries = json.loads(files[mail.SYNC_FILE]["content"])["entries"]
+        entries =json.loads(files[mail.SYNC_FILE]["content"])["entries"]
         self.assertEqual([(e["company"], e["title"], e["via"]) for e in entries.values()],
                          [("Amazon", "Préparateur de commandes H/F", "Indeed")])
         rows = json.loads(files[mail.MAIL_FILE]["content"])["mails"]

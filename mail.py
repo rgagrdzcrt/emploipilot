@@ -170,6 +170,12 @@ INSCRIPTION = [
     r"\bbienvenue (sur|dans l espace)",
 ]
 
+# Questionnaires de satisfaction d'un site (« Combien d'étoiles donnez-vous à… ») : ni accusé, ni candidature.
+AVIS = [
+    r"\bcombien d etoiles\b", r"\bdonnez (nous )?votre avis\b", r"\bvotre avis (compte|nous interesse)\b",
+    r"\benquete de satisfaction\b", r"\bnotez (votre|nous|notre)\b", r"\bevaluez (votre|nous|notre)\b",
+]
+
 # E-mail qui parle d'une candidature (sert à écarter les correspondances fortuites dans le texte).
 CANDIDATURE = r"\bcandidat|\bpostul|\brecrut|\bentretien\b|\bcv\b|\bposte\b|\boffre d emploi\b|\bembauche\b"
 
@@ -193,7 +199,7 @@ NOISE_DOMAINS = (
 # un accusé de réception, et non du bruit comme ses alertes d'offres. Lue dans l'objet ou le début du texte.
 INDEED_DOMAINS = ("indeed.com", "indeedemail.com")
 INDEED_SENT = [
-    r"\bcandidature (indeed|envoyee)\b",
+    r"\bcandidature (indeed|envoyee)\b|\bcandidatures? via indeed\b",
     r"\bindeed (application|candidature)\b",
     r"\bapplication (submitted|sent)\b|\byour application (was|has been) (sent|submitted)\b",
     r"\belements suivants ont ete (envoyes|transmis)\b|\bitems were sent to\b",
@@ -223,6 +229,8 @@ STOP_WORDS = {
     "sas", "sasu", "sa", "sarl", "eurl", "snc", "sca", "scs", "groupe", "group", "france", "fr",
     "magasin", "hypermarche", "supermarche", "le", "la", "les", "l", "de", "des", "du", "d", "et",
     "the", "and", "inc", "ltd", "gmbh", "co", "cie", "societe", "ste", "entreprise", "recrutement",
+    # Mots de sites d'emploi : une fiche « Emploi » attirait tout e-mail citant le mot (Direct Emploi, CD 93…).
+    "emploi", "emplois", "job", "jobs",
 }
 
 TITLE_STOP = {"h", "f", "hf", "cdi", "cdd", "temps", "plein", "partiel", "interim", "poste", "employe",
@@ -279,6 +287,10 @@ def match_application(mail, applications):
     subject = norm(mail["subject"])
     body = norm(mail["body"][:4000])
     related = mail["related"]
+    # Site d'emploi (HelloWork, Jooble…) : son texte propose d'autres offres, souvent d'entreprises déjà
+    # suivies (« arrivée chez Staffizy » rattachée à Crit) ; seuls l'objet et l'expéditeur désignent l'entreprise.
+    if domain_in(domain, NOISE_DOMAINS) and not domain.startswith("reply."):
+        body = ""
 
     scored = []
     for app in applications:
@@ -335,7 +347,7 @@ def classify(mail, applications):
     )
 
     bruit = {"kind": "bruit", "label": "bruit", "app": None}
-    if kind == "inscription":
+    if kind == "inscription" or has(AVIS, norm(mail["subject"])):
         return bruit
 
     if app:
@@ -511,7 +523,8 @@ def generic_application(mail, subject, body):
 # ont été envoyés à Entreprise. » ; l'objet peut citer le poste (« Indeed Application: Magasinier »).
 INDEED_HEAD = re.compile(r"(?i)\W*(?:candidature envoy[ée]e|application submitted|"
                          r"votre candidature a (?:bien )?été envoyée)\W*")
-INDEED_SUBJECT = re.compile(r"(?i)^(?:indeed\s+(?:application|candidature)|candidature\s+(?:indeed|envoy[ée]e))"
+# Objet réel d'Indeed en 2026 : « Candidatures via Indeed : Stockiste H/F ».
+INDEED_SUBJECT = re.compile(r"(?i)^(?:indeed\s+(?:application|candidature)|candidatures?\s+(?:indeed|envoy[ée]e|via\s+indeed))"
                             r"\s*:\s*(?P<t>.+)$")
 INDEED_SENT_TO = re.compile(r"(?i)(?:ont été (?:envoyés|transmis) à|were sent to)\s+(?P<c>.{2,80}?)\s*[.!](?:\s|$)")
 VIA_INDEED = re.compile(r"(?i)^(?P<c>.+?)\s+via\s+Indeed\b")  # employeur qui écrit par la messagerie d'Indeed
@@ -544,6 +557,11 @@ def indeed_application(mail):
             break
     if TITLE_BAD.search(_clean(title)):  # une phrase (« Votre candidature… »), pas un intitulé
         title = ""
+    if title and not company:  # fiche de l'offre dans le texte : l'intitulé, puis « Entreprise - Ville »
+        for i, line in enumerate(lines[:60]):
+            if norm(line) == norm(title) and i + 1 < len(lines) and re.search(r"\s[-–]\s", lines[i + 1]):
+                company = re.split(r"\s[-–]\s", lines[i + 1])[0]
+                break
     m = INDEED_SENT_TO.search(" ".join(lines))
     company = m.group("c") if m else company
     m = VIA_INDEED.search(mail.get("from_name") or "")
@@ -599,6 +617,13 @@ def add_outside_application(entries, offers, mail, title, company, site, now_ms)
         # même objet pour toutes ses confirmations : seul le même e-mail compte alors.
         if entry.get("mailSubject") == mail["subject"][:140] and entry.get("mailFrom") == mail["from_name"][:80] \
                 and (site != "Indeed" or entry.get("mailAt") == mail["at"]):
+            # Le même e-mail relu après une amélioration de la lecture complète une fiche « à préciser ».
+            better = {k: v for k, v, unknown in (("title", title, UNKNOWN_TITLE), ("company", company, PLACEHOLDER_COMPANY))
+                      if entry.get(k) == unknown and v != unknown}
+            if better and entry.get("mailAt") == mail["at"]:
+                entry.update(better)
+                entry["trackedAt"] = max(now_ms, (entry.get("trackedAt") or 0) + 1)
+                return entry
             return None
     applied = time.strftime("%Y-%m-%d", time.localtime(mail["at"] / 1000))
     offer = next((o for o in offers if same_offer(o.get("company"), o.get("title"), company, title)), None)
@@ -606,9 +631,11 @@ def add_outside_application(entries, offers, mail, title, company, site, now_ms)
         # L'offre est déjà sur le site (collecte ou alerte) : elle passe simplement en « envoyée ».
         entry = {**offer}
     else:
-        key = norm(company + " " + title)
+        slug = re.sub(r"[^a-z0-9]+", "-", norm(company + " " + title))[:60]
+        if title == UNKNOWN_TITLE or company == PLACEHOLDER_COMPANY:
+            slug += "-" + str(mail["at"])  # fiche incomplète : une par e-mail, jamais écrasée par la suivante
         entry = {
-            "id": "mail_" + re.sub(r"[^a-z0-9]+", "-", key)[:60],
+            "id": "mail_" + slug,
             "title": title, "company": company, "location": "", "contract": "À vérifier",
             "date": "", "url": "", "created": applied,
             "notes": (f"Candidature faite sur {site}, ajoutée au suivi depuis l'accusé de réception."
@@ -971,18 +998,24 @@ def reclassify(gmail, gist_id, applications, essai):
     state, mail_state = read_gist(gist_id)
     entries = state.get("entries") or {}
     now_ms = int(time.time() * 1000)
-    restored, changed = 0, False
+    restored, detached, changed = 0, 0, False
     wrong_status = {"refus": "Refus", "entretien": "Entretien"}
     for mail, d in checked:
         for entry in entries.values():
             old = entry.get("mailKind")
-            if entry.get("mailAt") != mail["at"] or not old or old == d["kind"]:
+            if entry.get("mailAt") != mail["at"] or not old:
+                continue
+            # E-mail désormais rattaché à une autre candidature, ou à aucune : il quitte celle-ci
+            # (« Finalisez… Pradagroup » posé sur Michael Page). Une fiche créée depuis cet e-mail le garde.
+            moved = not entry.get("via") and (not d["app"] or d["app"].get("id") != entry.get("id"))
+            if old == d["kind"] and not moved:
                 continue
             if old in wrong_status and entry.get("status") == wrong_status[old] \
-                    and d["kind"] not in wrong_status:
+                    and (moved or d["kind"] not in wrong_status):
                 entry["status"] = "Candidature envoyée"
                 restored += 1
-            if d["label"] and d["label"] not in ("bruit", "verifier"):
+            detached += moved
+            if d["label"] and d["label"] not in ("bruit", "verifier") and not moved:
                 entry["mailKind"] = d["kind"]
             else:
                 for k in ("mailKind", "mailAt", "mailDate", "mailSubject", "mailFrom"):
@@ -1035,7 +1068,8 @@ def reclassify(gmail, gist_id, applications, essai):
         state["updatedAt"] = now_ms
         files[SYNC_FILE] = {"content": json.dumps(state, ensure_ascii=False)}
     gist_call("/gists/" + gist_id, {"files": files})
-    print(f"{len(changes)} libellé(s) corrigé(s), {restored} candidature(s) remise(s) en « Candidature envoyée ».")
+    print(f"{len(changes)} libellé(s) corrigé(s), {restored} candidature(s) remise(s) en « Candidature envoyée », "
+          f"{detached} e-mail(s) détaché(s) d'une candidature à laquelle ils ne se rapportaient pas.")
 
 
 def main():
