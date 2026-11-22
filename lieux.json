@@ -147,6 +147,15 @@
   "min": 59,
   "minAt": "2026-11-22"
  },
+ "boissy-saint-léger||94": {
+  "dept": "94",
+  "km": 17.1,
+  "label": "Boissy-Saint-Léger",
+  "lat": 48.75128,
+  "lon": 2.52001,
+  "min": 93,
+  "minAt": "2026-11-22"
+ },
  "bondy||93": {
   "dept": "93",
   "km": 0.0,
@@ -426,15 +435,6 @@
   "min": 36,
   "minAt": "2026-11-13"
  },
- "dugny||93": {
-  "dept": "93",
-  "km": 6.9,
-  "label": "Dugny",
-  "lat": 48.95015,
-  "lon": 2.42187,
-  "min": 69,
-  "minAt": "2026-11-22"
- },
  "ecouen||95": {
   "dept": "95",
   "km": 15.7,
@@ -626,6 +626,15 @@
   "lon": 2.38643,
   "min": 77,
   "minAt": "2026-11-16"
+ },
+ "l'haÿ-les-roses||94": {
+  "dept": "94",
+  "km": 17.6,
+  "label": "L'Haÿ-les-Roses",
+  "lat": 48.77685,
+  "lon": 2.34199,
+  "min": 84,
+  "minAt": "2026-11-22"
  },
  "l'isle-adam||95": {
   "dept": "95",
@@ -946,15 +955,6 @@
   "min": 68,
   "minAt": "2026-11-13"
  },
- "moisselles|95570|95": {
-  "dept": "95",
-  "km": 19.1,
-  "label": "Moisselles",
-  "lat": 49.04677,
-  "lon": 2.34056,
-  "min": 93,
-  "minAt": "2026-11-22"
- },
  "moisselles||95": {
   "dept": "95",
   "km": 19.1,
@@ -972,6 +972,15 @@
   "lon": 2.59148,
   "min": 122,
   "minAt": "2026-11-21"
+ },
+ "montigny-lès-cormeilles||95": {
+  "dept": "95",
+  "km": 23.5,
+  "label": "Montigny-lès-Cormeilles",
+  "lat": 48.99333,
+  "lon": 2.19375,
+  "min": 93,
+  "minAt": "2026-11-22"
  },
  "montmorency||95": {
   "dept": "95",
@@ -1086,15 +1095,6 @@
   "lon": 2.26587,
   "min": 60,
   "minAt": "2026-11-12"
- },
- "nogent-sur-marne||94": {
-  "dept": "94",
-  "km": 7.4,
-  "label": "Nogent-sur-Marne",
-  "lat": 48.83747,
-  "lon": 2.48091,
-  "min": 58,
-  "minAt": "2026-11-14"
  },
  "noisiel||77": {
   "dept": "77",
@@ -1518,6 +1518,15 @@
   "min": 80,
   "minAt": "2026-11-14"
  },
+ "santeny|94440|94": {
+  "dept": "94",
+  "km": 20.8,
+  "label": "Santeny",
+  "lat": 48.72565,
+  "lon": 2.57267,
+  "min": 115,
+  "minAt": "2026-11-22"
+ },
  "sarcelles||95": {
   "dept": "95",
   "km": 12.3,
@@ -1720,6 +1729,15 @@
   "min": 87,
   "minAt": "2026-11-12"
  },
+ "villeparisis||77": {
+  "dept": "77",
+  "km": 10.4,
+  "label": "Villeparisis",
+  "lat": 48.94354,
+  "lon": 2.61475,
+  "min": 51,
+  "minAt": "2026-11-22"
+ },
  "villepinte||93": {
   "dept": "93",
   "km": 6.8,
@@ -1728,6 +1746,15 @@
   "lon": 2.53243,
   "min": 61,
   "minAt": "2026-11-14"
+ },
+ "villiers-sur-marne||94": {
+  "dept": "94",
+  "km": 9.6,
+  "label": "Villiers-sur-Marne",
+  "lat": 48.82784,
+  "lon": 2.5492,
+  "min": 55,
+  "minAt": "2026-11-22"
  },
  "villiers-sur-marne||IDF": {
   "dept": "94",
@@ -1799,14 +1826,5 @@
   "lon": 2.61157,
   "min": 76,
   "minAt": "2026-11-21"
- },
- "épinay-sur-seine||93": {
-  "dept": "93",
-  "km": 13.6,
-  "label": "Épinay-sur-Seine",
-  "lat": 48.95527,
-  "lon": 2.31691,
-  "min": 67,
-  "minAt": "2026-11-22"
  }
 }
