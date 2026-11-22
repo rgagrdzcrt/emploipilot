@@ -176,10 +176,21 @@ def raw(m):
                 {"name": "Subject", "value": m["subject"]}]}}
 
 
+class Refus400(mail.ApiError):
+    """« Precondition check failed » renvoyé par Gmail pour un e-mail (vu le 22/11/2026)."""
+
+    def __init__(self):
+        Exception.__init__(self, "Gmail GET /messages/… : HTTP 400")
+        self.code = 400
+
+
 class FakeGmail:
-    def __init__(self, messages, by_label=None):
+    def __init__(self, messages, by_label=None, refused=()):
         self.messages, self.modified = {m["id"]: raw(m) for m in messages}, []
         self.by_label = by_label  # libellé → identifiants ; sinon tout vient de la recherche Indeed
+        self.refused = set(refused)
+        for message_id in self.refused:
+            self.messages.setdefault(message_id, None)
 
     def label_ids(self, names):
         return {n: "Label_" + n.rpartition("/")[2] for n in names}
@@ -187,9 +198,11 @@ class FakeGmail:
     def message_ids(self, query=None, label_id=None):
         if self.by_label is not None:
             return [] if query else self.by_label.get(label_id, [])
-        return list(self.messages) if query == mail.INDEED_QUERY else []
+        return list(self.messages) if query == mail.BRUIT_QUERY else []
 
     def message(self, message_id):
+        if message_id in self.refused:
+            raise Refus400()
         return self.messages[message_id]
 
     def modify(self, message_id, add, remove):
@@ -229,10 +242,20 @@ class Reclassement(unittest.TestCase):
         self.assertEqual(mp["status"], "À relancer")
         self.assertNotIn("mailKind", mp)
 
+    def test_finalisez_range_en_bruit_revient_en_a_faire_dans_la_boite(self):
+        finalise = message("Finalisez votre candidature sur le site de Pradagroup",
+                           "Pour finaliser votre candidature, rendez-vous sur le site de Pradagroup.",
+                           sender="Hellowork Candidature <candidature@hellowork.com>", mid="p")
+        self.assertEqual(mail.classify(finalise, [])["label"], "action")
+        gmail = FakeGmail([finalise])
+        run_reclassify(gmail)
+        self.assertEqual(gmail.modified, [("p", ["Label_À faire", "INBOX"], ["Label_Bruit"])])
+
     def test_confirmations_indeed_rangees_en_bruit_rattrapees(self):
+        # Un e-mail que Gmail refuse de lire (« z ») n'arrête plus le reclassement.
         gmail = FakeGmail([message("Votre candidature a été envoyée", INDEED_FR, mid="a"),
                            message("Nouvelles offres : magasinier", "Magasinier H/F", mid="b",
-                                   sender="Indeed <alert@indeed.com>")])
+                                   sender="Indeed <alert@indeed.com>")], refused=["z"])
         files = run_reclassify(gmail)
         # Seule la confirmation change de libellé (Bruit → Accusé), l'alerte reste du bruit.
         self.assertEqual(gmail.modified, [("a", ["Label_Accusé"], ["Label_Bruit"])])

@@ -211,8 +211,9 @@ INDEED_NOT_SENT = re.compile(
     r"\bn oubliez pas\b|\bavez vous postule\b|\b(finalis|termin|complet)\w* (votre|ta) candidature\b|\bconsult"
     r"|\bmise a jour\b|\brappel\b|\bsimilaires?\b|\bpostulez\b|\bnouvelles? offres?\b|\bvos candidatures\b"
     r"|\bstatut\b|\bviewed\b|\bdon t forget\b|\bsimilar\b|\breminder\b")
-# Confirmations d'Indeed rangées en bruit avant que le tri sache les lire (option « reclasser »).
-INDEED_QUERY = "from:(indeed.com OR indeedemail.com) newer_than:60d"
+# E-mails rangés en bruit que les règles actuelles peuvent reprendre (option « reclasser ») :
+# confirmations d'Indeed, « Finalisez votre candidature » des sites d'emploi.
+BRUIT_QUERY = "newer_than:60d {from:indeed.com from:indeedemail.com subject:finalisez subject:finaliser}"
 
 # Plateformes de recrutement : leurs e-mails concernent une candidature.
 ATS_DOMAINS = (
@@ -360,7 +361,10 @@ def classify(mail, applications):
     # sans toucher au suivi des candidatures.
     if kind == "accuse":
         return {"kind": kind, "label": "accuse", "app": None}
-    if marketing and kind not in ("refus", "entretien"):
+    # Démarche demandée dès l'objet (« Finalisez votre candidature sur le site de Pradagroup ») : à faire,
+    # même venant d'un site d'emploi et sans candidature suivie.
+    asked = kind == "action" and has(ACTION, norm(mail["subject"]))
+    if marketing and kind not in ("refus", "entretien") and not asked:
         return bruit
     if kind in ("refus", "entretien", "action") and (mail["related"] or ats):
         return {"kind": kind, "label": kind, "app": None}
@@ -962,17 +966,20 @@ def reclassify(gmail, gist_id, applications, essai):
         for message_id in gmail.message_ids(label_id=labels[LABELS[key]]):
             found.setdefault(message_id, key)
     # Confirmations de candidature d'Indeed rangées en bruit avant que le tri sache les lire.
-    for message_id in gmail.message_ids(INDEED_QUERY, label_id=labels[LABELS["bruit"]]):
+    for message_id in gmail.message_ids(BRUIT_QUERY, label_id=labels[LABELS["bruit"]]):
         found.setdefault(message_id, "bruit")
     print(f"Reclassement : {len(found)} e-mail(s) déjà libellé(s) à revoir.")
 
-    checked, changes = [], []
+    checked, changes, unreadable = [], [], 0
     for message_id, old in found.items():
         try:
             mail = parse_message(gmail.message(message_id))
         except ApiError as exc:
             if exc.code == 404:
                 continue  # supprimé entre-temps
+            if exc.code == 400:
+                unreadable += 1  # refusé par Gmail (« Precondition check failed ») : laissé tel quel
+                continue
             raise
         d = classify(mail, applications)
         checked.append((mail, d))
@@ -983,6 +990,8 @@ def reclassify(gmail, gist_id, applications, essai):
         key = f"{old}->{d['label'] or 'aucun'}"
         moves[key] = moves.get(key, 0) + 1
     print("Changements : " + (", ".join(f"{k} {v}" for k, v in sorted(moves.items())) or "aucun"))
+    if unreadable:
+        print(f"{unreadable} e-mail(s) refusé(s) par l'API Gmail, laissé(s) tel(s) quel(s).")
     if essai:
         print("Mode essai : rien n'a été modifié.")
         return
@@ -992,6 +1001,8 @@ def reclassify(gmail, gist_id, applications, essai):
         remove = [labels[LABELS[old]]]
         if d["label"] in ARCHIVED and "INBOX" in mail["labels"]:
             remove.append("INBOX")
+        elif old in ARCHIVED and d["label"] not in ARCHIVED and "INBOX" not in mail["labels"]:
+            add.append("INBOX")  # archivé à tort par le tri (bruit) : il revient dans la boîte de réception
         gmail.modify(mail["id"], add, remove)
 
     # Suivi : la candidature dont le statut venait de cet e-mail reprend « Candidature envoyée ».
@@ -1105,10 +1116,18 @@ def main():
     ids = [i for i in gmail.message_ids(query) if i not in seen]
     print(f"{len(applications)} candidature(s) suivie(s), {len(ids)} nouvel(s) e-mail(s) à examiner.")
 
-    decisions = []
+    decisions, unreadable = [], 0
     for message_id in ids:
-        mail = parse_message(gmail.message(message_id))
+        try:
+            mail = parse_message(gmail.message(message_id))
+        except ApiError as exc:
+            if exc.code not in (400, 404):
+                raise
+            unreadable += 1  # refusé par Gmail (400) ou supprimé (404) : non marqué, réessayé au passage suivant
+            continue
         decisions.append((mail, classify(mail, applications)))
+    if unreadable:
+        print(f"{unreadable} e-mail(s) refusé(s) par l'API Gmail, réessayé(s) au prochain passage.")
     decisions.sort(key=lambda d: d[0]["at"])  # les plus anciens d'abord : le dernier e-mail l'emporte
 
     counts = {}
