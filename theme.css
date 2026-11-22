@@ -1012,7 +1012,8 @@ button, select, .search-box, .search-row > button, .sort select { border-radius:
 .lm-cv input:checked + span .ic { color: var(--accent); }
 .lm-cv input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
 .lm-file { margin-top: 6px; color: var(--muted); font-size: 12.5px; }
-.lm-fields { display: grid; grid-template-columns: 1.4fr 1fr .8fr; gap: 10px; }
+.lm-fields { display: grid; grid-template-columns: 1fr 1fr .8fr; gap: 10px; }
+.lm-fields .field:first-child { grid-column: 1 / -1; } /* poste sur toute la largeur, puis entreprise, ville, contrat */
 .lm-result { position: sticky; top: 76px; }
 .lm-result textarea { width: 100%; min-height: 460px; padding: 18px 20px; border: 1px solid var(--line); border-radius: var(--r-ctrl); background: var(--surface-2); font: 14.5px/1.65 var(--sans); color: var(--ink); resize: vertical; }
 .lm-result.empty .lm-actions { opacity: .45; pointer-events: none; }
@@ -1022,7 +1023,6 @@ button, select, .search-box, .search-row > button, .sort select { border-radius:
   .lm-result { position: static; }
   .lm-result textarea { min-height: 380px; }
   .lm-fields { grid-template-columns: 1fr 1fr; }
-  .lm-fields .field:first-child { grid-column: 1 / -1; }
 }
 
 /* ==========================================================================

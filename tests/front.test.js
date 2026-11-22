@@ -307,6 +307,30 @@ test('nom « CARTIER GAZARD » : une seule fois, et seulement si le nom était �
   assert.strictEqual(empty.profile.updatedAt, 1);
 });
 
+test('générateur de lettre : poste, entreprise, ville et contrat lus dans l’annonce collée', () => {
+  const ctx = { document: stub, localStorage: { getItem: () => null, setItem() {}, removeItem() {} }, nsKey: k => k,
+    deptOf: o => (/\b(bondy|rosny-sous-bois|saint-denis|bobigny)\b/i.test(o.location) ? '93' : '') };
+  vm.createContext(ctx);
+  vm.runInContext(read('lettre.js'), ctx);
+  const d = text => { const r = ctx.lmDetect(text); return [r.title, r.company, r.location, r.contract]; };
+  // Indeed : entreprise sous l'intitulé, note et lieu ensuite.
+  assert.deepStrictEqual(d('Stockiste H/F\nSephora\n4,0 sur 5 étoiles\nRosny-sous-Bois (93)\nCDI\nDescription du poste\nVous rangez la réserve.'),
+    ['Stockiste H/F', 'Sephora', 'Rosny-sous-Bois', 'CDI']);
+  // HelloWork : « Ville - 75 ».
+  assert.deepStrictEqual(d('Employé de réserve H/F\nMonoprix\nParis 11e - 75\nCDD - 6 mois\nMissions'),
+    ['Employé de réserve H/F', 'Monoprix', 'Paris 11e', 'CDD']);
+  // LinkedIn : entreprise au-dessus de l'intitulé, lieu suivi de « · il y a… ».
+  assert.deepStrictEqual(d('ID Logistics\nPréparateur de commandes\nSaint-Denis, Île-de-France, France · il y a 2 jours · 25 candidats\nIntérim'),
+    ['Préparateur de commandes', 'ID Logistics', 'Saint-Denis', 'Intérim']);
+  // France Travail : « Publié le… » n'est pas l'entreprise ; elle est sous la rubrique « Entreprise ».
+  assert.deepStrictEqual(d('Magasinier (H/F)\nPublié le 20 novembre 2026\n93 - BONDY - Localiser avec Mappy\nCDI\nVous rangez la réserve.\nEntreprise\nDARTY\nGrand magasin.'),
+    ['Magasinier (H/F)', 'DARTY', 'Bondy', 'CDI']);
+  // Repères écrits : « Entreprise : », « Lieu : », « chez X » (accents compris).
+  assert.deepStrictEqual(d('Agent de stock H/F\nEntreprise : Carrefour Market\nLieu : Bobigny\nCDD'),
+    ['Agent de stock H/F', 'Carrefour Market', 'Bobigny', 'CDD']);
+  assert.strictEqual(ctx.lmDetect('Vous rejoindrez l’équipe chez Picard Surgelés, en CDI.').company, 'Picard Surgelés');
+});
+
 test('aucun caractère de contrôle dans les fichiers du site', () => {
   for (const f of ['app.js', 'pilot.js', 'profiles.js', 'ui.js', 'compose.js', 'letters.js', 'letterpdf.js', 'lettre.js', 'sw.js', 'index.html']) {
     assert.ok(!/[\x00-\x08\x0b\x0c\x0e-\x1f]/.test(read(f)), f);
