@@ -50,7 +50,9 @@ function lmDetect(text) {
   // Intitulé : ligne de tête qui nomme un métier (« H/F », « Stockiste… »), sinon la première ligne plausible.
   let ti = lines.slice(0, 8).findIndex(l => l.length <= 90 && !LM_SKIP_RE.test(l) && (LM_HF_RE.test(l) || LM_JOB_START_RE.test(l)));
   if (ti < 0) ti = lines.findIndex(l => l.length <= 90 && !LM_SKIP_RE.test(l));
-  const title = ti >= 0 ? lines[ti] : '';
+  // Annonce collée d'un seul bloc (copie depuis un téléphone) : l'intitulé s'arrête à « H/F ».
+  const block = ti < 0 && text.match(/^\s*(.{3,80}?\(?\b[hf]\s*\/\s*[hf]\b\)?)/i);
+  const title = ti >= 0 ? lines[ti] : block ? block[1].replace(/\s+/g, ' ').trim() : '';
   // Entreprise : « Entreprise : X », « X recrute », ligne voisine de l'intitulé, ligne sous « Entreprise », « chez X ».
   const label = lines.findIndex(l => LM_LABEL_RE.test(l));
   const near = ti >= 0 ? [lines[ti + 1], lines[ti - 1], lines[ti + 2], lines[ti + 3]] : [];
@@ -83,10 +85,17 @@ function lmOffer() {
   };
 }
 
+/** Même lettre que la fenêtre Préparer (pilot.js) : composée selon l'annonce pour Ryan, sinon modèle
+ * du métier (profil de Zia, ou modèle personnalisé dans Critères). composeLetter seul laissait Zia sans lettre. */
+function lmLetter(o) {
+  if (typeof fillTemplate === 'function') return fillTemplate(o);
+  return typeof composeLetter === 'function' ? composeLetter(o) : '';
+}
+
 function lmRender() {
   const o = lmOffer();
   const ready = o.title || o.notes.trim();
-  lmEl('lmOut').value = ready ? composeLetter(o) : '';
+  lmEl('lmOut').value = ready ? lmLetter(o) : '';
   lmEl('lmCvFile').textContent = cvOf(o.category) || '—';
   document.getElementById('lmResult').classList.toggle('empty', !ready);
 }

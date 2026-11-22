@@ -150,6 +150,13 @@ test('lettres de Ryan : conformes au CV stock et propres à chaque entreprise', 
   }
   assert.match(out.carrefour, /Carrefour/);
   assert.match(out.carrefour, /la distribution alimentaire/);
+  // Intitulé introuvable (annonce collée sans titre) : jamais « un poste de ce poste ».
+  for (let i = 0; i < 6; i++) {
+    for (const company of ['', 'Picard']) {
+      const l = letter({ title: '', company, category: 'stock', id: 'x' + i + company, notes: 'Vous rangez la réserve.' });
+      assert.ok(!/de ce poste|que ce poste/.test(l), l);
+    }
+  }
   assert.match(out.sephora, /Coordinateur stock chez Aroma-Zone|Chez Aroma-Zone, comme coordinateur stock/);
   assert.match(out.sephora, /beauté/);
   assert.match(out.darty, /Revenir chez Darty/);
@@ -329,6 +336,14 @@ test('générateur de lettre : poste, entreprise, ville et contrat lus dans l’
   assert.deepStrictEqual(d('Agent de stock H/F\nEntreprise : Carrefour Market\nLieu : Bobigny\nCDD'),
     ['Agent de stock H/F', 'Carrefour Market', 'Bobigny', 'CDD']);
   assert.strictEqual(ctx.lmDetect('Vous rejoindrez l’équipe chez Picard Surgelés, en CDI.').company, 'Picard Surgelés');
+  // Annonce collée d'un seul bloc (téléphone) : l'intitulé s'arrête à « H/F ».
+  assert.strictEqual(ctx.lmDetect('Stockiste H/F Sephora Rosny-sous-Bois (93) CDI Temps plein Au sein de notre magasin, vous rangez la réserve et réassortissez la surface de vente.').title,
+    'Stockiste H/F');
+  // Lettre de l'onglet : celle de la fenêtre Préparer (modèle du métier pour Zia), pas seulement composeLetter.
+  ctx.composeLetter = () => '';
+  assert.strictEqual(ctx.lmLetter({ title: 'Vendeuse' }), '');
+  ctx.fillTemplate = o => 'Modèle : ' + o.title;
+  assert.strictEqual(ctx.lmLetter({ title: 'Vendeuse' }), 'Modèle : Vendeuse');
 });
 
 test('aucun caractère de contrôle dans les fichiers du site', () => {

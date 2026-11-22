@@ -119,7 +119,15 @@ function composeLetter(o) {
 
   // 1. Accroche, au nom de l'entreprise quand on la connaît.
   const precise = dom.exact === false ? '' : `c'est précisément le métier que j'exerce depuis ${dom.years}`;
-  const openings = company ? [
+  // Intitulé introuvable (letterPoste rend « ce poste ») : accroches qui ne le nomment pas,
+  // au lieu de « un poste de ce poste ».
+  const openings = poste === 'ce poste' ? (company ? [
+    `Votre offre chez ${company} a retenu toute mon attention : avec ${dom.years} d'expérience ${dom.domain}, je peux y être efficace rapidement.`,
+    `C'est avec un grand intérêt que je propose ma candidature ${aCompany(company)}. Fort de ${dom.years} d'expérience ${dom.domain}, je suis opérationnel rapidement.`,
+  ] : [
+    `Votre annonce a retenu toute mon attention : avec ${dom.years} d'expérience ${dom.domain}, je peux être efficace rapidement.`,
+    `C'est avec un grand intérêt que je vous propose ma candidature. Fort de ${dom.years} d'expérience ${dom.domain}, je suis opérationnel rapidement.`,
+  ]) : company ? [
     `Votre offre ${dePoste(poste)} chez ${company} a retenu toute mon attention : ${precise || `avec ${dom.years} d'expérience ${dom.domain}, je peux y être efficace rapidement`}.`,
     `Rejoindre ${company} ${enTantQue(poste)} serait pour moi une belle étape : avec ${dom.years} d'expérience ${dom.domain}, je peux être efficace dès mon arrivée.`,
     `C'est avec un grand intérêt que je propose ma candidature ${aCompany(company)} pour le poste ${dePoste(poste)}. Fort de ${dom.years} d'expérience ${dom.domain}, je suis opérationnel rapidement.`,
