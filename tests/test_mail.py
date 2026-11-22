@@ -165,6 +165,9 @@ class AjoutAuSuivi(unittest.TestCase):
         self.assertTrue(all(e["status"] == "Candidature envoyée" and e["via"] == "Indeed" for e in entries.values()))
         # Le même e-mail relu n'ajoute rien.
         self.assertIsNone(mail.add_outside_application(entries, [], first, *mail.application_from_mail(first), AT))
+        # Avant la remise à zéro du site (12/11), rien n'est ajouté : le site la retirerait aussitôt.
+        old = message("Votre candidature a été envoyée", INDEED_FR, at=1792800000000, mid="c")  # 23/10/2026
+        self.assertIsNone(mail.add_outside_application({}, [], old, *mail.application_from_mail(old), AT))
 
 
 def raw(m):

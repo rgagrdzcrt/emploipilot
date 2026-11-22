@@ -612,8 +612,15 @@ def same_offer(company_a, title_a, company_b, title_b):
     return len(long_) - len(short) <= (0 if len(short) == 1 else 1)
 
 
+# Remise à zéro du site (purgeSentBefore de Ryan dans profiles.js) : le site retire du suivi les
+# candidatures envoyées avant cette date ; le tri ne les rajoute donc pas (chaque reclassement les remettait).
+SENT_PURGE_BEFORE = "2026-11-12"
+
+
 def add_outside_application(entries, offers, mail, title, company, site, now_ms):
     """Inscrit la candidature dans le suivi. Renvoie l'entrée créée, ou None si elle y était déjà."""
+    if time.strftime("%Y-%m-%d", time.localtime(mail["at"] / 1000)) < SENT_PURGE_BEFORE:
+        return None
     for entry in entries.values():
         if same_offer(entry.get("company"), entry.get("title"), company, title):
             return None
