@@ -147,15 +147,6 @@
   "min": 59,
   "minAt": "2026-11-22"
  },
- "boissy-saint-léger||94": {
-  "dept": "94",
-  "km": 17.1,
-  "label": "Boissy-Saint-Léger",
-  "lat": 48.75128,
-  "lon": 2.52001,
-  "min": 93,
-  "minAt": "2026-11-22"
- },
  "bondy||93": {
   "dept": "93",
   "km": 0.0,
@@ -199,6 +190,15 @@
   "lon": 2.71534,
   "min": 74,
   "minAt": "2026-11-12"
+ },
+ "cachan||94": {
+  "dept": "94",
+  "km": 16.8,
+  "label": "Cachan",
+  "lat": 48.79135,
+  "lon": 2.33152,
+  "min": 79,
+  "minAt": "2026-11-23"
  },
  "champigny-sur-marne||94": {
   "dept": "94",
@@ -488,6 +488,15 @@
   "min": 56,
   "minAt": "2026-11-12"
  },
+ "fontenay-trésigny||77": {
+  "dept": "77",
+  "km": 36.3,
+  "label": "Fontenay-Trésigny",
+  "lat": 48.70235,
+  "lon": 2.87571,
+  "min": 150,
+  "minAt": "2026-11-23"
+ },
  "franconville||95": {
   "km": 21.3,
   "label": "Franconville",
@@ -601,6 +610,15 @@
   "min": 107,
   "minAt": "2026-11-15"
  },
+ "herblay||95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Herblay-sur-Seine",
+  "lat": 49.00406,
+  "lon": 2.15245,
+  "min": 104,
+  "minAt": "2026-11-23"
+ },
  "issy-les-moulineaux||92": {
   "km": 18.5,
   "label": "Issy-les-Moulineaux",
@@ -681,6 +699,7 @@
   "min": 71,
   "minAt": "2026-11-22"
  },
+ "lagny-le-sec|60330|77": {},
  "lagny-sur-marne|77400|77": {
   "dept": "77",
   "km": 16.5,
@@ -1041,8 +1060,8 @@
   "label": "Montsoult",
   "lat": 49.06858,
   "lon": 2.31183,
-  "min": 91,
-  "minAt": "2026-10-23"
+  "min": 90,
+  "minAt": "2026-11-23"
  },
  "montévrain||77": {
   "km": 19.8,
@@ -1053,6 +1072,15 @@
   "minAt": "2026-11-12"
  },
  "morigny-champigny||94": {},
+ "moussy-le-neuf|77230|77": {
+  "dept": "77",
+  "km": 19.9,
+  "label": "Moussy-le-Neuf",
+  "lat": 49.06532,
+  "lon": 2.60222,
+  "min": 99,
+  "minAt": "2026-11-23"
+ },
  "nanterre|92000|92": {
   "km": 20.7,
   "label": "Nanterre",
@@ -1113,6 +1141,15 @@
   "lon": 2.26587,
   "min": 60,
   "minAt": "2026-11-12"
+ },
+ "nogent-sur-marne||94": {
+  "dept": "94",
+  "km": 7.4,
+  "label": "Nogent-sur-Marne",
+  "lat": 48.83747,
+  "lon": 2.48091,
+  "min": 58,
+  "minAt": "2026-11-23"
  },
  "noisiel||77": {
   "dept": "77",
@@ -1379,6 +1416,7 @@
   "min": 60,
   "minAt": "2026-11-12"
  },
+ "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
@@ -1508,6 +1546,15 @@
   "min": 56,
   "minAt": "2026-11-12"
  },
+ "saint-soupplets||77": {
+  "dept": "77",
+  "km": 27.7,
+  "label": "Saint-Soupplets",
+  "lat": 49.03657,
+  "lon": 2.80622,
+  "min": 107,
+  "minAt": "2026-11-23"
+ },
  "saint-thibault-des-vignes|77400|77": {
   "dept": "77",
   "km": 14.8,
@@ -1525,15 +1572,6 @@
   "lon": 2.25369,
   "min": 80,
   "minAt": "2026-11-14"
- },
- "santeny|94440|94": {
-  "dept": "94",
-  "km": 20.8,
-  "label": "Santeny",
-  "lat": 48.72565,
-  "lon": 2.57267,
-  "min": 115,
-  "minAt": "2026-11-22"
  },
  "sarcelles||95": {
   "dept": "95",
@@ -1613,6 +1651,15 @@
   "lon": 2.21809,
   "min": 65,
   "minAt": "2026-11-12"
+ },
+ "taverny||95": {
+  "dept": "95",
+  "km": 24.0,
+  "label": "Taverny",
+  "lat": 49.02419,
+  "lon": 2.21263,
+  "min": 92,
+  "minAt": "2026-11-23"
  },
  "thiais||94": {
   "km": 17.5,
@@ -1737,6 +1784,15 @@
   "min": 87,
   "minAt": "2026-11-12"
  },
+ "villeparisis||77": {
+  "dept": "77",
+  "km": 10.4,
+  "label": "Villeparisis",
+  "lat": 48.94354,
+  "lon": 2.61475,
+  "min": 51,
+  "minAt": "2026-11-23"
+ },
  "villepinte||93": {
   "dept": "93",
   "km": 6.8,
@@ -1745,15 +1801,6 @@
   "lon": 2.53243,
   "min": 61,
   "minAt": "2026-11-14"
- },
- "villiers-sur-marne||94": {
-  "dept": "94",
-  "km": 9.6,
-  "label": "Villiers-sur-Marne",
-  "lat": 48.82784,
-  "lon": 2.5492,
-  "min": 55,
-  "minAt": "2026-11-22"
  },
  "villiers-sur-marne||IDF": {
   "dept": "94",
@@ -1825,5 +1872,14 @@
   "lon": 2.61157,
   "min": 76,
   "minAt": "2026-11-21"
+ },
+ "épinay-sur-seine||93": {
+  "dept": "93",
+  "km": 13.6,
+  "label": "Épinay-sur-Seine",
+  "lat": 48.95527,
+  "lon": 2.31691,
+  "min": 67,
+  "minAt": "2026-11-23"
  }
 }
