@@ -8,15 +8,6 @@
   "min": 70,
   "minAt": "2026-11-13"
  },
- "antony|92160|92": {
-  "dept": "92",
-  "km": 21.8,
-  "label": "Antony",
-  "lat": 48.75102,
-  "lon": 2.29783,
-  "min": 72,
-  "minAt": "2026-11-21"
- },
  "arcueil||94": {
   "dept": "94",
   "km": 15.6,
@@ -58,14 +49,6 @@
   "lon": 2.49793,
   "min": 50,
   "minAt": "2026-11-12"
- },
- "bagnolet||93": {
-  "km": 6.0,
-  "label": "Bagnolet",
-  "lat": 48.8676,
-  "lon": 2.42502,
-  "min": 48,
-  "minAt": "2026-11-13"
  },
  "bailly-romainvilliers|77700|77": {
   "dept": "77",
@@ -120,15 +103,6 @@
   "min": 59,
   "minAt": "2026-11-22"
  },
- "boissy-saint-léger||94": {
-  "dept": "94",
-  "km": 17.1,
-  "label": "Boissy-Saint-Léger",
-  "lat": 48.75128,
-  "lon": 2.52001,
-  "min": 93,
-  "minAt": "2026-11-25"
- },
  "bondy||93": {
   "dept": "93",
   "km": 0.0,
@@ -172,6 +146,15 @@
   "lon": 2.71534,
   "min": 74,
   "minAt": "2026-11-12"
+ },
+ "cachan||94": {
+  "dept": "94",
+  "km": 16.8,
+  "label": "Cachan",
+  "lat": 48.79135,
+  "lon": 2.33152,
+  "min": 79,
+  "minAt": "2026-11-25"
  },
  "canton de goussainville||95": {
   "dept": "95",
@@ -236,6 +219,15 @@
   "min": 56,
   "minAt": "2026-11-15"
  },
+ "charny|77410|77": {
+  "dept": "77",
+  "km": 21.4,
+  "label": "Charny",
+  "lat": 48.97165,
+  "lon": 2.76005,
+  "min": null,
+  "minAt": "2026-11-25"
+ },
  "chaville||92": {
   "dept": "92",
   "km": 24.1,
@@ -263,6 +255,15 @@
   "min": 81,
   "minAt": "2026-11-14"
  },
+ "chessy|77700|77": {
+  "dept": "77",
+  "km": 20.7,
+  "label": "Chessy",
+  "lat": 48.87144,
+  "lon": 2.76478,
+  "min": 106,
+  "minAt": "2026-11-25"
+ },
  "chessy||77": {
   "dept": "77",
   "km": 20.7,
@@ -271,6 +272,15 @@
   "lon": 2.76478,
   "min": 106,
   "minAt": "2026-11-14"
+ },
+ "chevilly-larue||94": {
+  "dept": "94",
+  "km": 18.1,
+  "label": "Chevilly-Larue",
+  "lat": 48.76752,
+  "lon": 2.35088,
+  "min": 90,
+  "minAt": "2026-11-25"
  },
  "châtillon||92": {
   "km": 18.3,
@@ -418,15 +428,6 @@
   "lon": 2.4442,
   "min": 36,
   "minAt": "2026-11-13"
- },
- "epinay-sur-seine||93": {
-  "dept": "93",
-  "km": 13.6,
-  "label": "Épinay-sur-Seine",
-  "lat": 48.95527,
-  "lon": 2.31691,
-  "min": 67,
-  "minAt": "2026-11-20"
  },
  "faremoutiers||IDF": {
   "dept": "77",
@@ -693,15 +694,6 @@
   "min": 72,
   "minAt": "2026-10-28"
  },
- "le mesnil-amelot||77": {
-  "dept": "77",
-  "km": 15.1,
-  "label": "Le Mesnil-Amelot",
-  "lat": 49.0196,
-  "lon": 2.59354,
-  "min": 77,
-  "minAt": "2026-11-25"
- },
  "le mée-sur-seine||77": {
   "dept": "77",
   "km": 41.9,
@@ -745,6 +737,15 @@
   "lon": 1.98385,
   "min": 118,
   "minAt": "2026-11-17"
+ },
+ "les lilas||93": {
+  "dept": "93",
+  "km": 5.4,
+  "label": "Les Lilas",
+  "lat": 48.88054,
+  "lon": 2.42074,
+  "min": 52,
+  "minAt": "2026-11-25"
  },
  "les pavillons-sous-bois||93": {
   "dept": "93",
@@ -896,14 +897,14 @@
   "min": 90,
   "minAt": "2026-11-14"
  },
- "moisselles|95570|95": {
-  "dept": "95",
-  "km": 19.1,
-  "label": "Moisselles",
-  "lat": 49.04677,
-  "lon": 2.34056,
-  "min": 93,
-  "minAt": "2026-11-22"
+ "mitry-mory||77": {
+  "dept": "77",
+  "km": 10.9,
+  "label": "Mitry-Mory",
+  "lat": 48.96321,
+  "lon": 2.6044,
+  "min": 68,
+  "minAt": "2026-11-25"
  },
  "moisselles||95": {
   "dept": "95",
@@ -1027,15 +1028,6 @@
   "lon": 2.26587,
   "min": 60,
   "minAt": "2026-11-12"
- },
- "nogent-sur-marne||94": {
-  "dept": "94",
-  "km": 7.4,
-  "label": "Nogent-sur-Marne",
-  "lat": 48.83747,
-  "lon": 2.48091,
-  "min": 58,
-  "minAt": "2026-11-25"
  },
  "noisiel||77": {
   "dept": "77",
@@ -1423,6 +1415,15 @@
   "min": 56,
   "minAt": "2026-11-12"
  },
+ "saint-soupplets||77": {
+  "dept": "77",
+  "km": 27.7,
+  "label": "Saint-Soupplets",
+  "lat": 49.03657,
+  "lon": 2.80622,
+  "min": 107,
+  "minAt": "2026-11-25"
+ },
  "saint-thibault-des-vignes|77400|77": {
   "dept": "77",
   "km": 14.8,
@@ -1440,6 +1441,15 @@
   "lon": 2.25369,
   "min": 80,
   "minAt": "2026-11-14"
+ },
+ "santeny|94440|94": {
+  "dept": "94",
+  "km": 20.8,
+  "label": "Santeny",
+  "lat": 48.72565,
+  "lon": 2.57267,
+  "min": 115,
+  "minAt": "2026-11-25"
  },
  "sarcelles||95": {
   "dept": "95",
@@ -1669,15 +1679,6 @@
   "lon": 2.53243,
   "min": 61,
   "minAt": "2026-11-14"
- },
- "villiers-sur-marne||94": {
-  "dept": "94",
-  "km": 9.6,
-  "label": "Villiers-sur-Marne",
-  "lat": 48.82784,
-  "lon": 2.5492,
-  "min": 55,
-  "minAt": "2026-11-25"
  },
  "villiers-sur-marne||IDF": {
   "dept": "94",
