@@ -16,13 +16,26 @@ Toucher le logo bascule entre deux profils, définis dans `profiles.js`. Le logo
 | Lettres | Composées selon l'offre et l'entreprise (`compose.js`, `letters.js`), conformes au CV joint ; modèles par métier (`pilot.js`) ; téléchargeables en PDF (`letterpdf.js`) ; onglet **Lettre** pour une annonce trouvée ailleurs : on colle son texte (Indeed, HelloWork, LinkedIn, France Travail…), le poste, l'entreprise, la ville et le contrat sont lus (`lettre.js`) et la lettre se compose seule, sans IA | Modèles par métier (`profiles.js`) ; téléchargeables en PDF (`letterpdf.js`) |
 | Tri Gmail, onglet Mails | Oui | Non |
 
-**RGRD : niveaux et annonces d'agence (26/11/2026).** Chaque offre de Ryan a un niveau (`tiers` dans `profiles.js`, `tierOf` dans `pilot.js`). Le tri, la file « À postuler » et la liste (tri par adéquation) commencent par le cœur de cible ; la tuile « offres à trier » affiche combien il y en a.
+**RGRD : recherche pilotée par le CV (26/11/2026).** Les recherches Jooble de Ryan ne sont plus écrites une à une. `collect.py` les génère depuis `"profilRecherche"` dans `sources.json` :
+
+- **Postes du CV × lieux** : chaque poste dans chaque lieu, par exemple « stockiste · Bondy » ou « coordinateur stock · Paris ».
+- **Secteurs choisis par Ryan** :
+  - santé : responsable logistique en hôpital ou en clinique, magasinier hospitalier, gestionnaire de stock en pharmacie ; offres de l'AP-HP, des hôpitaux et des cliniques ;
+  - logisticiens : offres de Geodis, ID Logistics, FM Logistic, DHL… autour de Bondy ;
+  - aéroport : deux recherches seulement, stock et magasin autour de Roissy, pour garder quelques offres.
+  - enseignes : offres de 21 enseignes qui recrutent des stockistes et des employés de réserve autour de Paris (Sephora, Aroma-Zone, Nocibé, Darty, Fnac, Zara, Uniqlo, Galeries Lafayette, Printemps…). Les postes de vente qu'elles publient vont au profil de Zia.
+
+Les recherches sur un employeur utilisent l'option `companysearch` de Jooble. Les 18 recherches de Zia restent dans `joobleQueries`. Le rendement (ci-dessous, Jooble) met en pause les recherches qui n'apportent plus rien.
+
+Sur le site, chaque offre a un **secteur** (`sectors` dans `profiles.js`, `sectorOf` dans `pilot.js`), affiché sur sa carte et filtrable (menu « Secteur »). Il est reconnu par l'entreprise, le titre et le lieu, ou par une expression sûre de l'annonce. La **grande distribution est masquée** pour Ryan (`hiddenSectors`) : 2 candidatures sur 85 offres vues. Elle reste visible dans « Offres masquées » et toujours collectée pour Zia.
+
+Chaque offre de Ryan a aussi un **niveau** (`tiers` dans `profiles.js`, `tierOf` dans `pilot.js`). Le tri, la file « À postuler » et la liste (tri par adéquation) commencent par le cœur de cible ; la tuile « offres à trier » affiche combien il y en a.
 
 | Niveau | Offres | Envoyées / triées par Ryan |
 |---|---|---|
-| ★ Cœur de cible | Stockiste, réserve, réassort, gestionnaire, coordinateur ou responsable de stock ou de logistique, logisticien, onglet Aéroport | 47 % |
-| Bon | Magasinier et le reste | 17 % |
-| Repli | Préparation de commandes, tri, agent ou opérateur logistique, onglet Encadrement (chef ou manager de rayon : 0 sur 27) | 17 % |
+| ★ Cœur de cible | Stockiste, réserve, réassort, agent, gestionnaire ou coordinateur de stock, logisticien. Dans la santé : responsable ou coordinateur logistique, gestionnaire, magasinier. Chez un logisticien : magasinier, gestionnaire, coordinateur, chef d'équipe | 47 % |
+| Bon | Magasinier, coordinateur ou responsable logistique, aéroport, le reste | 17 % |
+| Repli | Préparation de commandes, tri, agent ou opérateur logistique, onglet Encadrement (chef ou manager de rayon : 0 sur 27), et toute offre « bon » à moins de 20 points d'adéquation au CV | 17 % |
 
 Avec « Dédupliquer les offres » coché, le même poste d'une agence d'intérim publié pour plusieurs lieux n'a plus qu'une carte, marquée « + N lieux » (`groupRepeats`, `collapseRepeats`). C'est celle déjà triée, sinon la plus proche. Les enseignes ne sont pas regroupées : deux magasins, ce sont deux postes.
 
@@ -46,14 +59,16 @@ Recherche généraliste configurée par métier dans `sources.json`. La clé res
 
 **Rendement** (26/11/2026) : chaque recherche note dans `stats.json` (`joobleRendement`) les offres nouvelles réellement gardées et les pages lues. Une recherche qui n'apporte aucune offre nouvelle à 3 passages de suite est mise en pause, et ses pages vont aux autres. Elle est réessayée au bout de 7 jours, ou de 2 jours si elle est prioritaire. Le journal affiche les recherches en pause. Jooble n'a pas de filtre de date : sa documentation ne prévoit que les mots-clés, le lieu, le rayon, le salaire et la page.
 
-### Alertes e-mail (HelloWork, Meteojob, Indeed, LinkedIn)
+### Alertes e-mail (HelloWork, Meteojob, Indeed, LinkedIn, France Travail, Choisir le service public, Welcome to the Jungle, Leboncoin, Optioncarrière)
 
-Ces sites n'ont pas d'API publique. Leurs alertes e-mail sont lues dans Gmail par `alertes.py`, à chaque collecte, en lecture seule et avec les mêmes secrets que le tri Gmail. Seuls le poste, l'entreprise, le lieu, le contrat, le salaire et l'adresse publique de l'annonce sont gardés. Les liens sont réduits à l'adresse de l'annonce (`fr.indeed.com/viewjob?jk=…`, `linkedin.com/jobs/view/…`), sans traceur ni jeton de connexion.
+Ces sites n'ont pas d'API publique (ou pas d'API utilisable : celle de France Travail ne marche pas). Leurs alertes e-mail sont lues dans Gmail par `alertes.py`, à chaque collecte, en lecture seule et avec les mêmes secrets que le tri Gmail. Seuls le poste, l'entreprise, le lieu, le contrat, le salaire et l'adresse publique de l'annonce sont gardés. Les liens sont réduits à l'adresse de l'annonce (`fr.indeed.com/viewjob?jk=…`, `linkedin.com/jobs/view/…`), sans traceur ni jeton de connexion.
 
 - **HelloWork, Meteojob** : formats fixes, lus depuis octobre 2026.
 - **Indeed, LinkedIn** (26/11/2026) : une carte par lien d'offre. Le titre est le texte du lien, l'entreprise et le lieu sont les lignes qui suivent. Pour vérifier la lecture de leur format, les deux premières alertes de chaque site sont copiées, nettoyées (sans adresse e-mail ni paramètre de lien), dans le gist secret (`zcrt-alertes-echantillons.json`), jamais dans le dépôt. Le workflow de collecte reçoit pour cela `ZCRT_GIST_TOKEN`.
 
-Pour en profiter, il faut créer les alertes sur Indeed et LinkedIn, envoyées à l'adresse Gmail triée : stockiste, employé de réserve, gestionnaire de stock, coordinateur logistique… autour de Bondy et de Paris.
+- **France Travail, Choisir le service public, Welcome to the Jungle, Leboncoin, Optioncarrière** (26/11/2026) : même lecture par carte, même échantillonnage. Seuls les e-mails qui ressemblent à une alerte (offres lues, ou objet avec « offre », « emploi », « alerte »…) sont échantillonnés, jamais un autre message du site (actualisation France Travail, conseiller…). Une offre d'une alerte France Travail a la même adresse que celle lue par EURES : les deux sont fusionnées, et l'offre EURES gagne sa ville, donc son temps de trajet.
+
+Pour en profiter, il faut créer les alertes sur chaque site, envoyées à l'adresse Gmail triée : stockiste, employé de réserve, agent ou gestionnaire de stock, logisticien… autour de Bondy et de Paris. Ajouter aussi magasinier ou responsable logistique sur Choisir le service public (hôpitaux, mairies).
 
 ### France Travail
 
@@ -101,7 +116,14 @@ L’identifiant est la partie qui suit le domaine de la page carrière : par exe
 
 Les identifiants d’employeurs sont publics et ne sont pas des clés API. Les recherches d’entreprise sont limitées à la France et à l’Île-de-France lorsqu’elles le permettent. Les offres passent par les mêmes filtres de métier, de contrat et d’exclusion des stages que les autres.
 
-**Sondage du 26/11/2026** : environ 150 enseignes de mode, de luxe, de cosmétique, de sport, d'équipement de la maison et de grands magasins ont été testées sur ces sept plateformes : SmartRecruiters, Lever, Greenhouse, Ashby, Workable, Recruitee et Personio. Seule **Jacquemus** (Lever, région `eu`) publie des offres utiles en Île-de-France. Chez Lever, une offre sans département d'Île-de-France reconnu (boutique à l'étranger) est écartée. Sephora, Zara, Mango, Lacoste, PVH, Prada et les autres passent par des sites carrière sans API publique : leurs offres arrivent par Jooble, EURES ou les alertes e-mail.
+**Sondage du 26/11/2026** : environ 150 enseignes de mode, de luxe, de cosmétique, de sport, d'équipement de la maison et de grands magasins ont été testées sur ces sept plateformes : SmartRecruiters, Lever, Greenhouse, Ashby, Workable, Recruitee et Personio. Seule **Jacquemus** (Lever, région `eu`) publie des offres utiles en Île-de-France. Chez Lever, une offre sans département d'Île-de-France reconnu (boutique à l'étranger) est écartée. Sephora, Zara, Mango, Lacoste, PVH, Prada et les autres passent par des sites carrière sans API publique : leurs offres arrivent par Jooble (recherche par employeur), EURES ou les alertes e-mail.
+
+D'autres pistes ont été écartées après essai (26/11/2026) :
+
+- **Logisticiens et santé sur ces plateformes** : Back Market (Ashby), Veepee (Lever) et Biogaran (SmartRecruiters) n'y publient que des postes de siège.
+- **Flux RSS Talentsoft** de Geodis, Fnac Darty, Sodexo et des Galeries Lafayette : seulement les 20 dernières offres de toute la France, presque jamais en stock en Île-de-France.
+- **Careerjet** : sa clé de partenaire impose l'adresse IP et le navigateur du visiteur à chaque recherche, ce qui ne convient pas à une collecte automatique.
+- **Choisir le service public** : pas d'API de lecture, d'où ses alertes e-mail.
 
 ### Flux RSS/Atom
 

@@ -35,6 +35,14 @@ SOURCES = {
     "Indeed": "from:indeed.com -subject:(candidature OR finalisez OR finaliser OR consulté OR consultée)",
     "LinkedIn": "from:(jobalerts-noreply@linkedin.com OR jobs-noreply@linkedin.com OR jobs-listings@linkedin.com)"
                 " -subject:(candidature OR application OR consulté OR consultée OR viewed)",
+    # Autres alertes (26/11/2026), lues de la même façon. France Travail : l'API ne marche pas, mais
+    # ses alertes e-mail donnent les offres avec leur ville ; elles se fondent avec les mêmes offres
+    # venues d'EURES (même adresse d'annonce), qui gagnent ainsi la ville et le temps de trajet.
+    "France Travail": "from:(francetravail.fr OR pole-emploi.fr) subject:(offre OR offres OR alerte)",
+    "Service public": "from:choisirleservicepublic.gouv.fr",
+    "Welcome to the Jungle": "from:welcometothejungle.com -subject:(candidature OR application)",
+    "Leboncoin": "from:leboncoin.fr subject:(annonce OR annonces OR recherche OR emploi)",
+    "Optioncarrière": "from:optioncarriere.com",
 }
 # Échantillons nettoyés des alertes Indeed et LinkedIn (liens sans paramètres, sans adresse e-mail),
 # écrits dans le gist secret de synchronisation pour vérifier la lecture de leur format.
@@ -173,8 +181,24 @@ def _decoded(link):
     return " ".join(out)
 
 
+# Liens d'offre des autres sites d'alertes : (source, motif, adresse publique de l'annonce).
+OTHER_JOB_LINKS = (
+    ("France Travail", re.compile(r"(?:francetravail|pole-emploi)\.fr/offres/recherche/detail/([0-9A-Z]{5,12})\b"),
+     "https://candidat.francetravail.fr/offres/recherche/detail/{}"),
+    ("Service public", re.compile(r"choisirleservicepublic\.gouv\.fr/offre-emploi/([a-z0-9][a-z0-9-]{8,160})", re.I),
+     "https://choisirleservicepublic.gouv.fr/offre-emploi/{}/"),
+    ("Welcome to the Jungle", re.compile(r"welcometothejungle\.com/(?:fr|en)/companies/([^/?#\"'\s]+/jobs/[^/?#\"'\s]+)", re.I),
+     "https://www.welcometothejungle.com/fr/companies/{}"),
+    ("Leboncoin", re.compile(r"leboncoin\.fr/(?:ad/)?(?:offres_d_emploi|emploi)/(\d{6,})", re.I),
+     "https://www.leboncoin.fr/ad/offres_d_emploi/{}"),
+    ("Optioncarrière", re.compile(r"optioncarriere\.com/jobad/([a-z0-9]{8,})", re.I),
+     "https://www.optioncarriere.com/jobad/{}"),
+)
+
+
 def job_key(link):
-    """(source, identifiant, adresse publique sans paramètres) d'un lien d'offre Indeed ou LinkedIn."""
+    """(source, identifiant, adresse publique sans paramètres) d'un lien d'offre (Indeed, LinkedIn,
+    France Travail, Choisir le service public, Welcome to the Jungle, Leboncoin, Optioncarrière)."""
     link = html.unescape(link or "")
     for text in (link, unquote(link), unquote(_decoded(link))):
         match = INDEED_JK_RE.search(text)
@@ -184,6 +208,11 @@ def job_key(link):
         match = LINKEDIN_JOB_RE.search(text)
         if match:
             return "LinkedIn", match.group(1), f"https://www.linkedin.com/jobs/view/{match.group(1)}/"
+        for source, pattern, url in OTHER_JOB_LINKS:
+            match = pattern.search(text)
+            if match:
+                key = match.group(1).rstrip("/")
+                return source, key, url.format(key)
     return None
 
 
@@ -195,6 +224,9 @@ def _card_fields(lines):
         # « Entreprise · Lieu » (LinkedIn), « Entreprise - Paris (75) » (Indeed).
         pair = re.match(r"^(.+?)\s+[·•]\s+(.+)$", line) or re.match(
             r"^(.+?)\s+[-–]\s+(.*(?:\(\d{2}\)|\b\d{5}\b|paris|[iî]le[- ]de[- ]france).*)$", line, re.I)
+        if pair and re.fullmatch(r"\d{2}|2[AB]", pair.group(1).strip()):
+            location = line.strip()  # « 75 - PARIS 10 » (France Travail) : département et ville
+            break
         if pair and PLACE_RE.search(pair.group(2)):
             company = company or pair.group(1).strip()
             location = re.split(r"\s+[·•]\s+", pair.group(2))[0].strip()
@@ -337,11 +369,14 @@ def fetch_alert_offers(days=4):
                 offers = parse_hellowork(parts.get("text/html", ""))
             elif source == "Meteojob":
                 offers = parse_meteojob(parts.get("text/plain", ""))
-            else:  # Indeed, LinkedIn
+            else:  # Indeed, LinkedIn, France Travail, Welcome to the Jungle… : une carte par lien d'offre
                 offers = parse_job_cards(parts.get("text/html", "")) or parse_job_text(parts.get("text/plain", ""))
-                if sampled < SAMPLES_PER_SOURCE:
-                    headers = (msg.get("payload") or {}).get("headers") or []
-                    subject = next((h.get("value", "") for h in headers if h.get("name", "").lower() == "subject"), "")
+                headers = (msg.get("payload") or {}).get("headers") or []
+                subject = next((h.get("value", "") for h in headers if h.get("name", "").lower() == "subject"), "")
+                # Échantillon : seulement une alerte (offres lues ou objet d'alerte), jamais un autre
+                # message du site (France Travail : actualisation, conseiller…).
+                alert_like = offers or re.search(r"offre|emploi|alerte|annonce|job|poste", subject, re.I)
+                if sampled < SAMPLES_PER_SOURCE and alert_like:
                     samples.append(sample_of(source, subject, received, parts, offers))
                     sampled += 1
             for offer in offers:

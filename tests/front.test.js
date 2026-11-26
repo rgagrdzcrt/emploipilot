@@ -357,18 +357,29 @@ test('niveaux RGRD : cœur de cible, bon, repli (choix du 26/11/2026)', () => {
   const src = read('pilot.js');
   const cut = (a, b) => { const i = src.indexOf(a), j = src.indexOf(b, i); assert.ok(i >= 0 && j > i, a); return src.slice(i, j); };
   const code = cut('const STOCKISTE_RE', 'function maxAgeDays') + cut('const TIERS', '/* ---------- Tri et file');
-  const t = new Function('ACTIVE_PROFILE', 'categoryOf', 'isExcluded', 'travelCost', 'deptOf', 'esc',
-    code + ';return {tierOf, collapseRepeats, REPEATS};')(
-    ryan, o => o.category, () => false, o => o.trajetMin ?? 1e6, o => o.dept || '', s => String(s));
+  const t = new Function('ACTIVE_PROFILE', 'categoryOf', 'isExcluded', 'travelCost', 'deptOf', 'esc', 'cvFit',
+    code + ';return {tierOf, collapseRepeats, REPEATS, sectorOf, sectorHides};')(
+    ryan, o => o.category, () => false, o => o.trajetMin ?? 1e6, o => o.dept || '', s => String(s), o => ({ score: o.fit ?? 50 }));
   const cases = [
     ['Stockiste H/F', 'stock', 'coeur'], ['Employé·e de Réserve CDI 35H', 'stock', 'coeur'],
-    ['Gestionnaire de Stocks et Approvisionnements', 'stock', 'coeur'], ['Coordinateur logistique (H/F)', 'stock', 'coeur'],
-    ['EMPLOYÉ(E) LOGISTIQUE ET RÉASSORT BOUTIQUE', 'stock', 'coeur'], ['Agent de piste H/F', 'aeroport', 'coeur'],
+    ['Gestionnaire de Stocks et Approvisionnements', 'stock', 'coeur'], ['Coordinateur logistique (H/F)', 'stock', 'bon'],
+    ['EMPLOYÉ(E) LOGISTIQUE ET RÉASSORT BOUTIQUE', 'stock', 'coeur'], ['Agent de piste H/F', 'aeroport', 'bon'],
     ['Magasinier H/F', 'stock', 'bon'], ['Magasinier - Préparateur de commandes', 'stock', 'bon'],
     ['Agent logistique H/F', 'stock', 'repli'], ['Opérateur polyvalent logistique', 'stock', 'repli'],
     ['Préparateur de commandes', 'preparation', 'repli'], ['Manager de rayon frais', 'encadrement', 'repli'],
   ];
   for (const [title, category, tier] of cases) assert.strictEqual(t.tierOf({ title, category }), tier, title);
+  // Recherche pilotée par le CV (26/11/2026) : responsable logistique dans la santé et magasinier chez un
+  // logisticien en cœur de cible ; peu d'adéquation au CV : repli ; grande distribution masquée.
+  const tier = (title, company, fit) => t.tierOf({ id: title + company, title, company, category: 'stock', fit });
+  assert.strictEqual(tier('Responsable logistique', 'AP-HP'), 'coeur');
+  assert.strictEqual(tier('Responsable logistique', 'ACME'), 'bon');
+  assert.strictEqual(tier('Magasinier H/F', 'GEODIS'), 'coeur');
+  assert.strictEqual(tier('Magasinier H/F', 'ACME', 10), 'repli');
+  assert.strictEqual(t.sectorOf({ id: 's1', title: 'Gestionnaire de stock', company: 'Clinique du Parc' }), 'sante');
+  assert.strictEqual(t.sectorOf({ id: 's2', title: 'Magasinier', company: 'ACME', notes: 'Leader européen de la logistique.' }), 'logisticiens');
+  assert.strictEqual(t.sectorHides({ id: 's3', title: 'Employé de réserve', company: 'Monoprix' }), true);
+  assert.strictEqual(t.sectorHides({ id: 's4', title: 'Stockiste', company: 'Sephora' }), false);
 
   // Même poste d'une agence pour plusieurs lieux : une carte (déjà triée, sinon la plus proche).
   const o = (id, company, location, trajetMin, status) => ({ id, title: 'Préparateur de Commandes (h/f)', company, location, trajetMin, status, category: 'preparation' });

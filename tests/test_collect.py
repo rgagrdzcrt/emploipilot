@@ -554,3 +554,64 @@ class AlertesIndeedLinkedIn(unittest.TestCase):
         found = alertes.parse_job_text(text)
         self.assertEqual([(o["title"], o["company"], o["location"]) for o in found],
                          [("Stockiste H/F", "Sephora", "Paris, Île-de-France, France")])
+
+
+class ProfilRecherche(unittest.TestCase):
+    """Recherche RGRD pilotée par le CV (profilRecherche, 26/11/2026) : recherches générées."""
+
+    def test_recherches_generees(self):
+        config = {
+            "profilRecherche": {
+                "lieux": {"Bondy": "16", "Paris": "8"},
+                "postes": [{"keywords": "stockiste", "priorite": True, "maxPages": 5, "lieuxEnPlus": ["Montreuil"]},
+                           {"keywords": "stock associate", "lieux": ["Paris"]},
+                           {"keywords": "magasinier", "enabled": False}],
+                "secteurs": [{"nom": "santé", "recherches": [{"keywords": "AP-HP", "entreprise": True, "lieu": "Paris"}]},
+                             {"nom": "logisticiens", "entreprises": ["Geodis"], "lieu": "Bondy", "radius": "26"}],
+            },
+            "joobleQueries": [{"name": "stockiste · Paris", "keywords": "doublon"}, {"name": "serveur · Paris", "keywords": "serveur"}],
+        }
+        queries = {q["name"]: q for q in collect.jooble_queries(config)}
+        self.assertEqual(list(queries), ["stockiste · Bondy", "stockiste · Paris", "stockiste · Montreuil",
+                                         "stock associate · Paris", "AP-HP (entreprise) · Paris",
+                                         "Geodis (entreprise) · Bondy", "serveur · Paris"])
+        self.assertEqual((queries["stockiste · Bondy"]["maxPages"], queries["stockiste · Bondy"]["radius"]), (5, "16"))
+        self.assertEqual(queries["stockiste · Montreuil"]["maxPages"], 1)  # ville en plus : une page
+        self.assertEqual(queries["stockiste · Paris"]["keywords"], "stockiste")  # le profil passe avant la liste
+        self.assertTrue(queries["Geodis (entreprise) · Bondy"]["companysearch"])
+        self.assertFalse(queries["stockiste · Bondy"]["companysearch"])
+
+
+class AutresAlertes(unittest.TestCase):
+    """Alertes France Travail, Choisir le service public, Welcome to the Jungle, Leboncoin, Optioncarrière (26/11/2026)."""
+
+    def test_liens_d_offre(self):
+        import alertes
+        cases = [
+            ("https://candidat.francetravail.fr/offres/recherche/detail/198KZQW?at_medium=email&xtor=ES-1",
+             ("France Travail", "198KZQW", "https://candidat.francetravail.fr/offres/recherche/detail/198KZQW")),
+            ("https://choisirleservicepublic.gouv.fr/offre-emploi/magasinier-hospitalier-h-f-reference-2026-123456/?utm=x",
+             ("Service public", "magasinier-hospitalier-h-f-reference-2026-123456",
+              "https://choisirleservicepublic.gouv.fr/offre-emploi/magasinier-hospitalier-h-f-reference-2026-123456/")),
+            ("https://www.welcometothejungle.com/fr/companies/aroma-zone/jobs/stock-coordinator_rosny?utm_source=alert",
+             ("Welcome to the Jungle", "aroma-zone/jobs/stock-coordinator_rosny",
+              "https://www.welcometothejungle.com/fr/companies/aroma-zone/jobs/stock-coordinator_rosny")),
+            ("https://www.leboncoin.fr/ad/offres_d_emploi/2876543210?utm_campaign=alerte",
+             ("Leboncoin", "2876543210", "https://www.leboncoin.fr/ad/offres_d_emploi/2876543210")),
+            ("https://www.optioncarriere.com/jobad/fr8d1c2e3f4a5b6c7d?utm=1",
+             ("Optioncarrière", "fr8d1c2e3f4a5b6c7d", "https://www.optioncarriere.com/jobad/fr8d1c2e3f4a5b6c7d")),
+        ]
+        for link, expected in cases:
+            with self.subTest(link=link):
+                self.assertEqual(alertes.job_key(link), expected)
+        self.assertIsNone(alertes.job_key("https://www.francetravail.fr/candidat/mes-demarches"))
+
+    def test_alerte_france_travail_rejoint_l_offre_eures(self):
+        import alertes
+        markup = ('<a href="https://candidat.francetravail.fr/offres/recherche/detail/198KZQW?xtor=ES">Magasinier (H/F)</a>'
+                  '<p>HOPITAL SAINT-LOUIS</p><p>75 - PARIS 10</p>')
+        found = alertes.parse_job_cards(markup)
+        self.assertEqual([(o["title"], o["company"], o["location"]) for o in found],
+                         [("Magasinier (H/F)", "HOPITAL SAINT-LOUIS", "75 - PARIS 10")])
+        # Même adresse que l'offre lue par EURES (FT_DETAIL_URL) : les deux sont fusionnées par la collecte.
+        self.assertEqual(found[0]["url"], collect.FT_DETAIL_URL.format("198KZQW"))

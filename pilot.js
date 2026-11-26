@@ -461,7 +461,7 @@ function excludedWords() {
 function isHiddenType(o) {
   if (isTracked(o)) return false;
   if (tooOld(o)) return true;
-  if (hidingType(o) || zoneHides(o)) return true;
+  if (hidingType(o) || zoneHides(o) || sectorHides(o)) return true;
   const t = norm(o.title || '');
   return excludedWords().some(w => t.includes(w));
 }
@@ -485,6 +485,7 @@ function hiddenReason(o) {
   const type = hidingType(o);
   if (type) return 'type masqué « ' + type.label + ' »';
   if (zoneHides(o)) return 'en ' + deptOf(o) + ', seuls les stockistes sont gardés';
+  if (sectorHides(o)) return 'secteur masqué « ' + sectorLabel(sectorOf(o)) + ' »';
   const t = norm(o.title || '');
   const word = excludedWords().find(w => t.includes(w));
   if (word) return 'mot exclu « ' + word + ' »';
@@ -613,14 +614,51 @@ function autoRelances() {
 const TIERS = ACTIVE_PROFILE.tiers || null;
 const TIER_RANK = { coeur: 0, bon: 1, repli: 2 };
 
-/** Niveau d'une offre : métier de l'onglet d'abord, puis mots du titre ('bon' à défaut). */
+/** Niveau d'une offre : métier de l'onglet d'abord, puis mots du titre et secteur ('bon' à défaut).
+ * Une offre « bon » avec moins de minFit points d'adéquation au CV passe en repli. */
 function tierOf(o) {
   if (!TIERS) return 'bon';
-  const cat = categoryOf(o), title = o.title || '';
+  const cat = categoryOf(o), title = o.title || '', inSector = (TIERS.coeurSectors || {})[sectorOf(o)];
   if ((TIERS.repliCats || []).includes(cat)) return 'repli';
-  if ((TIERS.coeurCats || []).includes(cat) || isStockiste(o) || (TIERS.coeur && TIERS.coeur.test(title))) return 'coeur';
-  if (TIERS.bon && TIERS.bon.test(title)) return 'bon';
-  return TIERS.repli && TIERS.repli.test(title) ? 'repli' : 'bon';
+  if ((TIERS.coeurCats || []).includes(cat) || isStockiste(o) || (TIERS.coeur && TIERS.coeur.test(title))
+    || (inSector && inSector.test(title))) return 'coeur';
+  const tier = (TIERS.bon && TIERS.bon.test(title)) || !(TIERS.repli && TIERS.repli.test(title)) ? 'bon' : 'repli';
+  return tier === 'bon' && TIERS.minFit && cvFit(o).score < TIERS.minFit ? 'repli' : tier;
+}
+
+/* ---------- Secteurs (profiles.js, sectors ; profil de Ryan, 26/11/2026) ---------- */
+const SECTORS = ACTIVE_PROFILE.sectors || [];
+const sectorCache = new Map();
+
+/** Secteur de l'offre (id), d'après le titre, l'entreprise et le lieu, ou une expression sûre du texte. */
+function sectorOf(o) {
+  if (!SECTORS.length) return '';
+  const key = o.id + '|' + (o.title || '').length + '|' + (o.company || '').length;
+  if (sectorCache.has(key)) return sectorCache.get(key);
+  const head = [o.title, o.company, o.location].join(' '), notes = o.notes || '';
+  const found = SECTORS.find(s => s.re.test(head)) || SECTORS.find(s => s.text && s.text.test(notes));
+  const id = found ? found.id : '';
+  sectorCache.set(key, id);
+  return id;
+}
+function sectorLabel(id) { return (SECTORS.find(s => s.id === id) || {}).label || ''; }
+/** Secteur jamais proposé sur ce profil (grande distribution pour Ryan). */
+function sectorHides(o) { return (ACTIVE_PROFILE.hiddenSectors || []).includes(sectorOf(o)); }
+function sectorBadge(o) {
+  const label = sectorLabel(sectorOf(o));
+  return label ? `<span class="pill" title="Secteur">${esc(label)}</span>` : '';
+}
+
+/** Menu « Secteur » des filtres de la liste (profil avec secteurs seulement). */
+function fillSectorFilter() {
+  const select = document.getElementById('sector');
+  if (!select) return;
+  select.hidden = !SECTORS.length;
+  select.closest('.field')?.toggleAttribute('hidden', !SECTORS.length);
+  select.innerHTML = '<option value="all">Tous les secteurs</option>'
+    + SECTORS.filter(s => !(ACTIVE_PROFILE.hiddenSectors || []).includes(s.id))
+      .map(s => `<option value="${s.id}">${esc(s.label)}</option>`).join('')
+    + '<option value="">Autres</option>';
 }
 function tierRank(o) { return TIERS ? TIER_RANK[tierOf(o)] : 0; }
 function tierBadge(o) {
@@ -925,7 +963,7 @@ function drawPilot() {
   }
   const cat = jobCategory(o);
   const head = `<div class="pilot-head"><span class="pill blue">${title} · ${pilot.i + 1} / ${total}</span>
-    ${pilotCatPill(cat)}${tierBadge(o)}${repeatBadge(o)}
+    ${pilotCatPill(cat)}${tierBadge(o)}${sectorBadge(o)}${repeatBadge(o)}
     <button class="ghost" data-act="close">Fermer<span class="key-hint"> (Échap)</span></button></div>
     <h2>${esc(o.title)}</h2><div class="job-meta">${metaLine(o)}</div>`;
 
@@ -1572,6 +1610,7 @@ function toggleTheme() {
 /* ---------- Initialisation ---------- */
 
 function pilotInit() {
+  fillSectorFilter();
   // Ancien objectif par défaut (10) enregistré avec « Mes infos » : passe à 50.
   if (!profile.goalMigrated) {
     if (Number(profile.dailyGoal) === 10) delete profile.dailyGoal;

@@ -48,13 +48,50 @@ const ZCRT_PROFILES = {
     // d'envoyées, gestionnaire ou coordinateur de stock 48 %, stockiste et réserve 46 %, coordinateur
     // ou responsable logistique 46 % ; magasinier 27 % (bon) ; préparateur 25 %, agent ou opérateur
     // logistique 20 %, chef ou manager de rayon 0 sur 27 (repli). Stockistes (STOCKISTE_RE) : cœur.
+    // Recherche pilotée par le CV (26/11/2026, choix de Ryan) : cœur = stockiste, agent de stock,
+    // coordinateur ou gestionnaire de stock, logisticien, et dans la santé ou chez les logisticiens
+    // (prestataires) les postes de logistique et de magasin ; aéroport en petite quantité (bon) ;
+    // sous minFit points d'adéquation au CV (pilot.js, cvFit), une offre « bon » passe en repli.
     tiers: {
-      coeurCats: ['aeroport'],
       repliCats: ['preparation', 'tri', 'encadrement'],
-      coeur: /stockist|stockman|r[eé]assort|(?:gestionnaire|coordinat|responsable|charg[eé]|contr[oô]l|adjoint|assistant|technicien|chef\s+d['’ ]\s*[eé]quipe)\S*(?:\s+\S+){0,3}?\s+(?:de\s+|des\s+|du\s+|en\s+|aux\s+)?(?:stocks?|logisti\S*)\b|logisticien|stock\s+manager|supply\s+chain\s+(?:assistant|coordinat)/i,
-      bon: /magasini/i,
+      coeur: /stockist|stockman|r[eé]assort|(?:gestionnaire|coordinat|responsable|charg[eé]|contr[oô]l|adjoint|assistant|technicien|agent|employ[eé])\S*(?:\s+\S+){0,3}?\s+(?:de\s+|des\s+|du\s+|en\s+|aux\s+)?stocks?\b|stock\s+(?:manager|controller|associate)|logisticien/i,
+      coeurSectors: {
+        // Pas « Agent de service logistique » (EHPAD, hôpital : entretien et repas).
+        sante: /(?:responsable|coordinat|technicien|chef|adjoint)\S*(?:\s+\S+){0,3}?\s+(?:de\s+|en\s+)?logisti|logisticien|gestionnaire|magasini|stock/i,
+        logisticiens: /magasini|stock|gestionnaire|coordinat|chef\s+d['’ ]\s*[eé]quipe|logisticien/i,
+      },
+      bon: /magasini|(?:coordinat|responsable|assistant|gestionnaire|chef\s+d['’ ]\s*[eé]quipe|adjoint|technicien)\S*(?:\s+\S+){0,2}?\s+(?:de\s+|en\s+)?logisti/i,
       repli: /pr[eé]parat|\btri\b|trieu|manutention|(?:agent|op[eé]rat|employ[eé])\S*(?:\s+\S+){0,2}?\s+(?:de\s+|en\s+)?logisti|\bextras?\b/i,
+      minFit: 20,
     },
+    // Secteurs (26/11/2026, pilot.js, sectorOf) : le premier qui reconnaît le titre, l'entreprise ou le lieu
+    // (re), ou une expression sûre de la description (text). Ryan : santé et logisticiens recherchés,
+    // aéroport en petite quantité, grande distribution masquée (2 candidatures sur 85 offres vues).
+    sectors: [
+      { id: 'sante', label: 'Santé',
+        re: /h[oô]pita|hospitali|clinique|\bap-?hp\b|\bghu\b|\bchu\b|ehpad|maternit|m[eé]dical|m[eé]dico|pharma|\bsant[eé]\b|laborato|biolog|\bhad\b|dialyse|radiolog|institut curie|gustave roussy|fondation (?:rothschild|adolphe)|croix.rouge|korian|orpea|emeis|ramsay|elsan|vivalto|sanofi|servier|ipsen|biogaran|alliance healthcare|\bcerp\b/i,
+        text: /[eé]tablissements? de sant[eé]|milieu hospitalier|secteur (?:hospitalier|m[eé]dical|de la sant[eé]|pharmaceutique)|dispositifs? m[eé]dicaux|mat[eé]riel m[eé]dical|produits? pharmaceutiques?|industrie pharmaceutique|r[eé]partiteur pharmaceutique/i },
+      { id: 'logisticiens', label: 'Logisticien (prestataire)',
+        re: /geodis|id logistics|fm logistic|kuehne|\bdhl\b|\bxpo\b|\bgxo\b|rhenus|\bstef\b|arvato|\bceva\b|dachser|schenker|bollor[eé] logistics|gefco|ziegler|heppner|viapost|\bmory\b|daher|norbert dentressangle|logista\b|bansard|clasquin/i,
+        text: /prestataire logistique|acteur (?:majeur|cl[eé]) de la logistique|leader (?:europ[eé]en|mondial|fran[cç]ais) de la logistique|logisticien de premier plan/i },
+      { id: 'aeroport', label: 'Aéroport & fret',
+        re: /a[eé]roport|roissy|\bcdg\b|\borly\b|fret a[eé]rien|\bcargo\b|handling|servair|swissport|alyzia|menzies|\bwfs\b|air france|groupe 3s|\bpiste\b|escale|bagag/i },
+      { id: 'gd', label: 'Grande distribution',
+        re: /carrefour|auchan|leclerc|intermarch|monoprix|franprix|\blidl\b|\baldi\b|\bcasino\b|super\s?u\b|hyper\s?u\b|u les commer|syst[eè]me u|\bcora\b|supermarch[eé]s? match|\bnetto\b|leader price|\bg20\b|\bpicard\b|grand frais|naturalia|biocoop|la vie claire|hypermarch|supermarch|sup[eé]rette|mousquetaires|\bspar\b|\bvival\b|coccinelle|\bdrive\b|bricorama/i },
+      { id: 'cosmetique', label: 'Cosmétique & parfum',
+        re: /cosm[eé]t|parfum|beaut[eé]|aroma.?zone|sephora|rituals|\blush\b|\bkiko\b|yves rocher|occitane|nocib[eé]|marionnaud|douglas|l.or[eé]al|guerlain|diptyque|clarins|caudalie|\bnuxe\b|sisley/i },
+      { id: 'mode', label: 'Mode, luxe & boutiques',
+        re: /luxe|luxury|prada|lacoste|\bmango\b|\bzara\b|massimo dutti|\bcelio\b|\bpvh\b|tommy hilfiger|calvin klein|\bsmcp\b|sandro|\bmaje\b|claudie pierlot|galeries lafayette|printemps|bon march[eé]|samaritaine|\blvmh\b|\bdior\b|chanel|herm[eè]s|cartier|jacquemus|kooples|zadig|s[eé]zane|uniqlo|h&m|primark|kiabi|courir|\bnike\b|adidas|zag bijoux|\bmode\b|pr[eê]t.[aà].porter|fashion|boutique|bijou|joaill|maroquin|onebird|bompard|\betam\b|aubert/i },
+      { id: 'hightech', label: 'High-tech & électroménager',
+        re: /darty|\bfnac\b|boulanger|\bapple\b|[eé]lectrom[eé]nager|high.?tech|multim[eé]dia|samsung|electro d[eé]p[oô]t/i },
+      { id: 'ecommerce', label: 'E-commerce', re: /e-?commerce|en ligne|amazon|cdiscount|vinted|veepee|zalando|showroompriv|\bebay\b/i },
+      { id: 'industrie', label: 'Industrie & BTP',
+        re: /industri|usine|pi[eè]ces d[eé]tach|a[eé]ronautique|automobile|\bbtp\b|mat[eé]riaux|chantier|m[eé]tallurg|chimi/i },
+      { id: 'public', label: 'Public',
+        re: /minist[eè]re|mairie|ville de|fonction publique|dgafp|collectivit|universit|[eé]cole normale|\bcnrs\b|conseil (?:r[eé]gional|d[eé]partemental)|pr[eé]fecture/i },
+    ],
+    // Secteurs jamais proposés sur RGRD (pilot.js, sectorHides), visibles dans « Offres masquées ».
+    hiddenSectors: ['gd'],
     // Même poste d'une agence d'intérim publié pour plusieurs lieux : une seule carte (pilot.js, collapseRepeats).
     groupRepeats: true,
     // Les suivis rayon / vente posés avant cette date sont supprimés, sur chaque appareil et dans

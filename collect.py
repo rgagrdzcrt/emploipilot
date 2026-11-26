@@ -927,7 +927,8 @@ def _jooble_page(api_key, query, page, per_page):
         "radius": str(query.get("radius", "80")),
         "page": str(page),
         "ResultOnPage": str(per_page),
-        "companysearch": False,
+        # Recherche sur le nom de l'employeur (AP-HP, Geodis…) : profilRecherche, « entreprise ».
+        "companysearch": bool(query.get("companysearch", False)),
     }
     req = Request(
         f"https://fr.jooble.org/api/{api_key}",
@@ -973,6 +974,53 @@ def previous_jooble_suite():
         return str(json.loads(STATS_FILE.read_text(encoding="utf-8")).get("joobleSuite") or "")
     except (OSError, ValueError, AttributeError):
         return ""
+
+
+def profile_queries(config):
+    """Recherches Jooble générées depuis le profil de recherche RGRD (« profilRecherche » dans
+    sources.json, 26/11/2026) : chaque poste du CV dans chaque lieu (« stockiste · Bondy »), puis
+    les recherches des secteurs choisis (mots-clés, ou nom de l'employeur avec « entreprise »)."""
+    profil = config.get("profilRecherche") or {}
+    if not profil.get("enabled", True):
+        return []
+    lieux = profil.get("lieux") or {}
+    queries = []
+
+    def add(keywords, lieu, radius, category="stock", priorite=False, pages=1, entreprise=False):
+        queries.append({
+            "name": f"{keywords}{' (entreprise)' if entreprise else ''} · {lieu}", "enabled": True,
+            "category": category, "keywords": keywords, "location": lieu, "radius": str(radius),
+            "maxPages": max(1, int(pages)), "priorite": bool(priorite), "companysearch": bool(entreprise),
+        })
+
+    for poste in profil.get("postes") or []:
+        if not poste.get("enabled", True) or not poste.get("keywords"):
+            continue
+        extra = list(poste.get("lieuxEnPlus") or [])
+        for lieu in list(poste.get("lieux") or lieux) + extra:
+            # Villes en plus (Saint-Denis, Montreuil…) : déjà dans le rayon de Bondy, une page suffit.
+            add(poste["keywords"], lieu, poste.get("radius") or lieux.get(lieu) or "16",
+                poste.get("category", "stock"), poste.get("priorite"), 1 if lieu in extra else poste.get("maxPages", 1))
+    for secteur in profil.get("secteurs") or []:
+        if not secteur.get("enabled", True):
+            continue
+        for item in secteur.get("recherches") or []:
+            add(item["keywords"], item.get("lieu", "Paris"), item.get("radius", "16"), item.get("category", "stock"),
+                item.get("priorite"), item.get("maxPages", 1), item.get("entreprise", False))
+        for company in secteur.get("entreprises") or []:
+            add(company, secteur.get("lieu", "Bondy"), secteur.get("radius", "26"), "stock", False, 1, True)
+    return queries
+
+
+def jooble_queries(config):
+    """Recherches du profil RGRD puis celles de sources.json (« joobleQueries », profil de Zia),
+    sans doublon de nom."""
+    seen, queries = set(), []
+    for query in profile_queries(config) + list(config.get("joobleQueries") or DEFAULT_JOOBLE_QUERIES):
+        if query.get("name") not in seen:
+            seen.add(query.get("name"))
+            queries.append(query)
+    return queries
 
 
 def previous_jooble_yield():
@@ -1026,7 +1074,7 @@ def fetch_jooble_all(api_key, config, errors):
     Chaque offre garde le nom de sa recherche (« _q », retiré avant l'écriture) pour le rendement."""
     default_pages = max(1, int(config.get("joobleMaxPages", 1)))
     budget = max(1, int(config.get("joobleMaxRequestsPerRun", JOOBLE_BUDGET)))
-    first, rest = jooble_plan(config.get("joobleQueries") or DEFAULT_JOOBLE_QUERIES, JOOBLE_STATE["suite"])
+    first, rest = jooble_plan(jooble_queries(config), JOOBLE_STATE["suite"])
     if rest:
         JOOBLE_STATE["suite"] = rest[0].get("name", "")
     today = datetime.now(timezone.utc).date()
