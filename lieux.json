@@ -50,6 +50,15 @@
   "min": 50,
   "minAt": "2026-11-12"
  },
+ "bagnolet||93": {
+  "dept": "93",
+  "km": 6.0,
+  "label": "Bagnolet",
+  "lat": 48.8676,
+  "lon": 2.42502,
+  "min": 48,
+  "minAt": "2026-11-26"
+ },
  "bailly-romainvilliers|77700|77": {
   "dept": "77",
   "km": 24.9,
@@ -102,6 +111,15 @@
   "lon": 2.26884,
   "min": 59,
   "minAt": "2026-11-22"
+ },
+ "boissy-saint-léger||94": {
+  "dept": "94",
+  "km": 17.1,
+  "label": "Boissy-Saint-Léger",
+  "lat": 48.75128,
+  "lon": 2.52001,
+  "min": 93,
+  "minAt": "2026-11-26"
  },
  "bondy||93": {
   "dept": "93",
@@ -209,15 +227,6 @@
   "lon": 2.51116,
   "min": 56,
   "minAt": "2026-11-15"
- },
- "charny|77410|77": {
-  "dept": "77",
-  "km": 21.4,
-  "label": "Charny",
-  "lat": 48.97165,
-  "lon": 2.76005,
-  "min": null,
-  "minAt": "2026-11-26"
  },
  "chaville||92": {
   "dept": "92",
@@ -463,6 +472,15 @@
   "min": 97,
   "minAt": "2026-11-14"
  },
+ "fresnes||94": {
+  "dept": "94",
+  "km": 20.1,
+  "label": "Fresnes",
+  "lat": 48.75754,
+  "lon": 2.32454,
+  "min": 84,
+  "minAt": "2026-11-26"
+ },
  "frépillon||95": {
   "dept": "95",
   "km": 26.4,
@@ -568,6 +586,15 @@
   "min": 107,
   "minAt": "2026-11-15"
  },
+ "herblay||95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Herblay-sur-Seine",
+  "lat": 49.00406,
+  "lon": 2.15245,
+  "min": 104,
+  "minAt": "2026-11-26"
+ },
  "issy-les-moulineaux||92": {
   "km": 18.5,
   "label": "Issy-les-Moulineaux",
@@ -640,15 +667,6 @@
  },
  "la plaine saint-denis||93": {},
  "lagny-le-sec|60330|77": {},
- "lagny-sur-marne|77400|77": {
-  "dept": "77",
-  "km": 16.5,
-  "label": "Lagny-sur-Marne",
-  "lat": 48.87388,
-  "lon": 2.70579,
-  "min": 76,
-  "minAt": "2026-11-26"
- },
  "lagny-sur-marne||77": {
   "dept": "77",
   "km": 16.5,
@@ -888,6 +906,15 @@
   "min": 68,
   "minAt": "2026-11-26"
  },
+ "moisselles|95570|95": {
+  "dept": "95",
+  "km": 19.1,
+  "label": "Moisselles",
+  "lat": 49.04677,
+  "lon": 2.34056,
+  "min": 93,
+  "minAt": "2026-11-26"
+ },
  "moisselles||95": {
   "dept": "95",
   "km": 19.1,
@@ -959,15 +986,6 @@
   "minAt": "2026-11-12"
  },
  "morigny-champigny||94": {},
- "moussy-le-neuf|77230|77": {
-  "dept": "77",
-  "km": 19.9,
-  "label": "Moussy-le-Neuf",
-  "lat": 49.06532,
-  "lon": 2.60222,
-  "min": 99,
-  "minAt": "2026-11-26"
- },
  "nanterre|92000|92": {
   "km": 20.7,
   "label": "Nanterre",
@@ -1002,6 +1020,15 @@
   "lon": 2.70305,
   "min": 151,
   "minAt": "2026-11-16"
+ },
+ "neuilly-sur-marne||93": {
+  "dept": "93",
+  "km": 5.8,
+  "label": "Neuilly-sur-Marne",
+  "lat": 48.8649,
+  "lon": 2.53737,
+  "min": 56,
+  "minAt": "2026-11-26"
  },
  "neuilly-sur-seine||92": {
   "km": 16.2,
@@ -1215,15 +1242,6 @@
   "min": 58,
   "minAt": "2026-11-15"
  },
- "paris 5e arrondissement|75005|75": {
-  "dept": "75",
-  "km": 11.8,
-  "label": "Paris 5e Arrondissement",
-  "lat": 48.84528,
-  "lon": 2.35055,
-  "min": 60,
-  "minAt": "2026-11-26"
- },
  "paris 6e arrondissement|75006|75": {
   "dept": "75",
   "km": 12.8,
@@ -1424,15 +1442,6 @@
   "lon": 2.3334,
   "min": 56,
   "minAt": "2026-11-12"
- },
- "saint-soupplets||77": {
-  "dept": "77",
-  "km": 27.7,
-  "label": "Saint-Soupplets",
-  "lat": 49.03657,
-  "lon": 2.80622,
-  "min": 107,
-  "minAt": "2026-11-26"
  },
  "saint-thibault-des-vignes|77400|77": {
   "dept": "77",
@@ -1742,5 +1751,14 @@
   "lon": 2.61157,
   "min": 76,
   "minAt": "2026-11-21"
+ },
+ "épinay-sur-seine||93": {
+  "dept": "93",
+  "km": 13.6,
+  "label": "Épinay-sur-Seine",
+  "lat": 48.95527,
+  "lon": 2.31691,
+  "min": 67,
+  "minAt": "2026-11-26"
  }
 }
