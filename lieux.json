@@ -103,15 +103,6 @@
   "min": 59,
   "minAt": "2026-11-22"
  },
- "boissy-saint-léger||94": {
-  "dept": "94",
-  "km": 17.1,
-  "label": "Boissy-Saint-Léger",
-  "lat": 48.75128,
-  "lon": 2.52001,
-  "min": 93,
-  "minAt": "2026-11-26"
- },
  "bondy||93": {
   "dept": "93",
   "km": 0.0,
@@ -147,15 +138,6 @@
   "min": 118,
   "minAt": "2026-11-23"
  },
- "bry-sur-marne||94": {
-  "dept": "94",
-  "km": 7.7,
-  "label": "Bry-sur-Marne",
-  "lat": 48.83925,
-  "lon": 2.52319,
-  "min": 61,
-  "minAt": "2026-11-26"
- },
  "bussy-saint-georges||77": {
   "dept": "77",
   "km": 18.3,
@@ -164,15 +146,6 @@
   "lon": 2.71534,
   "min": 74,
   "minAt": "2026-11-12"
- },
- "cachan||94": {
-  "dept": "94",
-  "km": 16.8,
-  "label": "Cachan",
-  "lat": 48.79135,
-  "lon": 2.33152,
-  "min": 79,
-  "minAt": "2026-11-26"
  },
  "canton de goussainville||95": {
   "dept": "95",
@@ -490,14 +463,14 @@
   "min": 97,
   "minAt": "2026-11-14"
  },
- "fresnes||94": {
-  "dept": "94",
-  "km": 20.1,
-  "label": "Fresnes",
-  "lat": 48.75754,
-  "lon": 2.32454,
-  "min": 84,
-  "minAt": "2026-11-24"
+ "frépillon||95": {
+  "dept": "95",
+  "km": 26.4,
+  "label": "Frépillon",
+  "lat": 49.05127,
+  "lon": 2.20139,
+  "min": 99,
+  "minAt": "2026-11-26"
  },
  "gagny||93": {
   "dept": "93",
@@ -507,15 +480,6 @@
   "lon": 2.54565,
   "min": 43,
   "minAt": "2026-11-25"
- },
- "garches||92": {
-  "dept": "92",
-  "km": 22.6,
-  "label": "Garches",
-  "lat": 48.84709,
-  "lon": 2.18829,
-  "min": 80,
-  "minAt": "2026-11-16"
  },
  "garges-lès-gonesse-est||95": {
   "dept": "95",
@@ -933,6 +897,15 @@
   "min": 93,
   "minAt": "2026-11-14"
  },
+ "montfermeil||93": {
+  "dept": "93",
+  "km": 6.1,
+  "label": "Montfermeil",
+  "lat": 48.89703,
+  "lon": 2.56873,
+  "min": 47,
+  "minAt": "2026-11-26"
+ },
  "montigny-lès-cormeilles||95": {
   "dept": "95",
   "km": 23.5,
@@ -1029,24 +1002,6 @@
   "lon": 2.70305,
   "min": 151,
   "minAt": "2026-11-16"
- },
- "neuilly-plaisance||93": {
-  "dept": "93",
-  "km": 4.7,
-  "label": "Neuilly-Plaisance",
-  "lat": 48.86467,
-  "lon": 2.50964,
-  "min": 52,
-  "minAt": "2026-11-26"
- },
- "neuilly-sur-marne||93": {
-  "dept": "93",
-  "km": 5.8,
-  "label": "Neuilly-sur-Marne",
-  "lat": 48.8649,
-  "lon": 2.53737,
-  "min": 56,
-  "minAt": "2026-11-20"
  },
  "neuilly-sur-seine||92": {
   "km": 16.2,
@@ -1260,6 +1215,15 @@
   "min": 58,
   "minAt": "2026-11-15"
  },
+ "paris 5e arrondissement|75005|75": {
+  "dept": "75",
+  "km": 11.8,
+  "label": "Paris 5e Arrondissement",
+  "lat": 48.84528,
+  "lon": 2.35055,
+  "min": 60,
+  "minAt": "2026-11-26"
+ },
  "paris 6e arrondissement|75006|75": {
   "dept": "75",
   "km": 12.8,
@@ -1381,6 +1345,15 @@
   "minAt": "2026-11-12"
  },
  "république||": {},
+ "saint-brice-sous-forêt||95": {
+  "dept": "95",
+  "km": 14.7,
+  "label": "Saint-Brice-sous-Forêt",
+  "lat": 49.00169,
+  "lon": 2.35117,
+  "min": 87,
+  "minAt": "2026-11-26"
+ },
  "saint-cloud||92": {
   "km": 20.9,
   "label": "Saint-Cloud",
@@ -1451,6 +1424,15 @@
   "lon": 2.3334,
   "min": 56,
   "minAt": "2026-11-12"
+ },
+ "saint-soupplets||77": {
+  "dept": "77",
+  "km": 27.7,
+  "label": "Saint-Soupplets",
+  "lat": 49.03657,
+  "lon": 2.80622,
+  "min": 107,
+  "minAt": "2026-11-26"
  },
  "saint-thibault-des-vignes|77400|77": {
   "dept": "77",
@@ -1760,14 +1742,5 @@
   "lon": 2.61157,
   "min": 76,
   "minAt": "2026-11-21"
- },
- "épinay-sur-seine||93": {
-  "dept": "93",
-  "km": 13.6,
-  "label": "Épinay-sur-Seine",
-  "lat": 48.95527,
-  "lon": 2.31691,
-  "min": 67,
-  "minAt": "2026-11-25"
  }
 }
