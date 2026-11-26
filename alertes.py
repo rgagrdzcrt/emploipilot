@@ -177,7 +177,11 @@ def _decoded(link):
                 raw = gzip.decompress(raw)
         except Exception:
             continue
-        out.append(raw.decode("utf-8", "replace"))
+        text = raw.decode("utf-8", "replace")
+        # Segment chiffré (liens « engage.indeed.com » des e-mails promotionnels) : octets illisibles,
+        # ignorés ; ils abîmaient l'échantillon écrit dans le gist (27/11/2026).
+        if text and sum(ch.isprintable() for ch in text) >= 0.95 * len(text):
+            out.append(text)
     return " ".join(out)
 
 

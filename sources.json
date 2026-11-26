@@ -202,7 +202,7 @@
       },
       {
         "nom": "santé",
-        "_note": "Responsable logistique, magasinier et gestionnaire de stock dans les hôpitaux, cliniques et la pharmacie ; « entreprise » : nom de l'employeur (AP-HP, Hôpital…).",
+        "_note": "Responsable logistique, magasinier et gestionnaire de stock dans les hôpitaux, cliniques et la pharmacie. Recherche par mots-clés : la recherche par nom d'employeur (AP-HP, Hôpital, Clinique) ne donnait aucun résultat sur Jooble (collecte du 26/11/2026).",
         "recherches": [
           {
             "keywords": "responsable logistique hôpital",
@@ -250,20 +250,17 @@
             "radius": "26"
           },
           {
-            "keywords": "AP-HP",
-            "entreprise": true,
+            "keywords": "AP-HP logistique",
             "lieu": "Paris",
             "radius": "16"
           },
           {
-            "keywords": "Hôpital",
-            "entreprise": true,
+            "keywords": "magasinier hôpital",
             "lieu": "Bondy",
             "radius": "26"
           },
           {
-            "keywords": "Clinique",
-            "entreprise": true,
+            "keywords": "logistique clinique",
             "lieu": "Paris",
             "radius": "16"
           }
