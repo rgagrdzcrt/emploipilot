@@ -12,9 +12,19 @@ Toucher le logo bascule entre deux profils, définis dans `profiles.js`. Le logo
 
 | | Ryan | Zia |
 |---|---|---|
-| Métiers | Stock & logistique (tout ce qui touche au stock et à la réserve : agent, coordinateur ou gestionnaire de stock, stockiste, stockman, réserviste, employé de réserve…), Préparation de commandes (onglet à part), Encadrement en magasin (chefs et managers de rayon et de caisse), Logistique aéroport, Tri de colis — zones : 93 et 75 d'abord (recherches recentrées), en 92, 77 et 94 seulement les stockistes (onglet Aéroport à part) ; priorité aux stockistes (recherches prioritaires, offres gardées 15 jours au lieu de 5, jamais masquées par les types sauf cariste et direction) ; hors inventoriste, réceptionnaire (sauf « Magasinier réceptionnaire »), manutention, agent de quai, CACES, transport et livraison, encadrement de gros sites logistiques (responsable d'entrepôt, de secteur…) et responsables ou adjoints de magasin | Grande distribution, Vente, Restauration & café (service en salle, barista) |
+| Métiers | Stock & logistique (tout ce qui touche au stock et à la réserve : agent, coordinateur ou gestionnaire de stock, stockiste, stockman, réserviste, employé de réserve…), Préparation de commandes (onglet à part), Encadrement en magasin (chefs et managers de rayon et de caisse), Logistique aéroport, Tri de colis — zones : 93 et 75 d'abord (recherches recentrées), en 92, 77 et 94 seulement les stockistes (onglet Aéroport à part) ; priorité aux stockistes (recherches prioritaires, offres gardées 15 jours au lieu de 7, jamais masquées par les types sauf cariste et direction) ; hors inventoriste, réceptionnaire (sauf « Magasinier réceptionnaire »), manutention, agent de quai, CACES, transport et livraison, encadrement de gros sites logistiques (responsable d'entrepôt, de secteur…) et responsables ou adjoints de magasin | Grande distribution, Vente, Restauration & café (service en salle, barista) |
 | Lettres | Composées selon l'offre et l'entreprise (`compose.js`, `letters.js`), conformes au CV joint ; modèles par métier (`pilot.js`) ; téléchargeables en PDF (`letterpdf.js`) ; onglet **Lettre** pour une annonce trouvée ailleurs : on colle son texte (Indeed, HelloWork, LinkedIn, France Travail…), le poste, l'entreprise, la ville et le contrat sont lus (`lettre.js`) et la lettre se compose seule, sans IA | Modèles par métier (`profiles.js`) ; téléchargeables en PDF (`letterpdf.js`) |
 | Tri Gmail, onglet Mails | Oui | Non |
+
+**RGRD : niveaux et annonces d'agence (26/11/2026).** Chaque offre de Ryan a un niveau (`tiers` dans `profiles.js`, `tierOf` dans `pilot.js`). Le tri, la file « À postuler » et la liste (tri par adéquation) commencent par le cœur de cible ; la tuile « offres à trier » affiche combien il y en a.
+
+| Niveau | Offres | Envoyées / triées par Ryan |
+|---|---|---|
+| ★ Cœur de cible | Stockiste, réserve, réassort, gestionnaire, coordinateur ou responsable de stock ou de logistique, logisticien, onglet Aéroport | 47 % |
+| Bon | Magasinier et le reste | 17 % |
+| Repli | Préparation de commandes, tri, agent ou opérateur logistique, onglet Encadrement (chef ou manager de rayon : 0 sur 27) | 17 % |
+
+Avec « Dédupliquer les offres » coché, le même poste d'une agence d'intérim publié pour plusieurs lieux n'a plus qu'une carte, marquée « + N lieux » (`groupRepeats`, `collapseRepeats`). C'est celle déjà triée, sinon la plus proche. Les enseignes ne sont pas regroupées : deux magasins, ce sont deux postes.
 
 Chaque profil garde ses propres données sur l'appareil (offres suivies, critères, modèles, « Mes infos ») et se synchronise dans son propre fichier de gist (`zcrt-suivi.json` / `zcrt-suivi-zia.json`), même avec un seul compte GitHub. La collecte est commune : chaque profil n'affiche que ses métiers. Les métiers réellement collectés sont listés dans `"categories"` de `sources.json` (aujourd'hui `["stock", "preparation", "aeroport", "tri", "encadrement", "rayon", "vente", "restauration"]`) : les offres des autres métiers sont écartées et retirées d'`offres.json` à la collecte suivante. Adzuna (`maxRequestsPerRun` requêtes par collecte) et Jooble (`joobleMaxRequestsPerRun` pages par collecte, environ 450 acceptées par jour) ont un quota : les recherches marquées `"priorite": true` (stockiste, réserve, stock) passent à chaque collecte, les autres à tour de rôle. Les coordonnées et les CV ne sont pas dans le dépôt (public) : chacun les renseigne dans « Mes infos » et « CV à joindre ».
 
@@ -34,11 +44,24 @@ Chaque profil garde ses propres données sur l'appareil (offres suivies, critèr
 
 Recherche généraliste configurée par métier dans `sources.json`. La clé reste dans le secret GitHub `JOOBLE_API_KEY`. Au-delà d'environ 450 pages par jour, Jooble refuse les demandes (erreur 429) : la collecte s'arrête alors au premier refus, et la suivante reprend là où elle s'était arrêtée (`joobleSuite` dans `stats.json`), après les recherches prioritaires.
 
+**Rendement** (26/11/2026) : chaque recherche note dans `stats.json` (`joobleRendement`) les offres nouvelles réellement gardées et les pages lues. Une recherche qui n'apporte aucune offre nouvelle à 3 passages de suite est mise en pause, et ses pages vont aux autres. Elle est réessayée au bout de 7 jours, ou de 2 jours si elle est prioritaire. Le journal affiche les recherches en pause. Jooble n'a pas de filtre de date : sa documentation ne prévoit que les mots-clés, le lieu, le rayon, le salaire et la page.
+
+### Alertes e-mail (HelloWork, Meteojob, Indeed, LinkedIn)
+
+Ces sites n'ont pas d'API publique. Leurs alertes e-mail sont lues dans Gmail par `alertes.py`, à chaque collecte, en lecture seule et avec les mêmes secrets que le tri Gmail. Seuls le poste, l'entreprise, le lieu, le contrat, le salaire et l'adresse publique de l'annonce sont gardés. Les liens sont réduits à l'adresse de l'annonce (`fr.indeed.com/viewjob?jk=…`, `linkedin.com/jobs/view/…`), sans traceur ni jeton de connexion.
+
+- **HelloWork, Meteojob** : formats fixes, lus depuis octobre 2026.
+- **Indeed, LinkedIn** (26/11/2026) : une carte par lien d'offre. Le titre est le texte du lien, l'entreprise et le lieu sont les lignes qui suivent. Pour vérifier la lecture de leur format, les deux premières alertes de chaque site sont copiées, nettoyées (sans adresse e-mail ni paramètre de lien), dans le gist secret (`zcrt-alertes-echantillons.json`), jamais dans le dépôt. Le workflow de collecte reçoit pour cela `ZCRT_GIST_TOKEN`.
+
+Pour en profiter, il faut créer les alertes sur Indeed et LinkedIn, envoyées à l'adresse Gmail triée : stockiste, employé de réserve, gestionnaire de stock, coordinateur logistique… autour de Bondy et de Paris.
+
 ### France Travail
+
+**API plus disponible (constaté le 26/11/2026)** : les offres France Travail arrivent par EURES (ci-dessous). Le connecteur reste dans le code, inactif sans secrets.
 
 Connecteur officiel, gratuit, et la source la plus riche pour la logistique, la mise en rayon et la vente. **Inactif tant que ses deux secrets ne sont pas ajoutés** ; l’absence des secrets désactive cette source sans interrompre les autres.
 
-Une recherche par code métier ROME (`"rome"` dans `sources.json`, par exemple `N1103` : magasinage et préparation de commandes) ou par mot-clé (`"keywords"`), dans chaque département listé, limitée aux offres des 5 derniers jours (`"publieesDepuisJours"`). Une recherche en échec n’arrête pas les suivantes ; un jeton refusé arrête la source.
+Une recherche par code métier ROME (`"rome"` dans `sources.json`, par exemple `N1103` : magasinage et préparation de commandes) ou par mot-clé (`"keywords"`), dans chaque département listé, limitée aux offres des 7 derniers jours (`"publieesDepuisJours"`). Une recherche en échec n’arrête pas les suivantes ; un jeton refusé arrête la source.
 
 Pour l’activer (une seule fois) :
 
@@ -49,7 +72,7 @@ Pour l’activer (une seule fois) :
 
 ### EURES (offres France Travail, sans clé)
 
-EURES, le portail européen de l’emploi de la Commission européenne, rediffuse les offres de France Travail et de ses partenaires (agences d’intérim, Meteojob…). Sa recherche publique est lue sans compte ni clé, en lecture seule, avec 9 recherches sur le titre des offres (`"eures"` dans `sources.json` : stock et réserve, logistique, préparation, aéroport, tri et inventaire, rayon, magasin, vente, restauration). Seules les offres créées depuis 5 jours dans les départements listés sont gardées, puis triées par métier comme les autres.
+EURES, le portail européen de l’emploi de la Commission européenne, rediffuse les offres de France Travail et de ses partenaires (agences d’intérim, Meteojob…). Sa recherche publique est lue sans compte ni clé, en lecture seule, avec 9 recherches sur le titre des offres (`"eures"` dans `sources.json` : stock et réserve, logistique, préparation, aéroport, tri et inventaire, rayon, magasin, vente, restauration). Seules les offres créées depuis 7 jours dans les départements listés sont gardées, puis triées par métier comme les autres.
 
 Chaque offre renvoie directement à sa page France Travail (la référence France Travail est contenue dans l’identifiant EURES) et garde le même identifiant (`ft_…`) que si elle venait de l’API France Travail. EURES ne donne que le **département**, pas la ville : pas de temps de trajet pour ces offres, sauf quand la même offre arrive aussi par Jooble ou Adzuna (elle est alors fusionnée et prend leur ville). Dès que les secrets France Travail sont ajoutés, EURES est ignoré automatiquement (`"sansFranceTravail": true`) : l’API officielle donne les mêmes offres, avec la ville.
 
@@ -78,6 +101,8 @@ L’identifiant est la partie qui suit le domaine de la page carrière : par exe
 
 Les identifiants d’employeurs sont publics et ne sont pas des clés API. Les recherches d’entreprise sont limitées à la France et à l’Île-de-France lorsqu’elles le permettent. Les offres passent par les mêmes filtres de métier, de contrat et d’exclusion des stages que les autres.
 
+**Sondage du 26/11/2026** : environ 150 enseignes de mode, de luxe, de cosmétique, de sport, d'équipement de la maison et de grands magasins ont été testées sur ces sept plateformes : SmartRecruiters, Lever, Greenhouse, Ashby, Workable, Recruitee et Personio. Seule **Jacquemus** (Lever, région `eu`) publie des offres utiles en Île-de-France. Chez Lever, une offre sans département d'Île-de-France reconnu (boutique à l'étranger) est écartée. Sephora, Zara, Mango, Lacoste, PVH, Prada et les autres passent par des sites carrière sans API publique : leurs offres arrivent par Jooble, EURES ou les alertes e-mail.
+
 ### Flux RSS/Atom
 
 Des flux autorisés peuvent être ajoutés à `feeds`. Le collecteur ne visite pas les pages de sites d’emploi et ne récupère pas d’annonces par scraping.
@@ -89,6 +114,8 @@ Des flux autorisés peuvent être ajoutés à `feeds`. Le collecteur ne visite p
 - Lors d’une fusion, il conserve le statut et les dates de candidature déjà enregistrés.
 - Il retire une annonce publiée depuis plus de 45 jours seulement si elle n’a pas été revue depuis plus de 30 jours. Une annonce sans date connue est retirée uniquement si elle n’a pas été revue depuis plus de 30 jours.
 - Il exclut les stages et l’alternance, et garde les contrats indéterminés avec le statut « À vérifier ».
+- Il exclut les écoles et organismes de formation : titre « Formation… » ou « Formation qualifiante… », entreprises « … Academy », « … Campus », AIRSUP. Il exclut aussi des faux positifs : stockage d'énergie, technico-commercial, plongeur, préparateur-livreur, bagagistes « extras » d'hôtel.
+- **Journal des rejets** : `stats.json` (`rejets`) compte, pour chaque raison, les annonces reçues puis écartées, avec leurs 12 titres les plus fréquents. Il sert à vérifier qu'aucune bonne offre ne part.
 
 Le site garde également les notes, statuts et dates de candidature dans le navigateur. Pense à exporter une sauvegarde régulièrement.
 
@@ -135,7 +162,9 @@ Dans GitHub, ouvre **Actions → Collecte des offres → Run workflow**. Le work
 - EURES ne donne que le département des offres (pas de temps de trajet) et ne filtre pas lui-même par département : toute l’Île-de-France est lue puis triée. Ses recherches relient les mots par OU ; une expression entre guillemets n’est pas prise en compte.
 - Joblet est une recherche publique sans clé ; ses résultats ont un filtrage strict de la catégorie et du lieu avant ajout. **Désactivé depuis le 19/11/2026** (`"enabled": false` dans `sources.json`) : aucune offre France/Île-de-France retenue sur toutes les collectes vérifiées.
 - Workopia demande un renouvellement OAuth durable. Il est ignoré tant que les deux secrets dédiés ne sont pas configurés.
-- Greenhouse, Lever et Ashby restent inactifs faute d'employeurs pertinents configurés. SmartRecruiters est actif pour les tableaux Groupement Mousquetaires et Courir.
+- Greenhouse et Ashby restent inactifs faute d'employeurs pertinents. Lever est actif pour Jacquemus. SmartRecruiters est actif pour le Groupement Mousquetaires, Courir, SMCP, Kiabi, les Galeries Lafayette, Primark, Conforama et H&M.
+- La plupart des enseignes de mode et de luxe (Sephora, Zara, Mango, Lacoste…) n'ont pas d'API publique d'annonces : leurs offres n'arrivent que par Jooble, EURES ou les alertes e-mail.
+- Les alertes Indeed et LinkedIn sont lues sans exemple réel de leur format au départ : les échantillons du gist servent à corriger la lecture si une alerte donne « 0 offre » dans le journal de la collecte.
 - La Bonne Alternance est une API réelle, mais elle ne fournit que des offres en alternance. Elle n’est pas ajoutée au collecteur puisque ce site exclut actuellement l’alternance.
 - Les tâches planifiées de GitHub Actions sont retardées ou sautées. Constaté en novembre 2026 : la collecte, prévue toutes les 6 h, tourne environ toutes les 12 h ; le tri Gmail, prévu toutes les heures, environ toutes les 5 à 10 h. Un lancement manuel (**Run workflow**) reste possible à tout moment.
 

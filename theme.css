@@ -222,6 +222,11 @@ input[type="checkbox"] { accent-color: var(--brand); width: 16px; height: 16px; 
 .pill .ic { width: 13px; height: 13px; }
 .pill.green { background: color-mix(in srgb, var(--st-envoyee) 13%, transparent); color: var(--st-envoyee); }
 .pill.blue { background: color-mix(in srgb, var(--st-postuler) 13%, transparent); color: var(--st-postuler); }
+/* Niveaux d'intérêt (pilot.js, tierBadge) : ★ cœur de cible en avant, repli en retrait. */
+.pill.tier-coeur { background: var(--signal); color: var(--signal-ink); }
+.pill.tier-repli { background: transparent; border: 1px dashed var(--line, currentColor); color: var(--muted); }
+.tile-sub { display: block; font-size: 12px; font-weight: 700; opacity: .85; }
+.job-head .pill { flex: none; margin-top: 1px; }
 
 /* ---------- Statistiques ---------- */
 .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }

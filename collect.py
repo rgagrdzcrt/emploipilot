@@ -30,9 +30,9 @@ UA = "EmploiPilot/0.3 (personal job-search tool)"
 # dépasse MAX_AGE_DAYS ET si elle n'a plus été revue par une source depuis
 # MAX_UNSEEN_DAYS (elle a donc quitté la première page des résultats).
 MAX_AGE_DAYS = 45
-# Annonce publiée (ou mise à jour, pour Jooble) il y a plus de 5 jours : retirée
+# Annonce publiée (ou mise à jour, pour Jooble) il y a plus de 7 jours (5 jusqu'au 22/11/2026) : retirée
 # même si une source la propose encore.
-MAX_PUBLICATION_DAYS = 5
+MAX_PUBLICATION_DAYS = 7
 # Stockiste et postes voisins (réserve, stock associate, agent ou employé de stock…), cœur de la
 # recherche de Ryan : gardés 15 jours (choix du 21/11/2026). Même liste dans pilot.js (STOCKISTE_RE).
 MAX_STOCKISTE_DAYS = 15
@@ -45,7 +45,7 @@ STOCKISTE_RE = re.compile(
 
 
 def max_publication_days(title):
-    """Âge maximal d'une annonce : 15 jours pour les stockistes et la réserve, 5 pour le reste."""
+    """Âge maximal d'une annonce : 15 jours pour les stockistes et la réserve, 7 pour le reste."""
     return MAX_STOCKISTE_DAYS if STOCKISTE_RE.search(title or "") else MAX_PUBLICATION_DAYS
 MAX_UNSEEN_DAYS = 7
 
@@ -171,7 +171,7 @@ GARAGE_RE = re.compile(
 )
 # Autres métiers où « logistique » n'est qu'un à-côté du poste.
 STOCK_SIDE_RE = re.compile(
-    r"maintenance|sonorisation|services? g[eé]n[eé]raux|b[aâ]timent|r[eé]gie|[eé]v[eé]nementiel"
+    r"maintenance|sonorisation|services? g[eé]n[eé]raux|moyens g[eé]n[eé]raux|b[aâ]timent|r[eé]gie|[eé]v[eé]nementiel"
     r"|administrati|commercial|boulanger"
     r"|cantine|restauration scolaire|[eé]lectricien|monteur|m[eé]canicien|plombier|soudeur|frigoriste|chauffagiste",
     re.I,
@@ -238,6 +238,7 @@ STOCK_EXCLUDE_RE = re.compile(
     r"|(?:responsable|directeur|directrice|manager)\b.{0,25}(?:exploitation|plateforme|r[eé]gional|site\b)"
     r"|logistique r[eé]gional"
     r"|conseill|vend(?:eur|euse)|\bvente\b|caiss"  # stockiste / conseiller de vente : non voulu
+    r"|plong(?:eur|euse)"  # « Plongeur magasinier » : plonge en restauration (26/11/2026)
     # « Réserve » hors magasin : armée, gendarmerie, réserve naturelle ; « back of house » en cuisine.
     r"|r[eé]serv\w*\s+(?:naturel|op[eé]rationnel|militaire|citoyen|sanitaire|communal|de\s+(?:la\s+)?(?:gendarmerie|police|biosph))"
     r"|gendarm|militaire|sapeurs?.pompiers?|arm[eé]e\s+de\s+(?:terre|l['’]air)|marine\s+nationale"
@@ -263,7 +264,10 @@ STOCK_NAMED_RE = re.compile(
 PREPA_EXCLUDE_RE = re.compile(
     r"v[eé]hicule|automobile|\bauto\b|carross|pharmac|m[eé]dicament|st[eé]rilis|culinaire|cuisine|physique"
     r"|esth[eé]ti|peinture|bateau|nautique|mat[eé]riel\s+m[eé]dical|biolog|laborat|m[eé]cani|[eé]lectric"
-    r"|conseill|vend(?:eur|euse)|\bvente\b|caiss",  # poste mêlé de vente : comme pour le stock
+    r"|conseill|vend(?:eur|euse)|\bvente\b|caiss"  # poste mêlé de vente : comme pour le stock
+    # « Préparateur de commandes / livreur drive », « Chauffeur PL - préparateur » : transport et
+    # livraison non voulus, ici comme dans l'onglet Stock (26/11/2026).
+    r"|chauffeu|livreu|conducteu",
     re.I,
 )
 AEROPORT_EXCLUDE_RE = re.compile(
@@ -275,6 +279,7 @@ AEROPORT_EXCLUDE_RE = re.compile(
     r"|propret[eé]|nettoyage|entretien|m[eé]nage|vend|conseill|caiss"
     # Accueil et salons (service aux passagers), hôtellerie, chantiers, encadrement des opérations.
     r"|accueil|salon|lounge|voiturier|h[oô]tel|concierg|\bopc\b|\bprojets?\b|chantier|travaux"
+    r"|\bextras?\b"  # « Extras bagagistes » : bagagiste d'hôtel (26/11/2026)
     r"|(?:responsable|chef)\w*.{0,25}(?:exploitation|op[eé]rations)",
     re.I,
 )
@@ -379,9 +384,27 @@ NOT_TARGET_RE = re.compile(
     r"\bcloud\b|\bsre\b|devops|backup|sauvegarde|data ?cent(?:er|re)|stockage de donn[eé]es|\bstorage\b"
     r"|rayonnement|combustibles?"  # études nucléaires (« combustibles au stockage »)
     r"|serveurs?\s+(?:informatique|linux|windows|web|d['’]applications?)|administrat\w+\s+(?:syst|r[eé]seau|serveur)"
-    r"|(?:technicien|ing[eé]nieur)\w*\s+(?:syst|r[eé]seau|serveur|informatique)",
+    r"|(?:technicien|ing[eé]nieur)\w*\s+(?:syst|r[eé]seau|serveur|informatique)"
+    # Stockage d'énergie (batteries, BESS) et vente de rayonnages industriels (26/11/2026).
+    r"|stockage\s+(?:d['’]\s*)?[eé]nergie|\bbess\b|technico.?commercial|am[eé]nagement\s*(?:&|et)\s*stockage"
+    r"|stockage\s+industriel",
     re.I,
 )
+
+# Écoles et organismes de formation : une formation (« Formation agent d'escale », Eagle Academy,
+# Aerostaff Campus…) n'est pas un emploi (26/11/2026). L'employeur « École normale supérieure »
+# reste : le mot « école » seul n'est pas retenu.
+SCHOOL_TITLE_RE = re.compile(
+    r"^\W*formations?\b|\bformations?\s+(?:qualifiante|dipl[oô]mante|certifiante|gratuite|financ[eé]e|r[eé]mun[eé]r[eé]e)"
+    r"|\bpoei\b",
+    re.I,
+)
+SCHOOL_COMPANY_RE = re.compile(r"acad[eé]m(?:y|ie)\b|\bcampus\b|\bairsup\b|\bstudi\b|openclassrooms|ifocop", re.I)
+
+
+def is_school(title, company=""):
+    """Annonce d'une école ou d'une formation plutôt que d'un employeur."""
+    return bool(SCHOOL_TITLE_RE.search(title or "") or SCHOOL_COMPANY_RE.search(company or ""))
 
 PLACEHOLDER_COMPANY = "Entreprise à vérifier"
 PLACEHOLDER_LOCATION = "Lieu à vérifier dans l’annonce"
@@ -795,6 +818,51 @@ def stable_id(url):
     return hashlib.sha256(url.split("#", 1)[0].rstrip("/").encode()).hexdigest()[:16]
 
 
+# Journal des rejets (« rejets » dans stats.json, 26/11/2026) : nombre d'annonces reçues écartées
+# par raison, avec les titres les plus fréquents, pour vérifier qu'aucune bonne offre ne part.
+REJECTS = {}
+REJECT_EXAMPLES = 12
+
+
+def note_reject(reason, title):
+    titles = REJECTS.setdefault(reason, {})
+    key = re.sub(r"\s+", " ", GENDER_RE.sub(" ", title or "")).strip(" -–")[:90]
+    titles[key] = titles.get(key, 0) + 1
+
+
+def category_reject_reason(title):
+    """Pourquoi classify_category écarte ce titre (journal des rejets seulement)."""
+    if NOT_TARGET_RE.search(title):
+        return "autre métier (informatique, énergie…)"
+    if INVENTORY_COUNT_RE.search(title) and not re.search(r"stock|r[eé]serv", title, re.I):
+        return "inventoriste"
+    named = [name for name, pattern in CATEGORY_RE.items() if pattern.search(title)]
+    if not named:
+        return "aucun métier recherché dans le titre"
+    if not any(name in TARGET_CATEGORIES for name in named):
+        return f"métier non collecté ({named[0]})"
+    return f"écarté par les règles du métier « {named[0]} »"
+
+
+def reject_reason(title, text, company, contract, category, dept):
+    """Raison d'écarter une annonce reçue, ou "" si elle est gardée."""
+    if contract is None:
+        return "stage ou alternance"
+    if is_school(title, company):
+        return "école ou formation"
+    if category is None:
+        return category_reject_reason(title)
+    if dept == "HORS":
+        return "hors Île-de-France"
+    if dept in EXCLUDED_DEPTS:
+        return f"département exclu ({dept})"
+    if is_excluded_company(company):
+        return "entreprise exclue"
+    if caces_required(title, text):
+        return "CACES exigé"
+    return ""
+
+
 def make_offer(title, company, location, text, url, date, source, category=None):
     if not title or not url or urlparse(url).scheme not in {"http", "https"}:
         return None
@@ -805,10 +873,11 @@ def make_offer(title, company, location, text, url, date, source, category=None)
     category = classify_category(title_text)  # la catégorie de la requête est indicative
     dept = detect_dept(location) or detect_dept(title_text, postal=False)
 
-    # On exclut les stages/alternances, les métiers non recherchés, les lieux
-    # hors Île-de-France et les départements exclus.
-    if (contract is None or category is None or dept == "HORS" or dept in EXCLUDED_DEPTS
-            or is_excluded_company(company) or caces_required(title_text, body_text)):
+    # On exclut les stages/alternances, les écoles, les métiers non recherchés, les lieux
+    # hors Île-de-France et les départements exclus (raison notée dans le journal des rejets).
+    reason = reject_reason(title_text, body_text, company, contract, category, dept)
+    if reason:
+        note_reject(reason, title_text)
         return None
 
     parsed_date = parse_date(date)
@@ -876,7 +945,16 @@ def _jooble_page(api_key, query, page, per_page):
 # Jooble s'arrête au premier refus au lieu d'insister sur toutes les recherches restantes.
 JOOBLE_BUDGET = 110
 JOOBLE_PAUSE = 2  # secondes entre deux recherches
-JOOBLE_STATE = {"quota": False, "pages": 0, "suite": ""}
+JOOBLE_STATE = {"quota": False, "pages": 0, "suite": "", "rendement": {}, "ran": {}}
+# Rendement (« joobleRendement » dans stats.json, 26/11/2026) : offres nouvelles gardées et pages lues
+# par recherche, en moyenne glissante. Une recherche qui n'apporte aucune offre nouvelle à
+# JOOBLE_PAUSE_APRES passages de suite est mise en pause (ses pages vont aux autres), puis réessayée
+# au bout de JOOBLE_RETEST_JOURS jours (JOOBLE_RETEST_PRIORITE_JOURS pour les prioritaires).
+JOOBLE_PAUSE_APRES = 3
+JOOBLE_RETEST_JOURS = 7
+JOOBLE_RETEST_PRIORITE_JOURS = 2
+JOOBLE_DECAY = 0.7
+JOOBLE_OUBLI_JOURS = 30  # recherche renommée ou supprimée : son rendement est oublié
 
 
 def jooble_plan(queries, suite):
@@ -897,30 +975,91 @@ def previous_jooble_suite():
         return ""
 
 
+def previous_jooble_yield():
+    """Rendement des recherches Jooble, noté par la collecte précédente dans stats.json."""
+    try:
+        data = json.loads(STATS_FILE.read_text(encoding="utf-8")).get("joobleRendement")
+    except (OSError, ValueError, AttributeError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def jooble_paused(query, rendement, today):
+    """Vrai si la recherche n'a rien apporté de nouveau à ses derniers passages et attend son nouvel essai."""
+    info = rendement.get(query.get("name")) or {}
+    if int(info.get("vides") or 0) < JOOBLE_PAUSE_APRES:
+        return False
+    try:
+        last = datetime.fromisoformat(str(info.get("vu"))).date()
+    except ValueError:
+        return False
+    wait = JOOBLE_RETEST_PRIORITE_JOURS if query.get("priorite") else JOOBLE_RETEST_JOURS
+    return (today - last).days < wait
+
+
+def update_jooble_yield(new_by_query, today):
+    """Met à jour le rendement des recherches lancées à cette collecte (offres nouvelles gardées)."""
+    rendement = JOOBLE_STATE["rendement"]
+    for name, pages in JOOBLE_STATE["ran"].items():
+        info = rendement.get(name) or {}
+        new = int(new_by_query.get(name, 0))
+        rendement[name] = {
+            "nouvelles": round(JOOBLE_DECAY * float(info.get("nouvelles") or 0) + new, 2),
+            "pages": round(JOOBLE_DECAY * float(info.get("pages") or 0) + pages, 2),
+            "vides": 0 if new else int(info.get("vides") or 0) + 1,
+            "vu": today.isoformat(),
+        }
+    for name in list(rendement):
+        try:
+            last = datetime.fromisoformat(str(rendement[name].get("vu"))).date()
+        except (ValueError, AttributeError):
+            last = None
+        if last is None or (today - last).days > JOOBLE_OUBLI_JOURS:
+            del rendement[name]
+    for entry in SOURCE_STATS:
+        if entry.get("source") == "Jooble" and entry.get("recherche") in JOOBLE_STATE["ran"]:
+            entry["nouvelles"] = int(new_by_query.get(entry["recherche"], 0))
+
+
 def fetch_jooble_all(api_key, config, errors):
-    """Toutes les recherches Jooble de la collecte (voir JOOBLE_BUDGET)."""
+    """Toutes les recherches Jooble de la collecte (voir JOOBLE_BUDGET et JOOBLE_PAUSE_APRES).
+    Chaque offre garde le nom de sa recherche (« _q », retiré avant l'écriture) pour le rendement."""
     default_pages = max(1, int(config.get("joobleMaxPages", 1)))
     budget = max(1, int(config.get("joobleMaxRequestsPerRun", JOOBLE_BUDGET)))
     first, rest = jooble_plan(config.get("joobleQueries") or DEFAULT_JOOBLE_QUERIES, JOOBLE_STATE["suite"])
     if rest:
         JOOBLE_STATE["suite"] = rest[0].get("name", "")
-    offers = []
+    today = datetime.now(timezone.utc).date()
+    offers, paused = [], []
     for i, query in enumerate(first + rest):
         if JOOBLE_STATE["quota"] or JOOBLE_STATE["pages"] >= budget:
             why = "refus 429" if JOOBLE_STATE["quota"] else f"{budget} pages lues"
             print(f"Jooble : {why}, recherches suivantes reportées à la prochaine collecte "
                   f"(reprise à « {JOOBLE_STATE['suite']} »).")
             break
+        name = query.get("name", "?")
+        if jooble_paused(query, JOOBLE_STATE.get("rendement") or {}, today):
+            paused.append(name)
+            if i >= len(first):
+                JOOBLE_STATE["suite"] = rest[(i - len(first) + 1) % len(rest)].get("name", "")
+            continue
         pages = min(max(1, int(query.get("maxPages", default_pages))), budget - JOOBLE_STATE["pages"])
         try:
-            offers.extend(fetch_jooble(api_key, query, max_pages=pages))
+            found = fetch_jooble(api_key, query, max_pages=pages)
+            for offer in found:
+                offer["_q"] = name
+            offers.extend(found)
+            JOOBLE_STATE.setdefault("ran", {})[name] = SOURCE_STATS[-1]["pages"] if SOURCE_STATS else pages
             done = True
         except Exception as exc:
-            errors.append({"source": f"Jooble/{query.get('name', '?')}", "error": type(exc).__name__})
+            errors.append({"source": f"Jooble/{name}", "error": type(exc).__name__})
             done = not JOOBLE_STATE["quota"]  # refusée faute de quota : elle repassera en premier
         if i >= len(first) and done:
             JOOBLE_STATE["suite"] = rest[(i - len(first) + 1) % len(rest)].get("name", "")
         time.sleep(JOOBLE_PAUSE)
+    if paused:
+        print(f"Jooble : {len(paused)} recherche(s) en pause (aucune offre nouvelle à {JOOBLE_PAUSE_APRES} "
+              f"passages de suite) : {', '.join(paused)}.")
     return offers
 
 
@@ -1878,6 +2017,11 @@ def fetch_lever(cfg):
                 date=job.get("createdAt") or "",
                 source="Lever",
             )
+            # Lieu précis chez Lever : sans département d'Île-de-France reconnu, l'offre est à l'étranger
+            # ou en province (« Crans-Montana », boutiques à l'étranger) : écartée.
+            if offer and offer.get("dept") not in IDF_DEPTS:
+                note_reject("employeur : hors Île-de-France", offer["title"])
+                offer = None
             if offer:
                 offer["id"] = f"lever_{slug}_{job.get('id') or stable_id(url)}"
                 if categories.get("commitment"):
@@ -2152,6 +2296,8 @@ def refresh_offer(offer):
         dept = ""
     if is_excluded_company(offer.get("company")) and not tracked:
         return "entreprise exclue"
+    if is_school(title, offer.get("company")) and not tracked:
+        return "école ou formation"
     if dept in EXCLUDED_DEPTS and not tracked:
         return "département exclu (" + dept + ")"
     offer["dept"] = dept
@@ -2303,6 +2449,7 @@ def main():
     # Jooble : une requête par métier visé (configurable dans sources.json), dans la limite du quota.
     api_key = os.environ.get("JOOBLE_API_KEY", "").strip()
     JOOBLE_STATE["suite"] = previous_jooble_suite()
+    JOOBLE_STATE["rendement"] = previous_jooble_yield()
     if not api_key:
         print("Jooble ignoré : secret JOOBLE_API_KEY absent.")
     else:
@@ -2464,6 +2611,16 @@ def main():
         removed_by_rule[f"publiées il y a plus de {MAX_PUBLICATION_DAYS} jours "
                         f"({MAX_STOCKISTE_DAYS} pour les stockistes)"] = len(too_old)
 
+    # Rendement Jooble : offres nouvelles réellement gardées, par recherche.
+    final = {id(o) for o in offers}
+    new_by_query = {}
+    for item in new_items:
+        if id(item) in final and item.get("_q"):
+            new_by_query[item["_q"]] = new_by_query.get(item["_q"], 0) + 1
+    update_jooble_yield(new_by_query, today)
+    for item in merged:
+        item.pop("_q", None)
+
     write_offers(offers)
     save_pending_alert([item for item in new_items if item in offers])
     write_stats(offers, new_count, removed_by_rule, now)
@@ -2495,8 +2652,18 @@ def write_stats(offers, new_count, removed_by_rule, now):
         "nouvelles": new_count,
         "offres_finales_par_source": dict(sorted(by_source.items(), key=lambda kv: -kv[1])),
         "retirees": removed_by_rule,
+        # Annonces reçues puis écartées, par raison, avec leurs titres les plus fréquents.
+        "rejets": {
+            reason: {
+                "nombre": sum(titles.values()),
+                "exemples": [f"{t} (×{n})" if n > 1 else t
+                             for t, n in sorted(titles.items(), key=lambda kv: -kv[1])[:REJECT_EXAMPLES]],
+            }
+            for reason, titles in sorted(REJECTS.items(), key=lambda kv: -sum(kv[1].values()))
+        },
         "recherches": SOURCE_STATS,
         "joobleSuite": JOOBLE_STATE["suite"],  # reprise des recherches Jooble à la collecte suivante
+        "joobleRendement": JOOBLE_STATE["rendement"],
     }, ensure_ascii=False, indent=1), encoding="utf-8")
 
 

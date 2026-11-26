@@ -82,14 +82,14 @@ class Categories(unittest.TestCase):
                 self.assertEqual(self.cat(title), expected)
 
     def test_delai_stockistes(self):
-        # Stockiste et postes voisins : 15 jours ; le reste : 5 jours.
+        # Stockiste et postes voisins : 15 jours ; le reste : 7 jours.
         for title in ("Stockiste H/F", "Stockman", "Employé de réserve", "Hôtesse de réserve", "Réserviste 25h",
                       "Stock Associate", "Agent de stock", "Employée de stock", "Back of House Associate"):
             with self.subTest(title=title):
                 self.assertEqual(collect.max_publication_days(title), 15)
         for title in ("Magasinier", "Gestionnaire de stock", "Préparateur de commandes", "Chef de rayon"):
             with self.subTest(title=title):
-                self.assertEqual(collect.max_publication_days(title), 5)
+                self.assertEqual(collect.max_publication_days(title), 7)
 
     def test_encadrement_en_magasin(self):
         # Revue du 21/11/2026 : chefs et managers de rayon, de caisse ou de drive ; ni responsable, ni
@@ -443,3 +443,114 @@ class JoobleQuota(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Refonte(unittest.TestCase):
+    """Refonte du 26/11/2026 : écoles, faux positifs, journal des rejets, rendement Jooble."""
+
+    def test_ecoles_et_formations_ecartees(self):
+        for title, company in (("Agent / Agente d'escale aéroportuaire (H/F)", "EAGLE ACADEMY"),
+                               ("Agent de Piste Bagagiste H/F", "AEROSTAFF CAMPUS"),
+                               ("Formation Qualifiante pour devenir Agent d'Escale H/F", "AIRSUP"),
+                               ("Formation Agent Bagagiste H/F", "GI Group Holding")):
+            with self.subTest(title=title):
+                self.assertTrue(collect.is_school(title, company))
+                self.assertIsNone(collect.make_offer(title, company, "Roissy-en-France (95)", "", "https://ex.fr/1",
+                                                     "", "Test"))
+        # Un employeur qui s'appelle « École » reste ; « formation CACES offerte » n'est pas une école.
+        self.assertFalse(collect.is_school("Agent Logistique", "ECOLE NORMALE SUPERIEURE"))
+        self.assertFalse(collect.is_school("Magasinier - formation CACES offerte", "Leroy Merlin"))
+
+    def test_faux_positifs_ecartes(self):
+        for title in ("Responsable Stockage Energie / BESS C&I H/F", "Technico-Commercial - Aménagement & Stockage Industriel",
+                      "Plongeur Magasinier (H/F)", "Magasinier Plongeur (H/F)", "Agent Polyvalent Logistique/Moyens Généraux",
+                      "Préparateur de commandes / livreur drive F/H", "Chauffeur Poids Lourd - Préparateur de Commandes",
+                      "Extras Bagagistes"):
+            with self.subTest(title=title):
+                self.assertIsNone(collect.classify_category(title))
+        for title, cat in (("Magasinier H/F", "stock"), ("Préparateur de commandes H/F", "preparation"),
+                           ("Bagagiste H/F", "aeroport"), ("Stockiste - Centre commercial Rosny 2", "stock")):
+            with self.subTest(title=title):
+                self.assertEqual(collect.classify_category(title), cat)
+
+    def test_journal_des_rejets(self):
+        collect.REJECTS.clear()
+        collect.make_offer("Stage magasinier", "Leroy Merlin", "Bondy", "", "https://ex.fr/2", "", "Test")
+        collect.make_offer("Développeur web", "ACME", "Paris", "", "https://ex.fr/3", "", "Test")
+        collect.make_offer("Développeur web", "ACME", "Paris", "", "https://ex.fr/4", "", "Test")
+        collect.make_offer("Magasinier H/F", "ACME", "Lyon", "", "https://ex.fr/5", "", "Test")
+        self.assertEqual(collect.REJECTS["stage ou alternance"], {"Stage magasinier": 1})
+        self.assertEqual(collect.REJECTS["aucun métier recherché dans le titre"], {"Développeur web": 2})
+        self.assertEqual(collect.REJECTS["hors Île-de-France"], {"Magasinier": 1})
+        collect.REJECTS.clear()
+
+    def test_rendement_jooble_et_pause(self):
+        from datetime import date
+        from unittest import mock
+        today = date(2026, 11, 26)
+        state = {"quota": False, "pages": 0, "suite": "", "rendement": {}, "ran": {"vide": 1, "bonne": 2}}
+        with mock.patch.object(collect, "JOOBLE_STATE", state), mock.patch.object(collect, "SOURCE_STATS", []):
+            for _ in range(3):
+                collect.update_jooble_yield({"bonne": 4}, today)
+        self.assertEqual(state["rendement"]["vide"]["vides"], 3)
+        self.assertEqual(state["rendement"]["bonne"]["vides"], 0)
+        # Trois passages sans offre nouvelle : en pause 7 jours (2 pour une recherche prioritaire).
+        self.assertTrue(collect.jooble_paused({"name": "vide"}, state["rendement"], today))
+        self.assertTrue(collect.jooble_paused({"name": "vide"}, state["rendement"], date(2026, 12, 2)))
+        self.assertFalse(collect.jooble_paused({"name": "vide"}, state["rendement"], date(2026, 12, 3)))
+        self.assertFalse(collect.jooble_paused({"name": "vide", "priorite": True}, state["rendement"], date(2026, 11, 28)))
+        self.assertFalse(collect.jooble_paused({"name": "bonne"}, state["rendement"], today))
+
+
+class AlertesIndeedLinkedIn(unittest.TestCase):
+    """Alertes e-mail Indeed et LinkedIn (alertes.py) : une carte par lien d'offre, liens sans traceurs."""
+
+    LINKEDIN = (
+        '<p>Votre alerte emploi : stockiste</p>'
+        '<a href="https://www.linkedin.com/comm/jobs/view/4012345678/?trackingId=a&amp;otpToken=SECRET"><img alt="logo"></a>'
+        '<a href="https://www.linkedin.com/comm/jobs/view/4012345678/?trackingId=a&amp;otpToken=SECRET">Stockiste H/F</a>'
+        '<p>Sephora · Paris, Île-de-France, France</p><p>Candidature simplifiée</p>'
+        '<a href="https://www.linkedin.com/comm/jobs/view/4099999999/?trackingId=b">Gestionnaire de stock</a>'
+        '<p>Zara</p><p>Montreuil, Île-de-France, France</p>'
+        '<a href="https://www.linkedin.com/comm/jobs/search/?keywords=stockiste">Voir toutes les offres</a>'
+        '<p>Envoyé à quelquun@example.com</p>'
+    )
+
+    def test_linkedin(self):
+        import alertes
+        found = alertes.parse_job_cards(self.LINKEDIN)
+        self.assertEqual([(o["title"], o["company"], o["location"], o["url"]) for o in found], [
+            ("Stockiste H/F", "Sephora", "Paris, Île-de-France, France", "https://www.linkedin.com/jobs/view/4012345678/"),
+            ("Gestionnaire de stock", "Zara", "Montreuil, Île-de-France, France",
+             "https://www.linkedin.com/jobs/view/4099999999/"),
+        ])
+
+    def test_indeed_lien_direct_et_lien_de_suivi(self):
+        import alertes, base64, gzip, json
+        target = json.dumps({"u": "https://fr.indeed.com/rc/clk?jk=0123456789abcdef&from=ja&alid=9"}).encode()
+        payload = base64.urlsafe_b64encode(gzip.compress(target)).decode().rstrip("=")
+        markup = (f'<a href="https://cts.indeed.com/v3/{payload}"><h2>Employé de réserve H/F</h2></a>'
+                  '<span>Mango</span><span>Paris (75)</span><span>Facile à postuler</span><span>CDI</span>'
+                  '<a href="https://fr.indeed.com/rc/clk/dl?jk=fedcba9876543210&amp;from=ja&amp;tk=1">Magasinier</a>'
+                  '<span>Leroy Merlin - Rosny-sous-Bois (93)</span>')
+        found = alertes.parse_job_cards(markup)
+        self.assertEqual([(o["title"], o["company"], o["location"], o["contract"], o["url"]) for o in found], [
+            ("Employé de réserve H/F", "Mango", "Paris (75)", "CDI", "https://fr.indeed.com/viewjob?jk=0123456789abcdef"),
+            ("Magasinier", "Leroy Merlin", "Rosny-sous-Bois (93)", "", "https://fr.indeed.com/viewjob?jk=fedcba9876543210"),
+        ])
+
+    def test_echantillon_sans_jeton_ni_adresse(self):
+        import alertes, json
+        sample = json.dumps(alertes.sample_of("LinkedIn", "Alerte", "2026-11-26", {"text/html": self.LINKEDIN},
+                                              alertes.parse_job_cards(self.LINKEDIN)), ensure_ascii=False)
+        self.assertNotIn("SECRET", sample)
+        self.assertNotIn("example.com", sample)
+        self.assertNotIn("trackingId", sample)
+
+    def test_partie_texte(self):
+        import alertes
+        text = ("Stockiste H/F\nSephora\nParis, Île-de-France, France\n"
+                "Voir l'offre : https://www.linkedin.com/comm/jobs/view/4012345678/?trackingId=x\n")
+        found = alertes.parse_job_text(text)
+        self.assertEqual([(o["title"], o["company"], o["location"]) for o in found],
+                         [("Stockiste H/F", "Sephora", "Paris, Île-de-France, France")])

@@ -35,10 +35,13 @@ jobs:
           WORKOPIA_CLIENT_ID: ${{ secrets.WORKOPIA_CLIENT_ID }}
           WORKOPIA_REFRESH_TOKEN: ${{ secrets.WORKOPIA_REFRESH_TOKEN }}
           PRIM_API_KEY: ${{ secrets.PRIM_API_KEY }}
-          # Alertes e-mail HelloWork / Meteojob : mêmes secrets que le tri Gmail (lecture seule).
+          # Alertes e-mail HelloWork / Meteojob / Indeed / LinkedIn : mêmes secrets que le tri Gmail (lecture seule).
           GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
           GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
           GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
+          # Échantillons nettoyés des alertes Indeed / LinkedIn, écrits dans le gist secret (jamais dans le dépôt).
+          ZCRT_GIST_TOKEN: ${{ secrets.ZCRT_GIST_TOKEN }}
+          ZCRT_GIST_ID: ${{ secrets.ZCRT_GIST_ID }}
         run: python collect.py
 
       - name: Enregistrer les changements

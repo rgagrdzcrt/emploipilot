@@ -228,9 +228,10 @@ test('stockistes : 15 jours et jamais masqués par un type, sauf cariste et dire
   const daysAgo = n => new Date(Date.now() - n * 864e5).toISOString();
   assert.strictEqual(t.maxAgeDays({ title: 'Stockiste H/F' }), 15);
   assert.strictEqual(t.maxAgeDays({ title: 'Employé de réserve' }), 15);
-  assert.strictEqual(t.maxAgeDays({ title: 'Magasinier' }), 5);
+  assert.strictEqual(t.maxAgeDays({ title: 'Magasinier' }), 7);
   assert.strictEqual(t.tooOld({ title: 'Stockiste', date: daysAgo(10) }), false);
   assert.strictEqual(t.tooOld({ title: 'Magasinier', date: daysAgo(10) }), true);
+  assert.strictEqual(t.tooOld({ title: 'Magasinier', date: daysAgo(6) }), false);
   assert.strictEqual(t.tooOld({ title: 'Stockiste', date: daysAgo(16) }), true);
   // Types masqués par défaut (luxe, cosmétique, week-end…) : sans effet sur un stockiste.
   assert.strictEqual(t.hidingType({ title: 'Stockiste luxe H/F' }), undefined);
@@ -350,4 +351,32 @@ test('aucun caractère de contrôle dans les fichiers du site', () => {
   for (const f of ['app.js', 'pilot.js', 'profiles.js', 'ui.js', 'compose.js', 'letters.js', 'letterpdf.js', 'lettre.js', 'sw.js', 'index.html']) {
     assert.ok(!/[\x00-\x08\x0b\x0c\x0e-\x1f]/.test(read(f)), f);
   }
+});
+
+test('niveaux RGRD : cœur de cible, bon, repli (choix du 26/11/2026)', () => {
+  const src = read('pilot.js');
+  const cut = (a, b) => { const i = src.indexOf(a), j = src.indexOf(b, i); assert.ok(i >= 0 && j > i, a); return src.slice(i, j); };
+  const code = cut('const STOCKISTE_RE', 'function maxAgeDays') + cut('const TIERS', '/* ---------- Tri et file');
+  const t = new Function('ACTIVE_PROFILE', 'categoryOf', 'isExcluded', 'travelCost', 'deptOf', 'esc',
+    code + ';return {tierOf, collapseRepeats, REPEATS};')(
+    ryan, o => o.category, () => false, o => o.trajetMin ?? 1e6, o => o.dept || '', s => String(s));
+  const cases = [
+    ['Stockiste H/F', 'stock', 'coeur'], ['Employé·e de Réserve CDI 35H', 'stock', 'coeur'],
+    ['Gestionnaire de Stocks et Approvisionnements', 'stock', 'coeur'], ['Coordinateur logistique (H/F)', 'stock', 'coeur'],
+    ['EMPLOYÉ(E) LOGISTIQUE ET RÉASSORT BOUTIQUE', 'stock', 'coeur'], ['Agent de piste H/F', 'aeroport', 'coeur'],
+    ['Magasinier H/F', 'stock', 'bon'], ['Magasinier - Préparateur de commandes', 'stock', 'bon'],
+    ['Agent logistique H/F', 'stock', 'repli'], ['Opérateur polyvalent logistique', 'stock', 'repli'],
+    ['Préparateur de commandes', 'preparation', 'repli'], ['Manager de rayon frais', 'encadrement', 'repli'],
+  ];
+  for (const [title, category, tier] of cases) assert.strictEqual(t.tierOf({ title, category }), tier, title);
+
+  // Même poste d'une agence pour plusieurs lieux : une carte (déjà triée, sinon la plus proche).
+  const o = (id, company, location, trajetMin, status) => ({ id, title: 'Préparateur de Commandes (h/f)', company, location, trajetMin, status, category: 'preparation' });
+  const list = [o('a', 'ADECCO Groupe France', 'Roissy', 70), o('b', 'Adecco - France', 'Bondy', 20), o('c', 'ADECCO', 'Gonesse', 60),
+    { id: 'm1', title: 'Manager de rayon', company: 'Intermarché', location: 'Paris 10e' },
+    { id: 'm2', title: 'Manager de rayon', company: 'Intermarché', location: 'Bondy' }];
+  assert.deepStrictEqual(t.collapseRepeats(list).map(x => x.id), ['b', 'm1', 'm2']);
+  assert.deepStrictEqual(t.REPEATS.get('b'), ['Gonesse', 'Roissy']); // du plus proche au plus loin
+  const triaged = [o('a', 'ADECCO', 'Roissy', 70, 'Ignorée'), o('b', 'Adecco', 'Bondy', 20)];
+  assert.deepStrictEqual(t.collapseRepeats(triaged).map(x => x.id), ['a']); // la carte ignorée emporte le groupe
 });

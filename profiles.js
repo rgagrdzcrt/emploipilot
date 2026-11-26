@@ -41,7 +41,22 @@ const ZCRT_PROFILES = {
     cats: ['stock', 'preparation', 'encadrement', 'aeroport', 'tri'],
     tag: 'Logistique & magasin',  // étiquette du bandeau d'accueil (les 5 métiers à la suite débordent)
     // Tri au doigt : préparateur de commandes en dernier (surqualifié, gardé en solution de repli).
+    // Remplacé par les niveaux ci-dessous (tiers), qui le mettent aussi en repli.
     triageLastTitles: /pr[eé]parat(?:eur|rice) de commandes/i,
+    // Niveaux d'intérêt (26/11/2026, pilot.js, tierOf) : ★ cœur de cible en tête du tri, de la file et
+    // de la liste ; repli en dernier. Tirés des choix de Ryan (733 offres triées) : aéroport 71 %
+    // d'envoyées, gestionnaire ou coordinateur de stock 48 %, stockiste et réserve 46 %, coordinateur
+    // ou responsable logistique 46 % ; magasinier 27 % (bon) ; préparateur 25 %, agent ou opérateur
+    // logistique 20 %, chef ou manager de rayon 0 sur 27 (repli). Stockistes (STOCKISTE_RE) : cœur.
+    tiers: {
+      coeurCats: ['aeroport'],
+      repliCats: ['preparation', 'tri', 'encadrement'],
+      coeur: /stockist|stockman|r[eé]assort|(?:gestionnaire|coordinat|responsable|charg[eé]|contr[oô]l|adjoint|assistant|technicien|chef\s+d['’ ]\s*[eé]quipe)\S*(?:\s+\S+){0,3}?\s+(?:de\s+|des\s+|du\s+|en\s+|aux\s+)?(?:stocks?|logisti\S*)\b|logisticien|stock\s+manager|supply\s+chain\s+(?:assistant|coordinat)/i,
+      bon: /magasini/i,
+      repli: /pr[eé]parat|\btri\b|trieu|manutention|(?:agent|op[eé]rat|employ[eé])\S*(?:\s+\S+){0,2}?\s+(?:de\s+|en\s+)?logisti|\bextras?\b/i,
+    },
+    // Même poste d'une agence d'intérim publié pour plusieurs lieux : une seule carte (pilot.js, collapseRepeats).
+    groupRepeats: true,
     // Les suivis rayon / vente posés avant cette date sont supprimés, sur chaque appareil et dans
     // le gist (pilot.js, isPurged). Une candidature hors logistique faite ensuite reste suivie.
     purgeOtherCatsBefore: Date.UTC(2026, 10, 14),
@@ -54,7 +69,7 @@ const ZCRT_PROFILES = {
     // Offres non voulues (mêmes règles que collect.py) : retirées de « À postuler ».
     unwanted: {
       // Autre métier, poste trop senior, cariste / CACES, poste mêlé de vente.
-      title: /cariste|conducteur d['’ ]engins?|chariot|c[aà]c[eèé]s|conseill|vend(?:eur|euse)|\bvente\b|caiss|\bsi\b|chef de projet|soutien logistique|\bsli\b|d[eé]fense|biomasse|chantier|usinage|sciage|efficacit[eé] [eé]nerg|cadre sup|\bd['’ ]affaires\b|logisti\w*\s+et\s+[eé]v[eèé]nementiel|\brh\b|area manager|supply chain manager|tracfin|(?:responsable|directeur|directrice|manager)\b.{0,25}(?:exploitation|plateforme|r[eé]gional|site\b)|logistique r[eé]gional/i,
+      title: /plong(?:eur|euse)|stockage\s+(?:d['’]\s*)?[eé]nergie|\bbess\b|technico.?commercial|^\W*formations?\b|\bformations?\s+(?:qualifiante|dipl[oô]mante|certifiante|gratuite|financ[eé]e|r[eé]mun[eé]r[eé]e)|\bpoei\b|cariste|conducteur d['’ ]engins?|chariot|c[aà]c[eèé]s|conseill|vend(?:eur|euse)|\bvente\b|caiss|\bsi\b|chef de projet|soutien logistique|\bsli\b|d[eé]fense|biomasse|chantier|usinage|sciage|efficacit[eé] [eé]nerg|cadre sup|\bd['’ ]affaires\b|logisti\w*\s+et\s+[eé]v[eèé]nementiel|\brh\b|area manager|supply chain manager|tracfin|(?:responsable|directeur|directrice|manager)\b.{0,25}(?:exploitation|plateforme|r[eé]gional|site\b)|logistique r[eé]gional/i,
       // Écartés sauf si le titre nomme aussi le stock (tout ce qui touche au stock est voulu) :
       // [mots écartés, mots qui gardent l'offre].
       unless: [
@@ -75,8 +90,9 @@ const ZCRT_PROFILES = {
         [/(?:responsable|directeu|directrice|g[eé]rant|manager|chef|adjoint|assistant|second)\S*(?:\s+\S+){0,4}?\s+(?:magasin|boutique|point\s+de\s+vente|supermarch|hypermarch|sup[eé]rette|surface\s+de\s+vente|store|shop)|(?:store|shop|assistant)\s+manager|co.?manager|adjoint\S*\s+de\s+direction/i,
           /rayon|caisse|secteur|univers|d[eé]partement|department|frais|drive/i, ['encadrement']],
       ],
-      // Entreprises écartées quel que soit le métier (comme EXCLUDED_COMPANIES dans collect.py).
-      company: /michael\W*page/i,
+      // Entreprises écartées quel que soit le métier (comme EXCLUDED_COMPANIES dans collect.py),
+      // et écoles ou organismes de formation (comme SCHOOL_COMPANY_RE, 26/11/2026).
+      company: /michael\W*page|acad[eé]m(?:y|ie)\b|\bcampus\b|\bairsup\b|\bstudi\b|openclassrooms|ifocop/i,
       cacesInText: true,  // CACES obligatoire / exigé / requis dans le texte de l'annonce
       // Règles d'intitulé ci-dessus : métiers de la logistique seulement (« Chef de rayon » ou
       // « Chef de caisse » sont voulus dans l'onglet Encadrement), sauf celles qui nomment leurs onglets.

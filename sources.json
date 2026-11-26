@@ -1274,7 +1274,7 @@
         "rome": "G1801"
       }
     ],
-    "_note": "Une recherche par code métier ROME et par département, offres des 5 derniers jours (« publieesDepuisJours »). Inactif tant que les secrets FT_CLIENT_ID et FT_CLIENT_SECRET ne sont pas ajoutés dans GitHub (voir README)."
+    "_note": "Une recherche par code métier ROME et par département, offres des 7 derniers jours (« publieesDepuisJours »). Inactif tant que les secrets FT_CLIENT_ID et FT_CLIENT_SECRET ne sont pas ajoutés dans GitHub (voir README)."
   },
   "eures": {
     "enabled": true,
@@ -1856,7 +1856,7 @@
         "distance": 8
       }
     ],
-    "maxDaysOld": 5
+    "maxDaysOld": 7
   },
   "joblet": {
     "enabled": false,
@@ -1945,7 +1945,15 @@
   },
   "lever": {
     "enabled": true,
-    "sites": []
+    "sites": [
+      {
+        "name": "Jacquemus",
+        "slug": "jacquemus",
+        "region": "eu",
+        "enabled": true,
+        "_note": "Sondage du 26/11/2026 : seule enseigne de mode ou de luxe trouvée avec une API publique d'annonces (Lever) ; « Stockiste tissu et composant » au siège parisien."
+      }
+    ]
   },
   "smartRecruiters": {
     "enabled": true,

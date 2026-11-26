@@ -416,7 +416,7 @@ const JOB_TYPES = [
   { id: 'interim', label: 'Missions d’intérim', test: o => norm(o.contract) === 'interim' },
   { id: 'direction', label: 'Postes de direction (directeur, head of)', re: /directeur|directrice|\bdirection\b|head of/i },
 ];
-const MAX_OFFER_AGE_DAYS = 5; // annonces publiées il y a plus de 5 jours : masquées (même limite que collect.py)
+const MAX_OFFER_AGE_DAYS = 7; // annonces publiées il y a plus de 7 jours : masquées (même limite que collect.py)
 // Stockiste et postes voisins (réserve, stock associate, agent ou employé de stock…) : gardés 15 jours
 // et jamais masqués par un type (luxe, cosmétique, week-end…), sauf cariste et direction
 // (choix du 21/11/2026 ; même liste que STOCKISTE_RE dans collect.py).
@@ -473,7 +473,7 @@ const HORS_REPEREES = ['À postuler', 'Ignorée', 'Candidature envoyée', 'Entre
 /** Offres repérées d'une catégorie, comptées exactement comme la liste (doublons, masquage, statuts). */
 function repereesOf(cat) {
   let list = offers.filter(o => categoryOf(o) === cat);
-  if (document.getElementById('hideDuplicates')?.checked) list = dedupe(list);
+  if (document.getElementById('hideDuplicates')?.checked) list = collapseRepeats(dedupe(list));
   if (document.getElementById('hideExcluded')?.checked) list = list.filter(o => !isExcluded(o));
   return list.filter(o => !HORS_REPEREES.includes(o.status));
 }
@@ -607,6 +607,75 @@ function autoRelances() {
   if (n) { save(); toast(n + ' candidature(s) à relancer'); }
 }
 
+/* ---------- Niveaux d'intérêt (profiles.js, tiers ; profil de Ryan, 26/11/2026) ---------- */
+// ★ cœur de cible, bon, repli : le tri, la file et la liste des offres commencent par le cœur.
+// Règles tirées des choix de Ryan (offres envoyées / ignorées) : voir tiers dans profiles.js.
+const TIERS = ACTIVE_PROFILE.tiers || null;
+const TIER_RANK = { coeur: 0, bon: 1, repli: 2 };
+
+/** Niveau d'une offre : métier de l'onglet d'abord, puis mots du titre ('bon' à défaut). */
+function tierOf(o) {
+  if (!TIERS) return 'bon';
+  const cat = categoryOf(o), title = o.title || '';
+  if ((TIERS.repliCats || []).includes(cat)) return 'repli';
+  if ((TIERS.coeurCats || []).includes(cat) || isStockiste(o) || (TIERS.coeur && TIERS.coeur.test(title))) return 'coeur';
+  if (TIERS.bon && TIERS.bon.test(title)) return 'bon';
+  return TIERS.repli && TIERS.repli.test(title) ? 'repli' : 'bon';
+}
+function tierRank(o) { return TIERS ? TIER_RANK[tierOf(o)] : 0; }
+function tierBadge(o) {
+  if (!TIERS) return '';
+  const t = tierOf(o);
+  if (t === 'coeur') return '<span class="pill tier-coeur" title="Cœur de cible : passe en premier">★ Cœur de cible</span>';
+  return t === 'repli' ? '<span class="pill tier-repli" title="Solution de repli : passe en dernier">Repli</span>' : '';
+}
+
+/* ---------- Annonces répétées d'une agence (profiles.js, groupRepeats ; 26/11/2026) ---------- */
+// Même poste chez la même agence d'intérim ou de recrutement, publié pour plusieurs lieux : une
+// seule carte (celle déjà triée, sinon la plus proche), avec « + N lieux ». Les enseignes
+// (Intermarché, Carrefour…) ne sont pas regroupées : deux magasins, deux postes.
+const AGENCY_RE = /int[eé]rim|adecco|manpower|randstad|synergie|proman|\bcrit\b|start\s*people|samsic|partnaire|actual|supplay|temporis|kelly|iziwork|staffmatch|expectra|ergalis|triangle|leader\s+int|gi\s*group|gi\s+life|job\s*link|link\s*rh|hubjob|interaction|domino|human\s*recrute|proratis|fastroad|mistertemp|qapa|extracadabra|aquila|r[eé]seau\s+alliance|recrutement|staffing|\brh\b/i;
+const AGENCY_WORDS = new Set(['groupe', 'group', 'holding', 'france', 'sas', 'sasu', 'sarl', 'sa', 'interim', 'emploi', 'solution',
+  'solutions', 'travail', 'temporaire', 'tt', 'agence', 'recrutement', 'rh', 'service', 'services', 'by', 'de', 'du', 'la', 'le',
+  'les', 'et', 'the', 'l', 'd']);
+const REPEATS = new Map(); // id de la carte gardée → lieux des annonces regroupées avec elle
+
+/** Clé d'un poste d'agence : nom de l'agence (sans « Groupe », « France », « Intérim »…) et titre (sans H/F). */
+function repeatKey(o) {
+  if (!ACTIVE_PROFILE.groupRepeats || !AGENCY_RE.test(o.company || '')) return '';
+  const words = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/\(?\b[hfx]\s*\/\s*[hfx](\s*\/\s*[hfx])?\b\)?/g, ' ').split(/[^a-z0-9]+/).filter(Boolean);
+  const agency = words(o.company).find(w => !AGENCY_WORDS.has(w));
+  const title = words(o.title).map(w => w.replace(/s$/, '')).join(' ');
+  return agency && title ? agency + '|' + title : '';
+}
+
+/** Une carte par poste d'agence répété ; les autres lieux sont notés dans REPEATS. */
+function collapseRepeats(list) {
+  if (!ACTIVE_PROFILE.groupRepeats) return list;
+  const groups = new Map();
+  list.forEach(o => {
+    REPEATS.delete(o.id);
+    const k = repeatKey(o);
+    if (k) groups.set(k, [...(groups.get(k) || []), o]);
+  });
+  const drop = new Set();
+  const rank = o => [(o.status || 'À examiner') !== 'À examiner' ? 0 : 1, isExcluded(o) ? 1 : 0, travelCost(o)];
+  groups.forEach(members => {
+    if (members.length < 2) return;
+    members.sort((a, b) => { const x = rank(a), y = rank(b); return x[0] - y[0] || x[1] - y[1] || x[2] - y[2]; });
+    REPEATS.set(members[0].id, members.slice(1).map(o => o.location || deptOf(o) || 'lieu à vérifier'));
+    members.slice(1).forEach(o => drop.add(o));
+  });
+  return drop.size ? list.filter(o => !drop.has(o)) : list;
+}
+
+function repeatBadge(o) {
+  const others = REPEATS.get(o.id);
+  if (!others || !others.length) return '';
+  return `<span class="pill" title="Même annonce de l’agence aussi à : ${esc(others.join(' · '))}">+ ${others.length} lieu${others.length > 1 ? 'x' : ''}</span>`;
+}
+
 /* ---------- Tri et file de candidature ---------- */
 
 let pilot = null; // { mode: 'triage' | 'queue', ids, i, undo }
@@ -614,9 +683,9 @@ let pilot = null; // { mode: 'triage' | 'queue', ids, i, undo }
 function pilotList(mode) {
   const wanted = mode === 'triage' ? 'À examiner' : 'À postuler';
   const hideExcluded = document.getElementById('hideExcluded')?.checked;
-  // Mêmes doublons retirés que dans la liste des offres.
+  // Mêmes doublons (et annonces d'agence répétées) retirés que dans la liste des offres.
   // Seulement les métiers du profil actif (l'autre profil a ses propres offres dans offres.json).
-  return (document.getElementById('hideDuplicates')?.checked ? dedupe(offers) : offers)
+  return (document.getElementById('hideDuplicates')?.checked ? collapseRepeats(dedupe(offers)) : offers)
     // Offres non voulues (profiles.js, unwanted) : jamais proposées, même avant la prochaine collecte.
     .filter(o => (o.status || 'À examiner') === wanted && CATS.includes(categoryOf(o)) && !(hideExcluded && isExcluded(o))
       && !isUnwanted(o))
@@ -625,8 +694,10 @@ function pilotList(mode) {
       : (a, b) => triageRank(a, mode) - triageRank(b, mode) || score(b) - score(a));
 }
 
-/** Tri au doigt : les métiers « triageLast » (et les titres « triageLastTitles ») du profil passent après les autres. */
+/** Tri au doigt : les métiers « triageLast » (et les titres « triageLastTitles ») du profil passent après les autres.
+ * Profil avec niveaux (tiers) : ★ cœur de cible, puis bon, puis repli, au tri comme dans la file. */
 function triageRank(o, mode) {
+  if (TIERS) return tierRank(o);
   if (mode !== 'triage') return 0;
   if ((ACTIVE_PROFILE.triageLast || []).includes(categoryOf(o))) return 1;
   return ACTIVE_PROFILE.triageLastTitles && ACTIVE_PROFILE.triageLastTitles.test(o.title || '') ? 1 : 0;
@@ -646,7 +717,15 @@ function offerTime(o) { return parseDate(offerDate(o))?.getTime() || 0; }
 
 function updatePilotBar() {
   const t = document.getElementById('triageCount'), q = document.getElementById('queueCount');
-  if (t) t.textContent = pilotList('triage').length;
+  const triage = pilotList('triage');
+  if (t) t.textContent = triage.length;
+  // « À examiner » : dont ★ cœur de cible (profil avec niveaux).
+  const core = document.getElementById('statCore');
+  if (core) {
+    const n = TIERS ? triage.filter(o => tierOf(o) === 'coeur').length : 0;
+    core.textContent = TIERS ? '★ ' + n + ' cœur de cible' : '';
+    core.hidden = !TIERS;
+  }
   const queued = pilotList('queue').length;
   if (q) q.textContent = queued;
   document.querySelectorAll('[data-nav-count="queue"]').forEach(el => { el.textContent = queued || ''; el.hidden = !queued; });
@@ -846,7 +925,7 @@ function drawPilot() {
   }
   const cat = jobCategory(o);
   const head = `<div class="pilot-head"><span class="pill blue">${title} · ${pilot.i + 1} / ${total}</span>
-    ${pilotCatPill(cat)}
+    ${pilotCatPill(cat)}${tierBadge(o)}${repeatBadge(o)}
     <button class="ghost" data-act="close">Fermer<span class="key-hint"> (Échap)</span></button></div>
     <h2>${esc(o.title)}</h2><div class="job-meta">${metaLine(o)}</div>`;
 
