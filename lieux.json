@@ -50,6 +50,15 @@
   "min": 50,
   "minAt": "2026-11-12"
  },
+ "bagnolet||93": {
+  "dept": "93",
+  "km": 6.0,
+  "label": "Bagnolet",
+  "lat": 48.8676,
+  "lon": 2.42502,
+  "min": 48,
+  "minAt": "2026-11-26"
+ },
  "bailly-romainvilliers|77700|77": {
   "dept": "77",
   "km": 24.9,
@@ -147,15 +156,6 @@
   "min": 74,
   "minAt": "2026-11-12"
  },
- "cachan||94": {
-  "dept": "94",
-  "km": 16.8,
-  "label": "Cachan",
-  "lat": 48.79135,
-  "lon": 2.33152,
-  "min": 79,
-  "minAt": "2026-11-25"
- },
  "canton de goussainville||95": {
   "dept": "95",
   "km": 13.9,
@@ -219,15 +219,6 @@
   "min": 56,
   "minAt": "2026-11-15"
  },
- "charny|77410|77": {
-  "dept": "77",
-  "km": 21.4,
-  "label": "Charny",
-  "lat": 48.97165,
-  "lon": 2.76005,
-  "min": null,
-  "minAt": "2026-11-25"
- },
  "chaville||92": {
   "dept": "92",
   "km": 24.1,
@@ -272,15 +263,6 @@
   "lon": 2.76478,
   "min": 106,
   "minAt": "2026-11-14"
- },
- "chevilly-larue||94": {
-  "dept": "94",
-  "km": 18.1,
-  "label": "Chevilly-Larue",
-  "lat": 48.76752,
-  "lon": 2.35088,
-  "min": 90,
-  "minAt": "2026-11-25"
  },
  "châtillon||92": {
   "km": 18.3,
@@ -586,6 +568,15 @@
   "min": 107,
   "minAt": "2026-11-15"
  },
+ "herblay||95": {
+  "dept": "95",
+  "km": 26.7,
+  "label": "Herblay-sur-Seine",
+  "lat": 49.00406,
+  "lon": 2.15245,
+  "min": 104,
+  "minAt": "2026-11-26"
+ },
  "issy-les-moulineaux||92": {
   "km": 18.5,
   "label": "Issy-les-Moulineaux",
@@ -657,6 +648,15 @@
   "minAt": "2026-11-14"
  },
  "la plaine saint-denis||93": {},
+ "la queue-en-brie||94": {
+  "dept": "94",
+  "km": 14.8,
+  "label": "La Queue-en-Brie",
+  "lat": 48.78623,
+  "lon": 2.57913,
+  "min": 71,
+  "minAt": "2026-11-26"
+ },
  "lagny-le-sec|60330|77": {},
  "lagny-sur-marne||77": {
   "dept": "77",
@@ -693,6 +693,15 @@
   "lon": 2.35582,
   "min": 72,
   "minAt": "2026-10-28"
+ },
+ "le mesnil-amelot||77": {
+  "dept": "77",
+  "km": 15.1,
+  "label": "Le Mesnil-Amelot",
+  "lat": 49.0196,
+  "lon": 2.59354,
+  "min": 77,
+  "minAt": "2026-11-26"
  },
  "le mée-sur-seine||77": {
   "dept": "77",
@@ -737,15 +746,6 @@
   "lon": 1.98385,
   "min": 118,
   "minAt": "2026-11-17"
- },
- "les lilas||93": {
-  "dept": "93",
-  "km": 5.4,
-  "label": "Les Lilas",
-  "lat": 48.88054,
-  "lon": 2.42074,
-  "min": 52,
-  "minAt": "2026-11-25"
  },
  "les pavillons-sous-bois||93": {
   "dept": "93",
@@ -897,14 +897,14 @@
   "min": 90,
   "minAt": "2026-11-14"
  },
- "mitry-mory||77": {
-  "dept": "77",
-  "km": 10.9,
-  "label": "Mitry-Mory",
-  "lat": 48.96321,
-  "lon": 2.6044,
-  "min": 68,
-  "minAt": "2026-11-25"
+ "moisselles|95570|95": {
+  "dept": "95",
+  "km": 19.1,
+  "label": "Moisselles",
+  "lat": 49.04677,
+  "lon": 2.34056,
+  "min": 93,
+  "minAt": "2026-11-26"
  },
  "moisselles||95": {
   "dept": "95",
@@ -914,15 +914,6 @@
   "lon": 2.34056,
   "min": 93,
   "minAt": "2026-11-14"
- },
- "montfermeil||93": {
-  "dept": "93",
-  "km": 6.1,
-  "label": "Montfermeil",
-  "lat": 48.89703,
-  "lon": 2.56873,
-  "min": 47,
-  "minAt": "2026-11-25"
  },
  "montigny-lès-cormeilles||95": {
   "dept": "95",
@@ -1028,6 +1019,15 @@
   "lon": 2.26587,
   "min": 60,
   "minAt": "2026-11-12"
+ },
+ "nogent-sur-marne||94": {
+  "dept": "94",
+  "km": 7.4,
+  "label": "Nogent-sur-Marne",
+  "lat": 48.83747,
+  "lon": 2.48091,
+  "min": 58,
+  "minAt": "2026-11-26"
  },
  "noisiel||77": {
   "dept": "77",
@@ -1224,6 +1224,15 @@
   "min": 58,
   "minAt": "2026-11-15"
  },
+ "paris 5e arrondissement|75005|75": {
+  "dept": "75",
+  "km": 11.8,
+  "label": "Paris 5e Arrondissement",
+  "lat": 48.84528,
+  "lon": 2.35055,
+  "min": 60,
+  "minAt": "2026-11-26"
+ },
  "paris 6e arrondissement|75006|75": {
   "dept": "75",
   "km": 12.8,
@@ -1294,7 +1303,6 @@
   "min": 60,
   "minAt": "2026-11-12"
  },
- "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
@@ -1370,6 +1378,15 @@
   "min": 79,
   "minAt": "2026-11-18"
  },
+ "saint-mandé||94": {
+  "dept": "94",
+  "km": 8.4,
+  "label": "Saint-Mandé",
+  "lat": 48.84153,
+  "lon": 2.41944,
+  "min": 64,
+  "minAt": "2026-11-26"
+ },
  "saint-mard||77": {
   "dept": "77",
   "km": 21.2,
@@ -1414,15 +1431,6 @@
   "lon": 2.3334,
   "min": 56,
   "minAt": "2026-11-12"
- },
- "saint-soupplets||77": {
-  "dept": "77",
-  "km": 27.7,
-  "label": "Saint-Soupplets",
-  "lat": 49.03657,
-  "lon": 2.80622,
-  "min": 107,
-  "minAt": "2026-11-25"
  },
  "saint-thibault-des-vignes|77400|77": {
   "dept": "77",
@@ -1520,7 +1528,7 @@
   "lat": 48.77067,
   "lon": 2.5284,
   "min": 77,
-  "minAt": "2026-10-26"
+  "minAt": "2026-11-26"
  },
  "sucy-en-brie||94": {
   "dept": "94",
