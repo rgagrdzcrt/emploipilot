@@ -112,15 +112,6 @@
   "min": 59,
   "minAt": "2026-11-22"
  },
- "boissy-saint-léger||94": {
-  "dept": "94",
-  "km": 17.1,
-  "label": "Boissy-Saint-Léger",
-  "lat": 48.75128,
-  "lon": 2.52001,
-  "min": 93,
-  "minAt": "2026-11-26"
- },
  "bondy||93": {
   "dept": "93",
   "km": 0.0,
@@ -227,6 +218,15 @@
   "lon": 2.51116,
   "min": 56,
   "minAt": "2026-11-15"
+ },
+ "charny|77410|77": {
+  "dept": "77",
+  "km": 21.4,
+  "label": "Charny",
+  "lat": 48.97165,
+  "lon": 2.76005,
+  "min": null,
+  "minAt": "2026-11-27"
  },
  "chaville||92": {
   "dept": "92",
@@ -429,6 +429,15 @@
   "min": 36,
   "minAt": "2026-11-13"
  },
+ "ermont||95": {
+  "dept": "95",
+  "km": 19.2,
+  "label": "Ermont",
+  "lat": 48.98906,
+  "lon": 2.2574,
+  "min": 80,
+  "minAt": "2026-11-27"
+ },
  "faremoutiers||IDF": {
   "dept": "77",
   "km": 39.6,
@@ -454,15 +463,6 @@
   "lon": 2.47351,
   "min": 56,
   "minAt": "2026-11-12"
- },
- "fontenay-trésigny||77": {
-  "dept": "77",
-  "km": 36.3,
-  "label": "Fontenay-Trésigny",
-  "lat": 48.70235,
-  "lon": 2.87571,
-  "min": 150,
-  "minAt": "2026-11-23"
  },
  "franconville||95": {
   "km": 21.3,
@@ -667,6 +667,15 @@
  },
  "la plaine saint-denis||93": {},
  "lagny-le-sec|60330|77": {},
+ "lagny-sur-marne|77400|77": {
+  "dept": "77",
+  "km": 16.5,
+  "label": "Lagny-sur-Marne",
+  "lat": 48.87388,
+  "lon": 2.70579,
+  "min": 76,
+  "minAt": "2026-11-27"
+ },
  "lagny-sur-marne||77": {
   "dept": "77",
   "km": 16.5,
@@ -924,15 +933,6 @@
   "min": 93,
   "minAt": "2026-11-14"
  },
- "montfermeil||93": {
-  "dept": "93",
-  "km": 6.1,
-  "label": "Montfermeil",
-  "lat": 48.89703,
-  "lon": 2.56873,
-  "min": 47,
-  "minAt": "2026-11-26"
- },
  "montigny-lès-cormeilles||95": {
   "dept": "95",
   "km": 23.5,
@@ -986,6 +986,15 @@
   "minAt": "2026-11-12"
  },
  "morigny-champigny||94": {},
+ "moussy-le-neuf|77230|77": {
+  "dept": "77",
+  "km": 19.9,
+  "label": "Moussy-le-Neuf",
+  "lat": 49.06532,
+  "lon": 2.60222,
+  "min": 99,
+  "minAt": "2026-11-27"
+ },
  "nanterre|92000|92": {
   "km": 20.7,
   "label": "Nanterre",
@@ -1020,15 +1029,6 @@
   "lon": 2.70305,
   "min": 151,
   "minAt": "2026-11-16"
- },
- "neuilly-sur-marne||93": {
-  "dept": "93",
-  "km": 5.8,
-  "label": "Neuilly-sur-Marne",
-  "lat": 48.8649,
-  "lon": 2.53737,
-  "min": 56,
-  "minAt": "2026-11-26"
  },
  "neuilly-sur-seine||92": {
   "km": 16.2,
@@ -1312,7 +1312,6 @@
   "min": 60,
   "minAt": "2026-11-12"
  },
- "roissy-charles-de-gaulle||": {},
  "roissy-en-brie||77": {
   "km": 17.5,
   "label": "Roissy-en-Brie",
@@ -1363,15 +1362,6 @@
   "minAt": "2026-11-12"
  },
  "république||": {},
- "saint-brice-sous-forêt||95": {
-  "dept": "95",
-  "km": 14.7,
-  "label": "Saint-Brice-sous-Forêt",
-  "lat": 49.00169,
-  "lon": 2.35117,
-  "min": 87,
-  "minAt": "2026-11-26"
- },
  "saint-cloud||92": {
   "km": 20.9,
   "label": "Saint-Cloud",
@@ -1405,7 +1395,7 @@
   "lat": 49.0372,
   "lon": 2.69192,
   "min": 84,
-  "minAt": "2026-10-27"
+  "minAt": "2026-11-27"
  },
  "saint-mard||IDF": {
   "dept": "77",
@@ -1487,6 +1477,15 @@
   "lon": 2.57666,
   "min": 117,
   "minAt": "2026-11-25"
+ },
+ "sceaux||92": {
+  "dept": "92",
+  "km": 19.7,
+  "label": "Sceaux",
+  "lat": 48.77719,
+  "lon": 2.29615,
+  "min": 80,
+  "minAt": "2026-11-27"
  },
  "serris||77": {
   "km": 22.8,
@@ -1574,15 +1573,6 @@
   "min": 70,
   "minAt": "2026-11-12"
  },
- "valenton||94": {
-  "dept": "94",
-  "km": 17.3,
-  "label": "Valenton",
-  "lat": 48.74932,
-  "lon": 2.45916,
-  "min": 87,
-  "minAt": "2026-11-22"
- },
  "vanves||92": {
   "dept": "92",
   "km": 17.2,
@@ -1618,6 +1608,15 @@
   "lon": 2.23543,
   "min": 98,
   "minAt": "2026-11-19"
+ },
+ "villecresnes||94": {
+  "dept": "94",
+  "km": 20.7,
+  "label": "Villecresnes",
+  "lat": 48.72004,
+  "lon": 2.5296,
+  "min": 103,
+  "minAt": "2026-11-27"
  },
  "villemomble||93": {
   "dept": "93",
