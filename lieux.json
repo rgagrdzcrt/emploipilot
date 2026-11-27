@@ -1,4 +1,13 @@
 {
+ "ablon-sur-seine||94": {
+  "dept": "94",
+  "km": 20.4,
+  "label": "Ablon-sur-Seine",
+  "lat": 48.7247,
+  "lon": 2.42285,
+  "min": 84,
+  "minAt": "2026-11-27"
+ },
  "alfortville||94": {
   "dept": "94",
   "km": 12.7,
@@ -859,15 +868,6 @@
   "min": 93,
   "minAt": "2026-11-14"
  },
- "montfermeil||93": {
-  "dept": "93",
-  "km": 6.1,
-  "label": "Montfermeil",
-  "lat": 48.89703,
-  "lon": 2.56873,
-  "min": 47,
-  "minAt": "2026-11-27"
- },
  "montigny-lès-cormeilles||95": {
   "dept": "95",
   "km": 23.5,
@@ -876,15 +876,6 @@
   "lon": 2.19375,
   "min": 93,
   "minAt": "2026-11-22"
- },
- "montmagny||95": {
-  "dept": "95",
-  "km": 12.4,
-  "label": "Montmagny",
-  "lat": 48.96767,
-  "lon": 2.34704,
-  "min": 80,
-  "minAt": "2026-11-27"
  },
  "montreuil||93": {
   "km": 5.2,
@@ -1553,15 +1544,6 @@
   "lon": 2.23543,
   "min": 98,
   "minAt": "2026-11-19"
- },
- "villecresnes||94": {
-  "dept": "94",
-  "km": 20.7,
-  "label": "Villecresnes",
-  "lat": 48.72004,
-  "lon": 2.5296,
-  "min": 103,
-  "minAt": "2026-11-27"
  },
  "villemomble||93": {
   "dept": "93",
