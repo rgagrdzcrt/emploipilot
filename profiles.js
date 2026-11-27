@@ -61,7 +61,8 @@ const ZCRT_PROFILES = {
         sante: /(?:responsable|coordinat|technicien|chef|adjoint)\S*(?:\s+\S+){0,3}?\s+(?:de\s+|en\s+)?logisti|logisticien|gestionnaire|magasini|stock/i,
         logisticiens: /magasini|stock|gestionnaire|coordinat|chef\s+d['’ ]\s*[eé]quipe|logisticien/i,
       },
-      bon: /magasini|(?:coordinat|responsable|assistant|gestionnaire|chef\s+d['’ ]\s*[eé]quipe|adjoint|technicien)\S*(?:\s+\S+){0,2}?\s+(?:de\s+|en\s+)?logisti/i,
+      // Référent logistique (et approvisionnement) et économe : ajoutés le 27/11/2026.
+      bon: /magasini|[eé]conome|(?:coordinat|responsable|assistant|gestionnaire|r[eé]f[eé]rent|chef\s+d['’ ]\s*[eé]quipe|adjoint|technicien)\S*(?:\s+\S+){0,2}?\s+(?:de\s+|en\s+)?logisti/i,
       repli: /pr[eé]parat|\btri\b|trieu|manutention|(?:agent|op[eé]rat|employ[eé])\S*(?:\s+\S+){0,2}?\s+(?:de\s+|en\s+)?logisti|\bextras?\b/i,
       minFit: 20,
     },
@@ -70,8 +71,9 @@ const ZCRT_PROFILES = {
     // aéroport plus recherché (27/11/2026), grande distribution masquée (2 candidatures sur 85 offres vues).
     sectors: [
       { id: 'sante', label: 'Santé',
-        re: /h[oô]pita|hospitali|clinique|\bap-?hp\b|\bghu\b|\bchu\b|ehpad|maternit|m[eé]dical|m[eé]dico|pharma|\bsant[eé]\b|laborato|biolog|\bhad\b|dialyse|radiolog|institut curie|gustave roussy|fondation (?:rothschild|adolphe)|croix.rouge|korian|orpea|emeis|ramsay|elsan|vivalto|sanofi|servier|ipsen|biogaran|alliance healthcare|\bcerp\b/i,
-        text: /[eé]tablissements? de sant[eé]|milieu hospitalier|secteur (?:hospitalier|m[eé]dical|de la sant[eé]|pharmaceutique)|dispositifs? m[eé]dicaux|mat[eé]riel m[eé]dical|produits? pharmaceutiques?|industrie pharmaceutique|r[eé]partiteur pharmaceutique/i },
+        // Prestataires de santé à domicile (PSAD) et matériel médical ajoutés le 27/11/2026 (SANTE_RE dans collect.py).
+        re: /h[oô]pita|hospitali|clinique|\bap-?hp\b|\bghu\b|\bchu\b|ehpad|maternit|m[eé]dical|m[eé]dico|pharma|\bsant[eé]\b|laborato|biolog|\bhad\b|dialyse|radiolog|institut curie|gustave roussy|fondation (?:rothschild|adolphe)|croix.rouge|korian|orpea|emeis|ramsay|elsan|vivalto|sanofi|servier|ipsen|biogaran|alliance healthcare|\bcerp\b|orkyn|vitalaire|linde homecare|sos oxyg|elivie|\bpsad\b|orthop/i,
+        text: /[eé]tablissements? de sant[eé]|milieu hospitalier|secteur (?:hospitalier|m[eé]dical|de la sant[eé]|pharmaceutique)|dispositifs? m[eé]dicaux|mat[eé]riel m[eé]dical|produits? pharmaceutiques?|industrie pharmaceutique|r[eé]partiteur pharmaceutique|prestataires? de sant[eé] [aà] domicile/i },
       { id: 'logisticiens', label: 'Logisticien (prestataire)',
         re: /geodis|id logistics|fm logistic|kuehne|\bdhl\b|\bxpo\b|\bgxo\b|rhenus|\bstef\b|arvato|\bceva\b|dachser|schenker|bollor[eé] logistics|gefco|ziegler|heppner|viapost|\bmory\b|daher|norbert dentressangle|logista\b|bansard|clasquin/i,
         text: /prestataire logistique|acteur (?:majeur|cl[eé]) de la logistique|leader (?:europ[eé]en|mondial|fran[cç]ais) de la logistique|logisticien de premier plan/i },
@@ -111,8 +113,9 @@ const ZCRT_PROFILES = {
       // Écartés sauf si le titre nomme aussi le stock (tout ce qui touche au stock est voulu) :
       // [mots écartés, mots qui gardent l'offre].
       unless: [
-        // Approvisionneur, sauf « Magasinier approvisionneur », « Gestionnaire stock et approvisionnements ».
-        [/approvision/i, /magasinier|stock|r[eé]serv|pr[eé]parat(?:eur|rice) de commandes/i],
+        // Approvisionneur, sauf « Magasinier approvisionneur », « Gestionnaire stock et approvisionnements »,
+        // « Référent logistique et approvisionnement » (logistique nommée aussi, 27/11/2026).
+        [/approvision/i, /magasinier|stock|r[eé]serv|pr[eé]parat(?:eur|rice) de commandes|logisti/i],
         // Réceptionnaire (E.Leclerc, Carrefour…), sauf « Magasinier réceptionnaire », « Agent de stock / réception ».
         [/r[eé]ceptionnaire|r[eé]ception\s+(?:des\s+|de\s+)?marchandises|agent\S*\s+de\s+r[eé]ception\b/i, /magasini|stock|r[eé]serv/i],
         // Achats, optimisation, planification, sauf « Responsable optimisation des stocks ».
@@ -120,7 +123,10 @@ const ZCRT_PROFILES = {
         // Revue de l'onglet Stock (21/11/2026), comme stock_review_reject dans collect.py ;
         // 3e élément : onglets où la règle s'applique.
         [/chauffeu|livreu|conducteu|dispatch|transport/i, /(?!)/, ['stock']], // jamais gardé, même « Magasinier livreur »
-        [/\badv\b|\bdata\b|tech\s*lead|d[eé]veloppeu|technicien|maintenance/i, /stock|r[eé]serv/i, ['stock']],
+        [/\badv\b|\bdata\b|tech\s*lead|d[eé]veloppeu|maintenance/i, /stock|r[eé]serv/i, ['stock']],
+        // Technicien : écarté, sauf dans la santé (« Technicien logistique » à l'hôpital, 27/11/2026,
+        // comme STOCK_TECH_KEEP_RE dans collect.py) ; 4e élément : secteurs exemptés.
+        [/technicien/i, /stock|r[eé]serv/i, ['stock'], ['sante']],
         [/(?:responsable|directeu|directrice|manager|superviseu|chef)\S*.{0,40}?(?:entrep[oô]t|\bsite\b|secteur|activit[eé]|d[eé]partement|plateforme|exploitation|op[eé]rations)|superviseu|pilotage|\bmanager\b/i,
           /stock|magasini|r[eé]serv/i, ['stock']],
         [/\bquai\b|manutention/i, /stock|magasini|r[eé]serv/i, ['stock']],
@@ -141,6 +147,7 @@ const ZCRT_PROFILES = {
       + 'Agent de stock, employé de stock, contrôleur de stock, responsable des stocks\n'
       + 'Magasinier, agent logistique, agent d’entrepôt\n'
       + 'Coordinateur logistique, responsable logistique, chef d’équipe logistique\n'
+      + 'Technicien logistique (santé), référent logistique et approvisionnement, économe\n'
       + 'Chef de rayon, manager de rayon, chef de caisse\n'
       + 'Agent de tri, trieur, agent de tri de colis',
     mails: true,
@@ -163,7 +170,7 @@ const ZCRT_PROFILES = {
             'agent d entrepot', 'agent entrepot', 'responsable d entrepot', 'operateur logistique', 'agent de quai',
             'stockman', 'assistant stockiste', 'employe de reserve', 'agent de reserve', 'responsable de reserve'],
           skills: ['reception', 'controle', 'inventaire', 'gestion des stocks', 'stock', 'preparation', 'expedition', 'commande',
-            'fournisseur', 'approvisionnement', 'wms', 'cegid', 'gold', 'excel', 'reserve', 'encadrement', 'hygiene', 'securite',
+            'fournisseur', 'approvisionnement', 'wms', 'cegid', 'gold', 'orthop', 'excel', 'reserve', 'encadrement', 'hygiene', 'securite',
             'logistique', 'reassort', 'ecart', 'livraison', 'quai', 'emballage', 'colis'],
           brands: ['darty', 'aroma zone'],
         },

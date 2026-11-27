@@ -10,7 +10,7 @@
   "feeds": [],
   "profilRecherche": {
     "enabled": true,
-    "_note": "Recherche RGRD pilotée par le CV (26/11/2026) : collect.py en génère les recherches Jooble, « poste · lieu » pour chaque poste et chaque lieu, puis celles des secteurs. Cœur de cible choisi par Ryan : stockiste, agent de stock, coordinateur stock, responsable logistique dans la santé, logisticiens ; grande distribution masquée sur le site. Préparation de commandes et logistique aéroport retirées le 27/11/2026 (offres sans intérêt pour Ryan) : plus collectées (« categories »). Les recherches sans offre nouvelle sont mises en pause d'elles-mêmes (joobleRendement).",
+    "_note": "Recherche RGRD pilotée par le CV (26/11/2026) : collect.py en génère les recherches Jooble, « poste · lieu » pour chaque poste et chaque lieu, puis celles des secteurs. Cœur de cible choisi par Ryan : stockiste, agent de stock, coordinateur stock, responsable logistique dans la santé, logisticiens ; grande distribution masquée sur le site. Préparation de commandes et logistique aéroport retirées le 27/11/2026 (offres sans intérêt pour Ryan) : plus collectées (« categories »). Ajoutés le même jour d'après le CV : économe, technicien logistique dans la santé, matériel médical (PSAD), logistique et approvisionnement (règle de collect.py). Les recherches sans offre nouvelle sont mises en pause d'elles-mêmes (joobleRendement).",
     "lieux": {
       "Bondy": "16",
       "Paris": "8"
@@ -151,6 +151,10 @@
         "lieux": [
           "Saint-Denis"
         ]
+      },
+      {
+        "keywords": "économe",
+        "_note": "Ajouté le 27/11/2026 : hôtellerie, restauration collective et santé (réception, stock, inventaires et commandes des denrées). L'économe d'école est écarté par collect.py."
       }
     ],
     "secteurs": [
@@ -246,6 +250,11 @@
             "keywords": "logistique clinique",
             "lieu": "Paris",
             "radius": "16"
+          },
+          {
+            "keywords": "technicien logistique hospitalier",
+            "lieu": "Paris",
+            "radius": "16"
           }
         ]
       },
@@ -268,6 +277,36 @@
           "CEVA Logistics",
           "Dachser",
           "DB Schenker"
+        ]
+      },
+      {
+        "nom": "matériel médical",
+        "_note": "Ajouté le 27/11/2026 : distribution de matériel médical et prestataires de santé à domicile (PSAD), comme au Carré Médical. Magasinier, gestionnaire de stock, coordinateur logistique : recherches par mots-clés, puis par nom d'employeur autour de Bondy.",
+        "lieu": "Bondy",
+        "radius": "26",
+        "recherches": [
+          {
+            "keywords": "magasinier matériel médical",
+            "lieu": "Bondy",
+            "radius": "26"
+          },
+          {
+            "keywords": "logistique matériel médical",
+            "lieu": "Paris",
+            "radius": "16"
+          },
+          {
+            "keywords": "gestionnaire de stock dispositifs médicaux",
+            "lieu": "Paris",
+            "radius": "16"
+          }
+        ],
+        "entreprises": [
+          "Bastide le Confort Médical",
+          "Orkyn",
+          "LVL Médical",
+          "SOS Oxygène",
+          "Asten Santé"
         ]
       }
     ]
@@ -561,7 +600,7 @@
       {
         "name": "stock et réserve",
         "enabled": true,
-        "keywords": "magasinier magasiniere stockiste stockman stock reserve reserviste logisticien reassortisseur",
+        "keywords": "magasinier magasiniere stockiste stockman stock reserve reserviste logisticien reassortisseur econome",
         "maxPages": 6,
         "publieesDepuisJours": 15
       },

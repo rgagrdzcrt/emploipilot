@@ -86,6 +86,7 @@ CATEGORY_RE = {
         # « employé de réserve », « hôte(sse) de réserve », « back of house » (luxe)…
         r"|\br[eé]serves?\b|r[eé]serviste|r[eé]assortisseu|back[\s-]?of[\s-]?house|\bboh\b"
         r"|r[eé]ception\s+(?:des\s+|de\s+)?marchandises"
+        r"|\b[eé]conomes?\b"  # hôtellerie, restauration collective (27/11/2026) ; pas l'enseignement (ECONOME_SCHOOL_RE)
         r"|\binventory\b",  # « Inventory Associate » (luxe) : stockiste ; analyste écarté (STOCK_OTHER_JOB_RE)
         re.I,
     ),
@@ -183,7 +184,8 @@ STOCK_SIDE_RE = re.compile(
 # le stock ou un poste de terrain (« Magasinier approvisionneur », « Gestionnaire stock et
 # approvisionnements ») : tout ce qui touche au stock est gardé.
 APPRO_RE = re.compile(r"approvision", re.I)
-APPRO_KEEP_RE = re.compile(r"magasinier|stock|r[eé]serv|pr[eé]parat(?:eur|rice) de commandes", re.I)
+# Logistique nommée aussi (« Référent logistique et approvisionnement ») : gardé depuis le 27/11/2026.
+APPRO_KEEP_RE = re.compile(r"magasinier|stock|r[eé]serv|pr[eé]parat(?:eur|rice) de commandes|logisti", re.I)
 
 # Réceptionnaire (E.Leclerc, Carrefour…) : non voulu (21/11/2026), sauf si le titre nomme aussi
 # le stock, la réserve ou un magasinier (« Magasinier réceptionnaire », « Agent de stock / réception »).
@@ -308,7 +310,50 @@ ENCADREMENT_EXCLUDE_RE = re.compile(
 
 
 STOCK_DRIVE_RE = re.compile(r"chauffeu|livreu|conducteu|dispatch|transport", re.I)
-STOCK_OTHER_JOB_RE = re.compile(r"\badv\b|\bdata\b|tech\s*lead|d[eé]veloppeu|technicien|maintenance|analyst", re.I)
+STOCK_OTHER_JOB_RE = re.compile(r"\badv\b|\bdata\b|tech\s*lead|d[eé]veloppeu|maintenance|analyst", re.I)
+# Technicien : écarté comme ci-dessus, sauf « Technicien (supérieur hospitalier) logistique » dans la santé
+# (27/11/2026) : à l'hôpital, il organise les flux et encadre une équipe (secteur : is_sante).
+STOCK_TECH_RE = re.compile(r"technicien", re.I)
+STOCK_TECH_KEEP_RE = re.compile(r"technicien\w*(?:\s+\w+){0,2}?\s+(?:de\s+|en\s+)?logisti", re.I)
+
+# Secteur santé, comme « sante » dans les secteurs de profiles.js : employeur, titre ou lieu (SANTE_RE), ou
+# expression sûre de l'annonce (SANTE_TEXT_RE, jamais « mutuelle santé »). Prestataires de santé à domicile
+# (PSAD) et matériel médical ajoutés le 27/11/2026.
+SANTE_RE = re.compile(
+    r"h[oô]pita|hospitali|clinique|\bap-?hp\b|\bghu\b|\bchu\b|ehpad|maternit|m[eé]dical|m[eé]dico|pharma|\bsant[eé]\b"
+    r"|laborato|biolog|\bhad\b|dialyse|radiolog|institut curie|gustave roussy|fondation (?:rothschild|adolphe)"
+    r"|croix.rouge|korian|orpea|emeis|ramsay|elsan|vivalto|sanofi|servier|ipsen|biogaran|alliance healthcare|\bcerp\b"
+    r"|orkyn|vitalaire|linde homecare|sos oxyg|elivie|\bpsad\b|orthop",
+    re.I,
+)
+SANTE_TEXT_RE = re.compile(
+    r"[eé]tablissements? de sant[eé]|milieu hospitalier|secteur (?:hospitalier|m[eé]dical|de la sant[eé]|pharmaceutique)"
+    r"|dispositifs? m[eé]dicaux|mat[eé]riel m[eé]dical|produits? pharmaceutiques?|industrie pharmaceutique"
+    r"|r[eé]partiteur pharmaceutique|prestataires? de sant[eé] [aà] domicile",
+    re.I,
+)
+
+
+def is_sante(head, text=""):
+    """Offre du secteur santé : titre, employeur ou lieu (head), ou texte de l'annonce."""
+    return bool(SANTE_RE.search(head or "") or SANTE_TEXT_RE.search(text or ""))
+
+
+# Économe (27/11/2026) : réception, stock, inventaires et commandes des denrées en hôtellerie, restauration
+# collective ou santé. Pas l'économe d'un établissement scolaire ou religieux (gestion financière).
+ECONOME_RE = re.compile(r"\b[eé]conomes?\b", re.I)
+ECONOME_SCHOOL_RE = re.compile(
+    r"lyc[eé]e|coll[eè]ge|[eé]cole|scolaire|\bogec\b|enseignement|universit|paroiss|dioc[eè]s|congr[eé]gation|intendan",
+    re.I,
+)
+ECONOME_SCHOOL_TEXT_RE = re.compile(
+    r"[eé]tablissements? (?:scolaire|d['’]enseignement)|\bogec\b|intendan|[eé]l[eè]ves", re.I
+)
+
+
+def econome_hors_sujet(title, company="", text=""):
+    """Économe d'un établissement scolaire ou religieux (titre, employeur ou texte de l'annonce)."""
+    return bool(ECONOME_SCHOOL_RE.search(f"{title} {company}") or ECONOME_SCHOOL_TEXT_RE.search(text or ""))
 # Inventoriste et agent d'inventaire (comptages pour les sociétés d'inventaire) : écartés (21/11/2026),
 # sauf si le titre nomme aussi le stock ou la réserve.
 INVENTORY_COUNT_RE = re.compile(
@@ -336,11 +381,12 @@ ENCADREMENT_STORE_RE = re.compile(
 ENCADREMENT_KEEP_RE = re.compile(r"rayon|caisse|secteur|univers|d[eé]partement|department|frais|drive", re.I)
 
 
-def stock_review_reject(title):
+def stock_review_reject(title, sante=False):
     """Revue de l'onglet Stock (21/11/2026), offres écartées sans passer à un autre onglet
     (« Responsable de secteur logistique » n'est pas un chef de rayon) :
     - conduite, livraison, transport, même « Magasinier livreur » ;
     - ADV, data, technicien, maintenance, sans stock ni réserve dans le titre ;
+      « Technicien logistique » gardé dans la santé (sante, 27/11/2026) ;
     - encadrement de gros sites (responsable d'entrepôt, de secteur, d'activité, superviseur…),
       agent de quai, manutention, sauf si le titre nomme le stock, la réserve ou le magasinier
       (« Stock Manager », « Superviseur stock » restent ; « Chef d'équipe logistique » aussi).
@@ -348,6 +394,9 @@ def stock_review_reject(title):
     if STOCK_DRIVE_RE.search(title):
         return True
     if STOCK_OTHER_JOB_RE.search(title) and not re.search(r"stock|r[eé]serv", title, re.I):
+        return True
+    if (STOCK_TECH_RE.search(title) and not re.search(r"stock|r[eé]serv", title, re.I)
+            and not (sante and STOCK_TECH_KEEP_RE.search(title))):
         return True
     return bool((STOCK_BIG_SITE_RE.search(title) or STOCK_DOCK_RE.search(title)) and not STOCK_KEEP_RE.search(title))
 
@@ -759,12 +808,14 @@ def classify_contract(title, text=""):
     return "À vérifier"
 
 
-def classify_category(title):
+def classify_category(title, company="", location="", text=""):
     """Catégorie déduite du seul titre : les descriptions citent trop souvent
     « vente » ou « stock » pour des métiers sans rapport (cuisinier, data analyst…).
     La catégorie de la requête n'est donc qu'indicative : sans mot-clé métier
     dans le titre, l'offre est écartée. Elle l'est aussi si son métier ne fait pas
-    partie des métiers collectés (TARGET_CATEGORIES)."""
+    partie des métiers collectés (TARGET_CATEGORIES).
+    L'employeur, le lieu et le texte (facultatifs) ne servent qu'à deux règles du stock
+    (27/11/2026) : technicien logistique gardé dans la santé, économe d'école écarté."""
     title = title or ""
     if NOT_TARGET_RE.search(title):
         return None
@@ -779,7 +830,9 @@ def classify_category(title):
         if pattern.search(title):
             if name == "stock" and prep_named_first(title):
                 continue  # préparation de commandes non collectée : pas dans l'onglet Stock non plus
-            if name == "stock" and stock_review_reject(title):
+            if name == "stock" and stock_review_reject(title, is_sante(f"{title} {company} {location}", text)):
+                return None
+            if name == "stock" and ECONOME_RE.search(title) and econome_hors_sujet(title, company, text):
                 return None
             if name == "stock" and stock_off_topic(title):
                 continue
@@ -889,7 +942,8 @@ def make_offer(title, company, location, text, url, date, source, category=None)
     title_text = strip_html(title)
     body_text = strip_html(text)
     contract = classify_contract(title_text, body_text)
-    category = classify_category(title_text)  # la catégorie de la requête est indicative
+    # La catégorie de la requête est indicative.
+    category = classify_category(title_text, strip_html(company), strip_html(location), body_text)
     dept = detect_dept(location) or detect_dept(title_text, postal=False)
 
     # On exclut les stages/alternances, les écoles, les métiers non recherchés, les lieux
@@ -1710,7 +1764,7 @@ def _fetch_mcp_search(endpoint, tool_name, arguments, source, category, token=""
             continue
         # Les recherches d'emploi peuvent renvoyer des catégories voisines.
         # On ne garde que les annonces dont le titre/texte confirme le métier.
-        if classify_category(str(title)) != category:
+        if classify_category(str(title), str(company or ""), str(location or ""), str(text or "")) != category:
             continue
         offer = make_offer(
             title=str(title),
@@ -2371,7 +2425,7 @@ def refresh_offer(offer):
 
     if caces_required(title, notes) and not tracked:
         return "CACES obligatoire"
-    category = classify_category(title)
+    category = classify_category(title, offer.get("company") or "", offer.get("location") or "", notes)
     if category is None:
         if not tracked:
             return "métier non recherché"

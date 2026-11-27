@@ -46,10 +46,10 @@ function isUnwanted(o) {
   const cat = categoryOf(o);
   const byTitle = !UNWANTED.cats || UNWANTED.cats.includes(cat);
   if (byTitle && UNWANTED.title && UNWANTED.title.test(title)) return true;
-  // [mots écartés, mots qui gardent l'offre, onglets (facultatif, unwanted.cats à défaut)] :
-  // « Réceptionnaire » non, « Magasinier réceptionnaire » oui.
-  if ((UNWANTED.unless || []).some(([out, keep, cats]) => (cats ? cats.includes(cat) : byTitle)
-    && out.test(title) && !keep.test(title))) return true;
+  // [mots écartés, mots qui gardent l'offre, onglets (facultatif, unwanted.cats à défaut),
+  //  secteurs où la règle ne s'applique pas (facultatif)] : « Réceptionnaire » non, « Magasinier réceptionnaire » oui.
+  if ((UNWANTED.unless || []).some(([out, keep, cats, sectors]) => (cats ? cats.includes(cat) : byTitle)
+    && out.test(title) && !keep.test(title) && !(sectors && sectors.includes(sectorOf(o))))) return true;
   return !!UNWANTED.cacesInText && cacesRequiredInText(o.notes);
 }
 function isPurged(o) {

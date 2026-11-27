@@ -12,7 +12,7 @@ Toucher le logo bascule entre deux profils, définis dans `profiles.js`. Le logo
 
 | | Ryan | Zia |
 |---|---|---|
-| Métiers | Stock & logistique (tout ce qui touche au stock et à la réserve : agent, coordinateur ou gestionnaire de stock, stockiste, stockman, réserviste, employé de réserve…), Encadrement en magasin (chefs et managers de rayon et de caisse), Tri de colis (préparation de commandes et logistique aéroport retirées le 27/11/2026, plus collectées) — zones : 93 et 75 d'abord (recherches recentrées), en 92, 77 et 94 seulement les stockistes ; priorité aux stockistes (recherches prioritaires, offres gardées 15 jours au lieu de 7, jamais masquées par les types sauf cariste et direction) ; hors inventoriste, réceptionnaire (sauf « Magasinier réceptionnaire »), manutention, agent de quai, CACES, transport et livraison, encadrement de gros sites logistiques (responsable d'entrepôt, de secteur…) et responsables ou adjoints de magasin | Grande distribution, Vente, Restauration & café (service en salle, barista) |
+| Métiers | Stock & logistique (tout ce qui touche au stock et à la réserve : agent, coordinateur ou gestionnaire de stock, stockiste, stockman, réserviste, employé de réserve… ; depuis le 27/11/2026, technicien logistique dans la santé, logistique et approvisionnement, économe hors enseignement), Encadrement en magasin (chefs et managers de rayon et de caisse), Tri de colis (préparation de commandes et logistique aéroport retirées le 27/11/2026, plus collectées) — zones : 93 et 75 d'abord (recherches recentrées), en 92, 77 et 94 seulement les stockistes ; priorité aux stockistes (recherches prioritaires, offres gardées 15 jours au lieu de 7, jamais masquées par les types sauf cariste et direction) ; hors inventoriste, réceptionnaire (sauf « Magasinier réceptionnaire »), manutention, agent de quai, CACES, transport et livraison, encadrement de gros sites logistiques (responsable d'entrepôt, de secteur…) et responsables ou adjoints de magasin | Grande distribution, Vente, Restauration & café (service en salle, barista) |
 | Lettres | Composées selon l'offre et l'entreprise (`compose.js`, `letters.js`), conformes au CV joint ; modèles par métier (`pilot.js`) ; téléchargeables en PDF (`letterpdf.js`) ; onglet **Lettre** pour une annonce trouvée ailleurs : on colle son texte (Indeed, HelloWork, LinkedIn, France Travail…), le poste, l'entreprise, la ville et le contrat sont lus (`lettre.js`) et la lettre se compose seule, sans IA | Modèles par métier (`profiles.js`) ; téléchargeables en PDF (`letterpdf.js`) |
 | Tri Gmail, onglet Mails | Oui | Non |
 
@@ -20,9 +20,9 @@ Toucher le logo bascule entre deux profils, définis dans `profiles.js`. Le logo
 
 - **Postes du CV × lieux** : chaque poste dans chaque lieu, par exemple « stockiste · Bondy » ou « coordinateur stock · Paris ».
 - **Secteurs choisis par Ryan** :
-  - santé : responsable logistique en hôpital ou en clinique, magasinier hospitalier, gestionnaire de stock en pharmacie ; offres de l'AP-HP, des hôpitaux et des cliniques ;
+  - santé : responsable ou technicien logistique en hôpital ou en clinique, magasinier hospitalier, gestionnaire de stock en pharmacie ; offres de l'AP-HP, des hôpitaux et des cliniques ;
   - logisticiens : offres de Geodis, ID Logistics, FM Logistic, DHL… autour de Bondy ;
-  - aéroport : deux recherches seulement, stock et magasin autour de Roissy, pour garder quelques offres.
+  - matériel médical (27/11/2026) : magasinier, gestionnaire de stock ou logistique du matériel médical, et offres de prestataires de santé à domicile (Bastide, Orkyn, LVL Médical, SOS Oxygène, Asten Santé) autour de Bondy ;
   - enseignes : offres de 21 enseignes qui recrutent des stockistes et des employés de réserve autour de Paris (Sephora, Aroma-Zone, Nocibé, Darty, Fnac, Zara, Uniqlo, Galeries Lafayette, Printemps…). Les postes de vente qu'elles publient vont au profil de Zia.
 
 Les recherches sur un employeur utilisent l'option `companysearch` de Jooble. Les 18 recherches de Zia restent dans `joobleQueries`. Le rendement (ci-dessous, Jooble) met en pause les recherches qui n'apportent plus rien.

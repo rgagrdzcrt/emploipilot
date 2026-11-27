@@ -34,7 +34,7 @@ function slice(from, to, vars) {
 
 const ryan = profileOf('ryan');
 const rules = slice('const PURGE_BEFORE', 'function purgeOffers', {
-  ACTIVE_PROFILE: ryan, CATS: ryan.cats, categoryOf: o => o.category || 'stock',
+  ACTIVE_PROFILE: ryan, CATS: ryan.cats, categoryOf: o => o.category || 'stock', sectorOf: o => o.sector || '',
 });
 
 test('remise à zéro : candidatures envoyées avant le 12/11 supprimées, entretiens gardés', () => {
@@ -75,7 +75,7 @@ test('« À postuler » : offres non voulues retirées, les autres gardées', ()
 
 test('« À postuler » : règles d’intitulé limitées aux métiers de la logistique', () => {
   const r = slice('const PURGE_BEFORE', 'function purgeOffers', {
-    ACTIVE_PROFILE: ryan, CATS: ryan.cats, categoryOf: o => o.category || 'stock',
+    ACTIVE_PROFILE: ryan, CATS: ryan.cats, categoryOf: o => o.category || 'stock', sectorOf: o => o.sector || '',
   });
   const cases = [
     // Encadrement (revue du 21/11/2026) : chefs de rayon et de caisse oui, responsables ou adjoints de magasin non.
@@ -92,6 +92,12 @@ test('« À postuler » : règles d’intitulé limitées aux métiers de la log
   for (const [title, category, notes, expected] of cases) {
     assert.strictEqual(r.isPurged({ status: 'À postuler', title, category, notes }), expected, title);
   }
+  // 27/11/2026 : technicien logistique gardé dans la santé seulement ; logistique et approvisionnement gardé.
+  const postuler = o => r.isPurged({ status: 'À postuler', category: 'stock', ...o });
+  assert.strictEqual(postuler({ title: 'Technicien logistique', sector: 'sante' }), false);
+  assert.strictEqual(postuler({ title: 'Technicien logistique' }), true);
+  assert.strictEqual(postuler({ title: 'Technicien de maintenance', sector: 'sante' }), true);
+  assert.strictEqual(postuler({ title: 'Référent logistique et approvisionnement' }), false);
 });
 
 test('profil de Ryan : chaque onglet a libellé, icône, CV, modèle de lettre, score et missions', () => {
@@ -381,6 +387,12 @@ test('niveaux RGRD : cœur de cible, bon, repli (choix du 26/11/2026)', () => {
   assert.strictEqual(t.sectorOf({ id: 's2', title: 'Magasinier', company: 'ACME', notes: 'Leader européen de la logistique.' }), 'logisticiens');
   assert.strictEqual(t.sectorHides({ id: 's3', title: 'Employé de réserve', company: 'Monoprix' }), true);
   assert.strictEqual(t.sectorHides({ id: 's4', title: 'Stockiste', company: 'Sephora' }), false);
+  // Ajouts du 27/11/2026 : prestataires de santé à domicile, technicien logistique à l'hôpital, économe, référent.
+  assert.strictEqual(t.sectorOf({ id: 's5', title: 'Magasinier', company: 'SOS Oxygène' }), 'sante');
+  assert.strictEqual(t.sectorOf({ id: 's6', title: 'Gestionnaire de stock', company: 'ACME', notes: 'Prestataire de santé à domicile.' }), 'sante');
+  assert.strictEqual(tier('Technicien logistique', 'Hôpital Avicenne'), 'coeur');
+  assert.strictEqual(tier('Économe H/F', 'Hôtel Le Bristol'), 'bon');
+  assert.strictEqual(tier('Référent logistique et approvisionnement', 'ACME'), 'bon');
 
   // Même poste d'une agence pour plusieurs lieux : une carte (déjà triée, sinon la plus proche).
   const o = (id, company, location, trajetMin, status) => ({ id, title: 'Préparateur de Commandes (h/f)', company, location, trajetMin, status, category: 'preparation' });

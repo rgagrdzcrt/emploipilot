@@ -77,6 +77,33 @@ class Categories(unittest.TestCase):
                 self.assertEqual(self.cat(title), expected)
         self.assertEqual(collect.category_reject_reason("Agent de piste H/F"), "métier non collecté (aeroport)")
 
+    def test_ajouts_d_apres_le_cv(self):
+        # 27/11/2026 : technicien logistique dans la santé, logistique et approvisionnement, économe hors enseignement.
+        cat = collect.classify_category
+        self.assertEqual(cat("Technicien logistique (H/F)", "Hôpital Avicenne", "Bobigny (93)"), "stock")
+        self.assertEqual(cat("Technicien supérieur hospitalier logistique", "GHU Paris"), "stock")
+        self.assertEqual(cat("Technicien logistique", "ACME", "Paris", "Matériel médical livré aux établissements de santé."),
+                         "stock")
+        self.assertIsNone(cat("Technicien logistique (H/F)", "ACME Industrie", "Saint-Denis", "Mutuelle santé."))
+        self.assertIsNone(cat("Technicien de maintenance logistique", "Hôpital Avicenne"))
+        self.assertIsNone(cat("Technicien logistique"))
+        for title in ("Référent logistique et approvisionnement", "Coordinateur logistique et approvisionnements"):
+            with self.subTest(title=title):
+                self.assertEqual(cat(title), "stock")
+        for title in ("Approvisionneur H/F", "CDI - Coordinateur Approvisionnement Matières et Composants"):
+            with self.subTest(title=title):
+                self.assertIsNone(cat(title))
+        self.assertEqual(cat("Économe H/F", "Hôtel Le Bristol", "Paris 8e", "Diplômé d'une école hôtelière."), "stock")
+        self.assertEqual(cat("Aide-économe", "Sodexo"), "stock")
+        self.assertIsNone(cat("Économe (H/F)", "Lycée privé Saint-Michel"))
+        self.assertIsNone(cat("Économe", "OGEC Notre-Dame", "", "Gestion financière de l'établissement scolaire."))
+        self.assertIsNone(cat("Économiste de la construction"))
+        # Une offre déjà enregistrée garde la même règle (refresh_offer passe l'employeur et le texte).
+        offer = {"title": "Technicien logistique", "company": "Hôpital Avicenne", "location": "Bobigny (93)",
+                 "notes": "", "url": "https://ex.fr/t", "contract": "CDI"}
+        self.assertEqual(collect.refresh_offer(offer), "")
+        self.assertEqual(offer["category"], "stock")
+
     def test_tri_de_colis_sans_inventoriste(self):
         # Inventoriste et agent d'inventaire écartés (21/11/2026), même « grande distribution » (pas l'onglet
         # Rayon) ; « Inventory Associate » (luxe) est un stockiste, l'analyste ne l'est pas.
