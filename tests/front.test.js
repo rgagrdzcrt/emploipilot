@@ -84,10 +84,10 @@ test('« À postuler » : règles d’intitulé limitées aux métiers de la log
     ['Manager Drive (F/H) - Hypermarché', 'encadrement', '', false],
     // Stock : ni gros sites, quai, manutention ou livraison ; « Stock Manager », chef d'équipe et coordinateur restent.
     ['Responsable de Secteur Logistique H/F', 'stock', '', true], ['Chef d’équipe logistique', 'stock', '', false],
-    ['Agent de quai H/F', 'stock', '', true], ['Agent de quai H/F', 'aeroport', '', false], ['MAGASINIER LIVREUR', 'stock', '', true],
+    ['Agent de quai H/F', 'stock', '', true], ['Agent de quai H/F', 'tri', '', false], ['MAGASINIER LIVREUR', 'stock', '', true],
     ['Stock Manager H/F', 'stock', '', false], ['Coordinateur logistique', 'stock', '', false],
-    ['Préparateur de commandes vendeur', 'preparation', '', true],
-    ['Agent de piste', 'aeroport', 'CACES 1 obligatoire.', true], ['Agent de tri', 'tri', '', false],
+    ['Préparateur de commandes vendeur', 'stock', '', true],
+    ['Agent de tri', 'tri', 'CACES 1 obligatoire.', true], ['Agent de tri', 'tri', '', false],
   ];
   for (const [title, category, notes, expected] of cases) {
     assert.strictEqual(r.isPurged({ status: 'À postuler', title, category, notes }), expected, title);
@@ -102,7 +102,8 @@ test('profil de Ryan : chaque onglet a libellé, icône, CV, modèle de lettre, 
   vm.runInContext(read('compose.js') + ';this.__lp = LETTER_PROFILE;', ctx);
   vm.runInContext(read('letters.js') + ';this.__lt = LETTER_TAILOR;', ctx);
   const html = read('index.html'), pilot = read('pilot.js');
-  assert.deepStrictEqual([...ryan.cats], ['stock', 'preparation', 'encadrement', 'aeroport', 'tri']);
+  // Préparation de commandes et logistique aéroport retirées le 27/11/2026.
+  assert.deepStrictEqual([...ryan.cats], ['stock', 'encadrement', 'tri']);
   for (const c of ryan.cats) {
     assert.ok(ctx.__info[c] && ctx.__info[c].label, `libellé ${c}`);
     assert.ok(html.includes(`<symbol id="i-${ctx.__info[c].icon}"`), `icône ${c}`);
@@ -218,13 +219,13 @@ test('stockistes : 15 jours et jamais masqués par un type, sauf cariste et dire
   const t = new Function('norm', 'profile', 'ACTIVE_PROFILE', 'parseDate', 'offerDate', 'deptOf', 'categoryOf',
     src.slice(a, b) + '\nfunction hiddenTypes() { return DEFAULT_HIDDEN_TYPES; }\nreturn { maxAgeDays, hidingType, tooOld, zoneHides };')(
     s => String(s || '').toLowerCase(), {}, { zones: ryan.zones }, s => (s ? new Date(s) : null), o => o.date, o => o.dept, o => o.category);
-  // Zones de Ryan : 93 et 75 toujours ; en 92, 77 et 94, seulement les stockistes (onglet Aéroport à part).
+  // Zones de Ryan : 93 et 75 toujours ; en 92, 77 et 94, seulement les stockistes (Orly compris depuis le 27/11/2026).
   assert.deepStrictEqual([...ryan.zones.stockisteOnly], ['92', '77', '94']);
   assert.strictEqual(t.zoneHides({ title: 'Magasinier', dept: '77', category: 'stock' }), true);
   assert.strictEqual(t.zoneHides({ title: 'Stockiste H/F', dept: '92', category: 'stock' }), false);
   assert.strictEqual(t.zoneHides({ title: 'Magasinier', dept: '93', category: 'stock' }), false);
   assert.strictEqual(t.zoneHides({ title: 'Magasinier', dept: '95', category: 'stock' }), false);
-  assert.strictEqual(t.zoneHides({ title: 'Agent de piste', dept: '94', category: 'aeroport' }), false);
+  assert.strictEqual(t.zoneHides({ title: 'Magasinier Orly', dept: '94', category: 'stock' }), true);
   const daysAgo = n => new Date(Date.now() - n * 864e5).toISOString();
   assert.strictEqual(t.maxAgeDays({ title: 'Stockiste H/F' }), 15);
   assert.strictEqual(t.maxAgeDays({ title: 'Employé de réserve' }), 15);
@@ -363,10 +364,10 @@ test('niveaux RGRD : cœur de cible, bon, repli (choix du 26/11/2026)', () => {
   const cases = [
     ['Stockiste H/F', 'stock', 'coeur'], ['Employé·e de Réserve CDI 35H', 'stock', 'coeur'],
     ['Gestionnaire de Stocks et Approvisionnements', 'stock', 'coeur'], ['Coordinateur logistique (H/F)', 'stock', 'bon'],
-    ['EMPLOYÉ(E) LOGISTIQUE ET RÉASSORT BOUTIQUE', 'stock', 'coeur'], ['Agent de piste H/F', 'aeroport', 'bon'],
+    ['EMPLOYÉ(E) LOGISTIQUE ET RÉASSORT BOUTIQUE', 'stock', 'coeur'],
     ['Magasinier H/F', 'stock', 'bon'], ['Magasinier - Préparateur de commandes', 'stock', 'bon'],
     ['Agent logistique H/F', 'stock', 'repli'], ['Opérateur polyvalent logistique', 'stock', 'repli'],
-    ['Préparateur de commandes', 'preparation', 'repli'], ['Manager de rayon frais', 'encadrement', 'repli'],
+    ['Agent logistique - préparateur en extra', 'stock', 'repli'], ['Manager de rayon frais', 'encadrement', 'repli'],
   ];
   for (const [title, category, tier] of cases) assert.strictEqual(t.tierOf({ title, category }), tier, title);
   // Recherche pilotée par le CV (26/11/2026) : responsable logistique dans la santé et magasinier chez un

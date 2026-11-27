@@ -39,7 +39,7 @@ class Categories(unittest.TestCase):
         for title, expected in (("Réceptionnaire - H/F", None), ("RÉCEPTIONNAIRE MAGASIN H/F - H/F", None),
                                 ("Agent de réception des marchandises", None), ("Réceptionnaire (F/H)", None),
                                 ("Magasinier réceptionnaire", "stock"), ("Agent de stock / réceptionnaire", "stock"),
-                                ("Réceptionnaire / préparateur de commandes", "preparation"),
+                                ("Réceptionnaire / préparateur de commandes", None),
                                 ("Agent de stock", "stock"), ("Coordinateur stock H/F", "stock"),
                                 ("Responsable Optimisation des Stocks H/F", "stock"),
                                 ("Gestionnaire stock et approvisionnements", "stock"),
@@ -47,25 +47,35 @@ class Categories(unittest.TestCase):
             with self.subTest(title=title):
                 self.assertEqual(self.cat(title), expected)
 
-    def test_preparation_onglet_detache(self):
-        # Le premier métier nommé l'emporte ; « Préparateur » seul (pharmacie, véhicules) n'en est pas.
-        for title, expected in (("Préparateur de commandes CDI", "preparation"),
-                                ("Préparateur(trice) de commande H/F", "preparation"),
-                                ("Préparateur logistique", "preparation"), ("Order picker", "preparation"),
-                                ("Préparateur de commandes / Magasinier", "preparation"),
+    def test_preparation_plus_collectee(self):
+        # Préparation de commandes retirée le 27/11/2026 (choix de Ryan), y compris quand logistics_split la
+        # laissait au stock (automobile, pharmacie). Le premier métier nommé l'emporte : un poste du stock nommé
+        # d'abord reste ; « Préparateur » seul (pharmacie, véhicules) n'en est pas.
+        for title, expected in (("Préparateur de commandes CDI", None),
+                                ("Préparateur(trice) de commande H/F", None),
+                                ("Préparateur logistique", None), ("Order picker", None),
+                                ("Préparateur de commandes / Magasinier", None),
+                                ("Préparateur de Commandes Automobile H/F", None),
+                                ("Préparateur de commandes pharmacie", None),
                                 ("Magasinier préparateur de commandes", "stock"),
+                                ("Magasinier - Préparateur de commandes (H/F)", "stock"),
+                                ("Agent logistique - préparateur en extra - Paris (H/F)", "stock"),
                                 ("Préparateur de commandes vendeur", "vente"),
                                 ("Préparateur en pharmacie", None), ("Préparateur de véhicules", None)):
             with self.subTest(title=title):
                 self.assertEqual(self.cat(title), expected)
+        for title in ("Préparateur de commandes CDI", "Préparateur de Commandes Automobile H/F"):
+            self.assertEqual(collect.category_reject_reason(title), "métier non collecté (preparation)")
 
-    def test_logistique_aeroport(self):
-        for title, expected in (("Agent de piste aéroportuaire (H/F)", "aeroport"), ("Agent(e) d'escale", "aeroport"),
-                                ("Agent de fret aérien", "aeroport"), ("Bagagiste Roissy CDG", "aeroport"),
+    def test_logistique_aeroport_plus_collectee(self):
+        # Retirée le 27/11/2026 ; un poste du stock nommé d'abord reste dans l'onglet Stock.
+        for title, expected in (("Agent de piste aéroportuaire (H/F)", None), ("Agent(e) d'escale", None),
+                                ("Agent de fret aérien", None), ("Bagagiste Roissy CDG", None),
                                 ("Agent de sûreté aéroportuaire", None), ("Vendeur boutique aéroport", "vente"),
                                 ("Agent logistique fret", "stock"), ("Magasinier aéroportuaire", "stock")):
             with self.subTest(title=title):
                 self.assertEqual(self.cat(title), expected)
+        self.assertEqual(collect.category_reject_reason("Agent de piste H/F"), "métier non collecté (aeroport)")
 
     def test_tri_de_colis_sans_inventoriste(self):
         # Inventoriste et agent d'inventaire écartés (21/11/2026), même « grande distribution » (pas l'onglet
@@ -468,8 +478,7 @@ class Refonte(unittest.TestCase):
                       "Extras Bagagistes"):
             with self.subTest(title=title):
                 self.assertIsNone(collect.classify_category(title))
-        for title, cat in (("Magasinier H/F", "stock"), ("Préparateur de commandes H/F", "preparation"),
-                           ("Bagagiste H/F", "aeroport"), ("Stockiste - Centre commercial Rosny 2", "stock")):
+        for title, cat in (("Magasinier H/F", "stock"), ("Stockiste - Centre commercial Rosny 2", "stock")):
             with self.subTest(title=title):
                 self.assertEqual(collect.classify_category(title), cat)
 

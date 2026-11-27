@@ -66,7 +66,8 @@ CDD_RE = re.compile(r"\b(CDD|contrat [àa] dur[eé]e d[eé]termin[eé]e)\b", re.
 # Suffixe de genre ou d'écriture inclusive accolé à un métier : « Agent(e) », « Équipier.ère »…
 _G = r"[\w().·/-]*"
 
-# Préparation de commandes (onglet à part) : « Préparateur(trice) de commande(s) », « Préparateur
+# Préparation de commandes (onglet retiré le 27/11/2026 : reconnue pour être écartée, voir prep_named_first
+# et "categories" dans sources.json ; de même pour l'aéroport) : « Préparateur(trice) de commande(s) », « Préparateur
 # logistique », « Préparateur de colis », picking. Pas « Préparateur » seul (pharmacie, véhicules…).
 PREPA_RE = re.compile(
     r"pr[eé]parat(?:eur|rice|ion)[\w().·/-]*(?:\s*[/-]\s*pr[eé]parat\w*)?\s+(?:de\s+|des\s+)?(?:commandes?|colis)\b"
@@ -776,6 +777,8 @@ def classify_category(title):
         if name in SPLIT_EXCLUDE_RE:
             continue  # départagés par logistics_split
         if pattern.search(title):
+            if name == "stock" and prep_named_first(title):
+                continue  # préparation de commandes non collectée : pas dans l'onglet Stock non plus
             if name == "stock" and stock_review_reject(title):
                 return None
             if name == "stock" and stock_off_topic(title):
@@ -803,6 +806,19 @@ def logistics_split(title):
     position, name = min(found)
     named = STOCK_NAMED_RE.search(title)
     return None if named and named.start() < position else name
+
+
+def prep_named_first(title):
+    """Préparation de commandes nommée avant tout métier du stock, alors qu'elle n'est plus collectée
+    (27/11/2026, choix de Ryan) : « Préparateur de commandes automobile » ou « … pharmacie », que
+    logistics_split laisse au stock, sont écartés ; « Magasinier - Préparateur de commandes » reste."""
+    if "preparation" in TARGET_CATEGORIES:
+        return False
+    match = PREPA_RE.search(title or "")
+    if not match:
+        return False
+    named = STOCK_NAMED_RE.search(title)
+    return not (named and named.start() < match.start())
 
 
 def is_tracked(offer):
@@ -836,6 +852,9 @@ def category_reject_reason(title):
         return "autre métier (informatique, énergie…)"
     if INVENTORY_COUNT_RE.search(title) and not re.search(r"stock|r[eé]serv", title, re.I):
         return "inventoriste"
+    split = logistics_split(title)
+    if (split and split not in TARGET_CATEGORIES) or prep_named_first(title):
+        return f"métier non collecté ({split or 'preparation'})"
     named = [name for name, pattern in CATEGORY_RE.items() if pattern.search(title)]
     if not named:
         return "aucun métier recherché dans le titre"

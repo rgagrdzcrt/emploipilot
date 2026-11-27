@@ -29,8 +29,7 @@ const ZCRT_PROFILES = {
     brand: 'RGRD',               // logo affiché sur ce profil
     // Encadrement : CV « rayon » (chef de rayon chez Monoprix, référent chez E.Leclerc), comme la lettre.
     cv: {
-      stock: 'CV_Ryan_Gazard_stock.pdf', preparation: 'CV_Ryan_Gazard_stock.pdf', aeroport: 'CV_Ryan_Gazard_stock.pdf',
-      tri: 'CV_Ryan_Gazard_stock.pdf', encadrement: 'CV_Ryan_Gazard_rayon.pdf',
+      stock: 'CV_Ryan_Gazard_stock.pdf', tri: 'CV_Ryan_Gazard_stock.pdf', encadrement: 'CV_Ryan_Gazard_rayon.pdf',
     },
     ns: '',                      // clés historiques, sans suffixe
     syncFile: 'zcrt-suivi.json', // lu aussi par mail.py (tri Gmail)
@@ -38,8 +37,10 @@ const ZCRT_PROFILES = {
     // (ils restent collectés pour le profil de Zia, "categories" dans sources.json).
     // Onglets ajoutés le 21/11/2026 : préparation de commandes (détachée du stock), encadrement
     // en magasin, logistique aéroport, tri (sans inventoriste depuis le 21/11/2026).
-    cats: ['stock', 'preparation', 'encadrement', 'aeroport', 'tri'],
-    tag: 'Logistique & magasin',  // étiquette du bandeau d'accueil (les 5 métiers à la suite débordent)
+    // Préparation de commandes et logistique aéroport retirées le 27/11/2026 (offres sans intérêt pour
+    // Ryan) : plus collectées (sources.json), ni versées dans l'onglet Stock (collect.py, prep_named_first).
+    cats: ['stock', 'encadrement', 'tri'],
+    tag: 'Logistique & magasin',  // étiquette du bandeau d'accueil
     // Tri au doigt : préparateur de commandes en dernier (surqualifié, gardé en solution de repli).
     // Remplacé par les niveaux ci-dessous (tiers), qui le mettent aussi en repli.
     triageLastTitles: /pr[eé]parat(?:eur|rice) de commandes/i,
@@ -50,10 +51,10 @@ const ZCRT_PROFILES = {
     // logistique 20 %, chef ou manager de rayon 0 sur 27 (repli). Stockistes (STOCKISTE_RE) : cœur.
     // Recherche pilotée par le CV (26/11/2026, choix de Ryan) : cœur = stockiste, agent de stock,
     // coordinateur ou gestionnaire de stock, logisticien, et dans la santé ou chez les logisticiens
-    // (prestataires) les postes de logistique et de magasin ; aéroport en petite quantité (bon) ;
+    // (prestataires) les postes de logistique et de magasin ; plus d'aéroport depuis le 27/11/2026 ;
     // sous minFit points d'adéquation au CV (pilot.js, cvFit), une offre « bon » passe en repli.
     tiers: {
-      repliCats: ['preparation', 'tri', 'encadrement'],
+      repliCats: ['tri', 'encadrement'],
       coeur: /stockist|stockman|r[eé]assort|(?:gestionnaire|coordinat|responsable|charg[eé]|contr[oô]l|adjoint|assistant|technicien|agent|employ[eé])\S*(?:\s+\S+){0,3}?\s+(?:de\s+|des\s+|du\s+|en\s+|aux\s+)?stocks?\b|stock\s+(?:manager|controller|associate)|logisticien/i,
       coeurSectors: {
         // Pas « Agent de service logistique » (EHPAD, hôpital : entretien et repas).
@@ -66,7 +67,7 @@ const ZCRT_PROFILES = {
     },
     // Secteurs (26/11/2026, pilot.js, sectorOf) : le premier qui reconnaît le titre, l'entreprise ou le lieu
     // (re), ou une expression sûre de la description (text). Ryan : santé et logisticiens recherchés,
-    // aéroport en petite quantité, grande distribution masquée (2 candidatures sur 85 offres vues).
+    // aéroport plus recherché (27/11/2026), grande distribution masquée (2 candidatures sur 85 offres vues).
     sectors: [
       { id: 'sante', label: 'Santé',
         re: /h[oô]pita|hospitali|clinique|\bap-?hp\b|\bghu\b|\bchu\b|ehpad|maternit|m[eé]dical|m[eé]dico|pharma|\bsant[eé]\b|laborato|biolog|\bhad\b|dialyse|radiolog|institut curie|gustave roussy|fondation (?:rothschild|adolphe)|croix.rouge|korian|orpea|emeis|ramsay|elsan|vivalto|sanofi|servier|ipsen|biogaran|alliance healthcare|\bcerp\b/i,
@@ -101,8 +102,8 @@ const ZCRT_PROFILES = {
     // à relancer ou refus) sont supprimées partout (pilot.js, isPurged). Les entretiens restent.
     purgeSentBefore: Date.UTC(2026, 10, 12),
     // Zones (21/11/2026) : le 93 et le 75 d'abord ; en 92, 77 et 94, seuls les stockistes restent
-    // visibles (pilot.js, zoneHides), sauf l'onglet Aéroport (Orly). Le 95 garde la règle des 60 min.
-    zones: { stockisteOnly: ['92', '77', '94'], exemptCats: ['aeroport'] },
+    // visibles (pilot.js, zoneHides). Le 95 garde la règle des 60 min.
+    zones: { stockisteOnly: ['92', '77', '94'] },
     // Offres non voulues (mêmes règles que collect.py) : retirées de « À postuler ».
     unwanted: {
       // Autre métier, poste trop senior, cariste / CACES, poste mêlé de vente.
@@ -133,15 +134,14 @@ const ZCRT_PROFILES = {
       cacesInText: true,  // CACES obligatoire / exigé / requis dans le texte de l'annonce
       // Règles d'intitulé ci-dessus : métiers de la logistique seulement (« Chef de rayon » ou
       // « Chef de caisse » sont voulus dans l'onglet Encadrement), sauf celles qui nomment leurs onglets.
-      cats: ['stock', 'preparation', 'aeroport', 'tri'],
+      cats: ['stock', 'tri'],
     },
     keywords: 'Stockiste, assistant stockiste, stockman, gestionnaire de stock, chargé de stock, coordinateur stock\n'
       + 'Employé de réserve, hôte de réserve, réserviste, responsable de réserve, stockiste luxe\n'
       + 'Agent de stock, employé de stock, contrôleur de stock, responsable des stocks\n'
-      + 'Magasinier, agent logistique, agent d’entrepôt, préparateur de commandes\n'
+      + 'Magasinier, agent logistique, agent d’entrepôt\n'
       + 'Coordinateur logistique, responsable logistique, chef d’équipe logistique\n'
       + 'Chef de rayon, manager de rayon, chef de caisse\n'
-      + 'Agent de piste, agent d’escale, agent de fret (Roissy, Orly)\n'
       + 'Agent de tri, trieur, agent de tri de colis',
     mails: true,
     feminine: false,
@@ -167,15 +167,6 @@ const ZCRT_PROFILES = {
             'logistique', 'reassort', 'ecart', 'livraison', 'quai', 'emballage', 'colis'],
           brands: ['darty', 'aroma zone'],
         },
-        // Préparation des commandes : chez Darty, au Carré Médical et pour une boutique en ligne.
-        preparation: {
-          years: 4,
-          titles: ['preparateur de commandes', 'preparatrice de commandes', 'agent de preparation', 'preparateur logistique',
-            'magasinier', 'agent de stock', 'agent logistique'],
-          skills: ['preparation', 'commande', 'expedition', 'colis', 'emballage', 'picking', 'scan', 'reception', 'controle',
-            'stock', 'reassort', 'inventaire', 'e commerce', 'quai', 'wms', 'cegid', 'gold', 'hygiene', 'securite', 'logistique'],
-          brands: ['darty', 'aroma zone'],
-        },
         // Chef de rayon (Monoprix), référent rayon (E.Leclerc), responsable logistique (équipe de 6).
         encadrement: {
           years: 3,
@@ -185,14 +176,6 @@ const ZCRT_PROFILES = {
             'inventaire', 'approvisionnement', 'reassort', 'chiffre d affaires', 'objectifs', 'ventes', 'casse', 'demarque',
             'plv', 'fraicheur', 'reception', 'hygiene', 'securite', 'excel', 'gold'],
           brands: ['monoprix', 'leclerc', 'darty'],
-        },
-        // Pas d'expérience en aéroport : seule la logistique (réception, expédition, colis) compte.
-        aeroport: {
-          years: 4,
-          titles: ['magasinier', 'agent de stock', 'agent logistique', 'responsable logistique', 'coordinateur logistique'],
-          skills: ['reception', 'controle', 'expedition', 'colis', 'logistique', 'livraison', 'emballage', 'stock',
-            'inventaire', 'commande', 'equipe', 'coordination', 'hygiene', 'securite', 'quai'],
-          brands: [],
         },
         tri: {
           years: 4,

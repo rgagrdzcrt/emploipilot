@@ -12,7 +12,7 @@ Toucher le logo bascule entre deux profils, définis dans `profiles.js`. Le logo
 
 | | Ryan | Zia |
 |---|---|---|
-| Métiers | Stock & logistique (tout ce qui touche au stock et à la réserve : agent, coordinateur ou gestionnaire de stock, stockiste, stockman, réserviste, employé de réserve…), Préparation de commandes (onglet à part), Encadrement en magasin (chefs et managers de rayon et de caisse), Logistique aéroport, Tri de colis — zones : 93 et 75 d'abord (recherches recentrées), en 92, 77 et 94 seulement les stockistes (onglet Aéroport à part) ; priorité aux stockistes (recherches prioritaires, offres gardées 15 jours au lieu de 7, jamais masquées par les types sauf cariste et direction) ; hors inventoriste, réceptionnaire (sauf « Magasinier réceptionnaire »), manutention, agent de quai, CACES, transport et livraison, encadrement de gros sites logistiques (responsable d'entrepôt, de secteur…) et responsables ou adjoints de magasin | Grande distribution, Vente, Restauration & café (service en salle, barista) |
+| Métiers | Stock & logistique (tout ce qui touche au stock et à la réserve : agent, coordinateur ou gestionnaire de stock, stockiste, stockman, réserviste, employé de réserve…), Encadrement en magasin (chefs et managers de rayon et de caisse), Tri de colis (préparation de commandes et logistique aéroport retirées le 27/11/2026, plus collectées) — zones : 93 et 75 d'abord (recherches recentrées), en 92, 77 et 94 seulement les stockistes ; priorité aux stockistes (recherches prioritaires, offres gardées 15 jours au lieu de 7, jamais masquées par les types sauf cariste et direction) ; hors inventoriste, réceptionnaire (sauf « Magasinier réceptionnaire »), manutention, agent de quai, CACES, transport et livraison, encadrement de gros sites logistiques (responsable d'entrepôt, de secteur…) et responsables ou adjoints de magasin | Grande distribution, Vente, Restauration & café (service en salle, barista) |
 | Lettres | Composées selon l'offre et l'entreprise (`compose.js`, `letters.js`), conformes au CV joint ; modèles par métier (`pilot.js`) ; téléchargeables en PDF (`letterpdf.js`) ; onglet **Lettre** pour une annonce trouvée ailleurs : on colle son texte (Indeed, HelloWork, LinkedIn, France Travail…), le poste, l'entreprise, la ville et le contrat sont lus (`lettre.js`) et la lettre se compose seule, sans IA | Modèles par métier (`profiles.js`) ; téléchargeables en PDF (`letterpdf.js`) |
 | Tri Gmail, onglet Mails | Oui | Non |
 
@@ -34,8 +34,8 @@ Chaque offre de Ryan a aussi un **niveau** (`tiers` dans `profiles.js`, `tierOf`
 | Niveau | Offres | Envoyées / triées par Ryan |
 |---|---|---|
 | ★ Cœur de cible | Stockiste, réserve, réassort, agent, gestionnaire ou coordinateur de stock, logisticien. Dans la santé : responsable ou coordinateur logistique, gestionnaire, magasinier. Chez un logisticien : magasinier, gestionnaire, coordinateur, chef d'équipe | 47 % |
-| Bon | Magasinier, coordinateur ou responsable logistique, aéroport, le reste | 17 % |
-| Repli | Préparation de commandes, tri, agent ou opérateur logistique, onglet Encadrement (chef ou manager de rayon : 0 sur 27), et toute offre « bon » à moins de 20 points d'adéquation au CV | 17 % |
+| Bon | Magasinier, coordinateur ou responsable logistique, le reste | 17 % |
+| Repli | Tri, agent ou opérateur logistique (même « préparateur »), onglet Encadrement (chef ou manager de rayon : 0 sur 27), et toute offre « bon » à moins de 20 points d'adéquation au CV | 17 % |
 
 Avec « Dédupliquer les offres » coché, le même poste d'une agence d'intérim publié pour plusieurs lieux n'a plus qu'une carte, marquée « + N lieux » (`groupRepeats`, `collapseRepeats`). C'est celle déjà triée, sinon la plus proche. Les enseignes ne sont pas regroupées : deux magasins, ce sont deux postes.
 
@@ -87,7 +87,7 @@ Pour l’activer (une seule fois) :
 
 ### EURES (offres France Travail, sans clé)
 
-EURES, le portail européen de l’emploi de la Commission européenne, rediffuse les offres de France Travail et de ses partenaires (agences d’intérim, Meteojob…). Sa recherche publique est lue sans compte ni clé, en lecture seule, avec 9 recherches sur le titre des offres (`"eures"` dans `sources.json` : stock et réserve, logistique, préparation, aéroport, tri et inventaire, rayon, magasin, vente, restauration). Seules les offres créées depuis 7 jours dans les départements listés sont gardées, puis triées par métier comme les autres.
+EURES, le portail européen de l’emploi de la Commission européenne, rediffuse les offres de France Travail et de ses partenaires (agences d’intérim, Meteojob…). Sa recherche publique est lue sans compte ni clé, en lecture seule, avec 7 recherches sur le titre des offres (`"eures"` dans `sources.json` : stock et réserve, logistique, tri et inventaire, rayon, magasin, vente, restauration ; préparation et aéroport désactivées le 27/11/2026). Seules les offres créées depuis 7 jours dans les départements listés sont gardées, puis triées par métier comme les autres.
 
 Chaque offre renvoie directement à sa page France Travail (la référence France Travail est contenue dans l’identifiant EURES) et garde le même identifiant (`ft_…`) que si elle venait de l’API France Travail. EURES ne donne que le **département**, pas la ville : pas de temps de trajet pour ces offres, sauf quand la même offre arrive aussi par Jooble ou Adzuna (elle est alors fusionnée et prend leur ville). Dès que les secrets France Travail sont ajoutés, EURES est ignoré automatiquement (`"sansFranceTravail": true`) : l’API officielle donne les mêmes offres, avec la ville.
 

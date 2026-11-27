@@ -1,8 +1,6 @@
 {
   "categories": [
     "stock",
-    "preparation",
-    "aeroport",
     "tri",
     "encadrement",
     "rayon",
@@ -12,7 +10,7 @@
   "feeds": [],
   "profilRecherche": {
     "enabled": true,
-    "_note": "Recherche RGRD pilotée par le CV (26/11/2026) : collect.py en génère les recherches Jooble, « poste · lieu » pour chaque poste et chaque lieu, puis celles des secteurs. Cœur de cible choisi par Ryan : stockiste, agent de stock, coordinateur stock, responsable logistique dans la santé, logisticiens ; aéroport en petite quantité ; grande distribution masquée sur le site. Les recherches sans offre nouvelle sont mises en pause d'elles-mêmes (joobleRendement).",
+    "_note": "Recherche RGRD pilotée par le CV (26/11/2026) : collect.py en génère les recherches Jooble, « poste · lieu » pour chaque poste et chaque lieu, puis celles des secteurs. Cœur de cible choisi par Ryan : stockiste, agent de stock, coordinateur stock, responsable logistique dans la santé, logisticiens ; grande distribution masquée sur le site. Préparation de commandes et logistique aéroport retirées le 27/11/2026 (offres sans intérêt pour Ryan) : plus collectées (« categories »). Les recherches sans offre nouvelle sont mises en pause d'elles-mêmes (joobleRendement).",
     "lieux": {
       "Bondy": "16",
       "Paris": "8"
@@ -138,21 +136,6 @@
         "keywords": "logisticien e-commerce",
         "lieux": [
           "Paris"
-        ]
-      },
-      {
-        "keywords": "préparateur logistique",
-        "category": "preparation",
-        "lieux": [
-          "Bondy"
-        ],
-        "maxPages": 2
-      },
-      {
-        "keywords": "préparateur de commandes",
-        "category": "preparation",
-        "lieux": [
-          "Aulnay-sous-Bois"
         ]
       },
       {
@@ -285,22 +268,6 @@
           "CEVA Logistics",
           "Dachser",
           "DB Schenker"
-        ]
-      },
-      {
-        "nom": "aéroport",
-        "_note": "Quelques offres seulement (choix de Ryan) : stock et magasin autour de Roissy, plus de piste ni d'escale.",
-        "recherches": [
-          {
-            "keywords": "stockiste aéroport",
-            "lieu": "Roissy-en-France",
-            "radius": "8"
-          },
-          {
-            "keywords": "magasinier aéroport",
-            "lieu": "Roissy-en-France",
-            "radius": "8"
-          }
         ]
       }
     ]
@@ -499,19 +466,19 @@
       },
       {
         "name": "escale-aeroportuaire",
-        "enabled": true,
+        "enabled": false,
         "category": "aeroport",
         "rome": "N2201"
       },
       {
         "name": "pistes-aeroportuaires",
-        "enabled": true,
+        "enabled": false,
         "category": "aeroport",
         "rome": "N2203"
       },
       {
         "name": "fret",
-        "enabled": true,
+        "enabled": false,
         "category": "aeroport",
         "keywords": "fret"
       },
@@ -611,7 +578,8 @@
       },
       {
         "name": "préparation de commandes",
-        "enabled": true,
+        "enabled": false,
+        "_note": "Désactivé le 27/11/2026 : préparation de commandes non voulue (choix de Ryan).",
         "keywords": "preparateur preparatrice picking picker",
         "maxPages": 8,
         "departements": [
@@ -622,10 +590,10 @@
       },
       {
         "name": "aéroport",
-        "enabled": true,
+        "enabled": false,
         "keywords": "piste escale fret bagagiste bagages aeroportuaire cargo trafic",
         "maxPages": 1,
-        "_note": "Une page (50 offres les plus récentes) : quelques offres d'aéroport seulement (26/11/2026)."
+        "_note": "Désactivé le 27/11/2026 : logistique aéroport non voulue (choix de Ryan)."
       },
       {
         "name": "tri",
@@ -695,7 +663,7 @@
       },
       {
         "name": "préparateur commandes · Bondy",
-        "enabled": true,
+        "enabled": false,
         "category": "stock",
         "keywords": "préparateur commandes",
         "titleOnly": true,
@@ -772,7 +740,7 @@
       },
       {
         "name": "préparateur commandes · Paris",
-        "enabled": true,
+        "enabled": false,
         "category": "stock",
         "keywords": "préparateur commandes",
         "titleOnly": true,
@@ -1026,7 +994,7 @@
       },
       {
         "name": "préparateur logistique · Bondy",
-        "enabled": true,
+        "enabled": false,
         "category": "preparation",
         "keywords": "préparateur logistique",
         "titleOnly": true,
@@ -1035,7 +1003,7 @@
       },
       {
         "name": "agent de piste · Bondy",
-        "enabled": true,
+        "enabled": false,
         "category": "aeroport",
         "keywords": "agent de piste",
         "titleOnly": true,
@@ -1043,7 +1011,7 @@
       },
       {
         "name": "agent escale · Bondy",
-        "enabled": true,
+        "enabled": false,
         "category": "aeroport",
         "keywords": "agent escale",
         "titleOnly": true,
@@ -1051,7 +1019,7 @@
       },
       {
         "name": "agent fret · Bondy",
-        "enabled": true,
+        "enabled": false,
         "category": "aeroport",
         "keywords": "agent fret",
         "titleOnly": true,
