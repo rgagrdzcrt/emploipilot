@@ -12,11 +12,11 @@ const ZCRT_PROFILE_KEY = 'zcrt_active_profile';
 
 /** Métiers connus du site (catégories calculées par collect.py). */
 const CAT_INFO = {
-  stock: { label: 'Stock & logistique', icon: 'package' },
+  stock: { label: 'Stock & logistique', short: 'Stock', icon: 'package' },
   preparation: { label: 'Préparation de commandes', icon: 'clipboard' },
-  encadrement: { label: 'Encadrement en magasin', icon: 'user' },
+  encadrement: { label: 'Encadrement en magasin', short: 'Encadrement', icon: 'user' },
   aeroport: { label: 'Logistique aéroport', icon: 'plane' },
-  tri: { label: 'Tri de colis', icon: 'scan' },
+  tri: { label: 'Tri de colis', short: 'Tri de colis', icon: 'scan' },
   rayon: { label: 'Magasins & grande distribution', icon: 'cart' },
   vente: { label: 'Vente', icon: 'tag' },
   restauration: { label: 'Restauration & café', icon: 'cup' },
@@ -27,6 +27,8 @@ const ZCRT_PROFILES = {
     id: 'ryan',
     name: 'Ryan',
     brand: 'RGRD',               // logo affiché sur ce profil
+    // Habillage « Quai » (27/11/2026) : quai.css et quai.js ; ZCRT garde l'habillage « entrepôt » (entrepot.css).
+    design: 'quai',
     // Encadrement : CV « rayon » (chef de rayon chez Monoprix, référent chez E.Leclerc), comme la lettre.
     cv: {
       stock: 'CV_Ryan_Gazard_stock.pdf', tri: 'CV_Ryan_Gazard_stock.pdf', encadrement: 'CV_Ryan_Gazard_rayon.pdf',
@@ -311,6 +313,10 @@ const ACTIVE_PROFILE = (() => {
 })();
 document.title = ACTIVE_PROFILE.brand + ' — Recherche d’emploi';
 
+/** Habillage « Quai » (profil de Ryan) : gabarits de quai.js, styles de quai.css. */
+const QUAI = ACTIVE_PROFILE.design === 'quai';
+document.documentElement.setAttribute('data-profile', ACTIVE_PROFILE.id);
+
 /** Clé du navigateur propre au profil actif. */
 function nsKey(key) { return key + ACTIVE_PROFILE.ns; }
 
@@ -329,6 +335,14 @@ function switchProfile() {
 /** Logo du profil actif ; le toucher bascule vers l'autre profil (barre latérale et en-tête mobile). */
 function brandHtml() {
   const other = otherProfile(), b = ACTIVE_PROFILE.brand;
+  // Quai : étiquette d'emplacement « RG / RD », nom et métier dessous, flèche si un autre profil existe.
+  if (QUAI) {
+    const mark = `<span class="brand-mark" aria-hidden="true"><b>${b.slice(0, 2)}</b><b>${b.slice(2)}</b></span>`
+      + `<span class="brand-txt" aria-hidden="true"><span class="brand-name">${b}</span><span class="brand-sub">${ACTIVE_PROFILE.name} · ${ACTIVE_PROFILE.tag || ''}</span></span>`;
+    return other
+      ? `<button class="brand-btn" type="button" onclick="switchProfile()" title="Passer au profil de ${other.name}" aria-label="${b} — passer au profil de ${other.name}">${mark}<svg class="ic brand-chev" aria-hidden="true"><use href="#i-sort"/></svg></button>`
+      : `<button class="brand-btn" type="button" onclick="goHome()" title="Revenir à l’accueil" aria-label="${b} — revenir à l’accueil">${mark}</button>`;
+  }
   // Un seul profil actif : le logo ramène à l'accueil (onglet Offres).
   if (!other) {
     return `<button class="brand-btn" type="button" onclick="goHome()" title="Revenir à l’accueil" aria-label="${b} — revenir à l’accueil"><span class="brand-mark" aria-hidden="true">${b.charAt(0)}</span>`
@@ -399,6 +413,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /** Onglets métiers du profil actif. */
 function categoryTabsHtml() {
+  // Quai : nom court sur téléphone, et « repli » sous les métiers de repli (tiers.repliCats).
+  if (QUAI) {
+    const repli = (ACTIVE_PROFILE.tiers || {}).repliCats || [];
+    return ACTIVE_PROFILE.cats.map((c, i) => `<button${i === 0 ? ' class="active"' : ''} data-category="${c}" role="tab">`
+      + `<span class="ct-ic"><svg class="ic" aria-hidden="true"><use href="#i-${CAT_INFO[c].icon}"/></svg></span>`
+      + `<span class="ct-label"><span class="ct-long">${CAT_INFO[c].label}</span><span class="ct-short">${CAT_INFO[c].short || CAT_INFO[c].label}</span></span>`
+      + `<span class="ct-sub"><span class="ct-count" data-count="${c}"></span>${repli.includes(c) ? '<span class="ct-note">repli</span>' : ''}</span></button>`).join('');
+  }
   return ACTIVE_PROFILE.cats.map((c, i) => `<button${i === 0 ? ' class="active"' : ''} data-category="${c}" role="tab">`
     + `<span class="ct-ic"><svg class="ic" aria-hidden="true"><use href="#i-${CAT_INFO[c].icon}"/></svg></span>`
     + `<span class="ct-label">${CAT_INFO[c].label}</span><span class="ct-count" data-count="${c}"></span></button>`).join('');

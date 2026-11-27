@@ -192,8 +192,8 @@ function uiRenderApps() {
         <div class="kcol-body">${items.length ? items.map(o => `<article class="kcard">
           <div class="kcard-top">${uiLogo(o.company)}<div><h4>${uiEsc(o.title)}</h4><div class="muted small">${uiEsc(o.company)}</div></div></div>
           <div class="kcard-meta">${ic('pin')}${uiEsc(o.location || 'Lieu non précisé')}</div>
-          <div class="kcard-meta">${ic('calendar')}Candidature : ${uiDay(o.appliedDate)}</div>${uiMail(o)}
-          <div class="kcard-actions">${uiStatusSelect(o, 'compact')}<button class="secondary small-btn" onclick="prep('${o.id}')">Préparer</button>${o.url ? `<a class="icon-link" href="${uiEsc(o.url)}" target="_blank" rel="noopener" title="Ouvrir l'annonce" aria-label="Ouvrir l'annonce">${ic('external')}</a>` : ''}</div>
+          <div class="kcard-meta">${ic('calendar')}Candidature : ${uiDay(o.appliedDate)}${QUAI ? quaiDelay(o) : ''}</div>${uiMail(o)}
+          <div class="kcard-actions">${uiStatusSelect(o, 'compact')}<button class="secondary small-btn" onclick="prep('${o.id}')">${QUAI && o.status === 'À relancer' ? 'Relancer' : 'Préparer'}</button>${o.url ? `<a class="icon-link" href="${uiEsc(o.url)}" target="_blank" rel="noopener" title="Ouvrir l'annonce" aria-label="Ouvrir l'annonce">${ic('external')}</a>` : ''}</div>
         </article>`).join('') : '<div class="kempty">Aucune candidature</div>'}</div></div>`;
     }).join('');
   }

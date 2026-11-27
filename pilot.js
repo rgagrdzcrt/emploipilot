@@ -954,6 +954,7 @@ function drawPilot() {
   const o = currentOffer();
   const total = pilot.ids.length;
   const title = pilot.mode === 'triage' ? 'Tri des nouvelles offres' : 'File de candidature';
+  if (!o && QUAI) { card.innerHTML = quaiPilotDone(total); return; }
   if (!o) {
     card.innerHTML = `<div class="pilot-head"><strong>${title}</strong><button class="ghost" data-act="close">Fermer<span class="key-hint"> (Échap)</span></button></div>
       <div class="empty">${total ? 'Terminé : ' + total + ' offre(s) traitée(s).' : 'Rien à traiter pour le moment.'}
@@ -962,11 +963,16 @@ function drawPilot() {
     return;
   }
   const cat = jobCategory(o);
-  const head = `<div class="pilot-head"><span class="pill blue">${title} · ${pilot.i + 1} / ${total}</span>
+  const head = QUAI ? quaiPilotHead(o, cat, total) : `<div class="pilot-head"><span class="pill blue">${title} · ${pilot.i + 1} / ${total}</span>
     ${pilotCatPill(cat)}${tierBadge(o)}${sectorBadge(o)}${repeatBadge(o)}
     <button class="ghost" data-act="close">Fermer<span class="key-hint"> (Échap)</span></button></div>
     <h2>${esc(o.title)}</h2><div class="job-meta">${metaLine(o)}</div>`;
 
+  if (pilot.mode === 'triage' && QUAI) {
+    card.innerHTML = head + triageBody(o) + quaiTriageActions();
+    quaiAfterTriage(card);
+    return;
+  }
   if (pilot.mode === 'triage') {
     card.innerHTML = `${head}
       ${triageBody(o)}
@@ -998,6 +1004,7 @@ function drawPilot() {
     </div>`;
     return;
   }
+  if (QUAI) { card.innerHTML = quaiQueueBody(head, o, cv, chips); return; }
   card.innerHTML = `${head}
     <div class="pilot-hint">CV à joindre : <b>${cv ? esc(cv) : 'à définir dans Critères & modèles'}</b></div>
     <textarea id="pilotLetter" rows="12" aria-label="Lettre de motivation">${esc(fillTemplate(o))}</textarea>
