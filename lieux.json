@@ -130,15 +130,6 @@
   "min": 59,
   "minAt": "2026-11-22"
  },
- "boissy-saint-léger||94": {
-  "dept": "94",
-  "km": 17.1,
-  "label": "Boissy-Saint-Léger",
-  "lat": 48.75128,
-  "lon": 2.52001,
-  "min": 93,
-  "minAt": "2026-11-27"
- },
  "bondy||93": {
   "dept": "93",
   "km": 0.0,
@@ -173,6 +164,15 @@
   "lon": 2.61659,
   "min": 118,
   "minAt": "2026-11-23"
+ },
+ "bry-sur-marne||94": {
+  "dept": "94",
+  "km": 7.7,
+  "label": "Bry-sur-Marne",
+  "lat": 48.83925,
+  "lon": 2.52319,
+  "min": 61,
+  "minAt": "2026-11-28"
  },
  "bussy-saint-georges||77": {
   "dept": "77",
@@ -209,15 +209,6 @@
   "lon": 2.59397,
   "min": 67,
   "minAt": "2026-11-06"
- },
- "chanteloup-en-brie|77600|77": {
-  "dept": "77",
-  "km": 19.3,
-  "label": "Chanteloup-en-Brie",
-  "lat": 48.85986,
-  "lon": 2.74125,
-  "min": 92,
-  "minAt": "2026-11-24"
  },
  "charenton-le-pont||94": {
   "dept": "94",
@@ -654,7 +645,7 @@
   "lat": 48.80818,
   "lon": 2.35582,
   "min": 72,
-  "minAt": "2026-10-28"
+  "minAt": "2026-11-28"
  },
  "le mée-sur-seine||77": {
   "dept": "77",
@@ -725,6 +716,15 @@
   "lon": 2.54793,
   "min": 120,
   "minAt": "2026-11-15"
+ },
+ "limeil-brévannes||94": {
+  "dept": "94",
+  "km": 17.3,
+  "label": "Limeil-Brévannes",
+  "lat": 48.74791,
+  "lon": 2.49242,
+  "min": 86,
+  "minAt": "2026-11-28"
  },
  "livry-gargan||93": {
   "dept": "93",
@@ -877,6 +877,15 @@
   "min": 93,
   "minAt": "2026-11-22"
  },
+ "montmorency||95": {
+  "dept": "95",
+  "km": 15.3,
+  "label": "Montmorency",
+  "lat": 48.9894,
+  "lon": 2.32199,
+  "min": 84,
+  "minAt": "2026-11-28"
+ },
  "montreuil||93": {
   "km": 5.2,
   "label": "Montreuil",
@@ -956,14 +965,14 @@
   "min": 151,
   "minAt": "2026-11-16"
  },
- "neuilly-sur-marne||93": {
+ "neuilly-plaisance||93": {
   "dept": "93",
-  "km": 5.8,
-  "label": "Neuilly-sur-Marne",
-  "lat": 48.8649,
-  "lon": 2.53737,
-  "min": 56,
-  "minAt": "2026-11-27"
+  "km": 4.7,
+  "label": "Neuilly-Plaisance",
+  "lat": 48.86467,
+  "lon": 2.50964,
+  "min": 52,
+  "minAt": "2026-11-28"
  },
  "neuilly-sur-seine||92": {
   "km": 16.2,
@@ -1296,7 +1305,6 @@
   "min": 86,
   "minAt": "2026-11-12"
  },
- "république||": {},
  "saint-cloud||92": {
   "km": 20.9,
   "label": "Saint-Cloud",
@@ -1482,15 +1490,6 @@
   "min": 90,
   "minAt": "2026-11-12"
  },
- "torcy||77": {
-  "dept": "77",
-  "km": 13.3,
-  "label": "Torcy",
-  "lat": 48.84628,
-  "lon": 2.64446,
-  "min": 77,
-  "minAt": "2026-11-27"
- },
  "tremblay-en-france||93": {
   "dept": "93",
   "km": 9.6,
@@ -1544,6 +1543,15 @@
   "lon": 2.23543,
   "min": 98,
   "minAt": "2026-11-19"
+ },
+ "villejuif||94": {
+  "dept": "94",
+  "km": 15.3,
+  "label": "Villejuif",
+  "lat": 48.79347,
+  "lon": 2.361,
+  "min": 78,
+  "minAt": "2026-11-28"
  },
  "villemomble||93": {
   "dept": "93",
